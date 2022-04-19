@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bottom_nav_item_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/connectivity_background.xml" value="0.1565" />
+        <entry key="app/src/main/res/drawable/ic_add_vehicle.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1296875" />

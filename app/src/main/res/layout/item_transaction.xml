@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp"
+    android:layout_marginBottom="12dp"
+    android:layout_marginHorizontal="8dp"
+    android:id="@+id/transactionHistoryItem"
+    app:cardForegroundColor="@android:color/transparent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transaction_item_bg">
+
+        <ImageView
+            android:id="@+id/transactionIV"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/nunito_sans"
+            app:cornerRadius="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_transaction_credit" />
+
+        <TextView
+            android:id="@+id/transactionTitleTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/transactionIV"
+            app:layout_constraintEnd_toStartOf="@+id/transactionAmountTV"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/transactionIV"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Credit: NURTW" />
+
+        <TextView
+            android:id="@+id/transactionDateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nunito_sans"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/transactionTitleTV"
+            app:layout_constraintTop_toBottomOf="@+id/transactionTitleTV"
+            tools:text="21/08/2020 10:30" />
+
+
+        <TextView
+            android:id="@+id/transactionAmountTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:maxLines="1"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/transactionTitleTV"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/black"
+            tools:text="₦300,000.00" />
+
+        <!--<com.google.android.material.button.MaterialButton
+            android:id="@+id/view_details"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAllCaps="false"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/transactionHistoryAmount"
+            tools:text="View Details" />-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

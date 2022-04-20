@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ng.gov.imostate.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ng.gov.imostate.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addVehicleFragment"
+        android:name="ng.gov.imostate.AddVehicleFragment"
+        android:label="fragment_add_vehicle"
+        tools:layout="@layout/fragment_add_vehicle" />
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="ng.gov.imostate.ScanFragment"
+        android:label="fragment_scan"
+        tools:layout="@layout/fragment_scan" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="ng.gov.imostate.TransactionsFragment"
+        android:label="fragment_transactions"
+        tools:layout="@layout/fragment_transactions" />
+    <fragment
+        android:id="@+id/vehicleDetailsDialogFragment"
+        android:name="ng.gov.imostate.VehicleDetailsDialogFragment"
+        android:label="fragment_vehicle_details_dialog"
+        tools:layout="@layout/fragment_vehicle_details_dialog" />
+</navigation>

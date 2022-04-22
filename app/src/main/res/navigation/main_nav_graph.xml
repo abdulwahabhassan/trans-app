@@ -7,32 +7,55 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ng.gov.imostate.HomeFragment"
+        android:name="ng.gov.imostate.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_transactionsFragment"
+            app:destination="@id/transactionsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addVehicleFragment"
+            app:destination="@id/addVehicleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="ng.gov.imostate.ProfileFragment"
+        android:name="ng.gov.imostate.ui.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/addVehicleFragment"
-        android:name="ng.gov.imostate.AddVehicleFragment"
+        android:name="ng.gov.imostate.ui.AddVehicleFragment"
         android:label="fragment_add_vehicle"
         tools:layout="@layout/fragment_add_vehicle" />
     <fragment
         android:id="@+id/scanFragment"
-        android:name="ng.gov.imostate.ScanFragment"
+        android:name="ng.gov.imostate.ui.ScanFragment"
         android:label="fragment_scan"
-        tools:layout="@layout/fragment_scan" />
+        tools:layout="@layout/fragment_scan" >
+        <action
+            android:id="@+id/action_scanFragment_to_vehicleDetailsDialogFragment"
+            app:destination="@id/vehicleDetailsDialogFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_scannedResultFragment"
+            app:destination="@id/scannedResultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="ng.gov.imostate.TransactionsFragment"
+        android:name="ng.gov.imostate.ui.TransactionsFragment"
         android:label="fragment_transactions"
         tools:layout="@layout/fragment_transactions" />
-    <fragment
+    <dialog
         android:id="@+id/vehicleDetailsDialogFragment"
-        android:name="ng.gov.imostate.VehicleDetailsDialogFragment"
+        android:name="ng.gov.imostate.ui.VehicleDetailsDialogFragment"
         android:label="fragment_vehicle_details_dialog"
-        tools:layout="@layout/fragment_vehicle_details_dialog" />
+        tools:layout="@layout/fragment_vehicle_details_dialog" >
+        <action
+            android:id="@+id/action_vehicleDetailsDialogFragment_to_scannedResultFragment"
+            app:destination="@id/scannedResultFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/scannedResultFragment"
+        android:name="ng.gov.imostate.ui.ScannedResultFragment"
+        android:label="fragment_scanned_result"
+        tools:layout="@layout/fragment_scanned_result" />
 </navigation>

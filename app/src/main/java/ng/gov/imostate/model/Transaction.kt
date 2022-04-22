@@ -1,4 +1,4 @@
-package ng.gov.imostate
+package ng.gov.imostate.model
 
 data class Transaction (
     val id: String,

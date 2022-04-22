@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/bottom_nav_item_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/connectivity_background.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/connectivity_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/dialog_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_add_vehicle.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/ic_nfc_logo.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.14" />
@@ -15,15 +16,18 @@
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/transaction_item_bg.xml" value="0.1565" />
         <entry key="app/src/main/res/drawable/transaction_rv_bg.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_add_vehicle.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/fragment_add_vehicle.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_pay_outstanding_balance.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_scan.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_scanned_result.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_transactions.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_vehicle_details_dialog.xml" value="0.2171875" />
-        <entry key="app/src/main/res/layout/item_transaction.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_transaction.xml" value="0.165" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1296875" />
+        <entry key="app/src/main/res/xml/nfc_tech_filter.xml" value="0.15104166666666666" />
       </map>
     </option>
   </component>

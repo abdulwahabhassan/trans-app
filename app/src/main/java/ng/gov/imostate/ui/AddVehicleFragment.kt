@@ -1,4 +1,4 @@
-package ng.gov.imostate
+package ng.gov.imostate.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,6 +24,11 @@ class AddVehicleFragment : Fragment() {
     ): View? {
         _binding = FragmentAddVehicleBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
 }

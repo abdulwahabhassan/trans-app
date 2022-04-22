@@ -1,4 +1,6 @@
-package ng.gov.imostate
+package ng.gov.imostate.util
+
+import ng.gov.imostate.model.Transaction
 
 object Mock {
 
@@ -13,7 +15,7 @@ object Mock {
             Transaction("7", "Credit: NURTW",6000.00, "02/10/2021"),
             Transaction("8", "Credit: NURTW",29000.00, "15/12/2021"),
             Transaction("9", "Credit: NURTW",180000.00, "09/11/2021"),
-            Transaction("10", "Credit: NURTW",9000.00, "02/10/2021")
+            Transaction("10", "Credit: NURTW",9000.00, "02/10/2021"),
         )
     }
 }

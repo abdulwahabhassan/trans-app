@@ -1,4 +1,4 @@
-package ng.gov.imostate
+package ng.gov.imostate.util
 
 import android.app.Activity
 import android.content.Context
@@ -8,10 +8,10 @@ import android.graphics.Bitmap
 import android.util.Base64
 import android.view.Gravity
 import androidx.core.content.res.ResourcesCompat
+import ng.gov.imostate.R
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.net.NetworkInterface
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -113,7 +113,7 @@ object AppUtils {
                 style,
                 position,
                 MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(context,R.font.nunito_sans))
+                ResourcesCompat.getFont(context, R.font.nunito_sans))
 
         }catch (e: Exception){
             e.printStackTrace()

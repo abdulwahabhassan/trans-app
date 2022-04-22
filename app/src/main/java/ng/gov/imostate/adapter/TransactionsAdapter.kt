@@ -1,10 +1,13 @@
-package ng.gov.imostate
+package ng.gov.imostate.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ng.gov.imostate.util.AppUtils
+import ng.gov.imostate.R
+import ng.gov.imostate.model.Transaction
 import ng.gov.imostate.databinding.ItemTransactionBinding
 import java.lang.StringBuilder
 
@@ -54,9 +57,16 @@ class TransactionsAdapter(
         fun bind(transaction: Transaction) {
             with(binding) {
                 transactionTitleTV.text = transaction.title
-                transactionAmountTV.text = StringBuilder("₦").append(AppUtils.formatCurrency(transaction.amount))
+                transactionAmountTV.text = StringBuilder("₦").append(
+                    AppUtils.formatCurrency(
+                        transaction.amount
+                    )
+                )
                 transactionDateTV.text = transaction.date
-                transactionIV.setImageResource(listOf(R.drawable.ic_transaction_credit, R.drawable.ic_transaction_vehicle).random())
+                transactionIV.setImageResource(listOf(
+                    R.drawable.ic_transaction_credit,
+                    R.drawable.ic_transaction_vehicle
+                ).random())
             }
         }
 

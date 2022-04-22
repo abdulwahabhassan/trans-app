@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddVehicleFragment">
+    tools:context=".ui.AddVehicleFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,8 @@
             android:textSize="16sp"
             android:fontFamily="@font/nunito_sans_extrabold"
             android:text="Add Vehicle"
-            android:layout_marginTop="40dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,9 +52,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fleetNumberET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -84,10 +86,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/stateOfRegistrationET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
+                android:padding="0dp"
                 android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -117,9 +120,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/vehicleCatgeoryET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -150,9 +154,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/plateNumberET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -183,9 +188,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/chasisNumberET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -216,9 +222,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/engineNumberET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -249,9 +256,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/vehicleMakeET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -282,9 +290,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/vehicleModelET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -315,9 +324,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passengerCapacityET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -349,9 +359,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/driverET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -382,9 +393,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/vehicleRouteET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -415,9 +427,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/roadWorthinessExpiryDateET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -448,9 +461,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/vehicleLicenseExpiryDateET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -482,9 +496,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/vehicleInsuranceExpiryDateET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:padding="0dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -492,7 +507,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton"
+            android:id="@+id/payOutstandingPaymentTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -503,7 +518,7 @@
             android:padding="15dp"
             android:text="ADD VEHICLE"
             android:textColor="@color/white"
-            app:cornerRadius="8dp"
+            app:cornerRadius="50dp"
             android:layout_marginBottom="110dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,10 +1,33 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    dependencies {
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.40.3"
+    }
+}
+
+
 plugins {
     id 'com.android.application' version '7.1.1' apply false
     id 'com.android.library' version '7.1.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.5.30' apply false
 }
 
+
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    coroutines = '1.5.2'
+    moshi = '1.12.0'
+    moshi_converter = '2.4.0'
+    retrofit = '2.9.0'
+    arch_lifecycle = '2.2.0'
+    dataStore = '1.0.0'
+    logger_interceptor = '4.9.1'
+    gson = '2.8.6'
+    navigation = '2.4.2'
+    motion_toast = '1.4'
+    timber = '5.0.1'
 }

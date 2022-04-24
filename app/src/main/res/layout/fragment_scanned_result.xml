@@ -22,7 +22,7 @@
         android:id="@+id/outstandingBalanceTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/connectivity_bg"
+        android:background="@drawable/connectivity_online_bg"
         android:fontFamily="@font/nunito_sans_bold"
         android:paddingHorizontal="16dp"
         android:textAlignment="center"

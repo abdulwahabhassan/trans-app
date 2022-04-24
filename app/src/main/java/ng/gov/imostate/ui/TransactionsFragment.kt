@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.util.Mock
 import ng.gov.imostate.model.Transaction
 import ng.gov.imostate.adapter.TransactionsAdapter
 import ng.gov.imostate.databinding.FragmentTransactionsBinding
 
+@AndroidEntryPoint
 class TransactionsFragment : Fragment() {
 
     private var _binding: FragmentTransactionsBinding? = null

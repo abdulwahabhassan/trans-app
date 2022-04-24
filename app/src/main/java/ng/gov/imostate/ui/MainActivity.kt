@@ -1,5 +1,6 @@
 package ng.gov.imostate.ui
 
+//import timber.log.Timber
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
@@ -8,8 +9,8 @@ import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -25,7 +26,6 @@ import ng.gov.imostate.model.Data
 import ng.gov.imostate.util.AppUtils
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
-//import timber.log.Timber
 import java.nio.charset.Charset
 import java.util.*
 
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nfcAdapter: NfcAdapter
     private lateinit var pendingIntent: PendingIntent
     private lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

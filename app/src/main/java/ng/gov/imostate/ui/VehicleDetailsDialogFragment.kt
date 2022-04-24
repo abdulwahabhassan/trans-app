@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.databinding.FragmentVehicleDetailsDialogBinding
 
 
+@AndroidEntryPoint
 class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentVehicleDetailsDialogBinding? = null

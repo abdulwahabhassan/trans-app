@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.util.Pair
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.databinding.FragmentScanBinding
 import ng.gov.imostate.databinding.FragmentScannedResultBinding
 import ng.gov.imostate.model.Data
@@ -17,7 +18,7 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class ScannedResultFragment : Fragment() {
 
     private var _binding: FragmentScannedResultBinding? = null

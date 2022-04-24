@@ -4,7 +4,7 @@ import android.nfc.Tag
 import android.nfc.tech.MifareUltralight
 import java.nio.charset.Charset
 
-class MifareUltralightTagHelper {
+class MifareUltralightTagUtil {
     fun writeTag(tag: Tag, tagText: String) {
         MifareUltralight.get(tag)?.use { ultralight ->
             ultralight.connect()

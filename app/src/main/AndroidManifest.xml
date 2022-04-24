@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
 <!--    permission to use nfc -->
     <uses-permission android:name="android.permission.NFC" />
+<!--    permission to access network state-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".TransApp"

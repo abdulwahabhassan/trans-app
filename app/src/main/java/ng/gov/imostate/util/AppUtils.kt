@@ -42,11 +42,6 @@ object AppUtils {
         return json
     }
 
-    fun initFirstEmptyData(context: Context, moshi: Moshi): Data? {
-        return loadJsonFromAsset("empty_data.json", context, moshi)
-    }
-
-
     fun convertToJson(data: Data, context: Context, moshi: Moshi): String {
         val json: String
         try {
@@ -69,8 +64,6 @@ object AppUtils {
         return data
     }
 
-
-
     fun convertBitmapToString(bitmap: Bitmap): String? {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
@@ -89,21 +82,15 @@ object AppUtils {
         return df.format(valueToBeFormatted)
     }
 
-    fun getCurrentDateTimeFormatOne(): String {
-        val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
-        val now = Date()
-        return sdf.format(now)
-    }
-
-    fun getCurrentDateTimeFormatTwo(): String {
+    fun getCurrentDateTime(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         val now = Date()
         return sdf.format(now)
     }
 
     fun formatDateTime(date: String): String{
-        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+        val parser = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         return formatter.format(parser.parse(date) ?: "")
     }
 

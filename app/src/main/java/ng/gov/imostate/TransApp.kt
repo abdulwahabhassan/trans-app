@@ -9,7 +9,6 @@ class TransApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         initLog()
     }
 

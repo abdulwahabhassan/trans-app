@@ -30,4 +30,5 @@ ext {
     navigation = '2.4.2'
     motion_toast = '1.4'
     timber = '5.0.1'
+    gson = '2.8.6'
 }

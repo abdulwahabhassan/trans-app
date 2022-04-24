@@ -1,5 +1,6 @@
 package ng.gov.imostate.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,19 +11,27 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import ng.gov.imostate.databinding.FragmentScanBinding
 import ng.gov.imostate.databinding.FragmentScannedResultBinding
+import ng.gov.imostate.model.Data
+import ng.gov.imostate.util.AppUtils
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class ScannedResultFragment : Fragment() {
 
-
     private var _binding: FragmentScannedResultBinding? = null
     private val binding get() = _binding!!
+    private lateinit var data: Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        data = Data(
+            arguments?.getString(MainActivity.DRIVER_NAME_KEY) ?: "",
+            arguments?.getString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY) ?: "",
+            arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)?: "",
+            arguments?.getLong(MainActivity.OUTSTANDING_BAL_KEY) ?: 0
+        )
     }
 
     override fun onCreateView(
@@ -33,14 +42,24 @@ class ScannedResultFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.payOutstandingPaymentTV.setOnClickListener {
-            showDatePicker()
+        with(binding) {
+            payOutstandingPaymentTV.setOnClickListener {
+                showDatePicker()
+            }
+            backArrowIV.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            Timber.d("$data")
+            driverTV.text = data.name
+            vehicleRegistrationTV.text = data.vrn
+            lastPaymentDateTV.text = data.lpd
+            outstandingBalanceTV.text = "Balance: ₦${AppUtils.formatCurrency(data.ob)}"
         }
-        binding.backArrowIV.setOnClickListener {
-            findNavController().popBackStack()
-        }
+
     }
 
     private fun showDatePicker() {

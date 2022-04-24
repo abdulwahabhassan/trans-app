@@ -8,16 +8,68 @@ import android.graphics.Bitmap
 import android.util.Base64
 import android.view.Gravity
 import androidx.core.content.res.ResourcesCompat
+import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import ng.gov.imostate.R
+import ng.gov.imostate.model.Data
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.net.NetworkInterface
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 object AppUtils {
+
+    fun loadJsonFromAsset(jsonFileName: String, context: Context, moshi: Moshi): Data? {
+        val json: Data?
+        try {
+            val stream = context.assets.open(jsonFileName)
+            val size = stream.available()
+            val buffer = ByteArray(size)
+            stream.read(buffer)
+            stream.close()
+            val stringJson = String(buffer, charset("UTF-8"))
+            val gson = Gson()
+            val testData = moshi.adapter(Data::class.java).fromJson(stringJson)
+            json = testData
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return json
+    }
+
+    fun initFirstEmptyData(context: Context, moshi: Moshi): Data? {
+        return loadJsonFromAsset("empty_data.json", context, moshi)
+    }
+
+
+    fun convertToJson(data: Data, context: Context, moshi: Moshi): String {
+        val json: String
+        try {
+            json = moshi.adapter(Data::class.java).toJson(data)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return ""
+        }
+        return json
+    }
+
+    fun convertToData(json: String, moshi: Moshi): Data? {
+        val data: Data?
+        try {
+            data = moshi.adapter(Data::class.java).fromJson(json)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return data
+    }
+
+
 
     fun convertBitmapToString(bitmap: Bitmap): String? {
         val baos = ByteArrayOutputStream()
@@ -107,14 +159,15 @@ object AppUtils {
 
     fun showToast(context: Activity, message: String?, style: MotionToastStyle, position: Int = Gravity.CENTER_HORIZONTAL) {
         try {
-            MotionToast.createColorToast(context,
-                "Trans App",
-                message!!,
-                style,
-                position,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(context, R.font.nunito_sans))
-
+            if (message != null) {
+                MotionToast.createColorToast(context,
+                    "Trans App",
+                    message,
+                    style,
+                    position,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(context, R.font.nunito_sans))
+            }
         }catch (e: Exception){
             e.printStackTrace()
         }

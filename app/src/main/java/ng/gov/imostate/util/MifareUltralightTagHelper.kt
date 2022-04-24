@@ -9,12 +9,8 @@ class MifareUltralightTagHelper {
         MifareUltralight.get(tag)?.use { ultralight ->
             ultralight.connect()
             Charset.forName("US-ASCII").also { usAscii ->
-                ultralight.writePage(4, "love".toByteArray(usAscii))
-                ultralight.writePage(5, "live".toByteArray(usAscii))
-                ultralight.writePage(6, "play".toByteArray(usAscii))
-                ultralight.writePage(7, "pray".toByteArray(usAscii))
-                ultralight.writePage(8, "mike".toByteArray(usAscii))
-                ultralight.writePage(9, "nana".toByteArray(usAscii))
+                //can only write four text per page
+                ultralight.writePage(4, tagText.toByteArray(usAscii))
             }
         }
     }

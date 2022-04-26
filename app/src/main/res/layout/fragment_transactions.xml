@@ -10,26 +10,37 @@
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
+        android:background="@color/dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/backArrowIV"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:backgroundTint="@color/dark_blue"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/phoneNumberPromptTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="20dp"
             android:fontFamily="@font/nunito_sans_extrabold"
             android:text="Transactions"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
@@ -65,9 +76,7 @@
         android:layout_marginHorizontal="16dp"
         android:overScrollMode="never"
         android:paddingHorizontal="2dp"
-        android:paddingVertical="2dp"
         android:visibility="visible"
-        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/payOutstandingPaymentTV"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,22 +89,20 @@
         android:id="@+id/payOutstandingPaymentTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/nunito_sans_semibold"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:text="Generate Last Receipt"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="32dp"
+        app:cornerRadius="8dp"
+        android:textAllCaps="false"
         android:padding="15dp"
-        android:text="GENERATE LAST RECEIPT"
-        android:textColor="@color/black"
-        app:cornerRadius="50dp"
-        android:layout_marginBottom="110dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="24dp"
+        android:backgroundTint="@color/dark_blue"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transactionsRV"
-        app:strokeColor="@color/blue"
-        app:strokeWidth="1dp" />
+        app:strokeColor="@color/dark_blue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

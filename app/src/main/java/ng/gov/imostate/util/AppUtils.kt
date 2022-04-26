@@ -152,7 +152,7 @@ object AppUtils {
                     message,
                     style,
                     position,
-                    MotionToast.LONG_DURATION,
+                    MotionToast.LONG_DURATION + MotionToast.SHORT_DURATION,
                     ResourcesCompat.getFont(context, R.font.nunito_sans))
             }
         }catch (e: Exception){

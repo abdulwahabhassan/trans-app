@@ -5,15 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.hilt.android.AndroidEntryPoint
-import ng.gov.imostate.databinding.FragmentAddVehicleBinding
-import ng.gov.imostate.databinding.FragmentProfileBinding
+import androidx.navigation.fragment.findNavController
+import ng.gov.imostate.R
+import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
+import ng.gov.imostate.databinding.FragmentPaymentBinding
 
 
-@AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class PaymentFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
+    private var _binding: FragmentPaymentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,23 +25,15 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentPaymentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         with(binding) {
-            vehicleLicenseTV.text = "IMGS73"
-            vehicleRegistrationTV.text = "IMO-737-OWR"
-            vehicleColorTV.text = "Yellow"
-            vehicleTypeTV.text = "Toyota"
-            driverTV.text = "John Obi"
-            lastPaymentDateTV.text = "02/01/22"
+
         }
-
     }
-
 
 }

@@ -10,8 +10,11 @@
     <color name="blue">#3969E3</color>
     <color name="light_pink">#F8DADA</color>
     <color name="light_grey">#F0F3F6</color>
+    <color name="faint_grey">#F9FAFB</color>
     <color name="white_wash">#F5F6F8</color>
-    <color name="sky_blue">#CEEDFF</color>
+    <color name="sky_blue">#DFE6F8</color>
     <color name="red">#B40101</color>
-    <color name="dark_green">#1D7009</color>
+    <color name="green">#31DE57</color>
+    <color name="dark_blue">#123282</color>
+    <color name="line_grey">#DCDCDC</color>
 </resources>

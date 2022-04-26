@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import ng.gov.imostate.databinding.FragmentScanBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
 
-@AndroidEntryPoint
-class ScanFragment : Fragment() {
 
-    private var _binding: FragmentScanBinding? = null
+class DailyRatesDialogFragment : BottomSheetDialogFragment() {
+
+    private var _binding: FragmentDailyRatesDialogBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,24 +24,20 @@ class ScanFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentScanBinding.inflate(inflater, container, false)
+        _binding = FragmentDailyRatesDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            addManuallyBTN.setOnClickListener {
-                val action = ScanFragmentDirections.actionScanFragmentToVehicleDetailsDialogFragment()
-                findNavController().navigate(action)
-            }
-
-            backArrowIV.setOnClickListener {
-                findNavController().popBackStack()
-            }
+        binding.backArrowIV.setOnClickListener {
+            findNavController().popBackStack()
         }
 
+        binding.doneBTN.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 

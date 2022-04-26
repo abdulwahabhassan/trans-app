@@ -16,29 +16,21 @@
         <action
             android:id="@+id/action_homeFragment_to_addVehicleFragment"
             app:destination="@id/addVehicleFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_vehicleDetailsDialogFragment"
+            app:destination="@id/vehicleDetailsDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dailyRatesDialogFragment"
+            app:destination="@id/dailyRatesDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_updatesFragment"
+            app:destination="@id/updatesFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="ng.gov.imostate.ui.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/addVehicleFragment"
         android:name="ng.gov.imostate.ui.AddVehicleFragment"
         android:label="fragment_add_vehicle"
         tools:layout="@layout/fragment_add_vehicle" />
-    <fragment
-        android:id="@+id/scanFragment"
-        android:name="ng.gov.imostate.ui.ScanFragment"
-        android:label="fragment_scan"
-        tools:layout="@layout/fragment_scan" >
-        <action
-            android:id="@+id/action_scanFragment_to_vehicleDetailsDialogFragment"
-            app:destination="@id/vehicleDetailsDialogFragment" />
-        <action
-            android:id="@+id/action_scanFragment_to_scannedResultFragment"
-            app:destination="@id/scannedResultFragment" />
-    </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="ng.gov.imostate.ui.TransactionsFragment"
@@ -57,5 +49,35 @@
         android:id="@+id/scannedResultFragment"
         android:name="ng.gov.imostate.ui.ScannedResultFragment"
         android:label="fragment_scanned_result"
-        tools:layout="@layout/fragment_scanned_result" />
+        tools:layout="@layout/fragment_scanned_result" >
+        <action
+            android:id="@+id/action_scannedResultFragment_to_outStandingPaymentFragment"
+            app:destination="@id/outStandingPaymentFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/dailyRatesDialogFragment"
+        android:name="ng.gov.imostate.ui.DailyRatesDialogFragment"
+        android:label="fragment_daily_rates_dialog"
+        tools:layout="@layout/fragment_daily_rates_dialog" />
+    <fragment
+        android:id="@+id/outStandingPaymentFragment"
+        android:name="ng.gov.imostate.ui.OutStandingPaymentFragment"
+        android:label="fragment_out_standing_payment"
+        tools:layout="@layout/fragment_out_standing_payment" >
+        <action
+            android:id="@+id/action_outStandingPaymentFragment_to_successFragment"
+            app:destination="@id/successFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/successFragment"
+        android:name="ng.gov.imostate.ui.SuccessFragment"
+        android:label="fragment_success"
+        tools:layout="@layout/fragment_success" />
+    <fragment
+        android:id="@+id/updatesFragment"
+        android:name="ng.gov.imostate.ui.UpdatesFragment"
+        android:label="fragment_updates"
+        tools:layout="@layout/fragment_updates" />
 </navigation>

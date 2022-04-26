@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import ng.gov.imostate.databinding.FragmentAddVehicleBinding
-import ng.gov.imostate.databinding.FragmentHomeBinding
+import ng.gov.imostate.R
+import ng.gov.imostate.databinding.FragmentOutStandingPaymentBinding
+import ng.gov.imostate.databinding.FragmentPaymentBinding
 
-@AndroidEntryPoint
-class AddVehicleFragment : Fragment() {
-
-    private var _binding: FragmentAddVehicleBinding? = null
+class OutStandingPaymentFragment : Fragment() {
+    private var _binding: FragmentOutStandingPaymentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,18 +23,21 @@ class AddVehicleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddVehicleBinding.inflate(inflater, container, false)
+        _binding = FragmentOutStandingPaymentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         with(binding) {
             backArrowIV.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            markAsPaidBTN.setOnClickListener {
+                val action = OutStandingPaymentFragmentDirections.actionOutStandingPaymentFragmentToSuccessFragment()
+                findNavController().navigate(action)
+            }
         }
     }
-
 }

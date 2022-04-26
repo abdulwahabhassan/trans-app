@@ -1,5 +1,6 @@
 package ng.gov.imostate.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,20 +28,12 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var transactionsAdapter: TransactionsAdapter
     private var connectionState: Boolean = false
 
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
     lateinit var viewModel: HomeFragmentViewModel
-
-//    observer for internet connectivity status live-data
-//    private val activeNetworkStateObserver: androidx.lifecycle.Observer<Boolean> =
-//        androidx.lifecycle.Observer<Boolean> { isConnected ->
-//            connectionState = isConnected
-//            updateNetworkStatusUI(connectionState)
-//        }
 
     private fun updateNetworkStatusUI(isConnected: Boolean?) {
         if (isConnected == true) {
@@ -52,12 +45,6 @@ class HomeFragment : Fragment() {
             binding.networkStateTV.setTextColor(resources.getColor(R.color.black))
             binding.networkStateTV.setBackgroundResource(R.drawable.connectivity_offline_bg)
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        NetworkConnectivityUtil.instance?.networkConnectivityStatus
-//            ?.observe(this, activeNetworkStateObserver);
     }
 
     override fun onCreateView(
@@ -85,29 +72,44 @@ class HomeFragment : Fragment() {
 
         updateNetworkStatusUI(connectionState)
 
-        initRV()
-
         initUI()
     }
 
-    private fun initRV() {
-        transactionsAdapter = TransactionsAdapter{ position: Int, transaction: Transaction ->
-
-        }
-        binding.transactionsRV.adapter = transactionsAdapter
-    }
-
     private fun initUI() {
-        transactionsAdapter.submitList(Mock.getTransaction())
 
-        binding.transactionsCV.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToTransactionsFragment()
-            findNavController().navigate(action)
+        with(binding) {
+            scanVehicleBTN.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToVehicleDetailsDialogFragment()
+                findNavController().navigate(action)
+            }
+            addVehicleBTN.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToAddVehicleFragment()
+                findNavController().navigate(action)
+            }
+            transactionsBTN.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToTransactionsFragment()
+                findNavController().navigate(action)
+            }
+            updatesBTN.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToUpdatesFragment()
+                findNavController().navigate(action)
+            }
+            moreBTN.setOnClickListener {
+
+            }
+            paymentBTN.setOnClickListener {
+
+            }
+            dailyRatesTV.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesDialogFragment()
+                findNavController().navigate(action)
+            }
+            userPhotoIV.setOnClickListener{
+                val intent = Intent(requireContext(), ProfileActivity::class.java)
+                startActivity(intent)
+            }
         }
 
-        binding.vehicleCV.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToAddVehicleFragment()
-            findNavController().navigate(action)
-        }
+
     }
 }

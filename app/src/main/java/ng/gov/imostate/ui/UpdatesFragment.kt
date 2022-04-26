@@ -1,23 +1,24 @@
 package ng.gov.imostate.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.adapter.UpdatesAdapter
+import ng.gov.imostate.databinding.FragmentUpdatesBinding
+import ng.gov.imostate.model.Update
 import ng.gov.imostate.util.Mock
-import ng.gov.imostate.model.Transaction
-import ng.gov.imostate.adapter.TransactionsAdapter
-import ng.gov.imostate.databinding.FragmentTransactionsBinding
+import timber.log.Timber
 
 @AndroidEntryPoint
-class TransactionsFragment : Fragment() {
+class UpdatesFragment : Fragment() {
 
-    private var _binding: FragmentTransactionsBinding? = null
+    private var _binding: FragmentUpdatesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var transactionsAdapter: TransactionsAdapter
+    private lateinit var updatesAdapter: UpdatesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,28 +29,30 @@ class TransactionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTransactionsBinding.inflate(inflater, container, false)
+        _binding = FragmentUpdatesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.searchView.queryHint = "Search Transactions"
+        with(binding) {
 
-        initRV()
+            initRV()
 
-        initUI()
+            initUI()
+
+        }
     }
 
     private fun initRV() {
-        transactionsAdapter = TransactionsAdapter{ position: Int, transaction: Transaction ->
-
+        Timber.d("Rv init")
+        updatesAdapter = UpdatesAdapter{ position: Int, itemAtPosition: Update ->
         }
-        binding.transactionsRV.adapter = transactionsAdapter
+        binding.updatesRV.adapter = updatesAdapter
     }
 
     private fun initUI() {
-        transactionsAdapter.submitList(Mock.getTransactions())
+        updatesAdapter.submitList(Mock.getUpdates())
 
         with(binding) {
             backArrowIV.setOnClickListener {
@@ -57,5 +60,6 @@ class TransactionsFragment : Fragment() {
             }
         }
     }
+
 
 }

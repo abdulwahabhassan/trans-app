@@ -7,10 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.util.Pair
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import ng.gov.imostate.databinding.FragmentScanBinding
+import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentScannedResultBinding
 import ng.gov.imostate.model.Data
 import ng.gov.imostate.util.AppUtils
@@ -47,7 +48,7 @@ class ScannedResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            payOutstandingPaymentTV.setOnClickListener {
+            payOutstandingPaymentBTN.setOnClickListener {
                 showDatePicker()
             }
             backArrowIV.setOnClickListener {
@@ -88,7 +89,17 @@ class ScannedResultFragment : Fragment() {
             dateFrom = format.format(firstDate)
             dateTo = format.format(secondDate)
 
+            val bundle = Bundle().also { bundle ->
+                bundle.putString(MainActivity.DRIVER_NAME_KEY, data.name)
+                bundle.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY, data.vrn)
+                bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
+                bundle.putLong(MainActivity.OUTSTANDING_BAL_KEY, data.ob)
+            }
+
             //do api call
+            findNavController().navigate(R.id.outStandingPaymentFragment, bundle,
+                NavOptions.Builder().setLaunchSingleTop(true).build())
+
         }
     }
 

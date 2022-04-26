@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,523 +9,902 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/dark_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/backArrowIV"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/dark_blue"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             android:fontFamily="@font/nunito_sans_extrabold"
             android:text="Add Vehicle"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/fleetNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fleet Number"
-            android:layout_marginHorizontal="24dp"
-            android:textColor="@color/black"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fleetNumberTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/fleetNumberTV"
-            app:layout_constraintTop_toBottomOf="@+id/fleetNumberTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fleetNumberET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/stateOfRegistrationTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="State of Registration"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fleetNumberTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/stateOfRegistrationTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/stateOfRegistrationTV"
-            app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/stateOfRegistrationET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:padding="0dp"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/vehicleCategoryTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Vehicle Catgeory"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/vehicleCatgeoryTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vehicleCategoryTV"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleCategoryTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/vehicleCatgeoryET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/plateNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Plate Number"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleCatgeoryTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/plateNumberTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/plateNumberTV"
-            app:layout_constraintTop_toBottomOf="@+id/plateNumberTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/plateNumberET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/chasisNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Chasis Number"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/plateNumberTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/chasisNumberTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/plateNumberTV"
-            app:layout_constraintTop_toBottomOf="@+id/chasisNumberTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/chasisNumberET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/engineNumberTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Engine Number"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chasisNumberTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/engineNumberTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/plateNumberTV"
-            app:layout_constraintTop_toBottomOf="@+id/engineNumberTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/engineNumberET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/vehicleMakeTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Vehicle Make"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/engineNumberTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/vehicleMakeTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vehicleMakeTV"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/vehicleMakeET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/vehicleModelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Vehicle Model"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/vehicleModelTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vehicleModelTV"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleModelTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/vehicleModelET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/passengerCapacityTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Passenger Capacity"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleModelTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passengerCapacityTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/passengerCapacityTV"
-            app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passengerCapacityET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:id="@+id/driverTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Driver"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/driverTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/driverTV"
-            app:layout_constraintTop_toBottomOf="@+id/driverTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/driverET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/vehicleRouteTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Vehicle Route"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/driverTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/vehicleRouteTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vehicleRouteTV"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleRouteTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/vehicleRouteET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/roadWorthinessExpiryDateTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Road Worthiness Expiry Date"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleRouteTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/roadWorthinessExpiryDateTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/roadWorthinessExpiryDateTV"
-            app:layout_constraintTop_toBottomOf="@+id/roadWorthinessExpiryDateTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/roadWorthinessExpiryDateET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/vehicleLicenseExpiryDateTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Vehicle License Expiry Date"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roadWorthinessExpiryDateTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/vehicleLicenseExpiryDateTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vehicleLicenseExpiryDateTV"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseExpiryDateTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/vehicleLicenseExpiryDateET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <TextView
-            android:id="@+id/vehicleInsuranceExpiryDateTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:text="Vehicle Insurance Expiry Date"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseExpiryDateTIL" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/vehicleInsuranceExpiryDateTIL"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/nunito_sans"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vehicleLicenseExpiryDateTV"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleInsuranceExpiryDateTV">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/vehicleInsuranceExpiryDateET"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:padding="0dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textSize="14sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/payOutstandingPaymentTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="40dp"
-            android:backgroundTint="@color/blue"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:padding="15dp"
-            android:text="ADD VEHICLE"
             android:textColor="@color/white"
-            app:cornerRadius="50dp"
-            android:layout_marginBottom="110dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vehicleInsuranceExpiryDateTIL" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/fleetNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Fleet Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fleetNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/fleetNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/fleetNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fleetNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/stateOfRegistrationTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="State of Registration"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fleetNumberTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/stateOfRegistrationTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/stateOfRegistrationTV"
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/stateOfRegistrationET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/vehicleCategoryTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Vehicle Catgeory"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vehicleCatgeoryTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vehicleCategoryTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleCategoryTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicleCatgeoryET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/plateNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Plate Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleCatgeoryTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/plateNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/plateNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/plateNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/plateNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/chasisNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Chasis Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plateNumberTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/chasisNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/plateNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/chasisNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/chasisNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/engineNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Engine Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/chasisNumberTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/engineNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/plateNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/engineNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/engineNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/vehicleMakeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Vehicle Make"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/engineNumberTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vehicleMakeTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vehicleMakeTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicleMakeET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/vehicleModelTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Vehicle Model"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vehicleModelTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vehicleModelTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleModelTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicleModelET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/passengerCapacityTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Passenger Capacity"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleModelTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passengerCapacityTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/passengerCapacityTV"
+                    app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passengerCapacityET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/driverTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Driver"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/driverTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/driverTV"
+                    app:layout_constraintTop_toBottomOf="@+id/driverTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driverET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/driverGenderTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Driver Gender"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driverTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/driverGenderTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/driverGenderTV"
+                    app:layout_constraintTop_toBottomOf="@+id/driverGenderTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driverGenderET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/maritalStatusTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Marital Status"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driverGenderTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/maritalStatusTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/maritalStatusTV"
+                    app:layout_constraintTop_toBottomOf="@+id/maritalStatusTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/maritalStatusET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/bloodGroupTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Blood Group"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/maritalStatusTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bloodGroupTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/bloodGroupTV"
+                    app:layout_constraintTop_toBottomOf="@+id/bloodGroupTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bloodGroupET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/meansOfIdTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Means of ID"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bloodGroupTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/meansOfIdTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/meansOfIdTV"
+                    app:layout_constraintTop_toBottomOf="@+id/meansOfIdTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/meansOfIdET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/idNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="ID Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/meansOfIdTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/idNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/idNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/idNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/idNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/stateOfOriginTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="State of Origin"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/idNumberTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/stateOfOriginTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/stateOfOriginTV"
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfOriginTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/stateOfOriginET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/localGovernmentTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Local Government"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfOriginTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/localGovernmentTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/localGovernmentTV"
+                    app:layout_constraintTop_toBottomOf="@+id/localGovernmentTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/localGovernmentET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/phoneNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Phone Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/localGovernmentTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/phoneNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/emailTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneNumberTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/emailTV"
+                    app:layout_constraintTop_toBottomOf="@+id/emailTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/residentialAddressTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Residential Address"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/residentialAddressTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/residentialAddressTV"
+                    app:layout_constraintTop_toBottomOf="@+id/residentialAddressTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/residentialAddressET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/vehicleRouteTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Vehicle Route"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/residentialAddressTIL"
+                    tools:layout_editor_absoluteY="1394dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vehicleRouteTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vehicleRouteTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleRouteTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicleRouteET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/roadWorthinessExpiryDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Road Worthiness Expiry Date"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleRouteTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/roadWorthinessExpiryDateTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/roadWorthinessExpiryDateTV"
+                    app:layout_constraintTop_toBottomOf="@+id/roadWorthinessExpiryDateTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/roadWorthinessExpiryDateET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/vehicleLicenseExpiryDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Vehicle License Expiry Date"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/roadWorthinessExpiryDateTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vehicleLicenseExpiryDateTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vehicleLicenseExpiryDateTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseExpiryDateTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicleLicenseExpiryDateET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/vehicleInsuranceExpiryDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Vehicle Insurance Expiry Date"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseExpiryDateTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vehicleInsuranceExpiryDateTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vehicleLicenseExpiryDateTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleInsuranceExpiryDateTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vehicleInsuranceExpiryDateET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/payOutstandingPaymentTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="32dp"
+                    android:backgroundTint="@color/dark_blue"
+                    android:padding="15dp"
+                    android:text="ADD VEHICLE"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vehicleInsuranceExpiryDateTIL" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

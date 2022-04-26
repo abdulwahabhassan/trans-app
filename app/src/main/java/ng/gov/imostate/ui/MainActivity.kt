@@ -47,13 +47,15 @@ class MainActivity : AppCompatActivity() {
 
         Timber.d("Welcome")
 
-        binding.bottomNavigationView.background = null
-        val bottomNavView: BottomNavigationView = binding.bottomNavigationView
         navController = findNavController(R.id.activity_main_nav_host_fragment)
-        bottomNavView.setupWithNavController(navController)
 
-        //init nfc adapter
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        try {
+            //init nfc adapter
+            nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        } catch (e: NullPointerException) {
+            AppUtils.showToast(this, "This app only works on NFC enabled devices", MotionToastStyle.ERROR)
+            finish()
+        }
 
         //init intent
         val intent = Intent(this, javaClass).apply {
@@ -118,9 +120,9 @@ class MainActivity : AppCompatActivity() {
                 val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
                 if (tagFromIntent != null) {
                     readTag(tagFromIntent)
-                    writeTestDataToTag(tagFromIntent)
+                    //writeTestDataToTag(tagFromIntent)
                     //writeEmptyDataToTag(tagFromIntent)
-                    readTag(tagFromIntent)
+                    //readTag(tagFromIntent)
                 } else {
                     Timber.d("Tag is null")
                     AppUtils.showToast(this, "Tag not found!", MotionToastStyle.ERROR)

@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import ng.gov.imostate.databinding.FragmentAddVehicleBinding
-import ng.gov.imostate.databinding.FragmentHomeBinding
+import ng.gov.imostate.databinding.FragmentSuccessBinding
 
-@AndroidEntryPoint
-class AddVehicleFragment : Fragment() {
 
-    private var _binding: FragmentAddVehicleBinding? = null
+class SuccessFragment : Fragment() {
+
+    private var _binding: FragmentSuccessBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +23,7 @@ class AddVehicleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddVehicleBinding.inflate(inflater, container, false)
+        _binding = FragmentSuccessBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,10 +31,12 @@ class AddVehicleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            backArrowIV.setOnClickListener {
+            doneBTN.setOnClickListener {
                 findNavController().popBackStack()
             }
         }
+
     }
+
 
 }

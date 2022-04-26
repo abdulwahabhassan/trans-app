@@ -14,6 +14,7 @@
         android:layout_margin="16dp"
         android:padding="8dp"
         android:backgroundTint="@color/white"
+        android:tint="@color/black"
         android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +23,7 @@
         android:id="@+id/outstandingBalanceTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/connectivity_online_bg"
+        android:background="@drawable/balance_text_bg"
         android:fontFamily="@font/nunito_sans_bold"
         android:paddingHorizontal="16dp"
         android:textAlignment="center"
@@ -36,7 +37,7 @@
 
 
     <TextView
-        android:id="@+id/paymentDateTV"
+        android:id="@+id/userPhotoIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -59,7 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paymentDateTV"
+        app:layout_constraintTop_toBottomOf="@+id/userPhotoIV"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +105,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/vehicleColorLabelTV"
                         app:layout_constraintTop_toTopOf="@+id/vehicleColorLabelTV"
-                        tools:text="Matte Black" />
+                        android:text="Matte Black" />
 
                     <TextView
                         android:id="@+id/vehicleLicenseLabelTV"
@@ -136,7 +137,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/vehicleLicenseLabelTV"
                         app:layout_constraintTop_toTopOf="@+id/vehicleLicenseLabelTV"
-                        tools:text="IMO511EU" />
+                        android:text="IMO511EU" />
 
                     <TextView
                         android:id="@+id/vehicleRegistrationLabelTV"
@@ -169,7 +170,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/vehicleRegistrationLabelTV"
                         app:layout_constraintTop_toTopOf="@+id/vehicleRegistrationLabelTV"
-                        tools:text="AX364NJO" />
+                        android:text="AX364NJO" />
 
                     <TextView
                         android:id="@+id/vehicleColorLabelTV"
@@ -217,7 +218,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/lastPaymentDateLabelTV"
                         app:layout_constraintTop_toTopOf="@+id/lastPaymentDateLabelTV"
-                        tools:text="01/12/22" />
+                        android:text="01/12/22" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline13"
@@ -256,7 +257,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/driverLabelTV"
                         app:layout_constraintTop_toTopOf="@+id/driverLabelTV"
-                        tools:text="Dipo" />
+                        android:text="Dipo" />
 
                     <TextView
                         android:id="@+id/vehicleTypeLabelTV"
@@ -288,7 +289,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/vehicleTypeLabelTV"
                         app:layout_constraintTop_toTopOf="@+id/vehicleTypeLabelTV"
-                        tools:text="Mercedes Benz" />
+                        android:text="Mercedes Benz" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -298,18 +299,20 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/payOutstandingPaymentTV"
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/payOutstandingPaymentBTN"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="80dp"
-        android:fontFamily="@font/nunito_sans_bold"
-        android:padding="8dp"
-        android:text="@string/pay_outstanding"
-        android:textColor="@color/blue"
+        android:fontFamily="@font/nunito_sans"
+        android:padding="15dp"
+        android:text="Pay Outstanding"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         app:cornerRadius="8dp"
+        android:backgroundTint="@color/dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView"
         app:layout_constraintStart_toStartOf="@+id/materialCardView"

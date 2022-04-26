@@ -9,6 +9,7 @@ import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.R
 import ng.gov.imostate.model.Transaction
 import ng.gov.imostate.databinding.ItemTransactionBinding
+import timber.log.Timber
 import java.lang.StringBuilder
 
 class TransactionsAdapter(
@@ -55,6 +56,7 @@ class TransactionsAdapter(
 
 
         fun bind(transaction: Transaction) {
+            Timber.d("$transaction")
             with(binding) {
                 transactionTitleTV.text = transaction.title
                 transactionAmountTV.text = StringBuilder("₦").append(
@@ -71,6 +73,4 @@ class TransactionsAdapter(
         }
 
     }
-
-
 }

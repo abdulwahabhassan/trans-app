@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -36,8 +35,15 @@ class HomeFragment : Fragment() {
     //view model
     private lateinit var viewModel: HomeFragmentViewModel
 
-    private fun updateNetworkStatusUI(isConnected: Boolean?) {
-        if (isConnected == true) {
+    private fun updateUI(isConnected: Boolean) {
+        updateNetworkStatusUI(isConnected)
+        if (isConnected) {
+            getDashboardMetrics()
+        }
+    }
+
+    private fun updateNetworkStatusUI(isConnected: Boolean) {
+        if (isConnected) {
             binding.networkStateTV.text = "Online"
             binding.networkStateTV.setTextColor(resources.getColor(R.color.white))
             binding.networkStateTV.setBackgroundResource(R.drawable.connectivity_online_bg)
@@ -79,35 +85,19 @@ class HomeFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.connectionState.collect { viewModelResult ->
-                updateNetworkStatusUI(viewModelResult.data)
+                updateUI(viewModelResult.data)
             }
         }
 
-        updateNetworkStatusUI(connectionState)
+        updateUI(connectionState)
 
         initUI()
     }
 
     private fun initUI() {
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            when(val viewModelResult = viewModel.getUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }) {
-                is ViewModelResult.Success -> {
-                    val dashBoardMetrics = viewModelResult.data?.metrics
-                    with(binding) {
-                        walletBalanceTV.text = dashBoardMetrics?.currentBalance
-                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
-                        totalCreditedTV.text = dashBoardMetrics?.totalAmountCredited
-                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
-                        totalVendedTV.text = dashBoardMetrics?.totalAmountVended
-                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
-                    }
-                }
-                is ViewModelResult.Error -> {
-                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
-                }
-            }
-        }
+
+        getDashboardMetrics()
 
         with(binding) {
             scanVehicleBTN.setOnClickListener {
@@ -143,6 +133,27 @@ class HomeFragment : Fragment() {
         }
 
 
+    }
+
+    private fun getDashboardMetrics() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            when(val viewModelResult = viewModel.getUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }) {
+                is ViewModelResult.Success -> {
+                    val dashBoardMetrics = viewModelResult.data?.metrics
+                    with(binding) {
+                        walletBalanceTV.text = dashBoardMetrics?.currentBalance
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        totalCreditedTV.text = dashBoardMetrics?.totalAmountCredited
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        totalVendedTV.text = dashBoardMetrics?.totalAmountVended
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                    }
+                }
+                is ViewModelResult.Error -> {
+                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                }
+            }
+        }
     }
 
     override fun onResume() {

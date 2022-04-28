@@ -83,7 +83,8 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:$datastore"
     //lottie
     implementation "com.airbnb.android:lottie:$lottie"
-    //
+    //lifecycle ktx
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+
 
 }

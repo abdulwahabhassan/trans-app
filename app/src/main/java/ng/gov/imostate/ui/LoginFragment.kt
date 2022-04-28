@@ -3,6 +3,8 @@ package ng.gov.imostate.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +17,6 @@ import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
-import ng.gov.imostate.viewmodel.HomeFragmentViewModel
 import ng.gov.imostate.viewmodel.LoginFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
@@ -76,6 +77,7 @@ class LoginFragment : Fragment() {
                     password
                 )
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                    showProgressIndicator(true)
                     val viewModelResult = viewModel.loginAttendant(LoginRequest(email, password))
                     Timber.d("$viewModelResult")
                     when (viewModelResult) {
@@ -112,15 +114,22 @@ class LoginFragment : Fragment() {
                         }
                         is ViewModelResult.Error -> {
                             AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                            showProgressIndicator(false)
                         }
                     }
-//                    val result = viewModel.getAllVehicles()
-//                    Timber.d("$result")
-//                    AppUtils.showToast(requireActivity(), result.toString(), MotionToastStyle.ERROR)
-
                 }
 
             }
+        }
+    }
+
+    private fun showProgressIndicator(show: Boolean) {
+        if (show) {
+            binding.loginBTN.visibility = INVISIBLE
+            binding.progressIndicator.visibility = VISIBLE
+        } else {
+            binding.loginBTN.visibility = VISIBLE
+            binding.progressIndicator.visibility = INVISIBLE
         }
     }
 

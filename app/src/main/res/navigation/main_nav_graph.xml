@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -80,4 +80,13 @@
         android:name="ng.gov.imostate.ui.UpdatesFragment"
         android:label="fragment_updates"
         tools:layout="@layout/fragment_updates" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ng.gov.imostate.ui.LoginFragment"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

@@ -8,30 +8,42 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ng.gov.imostate.contract.GalleryActivityContract
 import ng.gov.imostate.databinding.ActivityProfileBinding
 import ng.gov.imostate.util.AppUtils
+import ng.gov.imostate.viewmodel.AppViewModelsFactory
+import ng.gov.imostate.viewmodel.GalleryActivityViewModel
+import ng.gov.imostate.viewmodel.LoginFragmentViewModel
+import ng.gov.imostate.viewmodel.ProfileActivityViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import www.sanju.motiontoast.MotionToastStyle
 import java.io.File
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
     private var image: String? = null
+    @Inject
+    lateinit var appViewModelFactory: AppViewModelsFactory
+    private lateinit var activityViewModel: ProfileActivityViewModel
     private val openGallery = registerForActivityResult(GalleryActivityContract()) { imagePath ->
         if (imagePath != null) {
-            AppUtils.showToast(this, "Your profile picture will be updated", MotionToastStyle.INFO)
+            AppUtils.showToast(this, "Selection confirmed, updating..", MotionToastStyle.INFO)
             image = imagePath
             displaySelectedPhoto(imagePath)
         } else {
@@ -61,6 +73,11 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        activityViewModel = ViewModelProvider(
+            this,
+            appViewModelFactory
+        ).get(ProfileActivityViewModel::class.java)
+
         enableImageSelection()
 
         with(binding) {
@@ -74,6 +91,17 @@ class ProfileActivity : AppCompatActivity() {
                     requestPermission()
                 }
             }
+
+            lifecycleScope.launchWhenResumed {
+                val user = activityViewModel.getUserPreferences()
+                onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else "${user.onboardingDate}"
+                emailTV.text = if (user.email.isNullOrEmpty()) "_" else "${user.email}"
+                addressTV.text = if (user.address.isNullOrEmpty()) "_" else "${user.address}"
+                nameTV.text = if (user.agentName.isNullOrEmpty()) "_" else "${user.agentName}"
+                businessNameTV.text = if (user.businessName.isNullOrEmpty()) "_" else "${user.businessName}"
+                phonenumberTV.text = if (user.phone.isNullOrEmpty()) "_" else "${user.phone}"
+            }
+
         }
 
         if (!haveStoragePermission()) {

@@ -99,7 +99,7 @@
 
 
             <TextView
-                android:id="@+id/vehicleColorTV"
+                android:id="@+id/phonenumberTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -108,30 +108,30 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/vehicleColorLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/phoneNumberLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/vehicleColorLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/vehicleColorLabelTV"
-                android:text="Matte Black" />
+                app:layout_constraintStart_toEndOf="@+id/phoneNumberLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/phoneNumberLabelTV"
+                tools:text="Matte Black" />
 
             <TextView
-                android:id="@+id/vehicleLicenseLabelTV"
+                android:id="@+id/nameLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Vehicle License :"
+                android:text="Name :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/vehicleLicenseTV"
+                app:layout_constraintEnd_toStartOf="@+id/nameTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/vehicleLicenseTV"
+                android:id="@+id/nameTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -140,30 +140,30 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/vehicleLicenseLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/nameLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/vehicleLicenseLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/vehicleLicenseLabelTV"
-                android:text="IMO511EU" />
+                app:layout_constraintStart_toEndOf="@+id/nameLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/nameLabelTV"
+                tools:text="IMO511EU" />
 
             <TextView
-                android:id="@+id/vehicleRegistrationLabelTV"
+                android:id="@+id/businessNameLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Vehicle Reg :"
+                android:text="Business Name :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/vehicleRegistrationTV"
+                app:layout_constraintEnd_toStartOf="@+id/businessNameTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/nameLabelTV" />
 
             <TextView
-                android:id="@+id/vehicleRegistrationTV"
+                android:id="@+id/businessNameTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -173,30 +173,30 @@
                 android:textAlignment="viewEnd"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/vehicleRegistrationLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/businessNameLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/vehicleRegistrationLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/vehicleRegistrationLabelTV"
-                android:text="AX364NJO" />
+                app:layout_constraintStart_toEndOf="@+id/businessNameLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/businessNameLabelTV"
+                tools:text="AX364NJO" />
 
             <TextView
-                android:id="@+id/vehicleColorLabelTV"
+                android:id="@+id/phoneNumberLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Vehicle Color :"
+                android:text="Phone Number :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/vehicleColorTV"
+                app:layout_constraintEnd_toStartOf="@+id/phonenumberTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vehicleRegistrationLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/businessNameLabelTV" />
 
             <TextView
-                android:id="@+id/lastPaymentDateLabelTV"
+                android:id="@+id/onBoardingDateLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -204,15 +204,15 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Last Pay Date :"
+                android:text="Date Onboarded:"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/lastPaymentDateTV"
+                app:layout_constraintEnd_toStartOf="@+id/onBoardingDateTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/driverLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/addressLabelTV" />
 
             <TextView
-                android:id="@+id/lastPaymentDateTV"
+                android:id="@+id/onBoardingDateTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -221,12 +221,12 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/blue"
-                app:layout_constraintBottom_toBottomOf="@+id/lastPaymentDateLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/onBoardingDateLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/lastPaymentDateLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/lastPaymentDateLabelTV"
-                android:text="01/12/22" />
+                app:layout_constraintStart_toEndOf="@+id/onBoardingDateLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/onBoardingDateLabelTV"
+                tools:text="01/12/22" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline13"
@@ -236,22 +236,22 @@
                 app:layout_constraintGuide_begin="174dp" />
 
             <TextView
-                android:id="@+id/driverLabelTV"
+                android:id="@+id/addressLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Driver :"
+                android:text="Address :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/driverTV"
+                app:layout_constraintEnd_toStartOf="@+id/addressTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vehicleTypeLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/emailLabelTV" />
 
             <TextView
-                android:id="@+id/driverTV"
+                android:id="@+id/addressTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -260,30 +260,30 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/driverLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/addressLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/driverLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/driverLabelTV"
-                android:text="Dipo" />
+                app:layout_constraintStart_toEndOf="@+id/addressLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/addressLabelTV"
+                tools:text="Dipo" />
 
             <TextView
-                android:id="@+id/vehicleTypeLabelTV"
+                android:id="@+id/emailLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Vehicle Type :"
+                android:text="Email :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/vehicleTypeTV"
+                app:layout_constraintEnd_toStartOf="@+id/emailTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vehicleColorLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/phoneNumberLabelTV" />
 
             <TextView
-                android:id="@+id/vehicleTypeTV"
+                android:id="@+id/emailTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -292,12 +292,12 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/vehicleTypeLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/emailLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/vehicleTypeLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/vehicleTypeLabelTV"
-                android:text="Mercedes Benz" />
+                app:layout_constraintStart_toEndOf="@+id/emailLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/emailLabelTV"
+                tools:text="Mercedes Benz" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

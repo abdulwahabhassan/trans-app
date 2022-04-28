@@ -2,7 +2,7 @@ package ng.gov.imostate.model.request
 
 import com.squareup.moshi.Json
 
-data class CreateTransactionRequest (
+data class CreateSyncTransactionsRequest (
     @Json(name = "data")
     val data: List<TransactionData>
 )

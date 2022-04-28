@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Fleet Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +107,7 @@
                     android:layout_marginTop="24dp"
                     android:text="State of Registration"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fleetNumberTIL" />
 
@@ -140,6 +142,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Vehicle Catgeory"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTIL" />
 
@@ -174,6 +177,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Plate Number"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleCatgeoryTIL" />
 
@@ -208,6 +212,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Chasis Number"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plateNumberTIL" />
 
@@ -242,6 +247,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Engine Number"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/chasisNumberTIL" />
 
@@ -276,6 +282,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Vehicle Make"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/engineNumberTIL" />
 
@@ -310,6 +317,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Vehicle Model"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTIL" />
 
@@ -344,6 +352,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Passenger Capacity"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleModelTIL" />
 
@@ -378,6 +387,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Driver"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTIL" />
@@ -412,6 +422,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Driver Gender"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/driverTIL" />
@@ -447,6 +458,7 @@
                     android:layout_marginTop="24dp"
                     android:text="Marital Status"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/driverGenderTIL" />
 
@@ -480,6 +492,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Blood Group"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/maritalStatusTIL" />
@@ -514,6 +527,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Means of ID"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bloodGroupTIL" />
@@ -548,6 +562,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="ID Number"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/meansOfIdTIL" />
@@ -581,6 +596,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="State of Origin"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -615,6 +631,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Local Government"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -649,6 +666,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Phone Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -684,6 +702,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Email"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/phoneNumberTIL" />
@@ -717,6 +736,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Residential Address"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -752,6 +772,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:text="Vehicle Route"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/residentialAddressTIL"
@@ -786,6 +807,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Road Worthiness Expiry Date"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -820,6 +842,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Vehicle License Expiry Date"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
@@ -855,6 +878,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Vehicle Insurance Expiry Date"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"

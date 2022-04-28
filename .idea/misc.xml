@@ -24,6 +24,8 @@
         <entry key="app/src/main/res/layout/fragment_daily_rates.xml" value="0.24707946777343748" />
         <entry key="app/src/main/res/layout/fragment_daily_rates_dialog.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20031982421875" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.18697916666666667" />
+        <entry key="app/src/main/res/layout/fragment_login_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_more.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_out_standing_payment.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.240625" />

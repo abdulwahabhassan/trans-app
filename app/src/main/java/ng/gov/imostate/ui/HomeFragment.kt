@@ -12,14 +12,13 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import ng.gov.imostate.R
-import ng.gov.imostate.util.Mock
-import ng.gov.imostate.model.Transaction
-import ng.gov.imostate.adapter.TransactionsAdapter
 import ng.gov.imostate.databinding.FragmentHomeBinding
 import ng.gov.imostate.model.result.ViewModelResult
-import ng.gov.imostate.util.NetworkConnectivityUtil
+import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.HomeFragmentViewModel
+import timber.log.Timber
+import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
 
@@ -33,7 +32,7 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
-    lateinit var viewModel: HomeFragmentViewModel
+    private lateinit var viewModel: HomeFragmentViewModel
 
     private fun updateNetworkStatusUI(isConnected: Boolean?) {
         if (isConnected == true) {
@@ -59,6 +58,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Timber.d("Home fragment started")
+
         viewModel = ViewModelProvider(
             this,
             appViewModelFactory
@@ -76,6 +77,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUI() {
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            when(val viewModelResult = viewModel.getUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }) {
+                is ViewModelResult.Success -> {
+                    val dashBoardMetrics = viewModelResult.data?.metrics
+                    with(binding) {
+                        walletBalanceTV.text = dashBoardMetrics?.currentBalance
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        totalCreditedTV.text = dashBoardMetrics?.totalAmountCredited
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        totalVendedTV.text = dashBoardMetrics?.totalAmountVended
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                    }
+                }
+                is ViewModelResult.Error -> {
+                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                }
+            }
+        }
 
         with(binding) {
             scanVehicleBTN.setOnClickListener {
@@ -111,5 +131,10 @@ class HomeFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

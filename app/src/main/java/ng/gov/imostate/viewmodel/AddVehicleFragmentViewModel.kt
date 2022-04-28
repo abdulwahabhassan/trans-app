@@ -1,16 +1,32 @@
 package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ng.gov.imostate.ui.AppConfigRepository
+import ng.gov.imostate.model.request.OnboardVehicleRequest
+import ng.gov.imostate.model.response.OnboardVehicleResult
+import ng.gov.imostate.model.result.ViewModelResult
+import ng.gov.imostate.repository.VehicleRepository
+import ng.gov.imostate.repository.AppConfigRepository
 import javax.inject.Inject
 
 
 @HiltViewModel
 class AddVehicleFragmentViewModel @Inject constructor(
-    appConfigRepository: AppConfigRepository
+    appConfigRepository: AppConfigRepository,
+    private val vehicleRepository: VehicleRepository
 ) : BaseViewModel(
     appConfigRepository
 ){
 
+    suspend fun onboardVehicle(token: String, onboardVehicleRequest: OnboardVehicleRequest): ViewModelResult<OnboardVehicleResult?> {
+        val response = vehicleRepository.onboardVehicle(token, onboardVehicleRequest)
+        return  when (response.success) {
+            true -> {
+                ViewModelResult.Success(response.result)
+            }
+            else -> {
+                ViewModelResult.Error(response.message ?: "Unknown Error")
+            }
+        }
+    }
 
 }

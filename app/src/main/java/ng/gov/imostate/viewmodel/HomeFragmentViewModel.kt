@@ -1,19 +1,19 @@
 package ng.gov.imostate.viewmodel
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import ng.gov.imostate.model.response.MetricsResult
 import ng.gov.imostate.model.result.ViewModelResult
-import ng.gov.imostate.ui.AppConfigRepository
+import ng.gov.imostate.repository.AgentRepository
+import ng.gov.imostate.repository.AppConfigRepository
 import ng.gov.imostate.util.NetworkConnectivityUtil
 import javax.inject.Inject
 
 
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
-    appConfigRepository: AppConfigRepository
+    appConfigRepository: AppConfigRepository,
+    private val agentRepository: AgentRepository
 ) : BaseViewModel(appConfigRepository) {
 
     private val _connectionState = MutableStateFlow(value = ViewModelResult.Success(false))
@@ -28,6 +28,18 @@ class HomeFragmentViewModel @Inject constructor(
     init {
         NetworkConnectivityUtil.instance?.networkConnectivityStatus
             ?.observeForever(activeNetworkStateObserver)
+    }
+
+    suspend fun getDashBoardMetrics(token: String,): ViewModelResult<MetricsResult?> {
+        val response = agentRepository.getDashBoardMetrics(token)
+        return  when (response.success) {
+            true -> {
+                ViewModelResult.Success(response.result)
+            }
+            else -> {
+                ViewModelResult.Error(response.message ?: "Unknown Error")
+            }
+        }
     }
 
     override fun onCleared() {

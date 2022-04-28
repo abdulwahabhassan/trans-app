@@ -1,7 +1,7 @@
 package ng.gov.imostate.model.response
 
-data class ApiResponse<Any>(
-    var status: Boolean = false,
+data class ApiResponse<T>(
+    var success: Boolean = false,
     var message: String? = null,
-    val data: Any? = null
+    val result: T? = null
 )

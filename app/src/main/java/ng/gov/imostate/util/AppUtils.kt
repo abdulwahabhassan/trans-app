@@ -10,6 +10,7 @@ import android.view.Gravity
 import androidx.core.content.res.ResourcesCompat
 import com.google.gson.Gson
 import com.squareup.moshi.Moshi
+import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
 import ng.gov.imostate.model.Data
 import www.sanju.motiontoast.MotionToast
@@ -158,5 +159,9 @@ object AppUtils {
         }catch (e: Exception){
             e.printStackTrace()
         }
+    }
+
+    fun isDebugBuild(): Boolean {
+        return BuildConfig.DEBUG
     }
 }

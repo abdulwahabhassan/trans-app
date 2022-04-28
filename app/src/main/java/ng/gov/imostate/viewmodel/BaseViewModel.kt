@@ -1,15 +1,21 @@
 package ng.gov.imostate.viewmodel
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import ng.gov.imostate.ui.AppConfigRepository
-import javax.inject.Inject
+import ng.gov.imostate.model.UserPreferences
+import ng.gov.imostate.repository.AppConfigRepository
+import timber.log.Timber
 
 open class BaseViewModel (
     protected val appConfigRepository: AppConfigRepository
 ): ViewModel() {
 
-    suspend fun getAppConfig(): AppConfigRepository.AppConfigPreferences {
+    suspend fun getUserPreferences(): AppConfigRepository.AppConfigPreferences {
+        Timber.d("fecthing pref")
         return appConfigRepository.fetchInitialPreferences()
+    }
+
+    suspend fun updateUserPreference(userPreferences: UserPreferences) {
+        Timber.d("$userPreferences")
+        appConfigRepository.updateAppConfig(userPreferences)
     }
 }

@@ -26,6 +26,7 @@ class NetworkClient @Inject constructor (
                     .request()
                     .newBuilder()
                     .addHeader("Connection", "close")
+                    //.addHeader("Authorization", "Bearer 32|AV7OhjPo8xtnw30ByNvbsrZA88qtU67AtesjQGQ3")
                     .build()
                     chain.proceed(request)
                 })
@@ -47,7 +48,7 @@ class NetworkClient @Inject constructor (
         api: Api
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(api.baseUrl)
+             .baseUrl(api.baseUrl)
             .client(okHttpClient)
             .addConverterFactory(moshiConverterFactory)
             .build()

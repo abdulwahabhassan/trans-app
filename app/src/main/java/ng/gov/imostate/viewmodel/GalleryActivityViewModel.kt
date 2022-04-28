@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import ng.gov.imostate.model.MediaStoreImage
 import timber.log.Timber
 
-class GalleryViewModel(application: Application) : AndroidViewModel(application) {
+class GalleryActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _images = MutableLiveData<List<MediaStoreImage>>()
     val images: LiveData<List<MediaStoreImage>> get() = _images

@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import ng.gov.imostate.adapter.GalleryAdapter
 import ng.gov.imostate.databinding.ActivityGalleryBinding
 import ng.gov.imostate.model.MediaStoreImage
-import ng.gov.imostate.viewmodel.GalleryViewModel
+import ng.gov.imostate.viewmodel.GalleryActivityViewModel
 
 class GalleryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGalleryBinding
-    private val viewModel: GalleryViewModel by viewModels()
+    private val activityViewModel: GalleryActivityViewModel by viewModels()
     private lateinit var adapter: GalleryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,9 +25,9 @@ class GalleryActivity : AppCompatActivity() {
         adapter = GalleryAdapter { image -> returnToMainScreen(image) }
         binding.galleryRecyclerView.adapter = adapter
 
-        viewModel.loadImages()
+        activityViewModel.loadImages()
 
-        viewModel.images.observe(this) { images ->
+        activityViewModel.images.observe(this) { images ->
             adapter.submitList(images)
         }
     }

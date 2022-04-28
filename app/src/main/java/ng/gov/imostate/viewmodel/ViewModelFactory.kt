@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.VehicleRepository
-import ng.gov.imostate.repository.AppConfigRepository
+import ng.gov.imostate.repository.UserPreferencesRepository
 import javax.inject.Inject
 
 class AppViewModelsFactory @Inject constructor(
-    private val appConfigRepository: AppConfigRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val agentRepository: AgentRepository,
     private val transactionRepository: TransactionRepository,
     private val vehicleRepository: VehicleRepository
@@ -19,36 +19,36 @@ class AppViewModelsFactory @Inject constructor(
         when {
             modelClass.isAssignableFrom(HomeFragmentViewModel::class.java) -> {
                 return HomeFragmentViewModel(
-                    appConfigRepository,
+                    userPreferencesRepository,
                     agentRepository
                 ) as T
             }
             modelClass.isAssignableFrom(TransactionsFragmentViewModel::class.java) -> {
                 return TransactionsFragmentViewModel(
-                    appConfigRepository,
+                    userPreferencesRepository,
                     transactionRepository
                 ) as T
             }
             modelClass.isAssignableFrom(ProfileActivityViewModel::class.java) -> {
                 return ProfileActivityViewModel(
-                    appConfigRepository
+                    userPreferencesRepository
                 ) as T
             }
             modelClass.isAssignableFrom(AddVehicleFragmentViewModel::class.java) -> {
                 return AddVehicleFragmentViewModel(
-                    appConfigRepository,
+                    userPreferencesRepository,
                     vehicleRepository
                 ) as T
             }
             modelClass.isAssignableFrom(LoginFragmentViewModel::class.java) -> {
                 return LoginFragmentViewModel(
-                    appConfigRepository,
+                    userPreferencesRepository,
                     agentRepository
                 ) as T
             }
             modelClass.isAssignableFrom(ProfileActivityViewModel::class.java) -> {
                 return ProfileActivityViewModel(
-                    appConfigRepository
+                    userPreferencesRepository
                 ) as T
             }
         }

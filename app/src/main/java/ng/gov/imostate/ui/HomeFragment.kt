@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -39,6 +41,14 @@ class HomeFragment : Fragment() {
         updateNetworkStatusUI(isConnected)
         if (isConnected) {
             getDashboardMetrics()
+            syncDatabase()
+        }
+    }
+
+    private fun syncDatabase() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val lastSyncTime = AppUtils.formatDateTime(AppUtils.getCurrentDateTime())
+            viewModel.updateLastSyncTime(lastSyncTime)
         }
     }
 
@@ -96,6 +106,7 @@ class HomeFragment : Fragment() {
 
     private fun initUI() {
 
+        observeLastSyncTime()
 
         getDashboardMetrics()
 
@@ -135,9 +146,27 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun observeLastSyncTime() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.userPreferences.collect { userPreferences ->
+                    when (val userPref = userPreferences) {
+                        is ViewModelResult.Success -> {
+                            binding.lastSyncTV.text = userPref.data.lastSyncTime ?: ""
+                        }
+                        is ViewModelResult.Error -> {
+                            AppUtils.showToast(requireActivity(), userPref.errorMessage, MotionToastStyle.ERROR)
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
     private fun getDashboardMetrics() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            when(val viewModelResult = viewModel.getUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }) {
+            when(val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }) {
                 is ViewModelResult.Success -> {
                     val dashBoardMetrics = viewModelResult.data?.metrics
                     with(binding) {
@@ -159,7 +188,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launchWhenResumed {
-            if (viewModel.getUserPreferences().loggedIn == false) {
+            if (viewModel.getInitialUserPreferences().loggedIn == false) {
                 findNavController().popBackStack()
             }
         }

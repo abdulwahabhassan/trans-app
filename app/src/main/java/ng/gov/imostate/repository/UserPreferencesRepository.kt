@@ -6,15 +6,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import ng.gov.imostate.model.UserPreferences
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
 
-class AppConfigRepository @Inject constructor (private val dataStore: DataStore<Preferences>) {
+class UserPreferencesRepository @Inject constructor (private val dataStore: DataStore<Preferences>) {
 
-    val appConfigPreferencesFlow: Flow<AppConfigPreferences> = dataStore.data.catch { exception ->
+    val userPreferencesFlow: Flow<UserPreferences> = dataStore.data.catch { exception ->
             //throw an IOException when an error is encountered while reading data
             if (exception is IOException) {
                 Timber.d(exception, "Error reading preferences.")
@@ -29,8 +28,8 @@ class AppConfigRepository @Inject constructor (private val dataStore: DataStore<
     suspend fun fetchInitialPreferences() =
         mapUserPreferences(dataStore.data.first().toPreferences())
 
-    private fun mapUserPreferences(preferences: Preferences): AppConfigPreferences {
-        return AppConfigPreferences(
+    private fun mapUserPreferences(preferences: Preferences): UserPreferences {
+        return UserPreferences(
             token = preferences[PreferencesKeys.TOKEN],
             loggedIn = preferences[PreferencesKeys.LOGGED_IN],
             agentName = preferences[PreferencesKeys.AGENT_NAME],
@@ -49,8 +48,9 @@ class AppConfigRepository @Inject constructor (private val dataStore: DataStore<
             createdBy = preferences[PreferencesKeys.CREATED_BY],
             createdAt = preferences[PreferencesKeys.CREATED_AT],
             updatedAt = preferences[PreferencesKeys.UPDATED_AT],
-            bvn = preferences[PreferencesKeys.BVN]
-            )
+            bvn = preferences[PreferencesKeys.BVN],
+            lastSyncTime = preferences[PreferencesKeys.LAST_SYNC_TIME]
+        )
     }
 
     suspend fun updateLoginStatus(loggedIn: Boolean) {
@@ -59,7 +59,13 @@ class AppConfigRepository @Inject constructor (private val dataStore: DataStore<
         }
     }
 
-    suspend fun updateAppConfig(userPreferences: UserPreferences) {
+    suspend fun updateLastSyncTime(time: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.LAST_SYNC_TIME] = time
+        }
+    }
+
+    suspend fun updateUserPreferences(userPreferences: UserPreferences) {
         dataStore.edit { preferences ->
            with(userPreferences) {
                preferences[PreferencesKeys.TOKEN] = token!!
@@ -84,26 +90,27 @@ class AppConfigRepository @Inject constructor (private val dataStore: DataStore<
         }
     }
 
-    data class AppConfigPreferences(
-        val token: String?,
+    data class UserPreferences(
+        val token: String? = null,
         val loggedIn: Boolean? = false,
-        val agentName: String?,
-        val agentId: Long?,
-        val businessName: String?,
-        val agentFirstName: String?,
-        val agentMiddleName: String?,
-        val agentLastName: String?,
-        val type: String?,
-        val phone: String?,
-        val address: String?,
-        val onboardingDate: String?,
-        val email:String?,
-        val emailVerifiedAt: String?,
-        val status: String?,
-        val createdBy: Long?,
-        val createdAt: String?,
-        val updatedAt: String?,
-        val bvn: String?
+        val agentName: String? = null,
+        val agentId: Long? = null,
+        val businessName: String? = null,
+        val agentFirstName: String? = null,
+        val agentMiddleName: String? = null,
+        val agentLastName: String? = null,
+        val type: String? = null,
+        val phone: String? = null,
+        val address: String? = null,
+        val onboardingDate: String? = null,
+        val email:String? = null,
+        val emailVerifiedAt: String? = null,
+        val status: String? = null,
+        val createdBy: Long? = null,
+        val createdAt: String? = null,
+        val updatedAt: String? = null,
+        val bvn: String? = null,
+        val lastSyncTime: String? = null
     )
 
     //define preferences keys
@@ -127,6 +134,7 @@ class AppConfigRepository @Inject constructor (private val dataStore: DataStore<
         val CREATED_AT = stringPreferencesKey("createdAt")
         val UPDATED_AT = stringPreferencesKey("updatedAt")
         val BVN = stringPreferencesKey("bvn")
+        val LAST_SYNC_TIME = stringPreferencesKey("last_syn_time")
     }
 
 }

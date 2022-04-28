@@ -90,8 +90,8 @@ object AppUtils {
     }
 
     fun formatDateTime(date: String): String{
-        val parser = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
-        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         return formatter.format(parser.parse(date) ?: "")
     }
 

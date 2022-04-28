@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -22,8 +21,6 @@ import ng.gov.imostate.contract.GalleryActivityContract
 import ng.gov.imostate.databinding.ActivityProfileBinding
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
-import ng.gov.imostate.viewmodel.GalleryActivityViewModel
-import ng.gov.imostate.viewmodel.LoginFragmentViewModel
 import ng.gov.imostate.viewmodel.ProfileActivityViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -100,7 +97,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launchWhenResumed {
-                val user = activityViewModel.getUserPreferences()
+                val user = activityViewModel.getInitialUserPreferences()
                 onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else "${user.onboardingDate}"
                 emailTV.text = if (user.email.isNullOrEmpty()) "_" else "${user.email}"
                 addressTV.text = if (user.address.isNullOrEmpty()) "_" else "${user.address}"

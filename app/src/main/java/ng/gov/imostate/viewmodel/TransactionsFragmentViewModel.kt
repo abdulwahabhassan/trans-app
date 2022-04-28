@@ -6,16 +6,16 @@ import ng.gov.imostate.model.response.SyncTransactionsResult
 import ng.gov.imostate.model.response.TransactionsResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.TransactionRepository
-import ng.gov.imostate.repository.AppConfigRepository
+import ng.gov.imostate.repository.UserPreferencesRepository
 import javax.inject.Inject
 
 
 @HiltViewModel
 class TransactionsFragmentViewModel @Inject constructor(
-    appConfigRepository: AppConfigRepository,
+    userPreferencesRepository: UserPreferencesRepository,
     private val transactionRepository: TransactionRepository
 ) : BaseViewModel(
-    appConfigRepository
+    userPreferencesRepository
 ){
 
     suspend fun getTransactions(token: String,): ViewModelResult<TransactionsResult?> {

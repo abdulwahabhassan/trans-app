@@ -12,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.databinding.FragmentLoginBinding
-import ng.gov.imostate.model.UserPreferences
 import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.result.ViewModelResult
+import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.LoginFragmentViewModel
@@ -54,9 +54,12 @@ class LoginFragment : Fragment() {
         ).get(LoginFragmentViewModel::class.java)
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            if (viewModel.getUserPreferences().loggedIn == true) {
+            if (viewModel.getInitialUserPreferences().loggedIn == true) {
                 val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                 findNavController().navigate(action)
+            } else {
+                showLoginButton(true)
+                showProgressIndicator(false)
             }
 
         }
@@ -78,6 +81,7 @@ class LoginFragment : Fragment() {
                 )
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                     showProgressIndicator(true)
+                    showLoginButton(false)
                     val viewModelResult = viewModel.loginAttendant(LoginRequest(email, password))
                     Timber.d("$viewModelResult")
                     when (viewModelResult) {
@@ -86,7 +90,7 @@ class LoginFragment : Fragment() {
 
                             val token = viewModelResult.data?.token
                             val user = viewModelResult.data?.user
-                            val userPreferences = UserPreferences(
+                            val userPreferences = UserPreferencesRepository.UserPreferences(
                                 token = "Bearer ${token ?: ""}",
                                 agentName = user?.name ?: "",
                                 agentId = user?.id ?: 0,
@@ -104,7 +108,8 @@ class LoginFragment : Fragment() {
                                 createdBy = user?.createdBy ?: 0,
                                 createdAt = user?.createdAt ?: "",
                                 updatedAt = user?.updatedAt ?: "",
-                                bvn = user?.bvn ?: ""
+                                bvn = user?.bvn ?: "",
+                                lastSyncTime = viewModel.getInitialUserPreferences().lastSyncTime ?: ""
                             )
 
                             viewModel.updateUserPreference(userPreferences)
@@ -115,6 +120,7 @@ class LoginFragment : Fragment() {
                         is ViewModelResult.Error -> {
                             AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                             showProgressIndicator(false)
+                            showLoginButton(true)
                         }
                     }
                 }
@@ -123,12 +129,18 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun showLoginButton(show: Boolean) {
+        if (show) {
+            binding.loginBTN.visibility = VISIBLE
+        } else {
+            binding.loginBTN.visibility = INVISIBLE
+        }
+    }
+
     private fun showProgressIndicator(show: Boolean) {
         if (show) {
-            binding.loginBTN.visibility = INVISIBLE
             binding.progressIndicator.visibility = VISIBLE
         } else {
-            binding.loginBTN.visibility = VISIBLE
             binding.progressIndicator.visibility = INVISIBLE
         }
     }

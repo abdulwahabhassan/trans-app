@@ -5,16 +5,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import ng.gov.imostate.model.response.MetricsResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.AgentRepository
-import ng.gov.imostate.repository.AppConfigRepository
+import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.util.NetworkConnectivityUtil
 import javax.inject.Inject
 
 
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
-    appConfigRepository: AppConfigRepository,
+    userPreferencesRepository: UserPreferencesRepository,
     private val agentRepository: AgentRepository
-) : BaseViewModel(appConfigRepository) {
+) : BaseViewModel(userPreferencesRepository) {
 
     private val _connectionState = MutableStateFlow(value = ViewModelResult.Success(false))
     val connectionState = _connectionState

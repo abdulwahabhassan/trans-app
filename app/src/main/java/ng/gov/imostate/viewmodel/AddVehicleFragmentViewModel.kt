@@ -5,16 +5,16 @@ import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.response.OnboardVehicleResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.VehicleRepository
-import ng.gov.imostate.repository.AppConfigRepository
+import ng.gov.imostate.repository.UserPreferencesRepository
 import javax.inject.Inject
 
 
 @HiltViewModel
 class AddVehicleFragmentViewModel @Inject constructor(
-    appConfigRepository: AppConfigRepository,
+    userPreferencesRepository: UserPreferencesRepository,
     private val vehicleRepository: VehicleRepository
 ) : BaseViewModel(
-    appConfigRepository
+    userPreferencesRepository
 ){
 
     suspend fun onboardVehicle(token: String, onboardVehicleRequest: OnboardVehicleRequest): ViewModelResult<OnboardVehicleResult?> {

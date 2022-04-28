@@ -18,4 +18,8 @@ open class BaseViewModel (
         Timber.d("$userPreferences")
         appConfigRepository.updateAppConfig(userPreferences)
     }
+
+    suspend fun updateAgentLogInStatus(loggedIn: Boolean) {
+        appConfigRepository.updateLoginStatus(loggedIn)
+    }
 }

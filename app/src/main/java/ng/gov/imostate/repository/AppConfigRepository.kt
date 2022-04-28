@@ -53,7 +53,7 @@ class AppConfigRepository @Inject constructor (private val dataStore: DataStore<
             )
     }
 
-    suspend fun updateAgentLog(loggedIn: Boolean) {
+    suspend fun updateLoginStatus(loggedIn: Boolean) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.LOGGED_IN] = loggedIn
         }

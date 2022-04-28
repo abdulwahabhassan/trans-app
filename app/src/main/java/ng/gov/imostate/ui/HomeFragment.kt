@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -44,6 +46,16 @@ class HomeFragment : Fragment() {
             binding.networkStateTV.setTextColor(resources.getColor(R.color.black))
             binding.networkStateTV.setBackgroundResource(R.drawable.connectivity_offline_bg)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //override on back pressed
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity?.finish()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -131,6 +143,15 @@ class HomeFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launchWhenResumed {
+            if (viewModel.getUserPreferences().loggedIn == false) {
+                findNavController().popBackStack()
+            }
+        }
     }
 
     override fun onDestroy() {

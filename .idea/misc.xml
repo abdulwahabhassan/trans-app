@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.1615" />
         <entry key="app/src/main/res/drawable/ic_scan.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/log_out_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/rank_text_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/transaction_rv_bg.xml" value="0.187" />

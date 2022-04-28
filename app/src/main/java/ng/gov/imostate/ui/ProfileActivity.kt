@@ -92,6 +92,13 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
 
+            logoutTV.setOnClickListener {
+               lifecycleScope.launchWhenResumed {
+                   activityViewModel.updateAgentLogInStatus(false)
+                   finish()
+               }
+            }
+
             lifecycleScope.launchWhenResumed {
                 val user = activityViewModel.getUserPreferences()
                 onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else "${user.onboardingDate}"

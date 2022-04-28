@@ -16,7 +16,7 @@ class LoginFragmentViewModel @Inject constructor (
 
     suspend fun loginAttendant(agentLoginRequest: LoginRequest): ViewModelResult<LoginResult?> {
         val response = agentRepository.loginAgent(agentLoginRequest)
-        appConfigRepository.updateAgentLog(true)
+        updateAgentLogInStatus(true)
         return  when (response.success) {
             true -> {
                 ViewModelResult.Success(response.result)

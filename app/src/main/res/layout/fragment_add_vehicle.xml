@@ -64,17 +64,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearLayoutCompat2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/minimalCB"
+                        android:layout_width="wrap_content"
+                        android:text="Minimal"
+                        android:fontFamily="@font/nunito_sans"
+                        android:checked="true"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/fullCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full"
+                        android:fontFamily="@font/nunito_sans"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Enter vehicle and driver details below"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2" />
+
                 <TextView
                     android:id="@+id/fleetNumberTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
                     android:text="Fleet Number"
                     android:textColor="@color/black"
+                    android:layout_marginTop="24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fleetNumberTIL"
@@ -105,9 +147,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="State of Registration"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fleetNumberTIL" />
 
@@ -140,9 +182,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Vehicle Catgeory"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTIL" />
 
@@ -175,9 +217,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Plate Number"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleCatgeoryTIL" />
 
@@ -210,9 +252,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Chasis Number"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plateNumberTIL" />
 
@@ -245,9 +287,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Engine Number"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/chasisNumberTIL" />
 
@@ -280,9 +322,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Vehicle Make"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/engineNumberTIL" />
 
@@ -315,9 +357,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Vehicle Model"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTIL" />
 
@@ -350,9 +392,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Passenger Capacity"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleModelTIL" />
 
@@ -386,8 +428,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Driver"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Driver"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTIL" />
@@ -421,8 +463,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Driver Gender"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Driver Gender"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/driverTIL" />
@@ -456,9 +498,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Marital Status"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/driverGenderTIL" />
 
@@ -491,8 +533,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Blood Group"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Blood Group"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/maritalStatusTIL" />
@@ -526,8 +568,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Means of ID"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Means of ID"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bloodGroupTIL" />
@@ -561,8 +603,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="ID Number"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="ID Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/meansOfIdTIL" />
@@ -701,8 +743,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Email"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Email"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/phoneNumberTIL" />
@@ -766,16 +808,124 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/bankNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Bank Name"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/residentialAddressTIL"
+                    tools:layout_editor_absoluteY="1394dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bankNameTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/bankNameTV"
+                    app:layout_constraintTop_toBottomOf="@+id/bankNameTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bankNameET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/acctNumberTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Bank Acct Number"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bankNameTIL"
+                    tools:layout_editor_absoluteY="1394dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/acctNumberTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/acctNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/acctNumberTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/acctNumberET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/bvnTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="BVN"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/acctNumberTIL"
+                    tools:layout_editor_absoluteY="1394dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bvnTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/bvnTV"
+                    app:layout_constraintTop_toBottomOf="@+id/bvnTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bvnET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
                     android:id="@+id/vehicleRouteTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Vehicle Route"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Vehicle Route"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/residentialAddressTIL"
+                    app:layout_constraintTop_toBottomOf="@id/bvnTIL"
                     tools:layout_editor_absoluteY="1394dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -916,11 +1066,11 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="32dp"
                     android:backgroundTint="@color/dark_blue"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:padding="15dp"
                     android:text="ADD VEHICLE"
                     android:textColor="@color/white"
                     app:cornerRadius="8dp"
-                    android:fontFamily="@font/nunito_sans_bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

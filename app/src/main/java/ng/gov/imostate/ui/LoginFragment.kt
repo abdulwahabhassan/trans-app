@@ -113,6 +113,7 @@ class LoginFragment : Fragment() {
                             )
 
                             viewModel.updateUserPreference(userPreferences)
+                            viewModel.updateAgentLogInStatus(true)
 
                             val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                             findNavController().navigate(action)

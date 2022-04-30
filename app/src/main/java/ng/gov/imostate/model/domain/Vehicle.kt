@@ -30,6 +30,7 @@ data class Vehicle(
     val createdAt: String?,
     @Json(name = "updated_at")
     val updatedAt: String?,
-    val driver: Driver?
+    val driver: Driver?,
+    val routes: List<Route>
 )
 

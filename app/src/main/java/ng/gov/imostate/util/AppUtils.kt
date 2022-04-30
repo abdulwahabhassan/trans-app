@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.util.Base64
 import android.view.Gravity
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.google.gson.Gson
 import com.squareup.moshi.Moshi
@@ -158,6 +159,22 @@ object AppUtils {
             }
         }catch (e: Exception){
             e.printStackTrace()
+        }
+    }
+
+    fun showLoginButton(show: Boolean, btn: View) {
+        if (show) {
+            btn.visibility = View.VISIBLE
+        } else {
+            btn.visibility = View.INVISIBLE
+        }
+    }
+
+    fun showProgressIndicator(show: Boolean, pi: View) {
+        if (show) {
+            pi.visibility = View.VISIBLE
+        } else {
+            pi.visibility = View.INVISIBLE
         }
     }
 

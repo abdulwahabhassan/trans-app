@@ -150,12 +150,16 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.userPreferences.collect { userPreferences ->
-                    when (val userPref = userPreferences) {
+                    when (userPreferences) {
                         is ViewModelResult.Success -> {
-                            binding.lastSyncTV.text = userPref.data.lastSyncTime ?: ""
+                            binding.lastSyncTV.text = userPreferences.data.lastSyncTime ?: ""
                         }
                         is ViewModelResult.Error -> {
-                            AppUtils.showToast(requireActivity(), userPref.errorMessage, MotionToastStyle.ERROR)
+                            AppUtils.showToast(
+                                requireActivity(),
+                                userPreferences.errorMessage,
+                                MotionToastStyle.ERROR
+                            )
                         }
                     }
 

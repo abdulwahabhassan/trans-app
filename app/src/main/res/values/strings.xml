@@ -2,15 +2,11 @@
     <string name="app_name">Trans App</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pay_outstanding"> <u>Pay Outstanding</u></string>
-    <string name="daily_rates"><u>Daily Rates</u></string>
+    <string name="daily_rates"><b><u>Daily Rates</u></b></string>
 
     <string-array name="vehicle_routes">
-        <item>108088</item>
-        <item>28000</item>
-        <item>39907099</item>
-        <item>49909</item>
-        <item>50877</item>
-        <item>686688</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="vehicle_category">

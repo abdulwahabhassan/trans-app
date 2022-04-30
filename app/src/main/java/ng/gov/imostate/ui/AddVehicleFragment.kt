@@ -12,24 +12,36 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
 import ng.gov.imostate.databinding.FragmentHomeBinding
 import ng.gov.imostate.model.domain.Route
 import ng.gov.imostate.model.request.OnboardVehicleRequest
+import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.DateInputMask
+import ng.gov.imostate.viewmodel.AddVehicleFragmentViewModel
+import ng.gov.imostate.viewmodel.AppViewModelsFactory
+import ng.gov.imostate.viewmodel.LoginFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleFragment : Fragment() {
 
     private var _binding: FragmentAddVehicleBinding? = null
     private val binding get() = _binding!!
+    @Inject
+    lateinit var appViewModelFactory: AppViewModelsFactory
+    //view model
+    lateinit var viewModel: AddVehicleFragmentViewModel
     val routes = mutableListOf<String>()
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +59,34 @@ class AddVehicleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(
+            this,
+            appViewModelFactory
+        ).get(AddVehicleFragmentViewModel::class.java)
+
+        if (BuildConfig.DEBUG) {
+            with(binding) {
+                fleetNumberET.setText("627JK2787")
+                plateNumberET.setText("IMO-1526-HDB")
+                vehicleBrandET.setText("Toyota")
+                vehicleModelET.setText("Camry")
+                passengerCapacityET.setText("4")
+                driverFirstNameET.setText("Adams")
+                driverMiddleNameET.setText("Jones")
+                driverLastNameET.setText("Maple")
+                dobET.setText("1987/12/01")
+                driverGenderRG.check(R.id.maleCB)
+                meansOfIdRG.check(R.id.ninSlipRB)
+                idNumberET.setText("NG2728301")
+                imssinNumberET.setText("IMS73630")
+                phoneNumberET.setText("09022332211")
+                emailET.setText("abc@gmail.com")
+                residentialAddressET.setText("No.16 new owerri")
+                acctNumberET.setText("2302928190")
+                bvnET.setText("400019229")
+            }
+        }
 
         showMinimal()
 
@@ -100,7 +140,7 @@ class AddVehicleFragment : Fragment() {
                     val plateNumber = plateNumberET.text.toString()
                     val chassisNumber = chasisNumberET.text.toString()
                     val engineNumber = engineNumberET.text.toString()
-                    val vehicleMake = vehicleBrandET.text.toString()
+                    val vehicleBrand = vehicleBrandET.text.toString()
                     val vehicleModel = vehicleModelET.text.toString()
                     val passengerCapacity = passengerCapacityET.text.toString()
                     val driverFirstName = driverFirstNameET.text.toString()
@@ -125,8 +165,8 @@ class AddVehicleFragment : Fragment() {
                     val onboardVehicleRequest = OnboardVehicleRequest(
                         vehiclePlates = plateNumber,
                         fleetNumber = fleetNumber,
-                        brand = vehicleMake,
-                        type = vehicleModel,
+                        brand = vehicleBrand,
+                        type = selectedVehicleCategory,
                         firstName = driverFirstName,
                         middleName = driverMiddleName,
                         lastName = driverLastName,
@@ -156,6 +196,26 @@ class AddVehicleFragment : Fragment() {
                         vehicleInsuranceExpDate = vehicleInsuranceExpiryDate
                     )
                     Timber.d("$onboardVehicleRequest")
+                    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                        AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                        AppUtils.showLoginButton(false, binding.addVehicleBTN)
+                        val result = viewModel.getInitialUserPreferences().token?.let { token ->
+                            viewModel.onboardVehicle(token, onboardVehicleRequest)
+                        }!!
+                        when (result) {
+                            is ViewModelResult.Success -> {
+                                Timber.d("${result.data}")
+                                AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
+                                findNavController().popBackStack()
+                            }
+                            is ViewModelResult.Error -> {
+                                Timber.d(result.errorMessage)
+                                AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
+                                AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                                AppUtils.showLoginButton(true, binding.addVehicleBTN)
+                            }
+                        }
+                    }
                 } else {
                     AppUtils.showToast(requireActivity(), "Incomplete fields", MotionToastStyle.ERROR)
                 }

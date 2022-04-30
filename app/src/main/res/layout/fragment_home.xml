@@ -467,24 +467,6 @@
             app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/scanVehicleBTN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rippleColor="@color/sky_blue"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/white"
-                android:drawableTop="@drawable/ic_scan"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0"
-                android:text="Manual Scan"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/addVehicleBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -498,6 +480,24 @@
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
                 android:text="Add Vehicle"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/scanVehicleBTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rippleColor="@color/sky_blue"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/white"
+                android:drawableTop="@drawable/ic_scan"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0"
+                android:text="Manual"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -533,7 +533,7 @@
                 android:drawableTop="@drawable/ic_transaction"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
-                android:text="Transactions"
+                android:text="Transaction"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="14sp" />

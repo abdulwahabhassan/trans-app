@@ -58,8 +58,8 @@ class LoginFragment : Fragment() {
                 val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                 findNavController().navigate(action)
             } else {
-                showLoginButton(true)
-                showProgressIndicator(false)
+                AppUtils.showLoginButton(true, binding.loginBTN)
+                AppUtils.showProgressIndicator(false, binding.progressIndicator)
             }
 
         }
@@ -80,8 +80,8 @@ class LoginFragment : Fragment() {
                     password
                 )
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                    showProgressIndicator(true)
-                    showLoginButton(false)
+                    AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                    AppUtils.showLoginButton(false, binding.loginBTN)
                     val viewModelResult = viewModel.loginAttendant(LoginRequest(email, password))
                     Timber.d("$viewModelResult")
                     when (viewModelResult) {
@@ -120,29 +120,13 @@ class LoginFragment : Fragment() {
                         }
                         is ViewModelResult.Error -> {
                             AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
-                            showProgressIndicator(false)
-                            showLoginButton(true)
+                            AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                            AppUtils.showLoginButton(true, binding.loginBTN)
                         }
                     }
                 }
 
             }
-        }
-    }
-
-    private fun showLoginButton(show: Boolean) {
-        if (show) {
-            binding.loginBTN.visibility = VISIBLE
-        } else {
-            binding.loginBTN.visibility = INVISIBLE
-        }
-    }
-
-    private fun showProgressIndicator(show: Boolean) {
-        if (show) {
-            binding.progressIndicator.visibility = VISIBLE
-        } else {
-            binding.progressIndicator.visibility = INVISIBLE
         }
     }
 

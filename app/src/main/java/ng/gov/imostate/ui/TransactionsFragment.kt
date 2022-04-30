@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.util.Mock
-import ng.gov.imostate.model.Transaction
+import ng.gov.imostate.model.domain.Transaction
 import ng.gov.imostate.adapter.TransactionsAdapter
 import ng.gov.imostate.databinding.FragmentTransactionsBinding
 

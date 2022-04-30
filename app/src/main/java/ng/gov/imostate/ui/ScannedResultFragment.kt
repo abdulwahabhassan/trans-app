@@ -13,7 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentScannedResultBinding
-import ng.gov.imostate.model.Data
+import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
 import timber.log.Timber
 import java.text.SimpleDateFormat

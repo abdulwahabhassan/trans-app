@@ -1,5 +1,6 @@
 package ng.gov.imostate.api
 
+import ng.gov.imostate.model.apiresult.*
 import ng.gov.imostate.model.request.*
 import ng.gov.imostate.model.response.*
 import retrofit2.http.*

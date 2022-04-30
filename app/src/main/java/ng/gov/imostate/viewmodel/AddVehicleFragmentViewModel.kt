@@ -2,7 +2,7 @@ package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.model.request.OnboardVehicleRequest
-import ng.gov.imostate.model.response.OnboardVehicleResult
+import ng.gov.imostate.model.apiresult.OnboardVehicleResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.VehicleRepository
 import ng.gov.imostate.repository.UserPreferencesRepository

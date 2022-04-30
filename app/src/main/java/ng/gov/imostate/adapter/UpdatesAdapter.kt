@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ng.gov.imostate.databinding.ItemUpdateBinding
-import ng.gov.imostate.model.Update
+import ng.gov.imostate.model.domain.Update
 import timber.log.Timber
 
 class UpdatesAdapter(

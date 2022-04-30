@@ -2,7 +2,7 @@ package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.model.request.LoginRequest
-import ng.gov.imostate.model.response.LoginResult
+import ng.gov.imostate.model.apiresult.LoginResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.UserPreferencesRepository

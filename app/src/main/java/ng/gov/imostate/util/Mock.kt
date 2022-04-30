@@ -1,7 +1,7 @@
 package ng.gov.imostate.util
 
-import ng.gov.imostate.model.Transaction
-import ng.gov.imostate.model.Update
+import ng.gov.imostate.model.domain.Transaction
+import ng.gov.imostate.model.domain.Update
 
 object Mock {
 

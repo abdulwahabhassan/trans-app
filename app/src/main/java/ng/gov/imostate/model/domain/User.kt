@@ -1,4 +1,4 @@
-package ng.gov.imostate.model.response
+package ng.gov.imostate.model.domain
 
 import com.squareup.moshi.Json
 

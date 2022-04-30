@@ -46,8 +46,8 @@ class AppViewModelsFactory @Inject constructor(
                     agentRepository
                 ) as T
             }
-            modelClass.isAssignableFrom(ProfileActivityViewModel::class.java) -> {
-                return ProfileActivityViewModel(
+            modelClass.isAssignableFrom(MainActivityViewModel::class.java) -> {
+                return MainActivityViewModel(
                     userPreferencesRepository
                 ) as T
             }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ng.gov.imostate.databinding.ItemStoreImageBinding
-import ng.gov.imostate.model.MediaStoreImage
+import ng.gov.imostate.model.domain.MediaStoreImage
 
 class GalleryAdapter(private val onClick: (MediaStoreImage) -> Unit)
     : ListAdapter<MediaStoreImage, GalleryAdapter.ImageViewHolder>(MediaStoreImage.DiffCallback) {

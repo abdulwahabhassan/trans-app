@@ -1,4 +1,4 @@
-package ng.gov.imostate.model
+package ng.gov.imostate.model.domain
 
 
 //data class UserPreferences(

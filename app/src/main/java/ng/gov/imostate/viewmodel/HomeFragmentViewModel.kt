@@ -2,7 +2,7 @@ package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import ng.gov.imostate.model.response.MetricsResult
+import ng.gov.imostate.model.apiresult.MetricsResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.UserPreferencesRepository

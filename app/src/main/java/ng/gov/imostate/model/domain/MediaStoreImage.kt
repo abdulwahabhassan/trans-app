@@ -1,4 +1,4 @@
-package ng.gov.imostate.model
+package ng.gov.imostate.model.domain
 
 import android.net.Uri
 import androidx.recyclerview.widget.DiffUtil

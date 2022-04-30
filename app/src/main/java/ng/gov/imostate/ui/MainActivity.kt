@@ -11,23 +11,26 @@ import android.nfc.Tag
 import android.nfc.tech.*
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.ActivityMainBinding
-import ng.gov.imostate.model.Data
+import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
+import ng.gov.imostate.viewmodel.AppViewModelsFactory
+import ng.gov.imostate.viewmodel.MainActivityViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import java.nio.charset.Charset
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,12 +41,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nfcAdapter: NfcAdapter
     private lateinit var pendingIntent: PendingIntent
     private lateinit var navController: NavController
+    @Inject
+    lateinit var appViewModelFactory: AppViewModelsFactory
+    private lateinit var activityViewModel: MainActivityViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        activityViewModel = ViewModelProvider(
+            this,
+            appViewModelFactory
+        ).get(MainActivityViewModel::class.java)
 
         Timber.d("Welcome")
 
@@ -101,34 +112,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resolveIntent(intent: Intent) {
-        when (intent.action) {
-            NfcAdapter.ACTION_TECH_DISCOVERED -> {
-                Timber.d("NFC TECH DISCOVERED")
-                val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-                if (tagFromIntent != null) {
-                    Timber.d("Tag tech list: ${tagFromIntent.techList}")
-                    val ndefFormatable = NdefFormatable.get(tagFromIntent)
-                    formatTagAsNdef(ndefFormatable)
-                    readTag(tagFromIntent)
-                } else {
-                    Timber.d("Tag is null")
-                    AppUtils.showToast(this, "Tag not found!", MotionToastStyle.ERROR)
+
+
+        lifecycleScope.launchWhenResumed {
+            if (activityViewModel.getInitialUserPreferences().loggedIn == true) {
+                when (intent.action) {
+                    NfcAdapter.ACTION_TECH_DISCOVERED -> {
+                        Timber.d("NFC TECH DISCOVERED")
+                        val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+                        if (tagFromIntent != null) {
+                            Timber.d("Tag tech list: ${tagFromIntent.techList}")
+                            val ndefFormatable = NdefFormatable.get(tagFromIntent)
+                            formatTagAsNdef(ndefFormatable)
+                            readTag(tagFromIntent)
+                        } else {
+                            Timber.d("Tag is null")
+                            AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
+                        }
+                    }
+                    NfcAdapter.ACTION_NDEF_DISCOVERED -> {
+                        Timber.d("NFC NDEF DISCOVERED")
+                        val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+                        if (tagFromIntent != null) {
+                            readTag(tagFromIntent)
+                            //writeTestDataToTag(tagFromIntent)
+                            //writeEmptyDataToTag(tagFromIntent)
+                            //readTag(tagFromIntent)
+                        } else {
+                            Timber.d("Tag is null")
+                            AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
+                        }
+                    }
                 }
-            }
-            NfcAdapter.ACTION_NDEF_DISCOVERED -> {
-                Timber.d("NFC NDEF DISCOVERED")
-                val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-                if (tagFromIntent != null) {
-                    readTag(tagFromIntent)
-                    //writeTestDataToTag(tagFromIntent)
-                    //writeEmptyDataToTag(tagFromIntent)
-                    //readTag(tagFromIntent)
-                } else {
-                    Timber.d("Tag is null")
-                    AppUtils.showToast(this, "Tag not found!", MotionToastStyle.ERROR)
-                }
+            } else {
+                AppUtils.showToast(this@MainActivity, "You need to login first", MotionToastStyle.INFO)
             }
         }
+
     }
 
     private fun writeEmptyDataToTag(tagFromIntent: Tag) {

@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.adapter.UpdatesAdapter
 import ng.gov.imostate.databinding.FragmentUpdatesBinding
-import ng.gov.imostate.model.Update
+import ng.gov.imostate.model.domain.Update
 import ng.gov.imostate.util.Mock
 import timber.log.Timber
 

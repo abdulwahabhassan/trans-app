@@ -1,8 +1,8 @@
-package ng.gov.imostate.model.response
+package ng.gov.imostate.model.domain
 
 import com.squareup.moshi.Json
 
-data class OnboardDriver(
+data class Driver(
     val id: Long?,
     @Json(name = "first_name")
     val firstName: String?,
@@ -44,4 +44,3 @@ data class OnboardDriver(
     @Json(name = "updated_at")
     val updatedAt: String?
 )
-

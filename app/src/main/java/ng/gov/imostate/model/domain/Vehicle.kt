@@ -1,8 +1,8 @@
-package ng.gov.imostate.model.response
+package ng.gov.imostate.model.domain
 
 import com.squareup.moshi.Json
 
-data class OnboardVehicle (
+data class Vehicle(
     val id: Long?,
     @Json(name = "vehicle_plates")
     val vehiclePlates: String?,
@@ -30,8 +30,6 @@ data class OnboardVehicle (
     val createdAt: String?,
     @Json(name = "updated_at")
     val updatedAt: String?,
-    @Json(name = "driver")
-    val onboardDriver: Driver?,
-    @Json(name = "routes")
-    val onboardRoutes: List<OnboardRoute>?
+    val driver: Driver?
 )
+

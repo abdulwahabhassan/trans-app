@@ -1,6 +1,7 @@
 package ng.gov.imostate.datasource
 
 import ng.gov.imostate.api.ApiService
+import ng.gov.imostate.model.apiresult.*
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.request.OnboardVehicleRequest

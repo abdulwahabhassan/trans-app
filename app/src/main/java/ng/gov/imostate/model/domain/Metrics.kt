@@ -1,8 +1,8 @@
-package ng.gov.imostate.model.response
+package ng.gov.imostate.model.domain
 
 import com.squareup.moshi.Json
 
-data class Profile (
+data class Metrics (
     @Json(name = "current_balance")
     val currentBalance: String?,
     @Json(name = "total_amount_credited")

@@ -1,6 +1,6 @@
 package ng.gov.imostate.network
 
-import ng.gov.imostate.model.Api
+import ng.gov.imostate.model.domain.Api
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

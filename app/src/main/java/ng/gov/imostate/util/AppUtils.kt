@@ -12,7 +12,7 @@ import com.google.gson.Gson
 import com.squareup.moshi.Moshi
 import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
-import ng.gov.imostate.model.Data
+import ng.gov.imostate.model.domain.Data
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 import java.io.ByteArrayOutputStream

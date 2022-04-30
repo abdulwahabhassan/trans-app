@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ng.gov.imostate.adapter.GalleryAdapter
 import ng.gov.imostate.databinding.ActivityGalleryBinding
-import ng.gov.imostate.model.MediaStoreImage
+import ng.gov.imostate.model.domain.MediaStoreImage
 import ng.gov.imostate.viewmodel.GalleryActivityViewModel
 
 class GalleryActivity : AppCompatActivity() {

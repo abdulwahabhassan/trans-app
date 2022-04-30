@@ -7,19 +7,32 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
 import ng.gov.imostate.databinding.FragmentHomeBinding
+import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.model.request.OnboardVehicleRequest
+import ng.gov.imostate.util.AppUtils
+import ng.gov.imostate.util.DateInputMask
+import timber.log.Timber
+import www.sanju.motiontoast.MotionToastStyle
 
 @AndroidEntryPoint
 class AddVehicleFragment : Fragment() {
 
     private var _binding: FragmentAddVehicleBinding? = null
     private val binding get() = _binding!!
+    val routes = mutableListOf<String>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
@@ -37,7 +50,22 @@ class AddVehicleFragment : Fragment() {
 
         showMinimal()
 
+        setUpBankNameSpinner()
+
+        setUpLocalGovernmentAreaSpinner()
+
+        setUpStatesSpinner()
+
+        setUpVehicleCategorySpinner()
+
+        setUpVehicleRoutesSpinner()
+
         with(binding) {
+
+            DateInputMask(roadWorthinessExpiryDateET).listen()
+            DateInputMask(vehicleLicenseExpiryDateET).listen()
+            DateInputMask(vehicleInsuranceExpiryDateET).listen()
+            DateInputMask(dobET).listen()
 
             backArrowIV.setOnClickListener {
                 findNavController().popBackStack()
@@ -58,8 +86,334 @@ class AddVehicleFragment : Fragment() {
                 (cb as MaterialCheckBox).isChecked = true
                 showFull()
             }
+            addVehicleBTN.setOnClickListener {
+                if(validateFields()) {
+                    val selectedBank = resources.getStringArray(R.array.banks_names)[bankNameSpinner.selectedItemPosition]
+                    val selectedStateOfReg = resources.getStringArray(R.array.nigerian_states)[stateOfRegistrationSpinner.selectedItemPosition]
+                    val selectedStateOfOrigin = resources.getStringArray(R.array.nigerian_states)[stateOfOriginSpinner.selectedItemPosition]
+                    val selectedVehicleCategory = resources.getStringArray(R.array.vehicle_category)[vehicleCategorySpinner.selectedItemPosition]
+                    val selectedLocalGovtArea = resources.getStringArray(R.array.imo_state_local_government_areas)[localGovernmentSpinner.selectedItemPosition]
+
+                    Timber.d("$selectedBank $selectedLocalGovtArea $selectedStateOfOrigin $selectedStateOfReg $selectedVehicleCategory $routes")
+
+                    val fleetNumber = fleetNumberET.text.toString()
+                    val plateNumber = plateNumberET.text.toString()
+                    val chassisNumber = chasisNumberET.text.toString()
+                    val engineNumber = engineNumberET.text.toString()
+                    val vehicleMake = vehicleBrandET.text.toString()
+                    val vehicleModel = vehicleModelET.text.toString()
+                    val passengerCapacity = passengerCapacityET.text.toString()
+                    val driverFirstName = driverFirstNameET.text.toString()
+                    val driverMiddleName = driverMiddleNameET.text.toString()
+                    val driverLastName = driverLastNameET.text.toString()
+                    val dob = dobET.text.toString()
+                    val imssin = imssinNumberET.text.toString()
+                    val idNumber =  idNumberET.text.toString()
+                    val phoneNumber = phoneNumberET.text.toString()
+                    val email = emailET.text.toString()
+                    val residentialAddress = residentialAddressET.text.toString()
+                    val bankAcctNumber = acctNumberET.text.toString()
+                    val bvn = bvnET.text.toString()
+                    val roadWorthinessExpiryDate = roadWorthinessExpiryDateET.text.toString()
+                    val vehicleLicenseExpiryDate = vehicleLicenseExpiryDateET.text.toString()
+                    val vehicleInsuranceExpiryDate = vehicleInsuranceExpiryDateET.text.toString()
+                    val selectedDriverGender = binding.root.findViewById<AppCompatRadioButton>(driverGenderRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedMaritalStatus = binding.root.findViewById<AppCompatRadioButton>(maritalStatusRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedBloodGroup = binding.root.findViewById<AppCompatRadioButton>(bloodGroupRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedMeansOfId = binding.root.findViewById<AppCompatRadioButton>(meansOfIdRG.checkedRadioButtonId)?.text ?: ""
+
+                    val onboardVehicleRequest = OnboardVehicleRequest(
+                        vehiclePlates = plateNumber,
+                        fleetNumber = fleetNumber,
+                        brand = vehicleMake,
+                        type = vehicleModel,
+                        firstName = driverFirstName,
+                        middleName = driverMiddleName,
+                        lastName = driverLastName,
+                        dOB = dob,
+                        address = residentialAddress,
+                        imssin = imssin,
+                        email = email,
+                        phone = phoneNumber,
+                        routes = routes.map { Route(routeID = it.toLong()) },
+                        stateOfRegistration = selectedStateOfReg,
+                        gender = selectedDriverGender.toString(),
+                        maritalStatus = selectedMaritalStatus.toString(),
+                        bloodGroup = selectedBloodGroup.toString(),
+                        passengerCapacity = passengerCapacity,
+                        chasisNumber = chassisNumber,
+                        engineNumber = engineNumber,
+                        vehicleModel = vehicleModel,
+                        meansOfID = selectedMeansOfId.toString(),
+                        idNumber = idNumber,
+                        stateOfOrigin = selectedStateOfOrigin.toString(),
+                        localGovt = selectedLocalGovtArea.toString(),
+                        bankName = selectedBank.toString(),
+                        accountNumber = bankAcctNumber,
+                        bvn = bvn,
+                        roadWorthinessExpDate = roadWorthinessExpiryDate,
+                        vehicleLicenceExpDate = vehicleLicenseExpiryDate,
+                        vehicleInsuranceExpDate = vehicleInsuranceExpiryDate
+                    )
+                    Timber.d("$onboardVehicleRequest")
+                } else {
+                    AppUtils.showToast(requireActivity(), "Incomplete fields", MotionToastStyle.ERROR)
+                }
+            }
         }
     }
+
+    private fun validateFields(): Boolean {
+        var successful = true
+
+        with(binding) {
+            if (fleetNumberTIL.isVisible && fleetNumberET.text.isNullOrEmpty()){
+                fleetNumberTIL.error = "Please fill fleet number"
+                successful = false
+            } else {
+                fleetNumberTIL.error = ""
+            }
+            if (plateNumberTIL.isVisible && plateNumberET.text.isNullOrEmpty()){
+                plateNumberTIL.error = "Please fill plate number"
+                successful = false
+            } else {
+                plateNumberTIL.error = ""
+            }
+            if (chasisNumberTIL.isVisible && chasisNumberET.text.isNullOrEmpty()){
+                chasisNumberTIL.error = "Please fill chassis number"
+                successful = false
+            } else {
+                chasisNumberTIL.error = ""
+            }
+            if (engineNumberTIL.isVisible && engineNumberET.text.isNullOrEmpty()){
+                engineNumberTIL.error = "Please fill engine number"
+                successful = false
+            } else {
+                engineNumberTIL.error = ""
+            }
+            if (vehicleBrandTIL.isVisible && vehicleBrandET.text.isNullOrEmpty()){
+                vehicleBrandTIL.error = "Please fill vehicle brand"
+                successful = false
+            } else {
+                vehicleBrandTIL.error = ""
+            }
+            if (vehicleModelTIL.isVisible && vehicleModelET.text.isNullOrEmpty()){
+                vehicleModelTIL.error = "Please fill vehicle model"
+                successful = false
+            } else {
+                vehicleModelTIL.error = ""
+            }
+            if (passengerCapacityTIL.isVisible && passengerCapacityET.text.isNullOrEmpty()){
+                passengerCapacityTIL.error = "Please fill passenger capacity"
+                successful = false
+            } else {
+                passengerCapacityTIL.error = ""
+            }
+            if (driverFirstNameTIL.isVisible && driverFirstNameET.text.isNullOrEmpty()){
+                driverFirstNameTIL.error = "Please fill driver's first name"
+                successful = false
+            } else {
+                driverFirstNameTIL.error = ""
+            }
+            if (driverLastNameTIL.isVisible && driverLastNameET.text.isNullOrEmpty()){
+                driverLastNameTIL.error = "Please fill driver's last name"
+                successful = false
+            } else {
+                driverLastNameTIL.error = ""
+            }
+            if (imssinNumberTIL.isVisible && imssinNumberET.text.isNullOrEmpty()){
+                imssinNumberTIL.error = "Please fill IMSSIN"
+                successful = false
+            } else {
+                imssinNumberTIL.error = ""
+            }
+            if (dobTIL.isVisible && dobET.text.isNullOrEmpty()){
+                dobTIL.error = "Please fill date of birth"
+                successful = false
+            } else if (dobET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+                dobTIL.error = "Please fill correct date format"
+                successful = false
+            } else {
+                dobTIL.error = ""
+            }
+            if(idNumberTIL.isVisible && idNumberET.text.isNullOrEmpty()){
+                idNumberTIL.error = "Please fill id number"
+                successful = false
+            } else {
+                idNumberTIL.error = ""
+            }
+            if (phoneNumberTIL.isVisible && phoneNumberET.text.isNullOrEmpty()){
+                phoneNumberTIL.error = "Please fill phone number"
+                successful = false
+            } else {
+                phoneNumberTIL.error = ""
+            }
+            if (emailTIL.isVisible && emailET.text.isNullOrEmpty()){
+                emailTIL.error = "Please fill email address"
+                successful = false
+            } else {
+                emailTIL.error = ""
+            }
+            if (residentialAddressTIL.isVisible && residentialAddressET.text.isNullOrEmpty()){
+                residentialAddressTIL.error = "Please fill residential address"
+                successful = false
+            } else {
+                residentialAddressTIL.error = ""
+            }
+            if (acctNumberTIL.isVisible && acctNumberET.text.isNullOrEmpty()){
+                acctNumberTIL.error = "Please fill account number"
+                successful = false
+            } else {
+                acctNumberTIL.error = ""
+            }
+            if (bvnTIL.isVisible && bvnET.text.isNullOrEmpty()){
+                bvnTIL.error = "Please fill BVN"
+                successful = false
+            } else {
+                bvnTIL.error = ""
+            }
+            if (roadWorthinessExpiryDateTIL.isVisible && roadWorthinessExpiryDateET.text.isNullOrEmpty()){
+                roadWorthinessExpiryDateTIL.error = "Please fill road worthiness expiry date"
+                successful = false
+            } else if (roadWorthinessExpiryDateTIL.isVisible && roadWorthinessExpiryDateET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+                roadWorthinessExpiryDateTIL.error = "Please fill correct date format"
+                successful = false
+            } else {
+                roadWorthinessExpiryDateTIL.error = ""
+            }
+            if (vehicleLicenseExpiryDateTIL.isVisible && vehicleLicenseExpiryDateET.text.isNullOrEmpty()){
+                vehicleLicenseExpiryDateTIL.error = "Please fill vehicle license expiry date"
+                successful = false
+            } else if (vehicleLicenseExpiryDateTIL.isVisible && vehicleLicenseExpiryDateET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+                vehicleLicenseExpiryDateTIL.error = "Please fill correct date format"
+                successful = false
+            } else {
+                vehicleLicenseExpiryDateTIL.error = ""
+            }
+            if (vehicleInsuranceExpiryDateTIL.isVisible && vehicleInsuranceExpiryDateET.text.isNullOrEmpty()){
+                vehicleInsuranceExpiryDateTIL.error = "Please fill vehicle insurance  expiry date"
+                successful = false
+            } else if (vehicleInsuranceExpiryDateTIL.isVisible && vehicleInsuranceExpiryDateET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+                vehicleInsuranceExpiryDateTIL.error = "Please fill correct date format"
+                successful = false
+            } else {
+                vehicleInsuranceExpiryDateTIL.error = ""
+            }
+
+            val selectedBank = resources.getStringArray(R.array.banks_names)[bankNameSpinner.selectedItemPosition]
+            val selectedStateOfReg = resources.getStringArray(R.array.nigerian_states)[stateOfRegistrationSpinner.selectedItemPosition]
+            val selectedStateOfOrigin = resources.getStringArray(R.array.nigerian_states)[stateOfOriginSpinner.selectedItemPosition]
+            val selectedVehicleCategory = resources.getStringArray(R.array.vehicle_category)[vehicleCategorySpinner.selectedItemPosition]
+            val selectedLocalGovtArea = resources.getStringArray(R.array.imo_state_local_government_areas)[localGovernmentSpinner.selectedItemPosition]
+
+            Timber.d("$selectedBank $selectedLocalGovtArea $selectedStateOfOrigin $selectedStateOfReg $selectedVehicleCategory $routes")
+
+            val selectedDriverGender = binding.root.findViewById<AppCompatRadioButton>(driverGenderRG.checkedRadioButtonId)?.text ?: ""
+            val selectedMaritalStatus = binding.root.findViewById<AppCompatRadioButton>(maritalStatusRG.checkedRadioButtonId)?.text ?: ""
+            val selectedBloodGroup = binding.root.findViewById<AppCompatRadioButton>(bloodGroupRG.checkedRadioButtonId)?.text ?: ""
+            val selectedMeansOfId = binding.root.findViewById<AppCompatRadioButton>(meansOfIdRG.checkedRadioButtonId)?.text ?: ""
+
+            Timber.d("$selectedDriverGender $selectedMaritalStatus $selectedBloodGroup $selectedMeansOfId")
+
+            if (driverGenderRG.isVisible && selectedDriverGender.isEmpty()) {
+                successful = false
+            }
+            if (maritalStatusRG.isVisible && selectedMaritalStatus.isEmpty()) {
+                successful = false
+            }
+            if (bloodGroupRG.isVisible && selectedBloodGroup.isEmpty()) {
+                successful = false
+            }
+            if (meansOfIdRG.isVisible && selectedMeansOfId.isEmpty()) {
+                successful = false
+            }
+            if (routes.isEmpty()) {
+                successful = false
+            }
+        }
+
+        return successful
+    }
+
+
+    private fun setUpBankNameSpinner(){
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.banks_names, android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.bankNameSpinner.adapter = spinnerAdapter
+        binding.bankNameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setUpVehicleRoutesSpinner(){
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.vehicle_routes, android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.vehicleRouteSpinner.adapter = spinnerAdapter
+        binding.vehicleRouteSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val selectedItem = resources.getStringArray(R.array.vehicle_routes)[p2]
+                if (routes.contains(selectedItem)) {
+                    routes.remove(selectedItem)
+                } else {
+                    routes.add(selectedItem)
+                }
+                binding.vehicleRouteTV.text = "Vehicle Routes: " + "${routes}"
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+
+        }
+    }
+
+    private fun setUpStatesSpinner(){
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.nigerian_states, android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.stateOfOriginSpinner.adapter = spinnerAdapter
+        binding.stateOfOriginSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+        binding.stateOfRegistrationSpinner.adapter = spinnerAdapter
+        binding.stateOfRegistrationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setUpLocalGovernmentAreaSpinner(){
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.imo_state_local_government_areas, android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.localGovernmentSpinner.adapter = spinnerAdapter
+        binding.localGovernmentSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setUpVehicleCategorySpinner(){
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            requireContext(), R.array.vehicle_category, android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.vehicleCategorySpinner.adapter = spinnerAdapter
+        binding.vehicleCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+
+
 
     private fun showFull() {
         with(binding) {
@@ -73,10 +427,10 @@ class AddVehicleFragment : Fragment() {
             vehicleLicenseExpiryDateTIL.visibility = VISIBLE
 
             bloodGroupTV.visibility = VISIBLE
-            bloodGroupTIL.visibility = VISIBLE
+            bloodGroupRG.visibility = VISIBLE
 
             maritalStatusTV.visibility = VISIBLE
-            maritalStatusTIL.visibility = VISIBLE
+            maritalStatusRG.visibility = VISIBLE
 
             engineNumberTV.visibility = VISIBLE
             engineNumberTIL.visibility = VISIBLE
@@ -85,7 +439,7 @@ class AddVehicleFragment : Fragment() {
             chasisNumberTIL.visibility = VISIBLE
 
             stateOfRegistrationTV.visibility = VISIBLE
-            stateOfRegistrationTIL.visibility = VISIBLE
+            stateOfRegistrationSpinner.visibility = VISIBLE
         }
     }
 
@@ -101,10 +455,10 @@ class AddVehicleFragment : Fragment() {
             vehicleLicenseExpiryDateTIL.visibility = GONE
 
             bloodGroupTV.visibility = GONE
-            bloodGroupTIL.visibility = GONE
+            bloodGroupRG.visibility = GONE
 
             maritalStatusTV.visibility = GONE
-            maritalStatusTIL.visibility = GONE
+            maritalStatusRG.visibility = GONE
 
             engineNumberTV.visibility = GONE
             engineNumberTIL.visibility = GONE
@@ -113,7 +467,7 @@ class AddVehicleFragment : Fragment() {
             chasisNumberTIL.visibility = GONE
 
             stateOfRegistrationTV.visibility = GONE
-            stateOfRegistrationTIL.visibility = GONE
+            stateOfRegistrationSpinner.visibility = GONE
         }
     }
 

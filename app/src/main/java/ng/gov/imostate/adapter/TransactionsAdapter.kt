@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.R
-import ng.gov.imostate.model.Transaction
+import ng.gov.imostate.model.domain.Transaction
 import ng.gov.imostate.databinding.ItemTransactionBinding
 import timber.log.Timber
 import java.lang.StringBuilder

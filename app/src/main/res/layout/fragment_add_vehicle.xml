@@ -90,7 +90,6 @@
                         android:layout_height="wrap_content"
                         android:text="Full"
                         android:fontFamily="@font/nunito_sans"
-                        android:layout_marginEnd="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.1" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -153,28 +152,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fleetNumberTIL" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/stateOfRegistrationTIL"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/stateOfRegistrationSpinner"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/stateOfRegistrationTV"
                     app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTV">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/stateOfRegistrationET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                </androidx.appcompat.widget.AppCompatSpinner>
 
                 <TextView
                     android:id="@+id/vehicleCategoryTV"
@@ -183,33 +173,25 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
-                    android:text="Vehicle Catgeory"
+                    android:text="Vehicle Type"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfRegistrationSpinner" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/vehicleCatgeoryTIL"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/vehicleCategorySpinner"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/vehicleCategoryTV"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleCategoryTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/vehicleCatgeoryET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                </androidx.appcompat.widget.AppCompatSpinner>
 
                 <TextView
                     android:id="@+id/plateNumberTV"
@@ -221,7 +203,7 @@
                     android:text="Plate Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleCatgeoryTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleCategorySpinner" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/plateNumberTIL"
@@ -253,7 +235,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
-                    android:text="Chasis Number"
+                    android:text="Chassis Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/plateNumberTIL" />
@@ -317,30 +299,30 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/vehicleMakeTV"
+                    android:id="@+id/vehicleBrandTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
-                    android:text="Vehicle Make"
+                    android:text="Vehicle Brand"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/engineNumberTIL" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/vehicleMakeTIL"
+                    android:id="@+id/vehicleBrandTIL"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/vehicleMakeTV"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTV">
+                    app:layout_constraintStart_toStartOf="@+id/vehicleBrandTV"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleBrandTV">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/vehicleMakeET"
+                        android:id="@+id/vehicleBrandET"
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
@@ -361,7 +343,7 @@
                     android:text="Vehicle Model"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleMakeTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleBrandTIL" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/vehicleModelTIL"
@@ -414,7 +396,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:padding="0dp"
                         android:singleLine="true"
                         android:textSize="14sp" />
@@ -423,34 +405,140 @@
 
 
                 <TextView
-                    android:id="@+id/driverTV"
+                    android:id="@+id/driverFirstNameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
-                    android:text="Driver"
+                    android:text="Driver's First Name"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/passengerCapacityTIL" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/driverTIL"
+                    android:id="@+id/driverFirstNameTIL"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/driverTV"
-                    app:layout_constraintTop_toBottomOf="@+id/driverTV">
+                    app:layout_constraintStart_toStartOf="@+id/driverFirstNameTV"
+                    app:layout_constraintTop_toBottomOf="@+id/driverFirstNameTV">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/driverET"
+                        android:id="@+id/driverFirstNameET"
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/driverMiddleNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Driver's Middle Name"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driverFirstNameTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/driverMiddleNameTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/driverMiddleNameTV"
+                    app:layout_constraintTop_toBottomOf="@+id/driverMiddleNameTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driverMiddleNameET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/driverLastNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Driver's Last Name"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driverMiddleNameTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/driverLastNameTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/driverLastNameTV"
+                    app:layout_constraintTop_toBottomOf="@+id/driverLastNameTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driverLastNameET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="text"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/dobTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Date of Birth"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driverLastNameTIL" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dobTIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/dobTV"
+                    app:layout_constraintTop_toBottomOf="@+id/dobTV">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dobET"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:inputType="number"
+                        android:hint="YYYY/MM/DD"
                         android:padding="0dp"
                         android:singleLine="true"
                         android:textSize="14sp" />
@@ -467,30 +555,40 @@
                     android:text="Driver Gender"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/driverTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/dobTIL" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/driverGenderTIL"
+                <RadioGroup
+                    android:id="@+id/driverGenderRG"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
                     android:fontFamily="@font/nunito_sans"
+                    android:gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/driverGenderTV"
                     app:layout_constraintTop_toBottomOf="@+id/driverGenderTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/driverGenderET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/maleB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Male"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/femaleCB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Female" />
+
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/maritalStatusTV"
@@ -502,30 +600,48 @@
                     android:text="Marital Status"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/driverGenderTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/driverGenderRG" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/maritalStatusTIL"
+                <RadioGroup
+                    android:id="@+id/maritalStatusRG"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/maritalStatusTV"
                     app:layout_constraintTop_toBottomOf="@+id/maritalStatusTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/maritalStatusET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/marriedRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Married" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/singleRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Single" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/divorcedRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Divorced"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/bloodGroupTV"
@@ -537,30 +653,89 @@
                     android:text="Blood Group"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/maritalStatusTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/maritalStatusRG" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/bloodGroupTIL"
+                <RadioGroup
+                    android:id="@+id/bloodGroupRG"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
+                    android:orientation="vertical"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/bloodGroupTV"
                     app:layout_constraintTop_toBottomOf="@+id/bloodGroupTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/bloodGroupET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/aPositiveRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="A+" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/bPositiveRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="B+" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/abPositiveRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="AB+"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/oPositiveRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="O+"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/aNegativeRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="A-" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/bNegativeRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="B-" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/abNegativeRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="AB-"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/oNegativeRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="O-"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/meansOfIdTV"
@@ -572,10 +747,10 @@
                     android:text="Means of ID"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bloodGroupTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/bloodGroupRG" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/meansOfIdTIL"
+                <RadioGroup
+                    android:id="@+id/meansOfIdRG"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -585,17 +760,32 @@
                     app:layout_constraintStart_toStartOf="@+id/meansOfIdTV"
                     app:layout_constraintTop_toBottomOf="@+id/meansOfIdTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/meansOfIdET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/votersCardRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Permanent Voters Card" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/nationalIdCardRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="National ID Card" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/ninSlipRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="NIN"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1" />
+
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/idNumberTV"
@@ -607,7 +797,7 @@
                     android:text="ID Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/meansOfIdTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/meansOfIdRG" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/idNumberTIL"
@@ -633,30 +823,30 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/stateOfOriginTV"
+                    android:id="@+id/imssinNumberTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
-                    android:text="State of Origin"
+                    android:text="IMSSIN"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/idNumberTIL" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/stateOfOriginTIL"
+                    android:id="@+id/imssinNumberTIL"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/stateOfOriginTV"
-                    app:layout_constraintTop_toBottomOf="@+id/stateOfOriginTV">
+                    app:layout_constraintStart_toStartOf="@+id/imssinNumberTV"
+                    app:layout_constraintTop_toBottomOf="@+id/imssinNumberTV">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/stateOfOriginET"
+                        android:id="@+id/imssinNumberET"
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
@@ -666,6 +856,33 @@
                         android:textSize="14sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/stateOfOriginTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="State of Origin"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imssinNumberTIL" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/stateOfOriginSpinner"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/nunito_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/stateOfOriginTV"
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfOriginTV">
+
+                </androidx.appcompat.widget.AppCompatSpinner>
 
                 <TextView
                     android:id="@+id/localGovernmentTV"
@@ -677,30 +894,22 @@
                     android:text="Local Government"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/stateOfOriginTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/stateOfOriginSpinner" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/localGovernmentTIL"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/localGovernmentSpinner"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/localGovernmentTV"
                     app:layout_constraintTop_toBottomOf="@+id/localGovernmentTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/localGovernmentET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                </androidx.appcompat.widget.AppCompatSpinner>
 
                 <TextView
                     android:id="@+id/phoneNumberTV"
@@ -712,7 +921,7 @@
                     android:text="Phone Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/localGovernmentTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/localGovernmentSpinner" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/phoneNumberTIL"
@@ -730,7 +939,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:padding="0dp"
                         android:singleLine="true"
                         android:textSize="14sp" />
@@ -820,28 +1029,20 @@
                     app:layout_constraintTop_toBottomOf="@id/residentialAddressTIL"
                     tools:layout_editor_absoluteY="1394dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/bankNameTIL"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/bankNameSpinner"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/bankNameTV"
                     app:layout_constraintTop_toBottomOf="@+id/bankNameTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/bankNameET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                </androidx.appcompat.widget.AppCompatSpinner>
 
                 <TextView
                     android:id="@+id/acctNumberTV"
@@ -853,7 +1054,7 @@
                     android:text="Bank Acct Number"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bankNameTIL"
+                    app:layout_constraintTop_toBottomOf="@id/bankNameSpinner"
                     tools:layout_editor_absoluteY="1394dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -872,7 +1073,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:padding="0dp"
                         android:singleLine="true"
                         android:textSize="14sp" />
@@ -908,7 +1109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:padding="0dp"
                         android:singleLine="true"
                         android:textSize="14sp" />
@@ -917,39 +1118,32 @@
 
                 <TextView
                     android:id="@+id/vehicleRouteTV"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginStart="32dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito_sans_bold"
                     android:text="Vehicle Route"
                     android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@+id/bvnTIL"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bvnTIL"
-                    tools:layout_editor_absoluteY="1394dp" />
+                    app:layout_constraintTop_toBottomOf="@id/bvnTIL" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/vehicleRouteTIL"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/vehicleRouteSpinner"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginTop="6dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="32dp"
                     android:fontFamily="@font/nunito_sans"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/vehicleRouteTV"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleRouteTV">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/vehicleRouteET"
-                        android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
-                        android:padding="0dp"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                </androidx.appcompat.widget.AppCompatSpinner>
 
                 <TextView
                     android:id="@+id/roadWorthinessExpiryDateTV"
@@ -961,7 +1155,7 @@
                     android:text="Road Worthiness Expiry Date"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleRouteTIL" />
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleRouteSpinner" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/roadWorthinessExpiryDateTIL"
@@ -979,8 +1173,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="date"
                         android:padding="0dp"
+                        android:hint="YYYY/MM/DD"
                         android:singleLine="true"
                         android:textSize="14sp" />
 
@@ -1014,8 +1209,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="date"
                         android:padding="0dp"
+                        android:hint="YYYY/MM/DD"
                         android:singleLine="true"
                         android:textSize="14sp" />
 
@@ -1050,8 +1246,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:inputType="text"
+                        android:inputType="date"
                         android:padding="0dp"
+                        android:hint="YYYY/MM/DD"
                         android:singleLine="true"
                         android:textSize="14sp" />
 
@@ -1059,7 +1256,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/payOutstandingPaymentTV"
+                    android:id="@+id/addVehicleBTN"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"

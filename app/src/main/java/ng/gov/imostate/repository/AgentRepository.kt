@@ -7,7 +7,6 @@ import kotlinx.coroutines.withContext
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.response.ApiResponse
-import ng.gov.imostate.model.response.LoginResult
 import ng.gov.imostate.model.result.ApiResult
 import ng.gov.imostate.util.NetworkConnectivityUtil
 import timber.log.Timber

@@ -7,9 +7,6 @@ import kotlinx.coroutines.withContext
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.response.ApiResponse
-import ng.gov.imostate.model.response.LoginResult
-import ng.gov.imostate.model.response.OnboardVehicleResult
-import ng.gov.imostate.model.response.VehiclesResult
 import ng.gov.imostate.model.result.ApiResult
 import ng.gov.imostate.util.NetworkConnectivityUtil
 import timber.log.Timber

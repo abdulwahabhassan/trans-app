@@ -3,7 +3,6 @@ package ng.gov.imostate.viewmodel
 import android.app.Application
 import android.content.ContentUris
 import android.provider.MediaStore
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ng.gov.imostate.model.MediaStoreImage
+import ng.gov.imostate.model.domain.MediaStoreImage
 import timber.log.Timber
 
 class GalleryActivityViewModel(application: Application) : AndroidViewModel(application) {

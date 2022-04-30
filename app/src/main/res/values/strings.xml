@@ -3,4 +3,143 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pay_outstanding"> <u>Pay Outstanding</u></string>
     <string name="daily_rates"><u>Daily Rates</u></string>
+
+    <string-array name="vehicle_routes">
+        <item>108088</item>
+        <item>28000</item>
+        <item>39907099</item>
+        <item>49909</item>
+        <item>50877</item>
+        <item>686688</item>
+    </string-array>
+
+    <string-array name="vehicle_category">
+        <item>Tricycle</item>
+        <item>Mini bus</item>
+        <item>Standard bus</item>
+        <item>Small truck</item>
+        <item>Heavy duty truck</item>
+    </string-array>
+
+    <string-array name="nigerian_states">
+        <item>Abia State</item>
+        <item>Adamawa State</item>
+        <item>Akwa Ibom State</item>
+        <item>Anambra State</item>
+        <item>Bauchi State</item>
+        <item>Bayelsa State</item>
+        <item>Benue State</item>
+        <item>Borno State</item>
+        <item>Cross River State</item>
+        <item>Delta State</item>
+        <item>Ebonyi State</item>
+        <item>Edo State</item>
+        <item>Ekiti State</item>
+        <item>Enugu State</item>
+        <item>FCT</item>
+        <item>Gombe State</item>
+        <item>Imo State</item>
+        <item>Jigawa State</item>
+        <item>Kaduna State</item>
+        <item>Kano State</item>
+        <item>Katsina State</item>
+        <item>Kebbi State</item>
+        <item>Kogi State</item>
+        <item>Kwara State</item>
+        <item>Lagos State</item>
+        <item>Nasarawa State</item>
+        <item>Niger State</item>
+        <item>Ogun State</item>
+        <item>Ondo State</item>
+        <item>Osun State</item>
+        <item>Oyo State</item>
+        <item>Plateau State</item>
+        <item>Rivers State</item>
+        <item>Sokoto State</item>
+        <item>Taraba State</item>
+        <item>Yobe State</item>
+        <item>Zamfara State</item>
+    </string-array>
+
+    <string-array name="imo_state_local_government_areas">
+        <item>Aboh Mbaise</item>
+        <item>Ahiazu Mbaise</item>
+        <item>Ehime Mbano</item>
+        <item>Ezinihitte Mbaise</item>
+        <item>Ideato North</item>
+        <item>Ideato South</item>
+        <item>Ihitte/Uboma</item>
+        <item>Ikeduru</item>
+        <item>Isiala Mbano</item>
+        <item>Isu</item>
+        <item>Mbaitoli</item>
+        <item>Ngor Okpala</item>
+        <item>Njaba</item>
+        <item>Nkwerre</item>
+        <item>Nwangele</item>
+        <item>Obowo</item>
+        <item>Oguta</item>
+        <item>Ohaji/Egbema</item>
+        <item>Okigwe</item>
+        <item>Onuimo</item>
+        <item>Orlu</item>
+        <item>Orsu</item>
+        <item>Oru East</item>
+        <item>Owerri West</item>
+        <item>Owerri Municipal</item>
+        <item>Oru West</item>
+        <item>Owerri North</item>
+    </string-array>
+
+    <string-array name="banks_names">
+        <item>Access Bank Plc</item>
+        <item>Fidelity Bank Plc</item>
+        <item>First City Monument Bank Limited</item>
+        <item>First Bank of Nigeria Limited</item>
+        <item>Guaranty Trust Holding Company Plc</item>
+        <item>Union Bank of Nigeria Plc</item>
+        <item>United Bank for Africa Plc</item>
+        <item>Zenith Bank Plc</item>
+        <item>Citibank Nigeria Limited</item>
+        <item>Ecobank Nigeria</item>
+        <item>Heritage Bank Plc</item>
+        <item>Keystone Bank Limited</item>
+        <item>Polaris Bank Limited</item>
+        <item>Stanbic IBTC Bank Plc</item>
+        <item>Standard Chartered</item>
+        <item>Sterling Bank Plc</item>
+        <item>Titan Trust Bank Limited</item>
+        <item>Unity Bank Plc</item>
+        <item>Wema Bank Plc</item>
+        <item>Globus Bank Limited</item>
+        <item>Parallex Bank Limited</item>
+        <item>Providus Bank Limited</item>
+        <item>SunTrust Bank Nigeria Limited</item>
+        <item>Jaiz Bank Plc</item>
+        <item>LOTUS BANK</item>
+        <item>TAJBank Limited</item>
+        <item>Mutual Trust Microfinance Bank</item>
+        <item>Rephidim Microfinance Bank</item>
+        <item>Shepherd Trust Microfinance Bank</item>
+        <item>Empire Trust Microfinance Bank</item>
+        <item>Finca Microfinance Bank Limited</item>
+        <item>Fina Trust Microfinance Bank</item>
+        <item>Accion Microfinance Bank</item>
+        <item>Peace Microfinance Bank</item>
+        <item>Infinity Microfinance Bank</item>
+        <item>Pearl Microfinance Bank Limited</item>
+        <item>Covenant Mirofinance Bank Ltd</item>
+        <item>Sparkle Bank</item>
+        <item>Kuda Bank</item>
+        <item>Rubies Bank</item>
+        <item>VFD MFB</item>
+        <item>Mint Finex MFB</item>
+        <item>Mkobo MFB</item>
+        <item>Coronation Merchant Bank</item>
+        <item>FBNQuest Merchant Bank</item>
+        <item>FSDH Merchant Bank</item>
+        <item>Rand Merchant Bank</item>
+        <item>Nova Merchant Bank</item>
+    </string-array>
+
 </resources>

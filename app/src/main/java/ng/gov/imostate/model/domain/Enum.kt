@@ -1,4 +1,4 @@
-package ng.gov.imostate.model
+package ng.gov.imostate.model.domain
 
 enum class Api(val baseUrl: String) {
     PROD(baseUrl = "http://https://www.imostate.gov.ng/api/v1/"),

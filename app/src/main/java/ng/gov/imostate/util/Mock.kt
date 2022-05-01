@@ -24,7 +24,7 @@ object Mock {
         return listOf(
             Update("1", "Daily Prices Updated! - Check Now"),
             Update("2", "Route Exempted: World Bank - Orji"),
-            Update("3", "Route Exempted: World Bank - Orji, Amakohia - Warehouse, Orlu - Orji")
+            Update("3", "Route Exempted: World Bank - Orji, Amakohia - Warehouse, Orlu")
         )
     }
 }

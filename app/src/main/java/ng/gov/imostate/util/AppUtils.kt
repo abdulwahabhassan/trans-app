@@ -162,11 +162,11 @@ object AppUtils {
         }
     }
 
-    fun showLoginButton(show: Boolean, btn: View) {
+    fun showView(show: Boolean, view: View) {
         if (show) {
-            btn.visibility = View.VISIBLE
+            view.visibility = View.VISIBLE
         } else {
-            btn.visibility = View.INVISIBLE
+            view.visibility = View.INVISIBLE
         }
     }
 

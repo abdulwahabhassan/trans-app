@@ -21,8 +21,8 @@
             android:layout_height="42dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:padding="8dp"
             android:backgroundTint="@color/dark_blue"
+            android:padding="8dp"
             android:src="@drawable/ic_arrow_left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +38,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
@@ -68,6 +69,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="visible"
+        app:indicatorColor="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/transactionsRV"
+        app:layout_constraintEnd_toEndOf="@+id/transactionsRV"
+        app:layout_constraintStart_toStartOf="@+id/transactionsRV"
+        app:layout_constraintTop_toTopOf="@+id/transactionsRV"
+        app:trackColor="@color/sky_blue" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionsRV"
@@ -76,9 +89,9 @@
         android:layout_marginHorizontal="16dp"
         android:overScrollMode="never"
         android:paddingHorizontal="2dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/payOutstandingPaymentTV"
+        app:layout_constraintBottom_toTopOf="@+id/generateLastReceiptBTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,23 +99,39 @@
         tools:listitem="@layout/item_transaction" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/payOutstandingPaymentTV"
+        android:id="@+id/generateLastReceiptBTN"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_sans_bold"
-        android:text="Generate Last Receipt"
-        android:textColor="@color/white"
         android:layout_marginHorizontal="32dp"
-        app:cornerRadius="8dp"
-        android:textAllCaps="false"
-        android:padding="15dp"
-        android:backgroundTint="@color/dark_blue"
         android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:padding="12dp"
+        android:text="PRINT LAST RECEIPT"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transactionsRV"
         app:strokeColor="@color/dark_blue" />
+
+    <TextView
+        android:id="@+id/button_bluetooth_browse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/log_out_bg"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="6dp"
+        android:drawableTint="@color/dark_blue"
+        android:drawableStart="@drawable/ic_print"
+        android:textColor="@color/dark_blue"
+        android:textAllCaps="false"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

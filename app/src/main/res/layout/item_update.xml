@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/nunito_sans"
-            android:maxLines="1"
+            android:maxLines="2"
             android:layout_marginHorizontal="16dp"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/updateIV"

@@ -3,8 +3,6 @@ package ng.gov.imostate.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -58,7 +56,7 @@ class LoginFragment : Fragment() {
                 val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                 findNavController().navigate(action)
             } else {
-                AppUtils.showLoginButton(true, binding.loginBTN)
+                AppUtils.showView(true, binding.loginBTN)
                 AppUtils.showProgressIndicator(false, binding.progressIndicator)
             }
 
@@ -81,7 +79,7 @@ class LoginFragment : Fragment() {
                 )
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                     AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                    AppUtils.showLoginButton(false, binding.loginBTN)
+                    AppUtils.showView(false, binding.loginBTN)
                     val viewModelResult = viewModel.loginAttendant(LoginRequest(email, password))
                     Timber.d("$viewModelResult")
                     when (viewModelResult) {
@@ -121,7 +119,7 @@ class LoginFragment : Fragment() {
                         is ViewModelResult.Error -> {
                             AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                             AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                            AppUtils.showLoginButton(true, binding.loginBTN)
+                            AppUtils.showView(true, binding.loginBTN)
                         }
                     }
                 }

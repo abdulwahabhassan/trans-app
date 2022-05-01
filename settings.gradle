@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Trans App"
 include ':app'
+include ':escposprinter'

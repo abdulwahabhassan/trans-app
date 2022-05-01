@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
-import ng.gov.imostate.databinding.FragmentHomeBinding
 import ng.gov.imostate.model.domain.Route
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.result.ViewModelResult
@@ -28,7 +26,6 @@ import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.DateInputMask
 import ng.gov.imostate.viewmodel.AddVehicleFragmentViewModel
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
-import ng.gov.imostate.viewmodel.LoginFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
@@ -198,7 +195,7 @@ class AddVehicleFragment : Fragment() {
                     Timber.d("$onboardVehicleRequest")
                     viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                         AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                        AppUtils.showLoginButton(false, binding.addVehicleBTN)
+                        AppUtils.showView(false, binding.addVehicleBTN)
                         val result = viewModel.getInitialUserPreferences().token?.let { token ->
                             viewModel.onboardVehicle(token, onboardVehicleRequest)
                         }!!
@@ -212,7 +209,7 @@ class AddVehicleFragment : Fragment() {
                                 Timber.d(result.errorMessage)
                                 AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
                                 AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                                AppUtils.showLoginButton(true, binding.addVehicleBTN)
+                                AppUtils.showView(true, binding.addVehicleBTN)
                             }
                         }
                     }

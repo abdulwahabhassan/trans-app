@@ -203,7 +203,7 @@ class TransactionsFragment : Fragment() {
                     printer,
                     requireContext().getResources()
                         .getDrawableForDensity(
-                            R.drawable.imo_state_logo,
+                            R.drawable.imo_logo,
                             DisplayMetrics.DENSITY_MEDIUM
                         )
                 )

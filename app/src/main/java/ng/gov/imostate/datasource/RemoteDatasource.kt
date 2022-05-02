@@ -3,6 +3,7 @@ package ng.gov.imostate.datasource
 import ng.gov.imostate.api.ApiService
 import ng.gov.imostate.model.apiresult.*
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
+import ng.gov.imostate.model.request.GetVehicleRequest
 import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.response.*
@@ -23,15 +24,23 @@ class RemoteDatasource  @Inject constructor(
         return apiService.getAllVehicles(token)
     }
 
+    suspend fun getVehicle(token: String, getVehicleRequest: GetVehicleRequest): ApiResponse<Any> {
+        return apiService.getVehicle(token, getVehicleRequest)
+    }
+
     suspend fun getDashBoardMetrics(token: String,): ApiResponse<MetricsResult> {
         return apiService.getDashboardMetrics(token)
     }
 
-    suspend fun createSyncTransactions(token: String, vehicleId: Int, data: CreateSyncTransactionsRequest): ApiResponse<SyncTransactionsResult> {
+    suspend fun createSyncTransactions(token: String, vehicleId: String, data: CreateSyncTransactionsRequest): ApiResponse<SyncTransactionsResult> {
         return apiService.createSyncTransactions(token, vehicleId = vehicleId, data = data)
     }
 
     suspend fun getTransactions(token: String,): ApiResponse<TransactionsResult> {
         return apiService.getTransactions(token)
+    }
+
+    suspend fun getRecentTransaction(token: String, vehicleId: String): ApiResponse<TransactionResult> {
+        return apiService.getRecentTransaction(token, vehicleId)
     }
 }

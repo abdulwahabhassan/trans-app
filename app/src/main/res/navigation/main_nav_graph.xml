@@ -40,20 +40,12 @@
         android:id="@+id/vehicleDetailsDialogFragment"
         android:name="ng.gov.imostate.ui.VehicleDetailsDialogFragment"
         android:label="fragment_vehicle_details_dialog"
-        tools:layout="@layout/fragment_vehicle_details_dialog" >
-        <action
-            android:id="@+id/action_vehicleDetailsDialogFragment_to_scannedResultFragment"
-            app:destination="@id/scannedResultFragment" />
-    </dialog>
+        tools:layout="@layout/fragment_vehicle_details_dialog" />
     <fragment
         android:id="@+id/scannedResultFragment"
         android:name="ng.gov.imostate.ui.ScannedResultFragment"
         android:label="fragment_scanned_result"
-        tools:layout="@layout/fragment_scanned_result" >
-        <action
-            android:id="@+id/action_scannedResultFragment_to_outStandingPaymentFragment"
-            app:destination="@id/outStandingPaymentFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_scanned_result" />
     <dialog
         android:id="@+id/dailyRatesDialogFragment"
         android:name="ng.gov.imostate.ui.DailyRatesDialogFragment"
@@ -74,7 +66,11 @@
         android:id="@+id/successFragment"
         android:name="ng.gov.imostate.ui.SuccessFragment"
         android:label="fragment_success"
-        tools:layout="@layout/fragment_success" />
+        tools:layout="@layout/fragment_success" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/updatesFragment"
         android:name="ng.gov.imostate.ui.UpdatesFragment"

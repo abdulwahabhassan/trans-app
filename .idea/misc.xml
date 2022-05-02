@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable-v24/connectivity_offline_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/amount_to_pay_text_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/balance_text_bg.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/balance_text_green_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/connectivity_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/connectivity_offline_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/daily_rates_text_bg.xml" value="0.187" />
@@ -19,6 +20,7 @@
         <entry key="app/src/main/res/drawable/rank_text_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/sync_btn_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/transaction_rv_bg.xml" value="0.187" />
         <entry key="app/src/main/res/layout/activity_gallery.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19739583333333333" />
@@ -30,7 +32,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.18697916666666667" />
         <entry key="app/src/main/res/layout/fragment_login_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_more.xml" value="0.19895833333333332" />
-        <entry key="app/src/main/res/layout/fragment_out_standing_payment.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_out_standing_payment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_scan.xml" value="0.1234375" />

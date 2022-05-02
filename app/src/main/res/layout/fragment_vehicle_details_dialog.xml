@@ -33,16 +33,17 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/enterVehicleDetailsTV"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="Enter Vehicle Details"
+        android:text="Enter Vehicle License"
         android:textAlignment="center"
         android:textColor="?colorOnSurface"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
@@ -51,21 +52,34 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterVehicleDetailsTV">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/vehicleDetailsET"
+            android:id="@+id/vehicleLicenseET"
             android:layout_width="match_parent"
             android:padding="0dp"
             android:layout_height="46dp"
-            android:inputType="number"
+            android:inputType="text"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/dark_blue"
+        app:trackColor="@color/sky_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/continueBTN"
+        app:layout_constraintEnd_toEndOf="@+id/continueBTN"
+        app:layout_constraintStart_toStartOf="@+id/continueBTN"
+        app:layout_constraintTop_toTopOf="@+id/continueBTN" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continueBTN"

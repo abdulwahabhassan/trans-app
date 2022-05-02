@@ -3,6 +3,7 @@ package ng.gov.imostate.printer;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 
 import com.dantsu.escposprinter.EscPosCharsetEncoding;
@@ -63,7 +64,7 @@ public abstract class AsyncEscPosPrint extends AsyncTask<AsyncEscPosPrinter, Int
                     printerData.getPrinterDpi(),
                     printerData.getPrinterWidthMM(),
                     printerData.getPrinterNbrCharactersPerLine(),
-                    new EscPosCharsetEncoding("windows-1252", 16)
+                    new EscPosCharsetEncoding("windows-1252", 21)
             );
 
             // printer.useEscAsteriskCommand(true);
@@ -112,7 +113,8 @@ public abstract class AsyncEscPosPrint extends AsyncTask<AsyncEscPosPrinter, Int
             this.dialog.setCancelable(false);
             this.dialog.setIndeterminate(false);
             this.dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            this.dialog.show();
+            //I DO NOT WANT TO SHOW PRINTING IN PROGRESS
+            //this.dialog.show();
         }
     }
 
@@ -146,12 +148,15 @@ public abstract class AsyncEscPosPrint extends AsyncTask<AsyncEscPosPrinter, Int
         }
 
         switch (result.getPrinterStatus()) {
-            case AsyncEscPosPrint.FINISH_SUCCESS:
-                new AlertDialog.Builder(context)
-                        .setTitle("Success")
-                        .setMessage("Congratulation ! The texts are printed !")
-                        .show();
-                break;
+            //I DO NOT WANT TO SHOW DIALOG FOR SUCCESSFUL PRINT
+//            case AsyncEscPosPrint.FINISH_SUCCESS:
+//                new AlertDialog.Builder(context)
+//                        .setTitle("Successful print")
+//                        .setPositiveButton("Ok", (dialogInterface, i) -> {
+//                            dialogInterface.dismiss();
+//                        })
+//                        .show();
+//                break;
             case AsyncEscPosPrint.FINISH_NO_PRINTER:
                 new AlertDialog.Builder(context)
                         .setTitle("No printer")

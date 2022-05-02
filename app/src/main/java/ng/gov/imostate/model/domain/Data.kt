@@ -10,5 +10,5 @@ data class Data (
     @Json(name = "lpd")
     val lpd: String,
     @Json(name = "ob")
-    val ob: Long
+    val ob: Double
 )

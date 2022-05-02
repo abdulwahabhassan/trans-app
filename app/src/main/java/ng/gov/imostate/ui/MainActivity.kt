@@ -1,22 +1,18 @@
 package ng.gov.imostate.ui
 
 //import timber.log.Timber
-import android.Manifest
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -32,6 +28,8 @@ import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.MainActivityViewModel
+import ng.gov.imostate.viewmodel.NfcMode
+import ng.gov.imostate.viewmodel.SharedNfcViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import java.nio.charset.Charset
@@ -49,7 +47,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
+    @Inject
+    lateinit var moshi: Moshi
     private lateinit var activityViewModel: MainActivityViewModel
+    private val sharedNfcViewModel: SharedNfcViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,19 +84,21 @@ class MainActivity : AppCompatActivity() {
         //init nfc tech discovered filter
         val techDiscoveredIntentFilter = IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED)
         //init nfc ndef discovered filter
-        val ndefDiscoveredIntentFilter = IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED).apply {
-            addDataType("application/json")
-        }
+//        val ndefDiscoveredIntentFilter = IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED).apply {
+//            addDataType("*/*")
+//        }
         //init array of all intent filters
-        intentFiltersArray = arrayOf(techDiscoveredIntentFilter, ndefDiscoveredIntentFilter)
+        intentFiltersArray = arrayOf(techDiscoveredIntentFilter)
         //init tech list of all nfc technologies to be handled
         techListsArray = arrayOf(
             arrayOf<String>(
-                NdefFormatable::class.java.name,
                 Ndef::class.java.name
             )
         )
 
+        Timber.d("On Create: ${intent}")
+        Timber.d("On Create: ${intent.data}")
+        Timber.d("On Create: ${intent.type}")
         Timber.d("On Create: ${intent.action}")
         resolveIntent(intent)
 
@@ -118,8 +121,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resolveIntent(intent: Intent) {
-
-
         lifecycleScope.launchWhenResumed {
             if (activityViewModel.getInitialUserPreferences().loggedIn == true) {
                 when (intent.action) {
@@ -128,22 +129,18 @@ class MainActivity : AppCompatActivity() {
                         val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
                         if (tagFromIntent != null) {
                             Timber.d("Tag tech list: ${tagFromIntent.techList}")
-                            val ndefFormatable = NdefFormatable.get(tagFromIntent)
-                            formatTagAsNdef(ndefFormatable)
-                            readTag(tagFromIntent)
-                        } else {
-                            Timber.d("Tag is null")
-                            AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
-                        }
-                    }
-                    NfcAdapter.ACTION_NDEF_DISCOVERED -> {
-                        Timber.d("NFC NDEF DISCOVERED")
-                        val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-                        if (tagFromIntent != null) {
-                            readTag(tagFromIntent)
-                            //writeTestDataToTag(tagFromIntent)
-                            //writeEmptyDataToTag(tagFromIntent)
-                            //readTag(tagFromIntent)
+                            if (sharedNfcViewModel.getNfcMode() == NfcMode.READ.name) {
+                                readTag(tagFromIntent)
+                            } else {
+                                //writeTestDataToTag(tagFromIntent)
+                                writeDataToTag(tagFromIntent, sharedNfcViewModel.getData())
+                                //rest to read mode. This is the default mode and must be rest back
+                                //after every write operation
+                                sharedNfcViewModel.setNfcMode(NfcMode.READ)
+                                //reset data to null after write operation
+                                sharedNfcViewModel.setData(null)
+                            }
+
                         } else {
                             Timber.d("Tag is null")
                             AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
@@ -154,7 +151,62 @@ class MainActivity : AppCompatActivity() {
                 AppUtils.showToast(this@MainActivity, "You need to login first", MotionToastStyle.INFO)
             }
         }
+    }
 
+    private fun writeDataToTag(tagFromIntent: Tag, data: Data?) {
+        Timber.d("Writing To Tag")
+        val records = arrayListOf<NdefRecord>()
+        val jsonRecord = createNdefJsonRecord(data)
+        if (jsonRecord != null) {
+            records.add(jsonRecord)
+            //this will embed the package name of the application inside an NDEF record, thereby
+            //preventing other applications from filtering for the same intent and
+            //potentially handling the data in tag
+            records.add(createAndroidApplicationRecord())
+            writeNdefRecordsToTag(records.toTypedArray(), tagFromIntent)
+        } else {
+            AppUtils.showToast(this, "Can't create record", MotionToastStyle.ERROR)
+        }
+    }
+    private fun createNdefJsonRecord(data: Data?): NdefRecord? {
+        val json: String
+        try {
+            if (data != null) {
+                json = AppUtils.convertToJson(data, this, moshi)
+            } else {
+                AppUtils.showToast(this, "Data not found", MotionToastStyle.ERROR)
+                return null
+            }
+        } catch (e: Exception) {
+            Timber.d(e.localizedMessage)
+            AppUtils.showToast(this, "Data Conversion to JSON failed", MotionToastStyle.ERROR)
+            return null
+        }
+
+        return NdefRecord.createMime(
+            "application/json",
+            json.toByteArray(Charset.forName("US-ASCII"))
+        )
+    }
+
+    private fun createAndroidApplicationRecord(): NdefRecord {
+        return NdefRecord.createApplicationRecord(BuildConfig.APPLICATION_ID)
+    }
+
+    private fun writeNdefRecordsToTag(records: Array<NdefRecord>, tag: Tag) {
+        val ndef = Ndef.get(tag)
+        Timber.d("${ndef.maxSize}")
+        val message = NdefMessage(records)
+        try {
+            ndef.connect()
+            ndef.writeNdefMessage(message)
+            AppUtils.showToast(this, "Successfully synced tag", MotionToastStyle.SUCCESS)
+        } catch (e: Exception) {
+            AppUtils.showToast(this, e.message, MotionToastStyle.ERROR)
+            Timber.d(e.message)
+        } finally {
+            ndef.close()
+        }
     }
 
     private fun writeEmptyDataToTag(tagFromIntent: Tag) {
@@ -173,6 +225,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun writeTestDataToTag(tagFromIntent: Tag) {
         Timber.d("Writing To Tag")
         val records = arrayListOf<NdefRecord>()
@@ -182,21 +235,6 @@ class MainActivity : AppCompatActivity() {
         //potentially handling the data in tag
         records.add(createAndroidApplicationRecord())
         writeNdefRecordsToTag(records.toTypedArray(), tagFromIntent)
-    }
-
-    private fun writeNdefRecordsToTag(records: Array<NdefRecord>, tag: Tag) {
-        val ndef = Ndef.get(tag)
-        Timber.d("${ndef.maxSize}")
-        val message = NdefMessage(records)
-        try {
-            ndef.connect()
-            ndef.writeNdefMessage(message)
-        } catch (e: Exception) {
-            AppUtils.showToast(this, e.message, MotionToastStyle.ERROR)
-            Timber.d(e.message)
-        } finally {
-            ndef.close()
-        }
     }
 
     private fun formatTagAsNdef(ndefFormatable: NdefFormatable?) {
@@ -209,6 +247,19 @@ class MainActivity : AppCompatActivity() {
         } finally {
             ndefFormatable?.close()
         }
+    }
+
+    private fun createNdefTextRecord(payload: String, locale: Locale, encodeInUtf8: Boolean): NdefRecord {
+        val langBytes = locale.language.toByteArray(Charset.forName("US-ASCII"))
+        val utfEncoding = if (encodeInUtf8) Charset.forName("UTF-8") else Charset.forName("UTF-16")
+        val textBytes = payload.toByteArray(utfEncoding)
+        val utfBit: Int = if (encodeInUtf8) 0 else 1 shl 7
+        val status = (utfBit + langBytes.size).toChar()
+        val data = ByteArray(1 + langBytes.size + textBytes.size)
+        data[0] = status.toByte()
+        System.arraycopy(langBytes, 0, data, 1, langBytes.size)
+        System.arraycopy(textBytes, 0, data, 1 + langBytes.size, textBytes.size)
+        return NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, ByteArray(0), data)
     }
 
     private fun createFirstNdefEmptyMessage(): NdefMessage {
@@ -252,45 +303,50 @@ class MainActivity : AppCompatActivity() {
         val ndef = Ndef.get(tag)
         try {
             ndef.connect()
-            ndef.ndefMessage.records.map {
-                //you only need to work with the first record, which has a MIME type of "application/json"
-                //and not the second record (application record) which has a MIME type of "android.com:pkg"
-                if (it.toMimeType() == "application/json") {
-                    val json = String(it.payload, Charset.forName("US-ASCII"))
-                    val moshi = Moshi.Builder()
-                        .add(KotlinJsonAdapterFactory())
-                        .build()
-                    val data = AppUtils.convertToData(json, moshi)
+            if (ndef.ndefMessage.records != null) {
+                ndef.ndefMessage.records.map {
+                    //you only need to work with the first record, which has a MIME type of "application/json"
+                    //and not the second record (application record) which has a MIME type of "android.com:pkg"
+                    if (it.toMimeType() == "application/json") {
+                        val json = String(it.payload, Charset.forName("US-ASCII"))
+                        val moshi = Moshi.Builder()
+                            .add(KotlinJsonAdapterFactory())
+                            .build()
 
-                    if (data != null) {
-                        if (data.name ==  "" && data.vrn == "" && data.lpd == "" && data.ob == 0L) {
-                            Timber.d("Data is empty")
-                            AppUtils.showToast(
-                                this,
-                                "Data is empty!",
-                                MotionToastStyle.INFO
-                            )
+                        val data = AppUtils.convertToData(json, moshi)
+
+                        if (data != null) {
+                            if (data.name == "" && data.vrn == "" && data.lpd == "" && data.ob == 0.00) {
+                                Timber.d("Record is empty")
+                                AppUtils.showToast(
+                                    this,
+                                    "Record is empty!",
+                                    MotionToastStyle.INFO
+                                )
+                            } else {
+                                AppUtils.showToast(
+                                    this,
+                                    "Name: ${data.name}\nVRN: ${data.vrn}",
+                                    MotionToastStyle.INFO
+                                )
+                                //display tag payload
+                                goToScannedTagResultScreen(data)
+                            }
                         } else {
                             AppUtils.showToast(
                                 this,
-                                "Name: ${data.name}\nVRN: ${data.vrn}",
+                                "Payload conversion failed!",
                                 MotionToastStyle.INFO
                             )
-                            //display tag payload
-                            goToScannedTagResultScreen(data)
                         }
-                    } else {
-                        AppUtils.showToast(
-                            this,
-                            "No data found!",
-                            MotionToastStyle.INFO
-                        )
                     }
+                    //log tag content of all records
+                    Timber.d("PAYLOAD ${String(it.payload, Charset.forName("US-ASCII"))}")
+                    Timber.d("ID ${String(it.id, Charset.forName("US-ASCII"))}")
+                    Timber.d("TYPE ${String(it.type, Charset.forName("US-ASCII"))}")
                 }
-                //log tag content of all records
-                Timber.d("PAYLOAD ${String(it.payload, Charset.forName("US-ASCII"))}")
-                Timber.d("ID ${String(it.id, Charset.forName("US-ASCII"))}")
-                Timber.d("TYPE ${String(it.type, Charset.forName("US-ASCII"))}")
+            } else {
+                AppUtils.showToast(this, "No record found", MotionToastStyle.ERROR)
             }
         } catch (e: Exception) {
             AppUtils.showToast(this, e.message, MotionToastStyle.ERROR)
@@ -305,30 +361,16 @@ class MainActivity : AppCompatActivity() {
             it.putString(DRIVER_NAME_KEY, data.name)
             it.putString(VEHICLE_REGISTRATION_NUMBER_KEY, data.vrn)
             it.putString(LAST_PAYMENT_DATE_KEY, data.lpd)
-            it.putLong(OUTSTANDING_BAL_KEY, data.ob)
+            it.putDouble(OUTSTANDING_BAL_KEY, data.ob)
+        }
+        if (navController.currentDestination?.id == R.id.scannedResultFragment) {
+            navController.popBackStack()
         }
         navController.navigate(
             R.id.scannedResultFragment,
             bundle,
             NavOptions.Builder().setLaunchSingleTop(true).build()
         )
-    }
-
-    private fun createAndroidApplicationRecord(): NdefRecord {
-        return NdefRecord.createApplicationRecord(BuildConfig.APPLICATION_ID)
-    }
-
-    private fun createNdefTextRecord(payload: String, locale: Locale, encodeInUtf8: Boolean): NdefRecord {
-        val langBytes = locale.language.toByteArray(Charset.forName("US-ASCII"))
-        val utfEncoding = if (encodeInUtf8) Charset.forName("UTF-8") else Charset.forName("UTF-16")
-        val textBytes = payload.toByteArray(utfEncoding)
-        val utfBit: Int = if (encodeInUtf8) 0 else 1 shl 7
-        val status = (utfBit + langBytes.size).toChar()
-        val data = ByteArray(1 + langBytes.size + textBytes.size)
-        data[0] = status.toByte()
-        System.arraycopy(langBytes, 0, data, 1, langBytes.size)
-        System.arraycopy(textBytes, 0, data, 1 + langBytes.size, textBytes.size)
-        return NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, ByteArray(0), data)
     }
 
     companion object {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.LoginFragmentViewModel
+import ng.gov.imostate.viewmodel.MainActivityViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
@@ -29,6 +31,7 @@ class LoginFragment : Fragment() {
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
     lateinit var viewModel: LoginFragmentViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +69,7 @@ class LoginFragment : Fragment() {
 
             if (AppUtils.isDebugBuild()) {
                 userEmailET.setText("agent@gmail.com")
-                passwordET.setText("3hKTqCCs")
+                passwordET.setText("YVZ0rPXi")
             }
 
             loginBTN.setOnClickListener {
@@ -84,7 +87,7 @@ class LoginFragment : Fragment() {
                     Timber.d("$viewModelResult")
                     when (viewModelResult) {
                         is ViewModelResult.Success -> {
-                            AppUtils.showToast(requireActivity(), "Successfully logged in", MotionToastStyle.SUCCESS)
+                            AppUtils.showToast(requireActivity(), "Successful login", MotionToastStyle.SUCCESS)
 
                             val token = viewModelResult.data?.token
                             val user = viewModelResult.data?.user

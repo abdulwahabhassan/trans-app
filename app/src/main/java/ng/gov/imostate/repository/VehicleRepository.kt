@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.datasource.RemoteDatasource
+import ng.gov.imostate.model.request.GetVehicleRequest
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.response.ApiResponse
 import ng.gov.imostate.model.result.ApiResult
@@ -22,6 +23,21 @@ class VehicleRepository @Inject constructor(
     suspend fun getAllVehicles(token: String,) = withContext(dispatcher) {
         when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
             dataSource.getAllVehicles(token)
+        }) {
+            is ApiResult.Success -> {
+                Timber.d("$apiResult")
+                apiResult.response
+            }
+            is ApiResult.Error -> {
+                Timber.d("$apiResult")
+                ApiResponse(message = apiResult.message)
+            }
+        }
+    }
+
+    suspend fun getVehicle(token: String, getVehicleRequest: GetVehicleRequest) = withContext(dispatcher) {
+        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+            dataSource.getVehicle(token, getVehicleRequest)
         }) {
             is ApiResult.Success -> {
                 Timber.d("$apiResult")

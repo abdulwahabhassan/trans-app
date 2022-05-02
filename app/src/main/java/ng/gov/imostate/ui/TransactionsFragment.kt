@@ -186,12 +186,6 @@ class TransactionsFragment : Fragment() {
         }
     }
 
-    /*==============================================================================================
-    ===================================ESC/POS PRINTER PART=========================================
-    ==============================================================================================*/
-    /**
-     * Asynchronous printing
-     */
     @SuppressLint("SimpleDateFormat")
     fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
         val format = SimpleDateFormat("'Date' yyyy-MM-dd 'Time' HH:mm:ss")
@@ -211,29 +205,25 @@ class TransactionsFragment : Fragment() {
             [L]
             [C]<u><font size='big'>Tax Receipt</font></u>
             [L]
-            [C]<u type='double'>${format.format(Date())}</u>
+            [C]${format.format(Date())}
             [C]
             [C]================================
             [L]
-            [L]<b>AMOUNT</b>[R]500.99₦
+            [L]<b>AMOUNT</b>[R]500.99 NGN
             [L]
-            [L]<b>VAT</b>[R]10.00₦
+            [L]<b>VAT</b>[R]10.00 NGN
             [L]
             [C]--------------------------------
-            [R]TOTAL CHARGE :[R]510.99₦
-            [R]TAX :[R]1.50₦
+            [R]TOTAL CHARGE :[R]510.99 NGN
+            [R]TAX :[R]1.50 NGN
             [L]
             [C]================================
             [L]
-            [L]<u><font color='bg-black'>Customer Details:</font></u>
-            [L]Johnson Dubem
-            [L]No. 5 Amakohia Flyover,
-            [L]Owerri, Imo
+            [L]<font color='bg-black'>Vehicle Details:</font>
+            [L]Vehicle ID: 3892
+            [L]Driver: Johnson Dubem
+            [L]Address: No. 5 Amakohia Flyover, Owerri, Imo
             [L]Phone: 08012014561
-            
-            [C]<barcode type='ean13' height='10'>831254784551</barcode>
-            [L]
-            [C]<qrcode size='20'>http://www.developpeur-web.dantsu.com/</qrcode>
             
             """.trimIndent()
         )

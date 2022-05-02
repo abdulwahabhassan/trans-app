@@ -51,6 +51,30 @@ class AppViewModelsFactory @Inject constructor(
                     userPreferencesRepository
                 ) as T
             }
+            modelClass.isAssignableFrom(VehicleDetailsDialogFragmentViewModel::class.java) -> {
+                return VehicleDetailsDialogFragmentViewModel(
+                    userPreferencesRepository,
+                    vehicleRepository
+                ) as T
+            }
+            modelClass.isAssignableFrom(ScannedResultFragmentViewModel::class.java) -> {
+                return ScannedResultFragmentViewModel(
+                    userPreferencesRepository
+                ) as T
+            }
+            modelClass.isAssignableFrom(SuccessFragmentViewModel::class.java) -> {
+                return SuccessFragmentViewModel(
+                    userPreferencesRepository,
+                    vehicleRepository,
+                    transactionRepository
+                ) as T
+            }
+            modelClass.isAssignableFrom(OutstandingPaymentFragmentViewModel::class.java) -> {
+                return OutstandingPaymentFragmentViewModel(
+                    userPreferencesRepository,
+                    transactionRepository
+                ) as T
+            }
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

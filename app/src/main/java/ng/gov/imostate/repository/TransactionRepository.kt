@@ -20,7 +20,7 @@ class TransactionRepository @Inject constructor(
     private val networkConnectivityUtil: NetworkConnectivityUtil
 ): BaseRepository() {
 
-    suspend fun createSyncTransactions(token: String, vehicleId: Int, data: CreateSyncTransactionsRequest) = withContext(dispatcher) {
+    suspend fun createSyncTransactions(token: String, vehicleId: String, data: CreateSyncTransactionsRequest) = withContext(dispatcher) {
         when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
             dataSource.createSyncTransactions(token, vehicleId, data)
         }) {
@@ -38,6 +38,21 @@ class TransactionRepository @Inject constructor(
     suspend fun getTransactions(token: String,) = withContext(dispatcher) {
         when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
             dataSource.getTransactions(token)
+        }) {
+            is ApiResult.Success -> {
+                Timber.d("$apiResult")
+                apiResult.response
+            }
+            is ApiResult.Error -> {
+                Timber.d("$apiResult")
+                ApiResponse(message = apiResult.message)
+            }
+        }
+    }
+
+    suspend fun getRecentTransaction(token: String, vehicleId: String) = withContext(dispatcher) {
+        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+            dataSource.getRecentTransaction(token, vehicleId)
         }) {
             is ApiResult.Success -> {
                 Timber.d("$apiResult")

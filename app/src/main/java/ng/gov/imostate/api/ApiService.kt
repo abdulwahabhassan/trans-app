@@ -24,14 +24,13 @@ interface ApiService {
     @POST("agent/vehicle/vend/{id}")
     suspend fun createSyncTransactions(
         @Header("Authorization") token: String,
-        @Path("id") vehicleId: Int,
+        @Path("id") vehicleId: String,
         @Body data: CreateSyncTransactionsRequest
     ): ApiResponse<SyncTransactionsResult>
 
     @GET("agent/vehicle/{id}")
     suspend fun getVehicle(
         @Header("Authorization") token: String,
-        @Path("id") vehicleId: Int,
         @Body getVehicleRequest: GetVehicleRequest,
     ): ApiResponse<Any>
 
@@ -49,5 +48,11 @@ interface ApiService {
     suspend fun getTransactions(
         @Header("Authorization") token: String
     ): ApiResponse<TransactionsResult>
+
+    @GET("agent/vehicle/transaction/{id}")
+    suspend fun getRecentTransaction(
+        @Header("Authorization") token: String,
+        @Path("id") vehicleId: String,
+    ): ApiResponse<TransactionResult>
 
 }

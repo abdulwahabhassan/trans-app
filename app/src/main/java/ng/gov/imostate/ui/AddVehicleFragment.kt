@@ -287,7 +287,7 @@ class AddVehicleFragment : Fragment() {
             if (dobTIL.isVisible && dobET.text.isNullOrEmpty()){
                 dobTIL.error = "Please fill date of birth"
                 successful = false
-            } else if (dobET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+            } else if (dobET.text?.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) == false) {
                 dobTIL.error = "Please fill correct date format"
                 successful = false
             } else {
@@ -332,7 +332,7 @@ class AddVehicleFragment : Fragment() {
             if (roadWorthinessExpiryDateTIL.isVisible && roadWorthinessExpiryDateET.text.isNullOrEmpty()){
                 roadWorthinessExpiryDateTIL.error = "Please fill road worthiness expiry date"
                 successful = false
-            } else if (roadWorthinessExpiryDateTIL.isVisible && roadWorthinessExpiryDateET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+            } else if (roadWorthinessExpiryDateTIL.isVisible && roadWorthinessExpiryDateET.text?.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) == false) {
                 roadWorthinessExpiryDateTIL.error = "Please fill correct date format"
                 successful = false
             } else {
@@ -341,7 +341,7 @@ class AddVehicleFragment : Fragment() {
             if (vehicleLicenseExpiryDateTIL.isVisible && vehicleLicenseExpiryDateET.text.isNullOrEmpty()){
                 vehicleLicenseExpiryDateTIL.error = "Please fill vehicle license expiry date"
                 successful = false
-            } else if (vehicleLicenseExpiryDateTIL.isVisible && vehicleLicenseExpiryDateET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+            } else if (vehicleLicenseExpiryDateTIL.isVisible && vehicleLicenseExpiryDateET.text?.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) == false) {
                 vehicleLicenseExpiryDateTIL.error = "Please fill correct date format"
                 successful = false
             } else {
@@ -350,7 +350,7 @@ class AddVehicleFragment : Fragment() {
             if (vehicleInsuranceExpiryDateTIL.isVisible && vehicleInsuranceExpiryDateET.text.isNullOrEmpty()){
                 vehicleInsuranceExpiryDateTIL.error = "Please fill vehicle insurance  expiry date"
                 successful = false
-            } else if (vehicleInsuranceExpiryDateTIL.isVisible && vehicleInsuranceExpiryDateET.text?.matches(Regex("\\d{4}/\\d{2}/\\d{2}")) == false) {
+            } else if (vehicleInsuranceExpiryDateTIL.isVisible && vehicleInsuranceExpiryDateET.text?.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) == false) {
                 vehicleInsuranceExpiryDateTIL.error = "Please fill correct date format"
                 successful = false
             } else {

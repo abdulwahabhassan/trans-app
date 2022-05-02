@@ -35,24 +35,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- &lt;!&ndash;            NFC NDEF DISCOVERED&ndash;&gt; -->
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.nfc.action.NDEF_DISCOVERED"/> -->
-            <!-- <category android:name="android.intent.category.DEFAULT"/> -->
-            <!-- <data android:mimeType="application/json" /> -->
-            <!-- </intent-filter> -->
 
+<!--             &lt;!&ndash;            NFC NDEF DISCOVERED&ndash;&gt;-->
+<!--             <intent-filter>-->
+<!--             <action android:name="android.nfc.action.NDEF_DISCOVERED"/>-->
+<!--             <category android:name="android.intent.category.DEFAULT"/>-->
+<!--             <data android:mimeType="*/*" />-->
+<!--             </intent-filter>-->
+             <!--            NFC TECH DISCOVERED-->
+<!--             <intent-filter>-->
+<!--             <action android:name="android.nfc.action.TECH_DISCOVERED"/>-->
+<!--             </intent-filter>-->
+<!--             &lt;!&ndash;            meta data&ndash;&gt;-->
+<!--             <meta-data-->
+<!--             android:name="android.nfc.action.TECH_DISCOVERED"-->
+<!--             android:resource="@xml/nfc_tech_filter" />-->
 
-            <!-- &lt;!&ndash;            NFC TECH DISCOVERED&ndash;&gt; -->
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.nfc.action.TECH_DISCOVERED"/> -->
-            <!-- </intent-filter> -->
-
-
-            <!-- &lt;!&ndash;            meta data&ndash;&gt; -->
-            <!-- <meta-data -->
-            <!-- android:name="android.nfc.action.TECH_DISCOVERED" -->
-            <!-- android:resource="@xml/nfc_tech_filter" /> -->
         </activity>
         <activity
             android:name=".ui.GalleryActivity"

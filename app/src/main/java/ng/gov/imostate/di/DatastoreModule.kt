@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ng.gov.imostate.repository.UserPreferencesRepository
 import javax.inject.Singleton
 
 
@@ -35,3 +36,4 @@ object DataStoreModule {
         )
     }
 }
+

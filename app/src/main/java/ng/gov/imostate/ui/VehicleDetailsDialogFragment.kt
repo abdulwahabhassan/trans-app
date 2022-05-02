@@ -67,7 +67,7 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                         binding.vehicleLicenseET.text.toString()
                     )
                     bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2022-04-09")
-                    bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 0.00)
+                    bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 910.00)
                 }
 
                 val result = viewModel.getInitialUserPreferences().token?.let { token ->

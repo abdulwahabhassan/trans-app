@@ -65,6 +65,8 @@ class SuccessFragment : Fragment() {
                 //do network call to retrieve last transaction for this vehicle id (navArgs.id)
                 //if successfully retrieved, set sharedNfcViewModel data
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                    AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                    AppUtils.showView(false, binding.syncTagBTN)
                     val result = viewModel.getInitialUserPreferences().token?.let { token ->
                         viewModel.getRecentTransaction(
                             token, args.id)
@@ -79,6 +81,8 @@ class SuccessFragment : Fragment() {
                         sharedNfcViewModel.setData(Data("Ndede Nicholas", args.id, AppUtils.getCurrentDate(), 150.00))
                         sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
                     }
+                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                    AppUtils.showView(true, binding.syncTagBTN)
                 }
 
             }

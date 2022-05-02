@@ -115,14 +115,14 @@ class OutStandingPaymentFragment : Fragment() {
                             }
                             when (result) {
                                 is ViewModelResult.Success -> {
-                                    printBluetooth()
+                                    //printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
                                         .actionOutStandingPaymentFragmentToSuccessFragment(vehicleId!!)
                                     findNavController().navigate(action)
                                 }
                                 is ViewModelResult.Error -> {
                                     //debugging purpose
-                                    printBluetooth()
+                                    //printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
                                         .actionOutStandingPaymentFragmentToSuccessFragment(vehicleId!!)
                                     findNavController().navigate(action)

@@ -77,8 +77,12 @@ class TransactionsFragment : Fragment() {
 
         initUI()
 
-        binding.buttonBluetoothBrowse.setOnClickListener { browseBluetoothDevice() }
-        binding.generateLastReceiptBTN.setOnClickListener { printBluetooth() }
+        binding.buttonBluetoothBrowse.setOnClickListener {
+            browseBluetoothDevice()
+        }
+        binding.generateLastReceiptBTN.setOnClickListener {
+            printBluetooth()
+        }
 
     }
 
@@ -122,6 +126,14 @@ class TransactionsFragment : Fragment() {
 //                val button = binding.buttonBluetoothBrowse
 //                button.text = items[i]
             }
+            val alert = alertDialog.create()
+            alert.setCanceledOnTouchOutside(false)
+            alert.show()
+        } else {
+            val alertDialog = AlertDialog.Builder(requireContext())
+            alertDialog.setTitle("No printer found")
+            alertDialog.setMessage("Check that bluetooth is on")
+            alertDialog.setNegativeButton("OK") { p0, _ -> p0?.dismiss() }
             val alert = alertDialog.create()
             alert.setCanceledOnTouchOutside(false)
             alert.show()

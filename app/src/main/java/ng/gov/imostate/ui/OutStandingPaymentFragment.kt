@@ -115,14 +115,14 @@ class OutStandingPaymentFragment : Fragment() {
                             }
                             when (result) {
                                 is ViewModelResult.Success -> {
-                                    //printBluetooth()
+                                    printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
                                         .actionOutStandingPaymentFragmentToSuccessFragment(vehicleId!!)
                                     findNavController().navigate(action)
                                 }
                                 is ViewModelResult.Error -> {
                                     //debugging purpose
-                                    //printBluetooth()
+                                    printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
                                         .actionOutStandingPaymentFragmentToSuccessFragment(vehicleId!!)
                                     findNavController().navigate(action)
@@ -140,7 +140,7 @@ class OutStandingPaymentFragment : Fragment() {
                     }
                 } else {
                     val alertDialog = AlertDialog.Builder(requireContext())
-                    alertDialog.setTitle("Printer not found")
+                    alertDialog.setTitle("No printer found")
                     alertDialog.setMessage("Check that bluetooth is on")
                     alertDialog.setNegativeButton("OK") { p0, _ -> p0?.dismiss() }
                     val alert = alertDialog.create()

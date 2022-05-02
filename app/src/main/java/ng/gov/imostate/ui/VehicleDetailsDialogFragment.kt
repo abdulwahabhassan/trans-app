@@ -57,43 +57,55 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
         }
 
         binding.continueBTN.setOnClickListener {
-
-            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                AppUtils.showView(false, binding.continueBTN)
-                val bundle = Bundle().also { bundle ->
-                    bundle.putString(MainActivity.DRIVER_NAME_KEY, "Amaechi Barnabas")
-                    bundle.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY,
-                        binding.vehicleLicenseET.text.toString()
-                    )
-                    bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2022-04-09")
-                    bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 910.00)
-                }
-
-                val result = viewModel.getInitialUserPreferences().token?.let { token ->
-                    viewModel.getVehicle(
-                        token,
-                        GetVehicleRequest("1"))
-                }!!
-                when (result) {
-                    is ViewModelResult.Success -> {
-                        AppUtils.showToast(requireActivity(), result.data.toString(), MotionToastStyle.SUCCESS)
-                        findNavController().navigate(
-                            R.id.scannedResultFragment, bundle,
-                            NavOptions.Builder().setLaunchSingleTop(true).build())
+            if (validateField()) {
+                viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                    AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                    AppUtils.showView(false, binding.continueBTN)
+                    val bundle = Bundle().also { bundle ->
+                        bundle.putString(MainActivity.DRIVER_NAME_KEY, "Amaechi Barnabas")
+                        bundle.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY,
+                            binding.vehicleLicenseET.text.toString()
+                        )
+                        bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2022-04-09")
+                        bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 910.00)
                     }
-                    is ViewModelResult.Error -> {
-                        AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
-                        findNavController().navigate(
-                            R.id.scannedResultFragment, bundle,
-                            NavOptions.Builder().setLaunchSingleTop(true).build())
-                        AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                        AppUtils.showView(true, binding.continueBTN)
+
+                    val result = viewModel.getInitialUserPreferences().token?.let { token ->
+                        viewModel.getVehicle(
+                            token,
+                            GetVehicleRequest("1"))
+                    }!!
+                    when (result) {
+                        is ViewModelResult.Success -> {
+                            AppUtils.showToast(requireActivity(), result.data.toString(), MotionToastStyle.SUCCESS)
+                            findNavController().navigate(
+                                R.id.scannedResultFragment, bundle,
+                                NavOptions.Builder().setLaunchSingleTop(true).build())
+                        }
+                        is ViewModelResult.Error -> {
+                            AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
+                            //debugging sake
+                            findNavController().navigate(
+                                R.id.scannedResultFragment, bundle,
+                                NavOptions.Builder().setLaunchSingleTop(true).build())
+                            AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                            AppUtils.showView(true, binding.continueBTN)
+                        }
                     }
                 }
-
             }
         }
+    }
+
+    fun validateField(): Boolean {
+        var success = true
+        if (binding.vehicleLicenseET.text.toString().isEmpty()) {
+            binding.vehicleDetailsTIP.error = "Please fill vehicle license"
+            success = false
+        } else {
+            binding.vehicleDetailsTIP.error = ""
+        }
+        return success
     }
 
     override fun onDestroy() {

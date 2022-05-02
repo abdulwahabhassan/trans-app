@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/vehicleDetailsLayout"
+        android:id="@+id/vehicleDetailsTIP"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsLayout"
+        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsTIP"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

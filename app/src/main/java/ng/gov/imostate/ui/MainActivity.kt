@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         Timber.d("On Create: ${intent.data}")
         Timber.d("On Create: ${intent.type}")
         Timber.d("On Create: ${intent.action}")
-        resolveIntent(intent)
+        //resolveIntent(intent)
 
     }
 

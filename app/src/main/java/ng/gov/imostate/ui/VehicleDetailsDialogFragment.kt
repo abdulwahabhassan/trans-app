@@ -18,6 +18,7 @@ import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AddVehicleFragmentViewModel
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.VehicleDetailsDialogFragmentViewModel
+import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
@@ -47,6 +48,8 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.imssinET.setText("IMO-101-OWR")
+
         viewModel = ViewModelProvider(
             this,
             appViewModelFactory
@@ -61,36 +64,40 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                     AppUtils.showProgressIndicator(true, binding.progressIndicator)
                     AppUtils.showView(false, binding.continueBTN)
-                    val bundle = Bundle().also { bundle ->
-                        bundle.putString(MainActivity.DRIVER_NAME_KEY, "Amaechi Barnabas")
-                        bundle.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY,
-                            binding.vehicleLicenseET.text.toString()
-                        )
-                        bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2022-04-09")
-                        bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 910.00)
-                    }
 
-                    val result = viewModel.getInitialUserPreferences().token?.let { token ->
-                        viewModel.getVehicle(
-                            token,
-                            GetVehicleRequest("1"))
-                    }!!
-                    when (result) {
-                        is ViewModelResult.Success -> {
-                            AppUtils.showToast(requireActivity(), result.data.toString(), MotionToastStyle.SUCCESS)
-                            findNavController().navigate(
+//                    val vehicles = viewModel.getAllVehiclesInDatabase()
+//                    Timber.d("$vehicles")
+//
+//                    val drivers = viewModel.getAllDriversInDatabase()
+//                    Timber.d("$drivers")
+
+                    val vehicleIdentifier = binding.imssinET.text.toString()
+
+                    val vehicle = viewModel.findVehicleDriverRecordInDatabase(vehicleIdentifier)
+                    Timber.d("$vehicle")
+
+                    if(vehicle?.identifier == vehicleIdentifier) {
+
+                        //debug purpose
+                        val bundle = Bundle().also { bundle ->
+                            bundle.putString(MainActivity.DRIVER_NAME_KEY, vehicle.driverFirstName + " " + vehicle.driverLastName)
+                            bundle.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY,
+                                vehicle.identifier
+                            )
+                            bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2022-04-09")
+                            bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 910.00)
+                        }
+                        //
+
+                        findNavController().navigate(
                                 R.id.scannedResultFragment, bundle,
                                 NavOptions.Builder().setLaunchSingleTop(true).build())
-                        }
-                        is ViewModelResult.Error -> {
-                            AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
-                            //debugging sake
-                            findNavController().navigate(
-                                R.id.scannedResultFragment, bundle,
-                                NavOptions.Builder().setLaunchSingleTop(true).build())
-                            AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                            AppUtils.showView(true, binding.continueBTN)
-                        }
+                    } else {
+                        AppUtils.showToast(
+                            requireActivity(),
+                            "Vehicle not found in database",
+                            MotionToastStyle.SUCCESS
+                        )
                     }
                 }
             }
@@ -99,7 +106,7 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
 
     fun validateField(): Boolean {
         var success = true
-        if (binding.vehicleLicenseET.text.toString().isEmpty()) {
+        if (binding.imssinET.text.toString().isEmpty()) {
             binding.vehicleDetailsTIP.error = "Please fill vehicle license"
             success = false
         } else {

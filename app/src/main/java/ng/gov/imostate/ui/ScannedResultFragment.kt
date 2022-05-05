@@ -8,18 +8,13 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.util.Pair
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentScannedResultBinding
 import ng.gov.imostate.model.domain.Data
@@ -97,7 +92,7 @@ class ScannedResultFragment : Fragment() {
                 payOutstandingBTN.visibility = VISIBLE
             }
 
-            outstandingBalancePeriodTV.text = "${AppUtils.formatDate(data.lpd)} - ${AppUtils.formatDate(AppUtils.getCurrentDate())}"
+            outstandingBalancePeriodTV.text = "${AppUtils.formatDateToFullDate(data.lpd)} - ${AppUtils.getCurrentFullDate()}"
 
             Timber.d("$data")
             driverTV.text = data.name

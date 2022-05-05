@@ -32,16 +32,16 @@
         android:layout_marginStart="16dp"
         android:textStyle="bold"
         android:fontFamily="@font/nunito_sans_extrabold"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/dailyRatesTV"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/dailyRatesTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="23 Mar, 2022"
+        tools:text="23 Mar, 2022"
         android:textColor="@color/blue"
         android:layout_marginStart="8dp"
         android:textStyle="bold"

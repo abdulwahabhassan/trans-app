@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
 
     private fun syncDatabase() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            val lastSyncTime = AppUtils.formatDateTime(AppUtils.getCurrentDateTime())
+            val lastSyncTime = AppUtils.getCurrentFullDateTime()
             viewModel.updateLastSyncTime(lastSyncTime)
         }
     }

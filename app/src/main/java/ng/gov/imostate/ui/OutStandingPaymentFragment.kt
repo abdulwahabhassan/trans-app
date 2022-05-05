@@ -3,7 +3,6 @@ package ng.gov.imostate.ui
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -14,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -92,7 +90,7 @@ class OutStandingPaymentFragment : Fragment() {
             }
             outstandingBalanceTV.text = "Outstanding balance ₦${AppUtils.formatCurrency(outstandingBalance.toString())}"
             amountToPayTV.text = "₦${AppUtils.formatCurrency(outstandingBalance.toString())}"
-            periodTV.text = "${AppUtils.formatDate(dateFrom ?: "")} - ${AppUtils.formatDate(dateTo ?: "")}"
+            periodTV.text = "${AppUtils.formatDateToFullDate(dateFrom ?: "")} - ${AppUtils.formatDateToFullDate(dateTo ?: "")}"
 
 
             backArrowIV.setOnClickListener {

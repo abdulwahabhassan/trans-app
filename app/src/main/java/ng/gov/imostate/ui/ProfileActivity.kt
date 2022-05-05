@@ -98,7 +98,7 @@ class ProfileActivity : AppCompatActivity() {
 
             lifecycleScope.launchWhenResumed {
                 val user = activityViewModel.getInitialUserPreferences()
-                onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else "${user.onboardingDate}"
+                onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else AppUtils.formatDateToFullDate(user.onboardingDate)
                 emailTV.text = if (user.email.isNullOrEmpty()) "_" else "${user.email}"
                 addressTV.text = if (user.address.isNullOrEmpty()) "_" else "${user.address}"
                 nameTV.text = if (user.agentName.isNullOrEmpty()) "_" else "${user.agentName}"

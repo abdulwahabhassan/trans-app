@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "vehicle_plates": "IMO-100-OWR",
+    "brand": "bmw",
+    "type": "truck",
+    "fleet_number": "FL0",
+    "state_of_registration": "owerri municipal",
+    "chasis_number": "1119934",
+    "engine_number": "sssail44om",
+    "vehicle_model": "corrola 2020",
+    "passenger_capacity": "10",
+    "road_worthiness_exp_date": "2022-04-26",
+    "vehicle_licence_exp_date": "2022-04-26",
+    "vehicle_insurance_exp_date": null,
+    "created_at": "2022-05-04T13:37:02.000000Z",
+    "updated_at": "2022-05-04T13:37:02.000000Z"
+  },
+  {
+    "id": 3,
+    "vehicle_plates": "IMO-101-OWR",
+    "brand": "toyota",
+    "type": "min-bus",
+    "fleet_number": "FL1",
+    "state_of_registration": "owerri municipal",
+    "chasis_number": "1119934",
+    "engine_number": "sssail44om",
+    "vehicle_model": "corrola 2020",
+    "passenger_capacity": "10",
+    "road_worthiness_exp_date": "2022-04-26",
+    "vehicle_licence_exp_date": "2022-04-26",
+    "vehicle_insurance_exp_date": null,
+    "created_at": "2022-05-05T11:29:59.000000Z",
+    "updated_at": "2022-05-05T11:29:59.000000Z"
+  },
+  {
+    "id": 4,
+    "vehicle_plates": "IMO-102-OWR",
+    "brand": "bmw",
+    "type": "min-bus",
+    "fleet_number": "FL2",
+    "state_of_registration": "owerri municipal",
+    "chasis_number": "1119934",
+    "engine_number": "sssail44om",
+    "vehicle_model": "corrola 2020",
+    "passenger_capacity": "10",
+    "road_worthiness_exp_date": "2022-04-26",
+    "vehicle_licence_exp_date": "2022-04-26",
+    "vehicle_insurance_exp_date": null,
+    "created_at": "2022-05-05T11:33:30.000000Z",
+    "updated_at": "2022-05-05T11:33:30.000000Z"
+  }
+]

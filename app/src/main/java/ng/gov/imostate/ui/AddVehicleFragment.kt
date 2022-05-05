@@ -72,7 +72,7 @@ class AddVehicleFragment : Fragment() {
                 driverFirstNameET.setText("Adams")
                 driverMiddleNameET.setText("Jones")
                 driverLastNameET.setText("Maple")
-                dobET.setText("1987/12/01")
+                dobET.setText("1987-12-01")
                 driverGenderRG.check(R.id.maleCB)
                 meansOfIdRG.check(R.id.ninSlipRB)
                 idNumberET.setText("NG2728301")

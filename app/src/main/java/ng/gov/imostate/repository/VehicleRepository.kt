@@ -4,6 +4,11 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
+import ng.gov.imostate.database.dao.DriverLocalDao
+import ng.gov.imostate.database.dao.VehicleDriverRecord
+import ng.gov.imostate.database.dao.VehicleLocalDao
+import ng.gov.imostate.database.entity.DriverEntity
+import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.GetVehicleRequest
 import ng.gov.imostate.model.request.OnboardVehicleRequest
@@ -15,6 +20,8 @@ import javax.inject.Inject
 
 class VehicleRepository @Inject constructor(
     private val moshi: Moshi,
+    private val vehicleLocalDao: VehicleLocalDao,
+    private val driverLocalDao: DriverLocalDao,
     @ApplicationContext private val context: Context,
     private val dataSource: RemoteDatasource,
     private val networkConnectivityUtil: NetworkConnectivityUtil
@@ -63,5 +70,22 @@ class VehicleRepository @Inject constructor(
                 ApiResponse(message = apiResult.message)
             }
         }
+    }
+
+    suspend fun findVehicleInDatabase(identifier: String): VehicleEntity? {
+        return vehicleLocalDao.
+        getVehicle(identifier)
+    }
+
+    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleDriverRecord? {
+        return vehicleLocalDao.getVehicleDriverRecord(identifier)
+    }
+
+    suspend fun getAllVehiclesInDatabase(): List<VehicleEntity> {
+        return vehicleLocalDao.getAllVehicles()
+    }
+
+    suspend fun getAllDriversInDatabase(): List<DriverEntity> {
+        return driverLocalDao.getAllDrivers()
     }
 }

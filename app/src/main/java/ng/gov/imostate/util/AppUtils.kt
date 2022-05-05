@@ -90,21 +90,33 @@ object AppUtils {
         return sdf.format(now)
     }
 
+    fun getCurrentFullDate(): String {
+        val sdf = SimpleDateFormat("E, dd MMM yyyy", Locale.US)
+        val now = Date()
+        return sdf.format(now)
+    }
+
+    fun getCurrentFullDateTime(): String {
+        val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+        val now = Date()
+        return sdf.format(now)
+    }
+
     fun getCurrentDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val now = Date()
         return sdf.format(now)
     }
 
-    fun formatDateTime(date: String): String{
-        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+    fun formatDateTimeToFullDateTime(date: String): String{
         val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
         return formatter.format(parser.parse(date) ?: "")
     }
 
-    fun formatDate(date: String): String{
-        val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.US)
+    fun formatDateToFullDate(date: String): String{
         val parser = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.US)
         return formatter.format(parser.parse(date) ?: "")
     }
 

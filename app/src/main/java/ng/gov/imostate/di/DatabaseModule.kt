@@ -7,6 +7,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ng.gov.imostate.database.AppRoomDatabase
+import ng.gov.imostate.database.dao.DriverLocalDao
+import ng.gov.imostate.database.dao.VehicleLocalDao
 import javax.inject.Singleton
 
 @Module
@@ -15,11 +17,17 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesAppDatabase(
+    fun provideVehicleLocalDAO(
         @ApplicationContext appContext: Context
-    ): AppRoomDatabase {
-        return AppRoomDatabase.getDatabase(appContext)
+    ): VehicleLocalDao {
+        return AppRoomDatabase.getInstance(appContext).vehicleLocalDao()
     }
 
-
+    @Provides
+    @Singleton
+    fun provideDriverLocalDAO(
+        @ApplicationContext appContext: Context
+    ): DriverLocalDao {
+        return AppRoomDatabase.getInstance(appContext).driverLocalDao()
+    }
 }

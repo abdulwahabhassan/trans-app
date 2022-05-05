@@ -538,7 +538,7 @@
                         android:layout_height="46dp"
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:inputType="number"
-                        android:hint="YYYY/MM/DD"
+                        android:hint="YYYY-MM-DD"
                         android:padding="0dp"
                         android:singleLine="true"
                         android:textSize="14sp" />
@@ -1175,7 +1175,7 @@
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:inputType="date"
                         android:padding="0dp"
-                        android:hint="YYYY/MM/DD"
+                        android:hint="YYYY-MM-DD"
                         android:singleLine="true"
                         android:textSize="14sp" />
 
@@ -1211,7 +1211,7 @@
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:inputType="date"
                         android:padding="0dp"
-                        android:hint="YYYY/MM/DD"
+                        android:hint="YYYY-MM-DD"
                         android:singleLine="true"
                         android:textSize="14sp" />
 
@@ -1248,7 +1248,7 @@
                         android:fontFamily="@font/nunito_sans_semibold"
                         android:inputType="date"
                         android:padding="0dp"
-                        android:hint="YYYY/MM/DD"
+                        android:hint="YYYY-MM-DD"
                         android:singleLine="true"
                         android:textSize="14sp" />
 

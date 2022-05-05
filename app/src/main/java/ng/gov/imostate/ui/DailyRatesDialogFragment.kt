@@ -1,13 +1,13 @@
 package ng.gov.imostate.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
+import ng.gov.imostate.util.AppUtils
 
 
 class DailyRatesDialogFragment : BottomSheetDialogFragment() {
@@ -31,12 +31,16 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backArrowIV.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        with(binding) {
+            dailyRatesTV.text = AppUtils.getCurrentFullDate()
 
-        binding.doneBTN.setOnClickListener {
-            findNavController().popBackStack()
+            backArrowIV.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            doneBTN.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

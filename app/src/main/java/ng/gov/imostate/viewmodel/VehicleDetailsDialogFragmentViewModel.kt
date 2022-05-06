@@ -13,37 +13,10 @@ import ng.gov.imostate.repository.VehicleRepository
 import javax.inject.Inject
 @HiltViewModel
 class VehicleDetailsDialogFragmentViewModel @Inject constructor(
-    userPreferencesRepository: UserPreferencesRepository,
-    private val vehicleRepository: VehicleRepository
+    userPreferencesRepository: UserPreferencesRepository
 ) : BaseViewModel(
     userPreferencesRepository
 ){
-    suspend fun getVehicle(token: String, getVehicleRequest: GetVehicleRequest): ViewModelResult<Any?> {
-        val response = vehicleRepository.getVehicle(token, getVehicleRequest)
-        return  when (response.success) {
-            true -> {
-                ViewModelResult.Success(response.result)
-            }
-            else -> {
-                ViewModelResult.Error(response.message ?: "Unknown Error")
-            }
-        }
-    }
 
-    suspend fun findVehicleInDatabase(identifier: String): VehicleEntity? {
-        return vehicleRepository.findVehicleInDatabase(identifier)
-    }
-
-    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleDriverRecord? {
-        return vehicleRepository.findVehicleDriverRecordInDatabase(identifier)
-    }
-
-    suspend fun getAllVehiclesInDatabase(): List<VehicleEntity> {
-        return vehicleRepository.getAllVehiclesInDatabase()
-    }
-
-    suspend fun getAllDriversInDatabase(): List<DriverEntity> {
-        return vehicleRepository.getAllDriversInDatabase()
-    }
 
 }

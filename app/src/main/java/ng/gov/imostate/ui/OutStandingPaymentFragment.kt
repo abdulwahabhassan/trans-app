@@ -2,7 +2,6 @@ package ng.gov.imostate.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -75,9 +75,9 @@ class OutStandingPaymentFragment : Fragment() {
         vehicleRegistrationNumber = arguments?.getString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY)
         outstandingBalance = arguments?.getDouble(MainActivity.OUTSTANDING_BAL_KEY)
         lastPaymentDate = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
-        vehicleId = arguments?.getString(ScannedResultFragment.VEHICLE_ID)
-        dateFrom = arguments?.getString(ScannedResultFragment.DATEFROM)
-        dateTo = arguments?.getString(ScannedResultFragment.DATETO)
+        vehicleId = arguments?.getString(NfcReaderResultFragment.VEHICLE_ID)
+        dateFrom = arguments?.getString(NfcReaderResultFragment.DATEFROM)
+        dateTo = arguments?.getString(NfcReaderResultFragment.DATETO)
 
         with(binding) {
 
@@ -115,14 +115,24 @@ class OutStandingPaymentFragment : Fragment() {
                                 is ViewModelResult.Success -> {
                                     printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
-                                        .actionOutStandingPaymentFragmentToSuccessFragment(vehicleId!!)
+                                        .actionOutStandingPaymentFragmentToSuccessFragment(
+                                            vehicleId!!,
+                                            driverName,
+                                            lastPaymentDate,
+                                            outstandingBalance.toString()
+                                        )
                                     findNavController().navigate(action)
                                 }
                                 is ViewModelResult.Error -> {
                                     //debugging purpose
                                     printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
-                                        .actionOutStandingPaymentFragmentToSuccessFragment(vehicleId!!)
+                                        .actionOutStandingPaymentFragmentToSuccessFragment(
+                                            vehicleId!!,
+                                            driverName,
+                                            lastPaymentDate,
+                                            outstandingBalance.toString()
+                                        )
                                     findNavController().navigate(action)
                                     //
 
@@ -268,11 +278,10 @@ class OutStandingPaymentFragment : Fragment() {
             [L]
             [C]================================
             [L]
-            [C]<font color='bg-black'><b>Details:</b></font>
+            [C]<font color='bg-black'><b>Details</b></font>
+            [L]
             [L]Vehicle ID: $vehicleId
             [L]Driver: $driverName
-            [L]Address: No. 5 Amakohia Flyover, Owerri, Imo
-            [L]Phone: 08012014561
             
             """.trimIndent()
         )
@@ -283,10 +292,4 @@ class OutStandingPaymentFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        const val PERMISSION_BLUETOOTH = 1
-        const val PERMISSION_BLUETOOTH_ADMIN = 2
-        const val PERMISSION_BLUETOOTH_CONNECT = 3
-        const val PERMISSION_BLUETOOTH_SCAN = 4
-    }
 }

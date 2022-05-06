@@ -17,7 +17,9 @@ interface VehicleLocalDao {
     @Query(
         "SELECT vehicle.vehicle_plates AS identifier, " +
                 "driver.first_name AS driverFirstName, " +
-                "driver.last_name AS driverLastName " +
+                "driver.last_name AS driverLastName, " +
+                "vehicle.vehicle_licence_exp_date AS vehicleLicenseExpiryDate, " +
+                "vehicle.type AS vehicleType " +
                 "FROM vehicle, driver " +
                 "WHERE vehicle.id = driver.vehicle_id AND vehicle.vehicle_plates LIKE :identifier "
     )
@@ -34,5 +36,7 @@ interface VehicleLocalDao {
 data class VehicleDriverRecord(
     val identifier: String?,
     val driverFirstName: String?,
-    val driverLastName: String?
+    val driverLastName: String?,
+    val vehicleType: String?,
+    val vehicleLicenseExpiryDate: String?
 )

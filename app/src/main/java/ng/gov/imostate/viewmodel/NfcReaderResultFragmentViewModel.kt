@@ -6,7 +6,7 @@ import ng.gov.imostate.repository.VehicleRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ScannedResultFragmentViewModel @Inject constructor(
+class NfcReaderResultFragmentViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository
 ) : BaseViewModel(
     userPreferencesRepository

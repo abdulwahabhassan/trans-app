@@ -16,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.R
-import ng.gov.imostate.databinding.FragmentScannedResultBinding
+import ng.gov.imostate.databinding.FragmentNfcReaderResultBinding
 import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.*
@@ -26,16 +26,16 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScannedResultFragment : Fragment() {
+class NfcReaderResultFragment : Fragment() {
 
-    private var _binding: FragmentScannedResultBinding? = null
+    private var _binding: FragmentNfcReaderResultBinding? = null
     private val binding get() = _binding!!
     private lateinit var data: Data
     private val sharedNfcViewModel: SharedNfcViewModel by activityViewModels()
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
-    private lateinit var viewModel: ScannedResultFragmentViewModel
+    private lateinit var viewModel: NfcReaderResultFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class ScannedResultFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentScannedResultBinding.inflate(inflater, container, false)
+        _binding = FragmentNfcReaderResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -62,7 +62,7 @@ class ScannedResultFragment : Fragment() {
         viewModel = ViewModelProvider(
             this,
             appViewModelFactory
-        ).get(ScannedResultFragmentViewModel::class.java)
+        ).get(NfcReaderResultFragmentViewModel::class.java)
 
         //observeNfcMode()
 

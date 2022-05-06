@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
 
         with(binding) {
             scanVehicleBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToVehicleDetailsDialogFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToFindVehicleDialogFragment()
                 findNavController().navigate(action)
             }
             addVehicleBTN.setOnClickListener {

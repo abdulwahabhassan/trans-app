@@ -78,7 +78,12 @@ class SuccessFragment : Fragment() {
                         sharedNfcViewModel.setNfcMode(NfcMode.READ)
                     } else {
                         //sharedNfcViewModel.setData(result.data.tagData)
-                        sharedNfcViewModel.setData(Data("Ndede Nicholas", args.id, AppUtils.getCurrentDate(), 150.00))
+                        sharedNfcViewModel.setData(
+                            Data(args.driverName.toString(),
+                                args.id, args.lastPayDate.toString(),
+                                args.outstandingBalance?.toDouble() ?: 0.00
+                            )
+                        )
                         sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
                     }
                     AppUtils.showProgressIndicator(false, binding.progressIndicator)

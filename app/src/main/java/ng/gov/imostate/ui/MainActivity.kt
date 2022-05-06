@@ -363,11 +363,11 @@ class MainActivity : AppCompatActivity() {
             it.putString(LAST_PAYMENT_DATE_KEY, data.lpd)
             it.putDouble(OUTSTANDING_BAL_KEY, data.ob)
         }
-        if (navController.currentDestination?.id == R.id.scannedResultFragment) {
+        if (navController.currentDestination?.id == R.id.nfcReaderResultFragment) {
             navController.popBackStack()
         }
         navController.navigate(
-            R.id.scannedResultFragment,
+            R.id.nfcReaderResultFragment,
             bundle,
             NavOptions.Builder().setLaunchSingleTop(true).build()
         )

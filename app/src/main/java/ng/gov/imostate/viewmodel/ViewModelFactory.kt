@@ -51,14 +51,14 @@ class AppViewModelsFactory @Inject constructor(
                     userPreferencesRepository
                 ) as T
             }
-            modelClass.isAssignableFrom(VehicleDetailsDialogFragmentViewModel::class.java) -> {
-                return VehicleDetailsDialogFragmentViewModel(
+            modelClass.isAssignableFrom(FindVehicleDialogFragmentViewModel::class.java) -> {
+                return FindVehicleDialogFragmentViewModel(
                     userPreferencesRepository,
                     vehicleRepository
                 ) as T
             }
-            modelClass.isAssignableFrom(ScannedResultFragmentViewModel::class.java) -> {
-                return ScannedResultFragmentViewModel(
+            modelClass.isAssignableFrom(NfcReaderResultFragmentViewModel::class.java) -> {
+                return NfcReaderResultFragmentViewModel(
                     userPreferencesRepository
                 ) as T
             }
@@ -73,6 +73,11 @@ class AppViewModelsFactory @Inject constructor(
                 return OutstandingPaymentFragmentViewModel(
                     userPreferencesRepository,
                     transactionRepository
+                ) as T
+            }
+            modelClass.isAssignableFrom(VehicleDetailsDialogFragmentViewModel::class.java) -> {
+                return VehicleDetailsDialogFragmentViewModel(
+                    userPreferencesRepository
                 ) as T
             }
         }

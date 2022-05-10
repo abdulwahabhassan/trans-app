@@ -5,7 +5,7 @@ import ng.gov.imostate.repository.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class VehicleDetailsDialogFragmentViewModel @Inject constructor(
+class TagVehicleFragmentViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository
 ) : BaseViewModel(
     userPreferencesRepository

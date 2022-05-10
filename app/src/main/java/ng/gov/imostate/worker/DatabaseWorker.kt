@@ -22,40 +22,58 @@ class DatabaseWorker (
         try {
             val vehicleFileName = inputData.getString(VEHICLE_KEY_FILENAME)
             val driverFileName = inputData.getString(DRIVER_KEY_FILENAME)
+            val vehicleDriverFileName = inputData.getString(VEHICLE_DRIVER_KEY_FILENAME)
 
             Timber.d("work started")
 
-            if (vehicleFileName != null) {
-                applicationContext.assets.open(vehicleFileName).use { inputStream ->
+//            if (vehicleFileName != null) {
+//                applicationContext.assets.open(vehicleFileName).use { inputStream ->
+//                    JsonReader(inputStream.reader()).use { jsonReader ->
+//                        val vehicleListType = object : TypeToken<List<VehicleEntity>>() {}.type
+//                        val vehicles: List<VehicleEntity> = Gson().fromJson(jsonReader, vehicleListType)
+//                        Timber.d("vehicles $vehicles")
+//                        val database = AppRoomDatabase.getInstance(applicationContext)
+//                        database.vehicleLocalDao().insertAllVehicles(vehicles)
+//                        Timber.d("Success database - all vehicles set in database")
+//                        Result.success()
+//                    }
+//                }
+//            } else {
+//                Timber.d("Error database - no valid vehicles filename")
+//                Result.failure()
+//            }
+//
+//            if (driverFileName != null) {
+//                applicationContext.assets.open(driverFileName).use { inputStream ->
+//                    JsonReader(inputStream.reader()).use { jsonReader ->
+//                        val driverListType = object : TypeToken<List<DriverEntity>>() {}.type
+//                        val drivers: List<DriverEntity> = Gson().fromJson(jsonReader, driverListType)
+//                        Timber.d("drivers $drivers")
+//                        val database = AppRoomDatabase.getInstance(applicationContext)
+//                        database.driverLocalDao().insertAllDrivers(drivers)
+//                        Timber.d("Success database - all drivers set in database")
+//                        Result.success()
+//                    }
+//                }
+//            } else {
+//                Timber.d("Error database - no valid driver filename")
+//                Result.failure()
+//            }
+
+            if (vehicleDriverFileName != null) {
+                applicationContext.assets.open(vehicleDriverFileName).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
                         val vehicleListType = object : TypeToken<List<VehicleEntity>>() {}.type
                         val vehicles: List<VehicleEntity> = Gson().fromJson(jsonReader, vehicleListType)
-                        Timber.d("vehicles $vehicles")
+                        Timber.d("vehicles and drivers $vehicles")
                         val database = AppRoomDatabase.getInstance(applicationContext)
                         database.vehicleLocalDao().insertAllVehicles(vehicles)
-                        Timber.d("Success database - all vehicles set in database")
+                        Timber.d("Success database - all vehicles and drivers set in database")
                         Result.success()
                     }
                 }
             } else {
-                Timber.d("Error database - no valid vehicles filename")
-                Result.failure()
-            }
-
-            if (driverFileName != null) {
-                applicationContext.assets.open(driverFileName).use { inputStream ->
-                    JsonReader(inputStream.reader()).use { jsonReader ->
-                        val driverListType = object : TypeToken<List<DriverEntity>>() {}.type
-                        val drivers: List<DriverEntity> = Gson().fromJson(jsonReader, driverListType)
-                        Timber.d("drivers $drivers")
-                        val database = AppRoomDatabase.getInstance(applicationContext)
-                        database.driverLocalDao().insertAllDrivers(drivers)
-                        Timber.d("Success database - all drivers set in database")
-                        Result.success()
-                    }
-                }
-            } else {
-                Timber.d("Error database - no valid driver filename")
+                Timber.d("Error database - no valid vehicle-driver filename")
                 Result.failure()
             }
 
@@ -68,5 +86,6 @@ class DatabaseWorker (
     companion object {
         const val VEHICLE_KEY_FILENAME = "VEHICLE_DATA_FILENAME"
         const val DRIVER_KEY_FILENAME = "DRIVER_DATA_FILENAME"
+        const val VEHICLE_DRIVER_KEY_FILENAME = "VEHICLE_DRIVER_DATA_FILENAME"
     }
 }

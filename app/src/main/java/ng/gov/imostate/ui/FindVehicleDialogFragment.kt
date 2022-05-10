@@ -46,7 +46,7 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.imssinET.setText("IMO-101-OWR")
+        binding.platesNumberET.setText("IMO-104-OWR")
 
         viewModel = ViewModelProvider(
             this,
@@ -69,19 +69,20 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
 //                    val drivers = viewModel.getAllDriversInDatabase()
 //                    Timber.d("$drivers")
 
-                    val vehicleIdentifier = binding.imssinET.text.toString()
+                    val vehicleIdentifier = binding.platesNumberET.text.toString()
 
                     val vehicle = viewModel.findVehicleDriverRecordInDatabase(vehicleIdentifier)
                     Timber.d("$vehicle")
 
-                    if(vehicle?.identifier == vehicleIdentifier) {
-
+                    if(vehicle?.vehiclePlates == vehicleIdentifier) {
                         //debug purpose
                         val bundle = Bundle().also { bundle ->
-                            bundle.putString(DRIVER_NAME_KEY, vehicle.driverFirstName + " " + vehicle.driverLastName)
-                            bundle.putString(VEHICLE_IDENTIFIER_KEY, vehicle.identifier)
-                            bundle.putString(VEHICLE_TYPE_KEY, vehicle.vehicleType)
-                            bundle.putString(VEHICLE_LICENSE_EXP_DATE_KEY, vehicle.vehicleLicenseExpiryDate)
+                            bundle.putString(DRIVER_NAME_KEY, vehicle.driver?.firstName + " " + vehicle.driver?.lastName)
+                            bundle.putString(VEHICLE_IDENTIFIER_KEY, vehicle.vehiclePlates)
+                            bundle.putString(VEHICLE_TYPE_KEY, vehicle.type)
+                            bundle.putString(VEHICLE_LICENSE_EXP_DATE_KEY,
+                                vehicle.vehicleLicenceExpDate
+                            )
                         }
                         //
 
@@ -104,7 +105,7 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
 
     fun validateField(): Boolean {
         var success = true
-        if (binding.imssinET.text.toString().isEmpty()) {
+        if (binding.platesNumberET.text.toString().isEmpty()) {
             binding.vehicleDetailsTIP.error = "Please fill vehicle license"
             success = false
         } else {

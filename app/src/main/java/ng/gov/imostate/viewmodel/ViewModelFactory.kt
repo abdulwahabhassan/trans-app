@@ -80,6 +80,11 @@ class AppViewModelsFactory @Inject constructor(
                     userPreferencesRepository
                 ) as T
             }
+            modelClass.isAssignableFrom(TagVehicleFragmentViewModel::class.java) -> {
+                return TagVehicleFragmentViewModel(
+                    userPreferencesRepository
+                ) as T
+            }
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

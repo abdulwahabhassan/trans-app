@@ -8,6 +8,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import ng.gov.imostate.database.converters.Converters
 import ng.gov.imostate.database.dao.DriverLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
 import ng.gov.imostate.worker.DatabaseWorker
@@ -51,15 +54,21 @@ abstract class AppRoomDatabase : RoomDatabase() {
                             val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
                                 .setInputData(
                                     workDataOf(
-                                        DatabaseWorker.VEHICLE_KEY_FILENAME to Constants.VEHICLE_DATA_FILENAME,
-                                        DatabaseWorker.DRIVER_KEY_FILENAME to Constants.DRIVER_DATA_FILENAME
+//                                        DatabaseWorker.VEHICLE_KEY_FILENAME to Constants.VEHICLE_DATA_FILENAME,
+//                                        DatabaseWorker.DRIVER_KEY_FILENAME to Constants.DRIVER_DATA_FILENAME
+                                        DatabaseWorker.VEHICLE_DRIVER_KEY_FILENAME to Constants.VEHICLE_DRIVER_DATA_FILENAME
                                     )
                                 )
                                 .build()
                             WorkManager.getInstance(appContext).enqueue(request)
                         }
                     }
-            ).build()
+            ).addTypeConverter(Converters(
+                Moshi.Builder()
+                    .add(KotlinJsonAdapterFactory())
+                    .build())
+            )
+                .build()
         }
 
     }

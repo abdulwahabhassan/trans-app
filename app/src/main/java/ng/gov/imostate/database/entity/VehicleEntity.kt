@@ -2,14 +2,13 @@ package ng.gov.imostate.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
-import com.squareup.moshi.Json
-import ng.gov.imostate.model.domain.Driver
-import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.database.converters.Converters
 
 @Entity(tableName = "vehicle")
+@TypeConverters(Converters::class)
 data class VehicleEntity(
     @PrimaryKey val id: Long?,
     @SerializedName("vehicle_plates")
@@ -52,10 +51,8 @@ data class VehicleEntity(
     @SerializedName("updated_at")
     @ColumnInfo(name = "updated_at")
     val updatedAt: String?,
-//    @Ignore
-//    @ColumnInfo
-//    val driver: Driver?,
-//    @Ignore
-//    @ColumnInfo
-//    val routes: List<Route>
+    @ColumnInfo
+    val driver: DriverEntity?,
+    @ColumnInfo
+    val routes: List<RouteEntity>?
 )

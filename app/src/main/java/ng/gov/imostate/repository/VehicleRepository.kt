@@ -5,7 +5,6 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.DriverLocalDao
-import ng.gov.imostate.database.dao.VehicleDriverRecord
 import ng.gov.imostate.database.dao.VehicleLocalDao
 import ng.gov.imostate.database.entity.DriverEntity
 import ng.gov.imostate.database.entity.VehicleEntity
@@ -77,7 +76,7 @@ class VehicleRepository @Inject constructor(
         getVehicle(identifier)
     }
 
-    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleDriverRecord? {
+    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {
         return vehicleLocalDao.getVehicleDriverRecord(identifier)
     }
 

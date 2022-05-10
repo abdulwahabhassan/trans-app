@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
@@ -52,6 +54,19 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
             vehicleLicenseExpiryDateTV.text = arguments?.getString(FindVehicleDialogFragment.VEHICLE_LICENSE_EXP_DATE_KEY)
 
             viewLastTransactionBTN.setOnClickListener {
+
+                when (viewLastTransactionBTN.text.toString()) {
+                    TAG_VEHICLE_TEXT -> {
+                        val action = VehicleDetailsDialogFragmentDirections
+                            .actionVehicleDetailsDialogFragmentToTagVehicleFragment(
+                                "200",
+                                AppUtils.getCurrentDate(),
+                                arguments?.getString(FindVehicleDialogFragment.DRIVER_NAME_KEY),
+                                arguments?.getString(FindVehicleDialogFragment.VEHICLE_IDENTIFIER_KEY)
+                            )
+                        findNavController().navigate(action)
+                    }
+                    VIEW_LAST_TRANSACTION -> {
                 //make api call to get last transaction for this vehicle if it exists
                 val bundle = Bundle().also {
                     it.putString(MainActivity.DRIVER_NAME_KEY, arguments?.getString(FindVehicleDialogFragment.DRIVER_NAME_KEY))
@@ -66,15 +81,32 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                     bundle,
                     NavOptions.Builder().setLaunchSingleTop(true).build()
                 )
+//                        //show toast if no transaction record exists and show button to tag vehicle
+//                        AppUtils.showToast(requireActivity(), "No transaction record found", MotionToastStyle.ERROR)
+//                        showTagVehicleButton(true)
+                    }
+                }
 
-                //show toast if no transaction record exists
-                //AppUtils.showToast(requireActivity(), "No transaction record found", MotionToastStyle.ERROR)
+
             }
+        }
+    }
+
+    private fun showTagVehicleButton(show: Boolean) {
+        if (show) {
+            binding.viewLastTransactionBTN.text = "TAG VEHICLE"
+        } else {
+            binding.viewLastTransactionBTN.text = "VIEW LAST TRANSACTION"
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val TAG_VEHICLE_TEXT = "TAG VEHICLE"
+        const val VIEW_LAST_TRANSACTION = "VIEW LAST TRANSACTION"
     }
 }

@@ -1,12 +1,14 @@
 package ng.gov.imostate.di
 
 import android.content.Context
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ng.gov.imostate.database.AppRoomDatabase
+import ng.gov.imostate.database.converters.Converters
 import ng.gov.imostate.database.dao.DriverLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
 import javax.inject.Singleton
@@ -30,4 +32,13 @@ object DatabaseModule {
     ): DriverLocalDao {
         return AppRoomDatabase.getInstance(appContext).driverLocalDao()
     }
+
+//    @Provides
+//    @Singleton
+//    fun provideTypeConverter(
+//        moshi: Moshi
+//    ): Converters {
+//        return Converters(moshi)
+//    }
+
 }

@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_scan.xml" value="0.1234375" />
         <entry key="app/src/main/res/layout/fragment_scanned_result.xml" value="0.25816192626953127" />
         <entry key="app/src/main/res/layout/fragment_success.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/fragment_tag_vehicle.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_transactions.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_updates.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_vehicle_details.xml" value="0.21302083333333333" />

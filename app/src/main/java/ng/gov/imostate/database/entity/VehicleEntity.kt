@@ -5,11 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 import ng.gov.imostate.database.converters.Converters
 
 @Entity(tableName = "vehicle")
 @TypeConverters(Converters::class)
 data class VehicleEntity(
+    @ColumnInfo(name = "id")
     @PrimaryKey val id: Long?,
     @SerializedName("vehicle_plates")
     @ColumnInfo(name = "vehicle_plates")

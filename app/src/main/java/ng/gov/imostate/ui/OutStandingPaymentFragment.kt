@@ -178,7 +178,7 @@ class OutStandingPaymentFragment : Fragment() {
 
     private fun getBluetoothDevice(): BluetoothConnection? {
         val bluetoothDevicesList = BluetoothPrintersConnections().list
-        return if (bluetoothDevicesList != null) {
+        return if (bluetoothDevicesList?.isNullOrEmpty() == false) {
             selectedDevice = bluetoothDevicesList[0]
             selectedDevice
         } else {

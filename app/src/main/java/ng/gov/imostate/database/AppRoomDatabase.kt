@@ -47,23 +47,25 @@ abstract class AppRoomDatabase : RoomDatabase() {
                 appContext,
                 AppRoomDatabase::class.java,
                 Constants.DATABASE_NAME
-            ).addCallback(
-                    object : RoomDatabase.Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
-                                .setInputData(
-                                    workDataOf(
-//                                        DatabaseWorker.VEHICLE_KEY_FILENAME to Constants.VEHICLE_DATA_FILENAME,
-//                                        DatabaseWorker.DRIVER_KEY_FILENAME to Constants.DRIVER_DATA_FILENAME
-                                        DatabaseWorker.VEHICLE_DRIVER_KEY_FILENAME to Constants.VEHICLE_DRIVER_DATA_FILENAME
-                                    )
-                                )
-                                .build()
-                            WorkManager.getInstance(appContext).enqueue(request)
-                        }
-                    }
-            ).addTypeConverter(Converters(
+            )
+//                .addCallback(
+//                    object : RoomDatabase.Callback() {
+//                        override fun onCreate(db: SupportSQLiteDatabase) {
+//                            super.onCreate(db)
+//                            val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
+//                                .setInputData(
+//                                    workDataOf(
+////                                        DatabaseWorker.VEHICLE_KEY_FILENAME to Constants.VEHICLE_DATA_FILENAME,
+////                                        DatabaseWorker.DRIVER_KEY_FILENAME to Constants.DRIVER_DATA_FILENAME
+//                                        DatabaseWorker.VEHICLE_DRIVER_KEY_FILENAME to Constants.VEHICLE_DRIVER_DATA_FILENAME
+//                                    )
+//                                )
+//                                .build()
+//                            WorkManager.getInstance(appContext).enqueue(request)
+//                        }
+//                    }
+//                )
+                .addTypeConverter(Converters(
                 Moshi.Builder()
                     .add(KotlinJsonAdapterFactory())
                     .build())

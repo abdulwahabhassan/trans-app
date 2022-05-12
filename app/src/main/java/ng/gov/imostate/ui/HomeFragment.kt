@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentHomeBinding
 import ng.gov.imostate.model.result.ViewModelResult
@@ -47,8 +48,19 @@ class HomeFragment : Fragment() {
 
     private fun syncDatabase() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            val lastSyncTime = AppUtils.getCurrentFullDateTime()
-            viewModel.updateLastSyncTime(lastSyncTime)
+            when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getAllVehicles(it) }!!) {
+                is ViewModelResult.Success -> {
+                    val vehicles = viewModelResult.data?.vehicles
+                    if (!vehicles.isNullOrEmpty()) {
+                        viewModel.insertVehiclesToDatabase(Mapper.mapListOfVehicleToListOfVehicleEntity(vehicles))
+                    }
+                    val lastSyncTime = AppUtils.getCurrentFullDateTime()
+                    viewModel.updateLastSyncTime(lastSyncTime)
+                }
+                is ViewModelResult.Error -> {
+                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                }
+            }
         }
     }
 

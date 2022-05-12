@@ -20,7 +20,8 @@ class AppViewModelsFactory @Inject constructor(
             modelClass.isAssignableFrom(HomeFragmentViewModel::class.java) -> {
                 return HomeFragmentViewModel(
                     userPreferencesRepository,
-                    agentRepository
+                    agentRepository,
+                    vehicleRepository
                 ) as T
             }
             modelClass.isAssignableFrom(TransactionsFragmentViewModel::class.java) -> {

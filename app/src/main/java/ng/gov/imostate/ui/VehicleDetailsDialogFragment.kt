@@ -71,7 +71,7 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                 val bundle = Bundle().also {
                     it.putString(MainActivity.DRIVER_NAME_KEY, arguments?.getString(FindVehicleDialogFragment.DRIVER_NAME_KEY))
                     it.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY, arguments?.getString(FindVehicleDialogFragment.VEHICLE_IDENTIFIER_KEY))
-                    it.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2022-10-02")
+                    it.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2021-10-02")
                     it.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 5100.00)
                 }
 

@@ -46,7 +46,7 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.platesNumberET.setText("IMO-104-OWR")
+        binding.platesNumberET.setText("IMO-101-OWR")
 
         viewModel = ViewModelProvider(
             this,

@@ -205,4 +205,46 @@ object AppUtils {
     fun isDebugBuild(): Boolean {
         return BuildConfig.DEBUG
     }
+
+    fun mapOfLgaStringArray() : Map<String, Int> {
+        return mapOf(
+            "Abia" to R.array.abia_lgas,
+            "Adamawa" to R.array.adamawa_lgas,
+            "Akwa Ibom" to R.array.akwa_ibom_lgas,
+            "Anambra" to R.array.anambra_lgas,
+            "Bauchi" to R.array.bauchi_lgas,
+            "Bayelsa" to R.array.bayelsa_lgas,
+            "Benue" to R.array.benue_lgas,
+            "Borno" to R.array.borno_lgas,
+            "Cross River" to R.array.cross_river_lgas,
+            "Delta" to R.array.delta_lgas,
+            "Ebonyi" to R.array.ebonyi_lgas,
+            "Edo" to R.array.edo_lgas,
+            "FCT" to R.array.fct_lgas,
+            "Ekiti" to R.array.ekiti_lgas,
+            "Enugu" to R.array.enugu_lgas,
+            "Gombe" to R.array.gombe_lgas,
+            "Imo" to R.array.imo_lgas,
+            "Jigawa" to R.array.jigawa_lgas,
+            "Kaduna" to R.array.kaduna_lgas,
+            "Kano" to R.array.kano_lgas,
+            "Katsina" to R.array.katsina_lgas,
+            "Kebbi" to R.array.kebbi_lgas,
+            "Kogi" to R.array.kogi_lgas,
+            "Kwara" to R.array.kwara_lgas,
+            "Lagos" to R.array.lagos_lgas,
+            "Nasarawa" to R.array.nassarawa_lgas,
+            "Niger" to R.array.niger_lgas,
+            "Ogun" to R.array.ogun_lgas,
+            "Ondo" to R.array.ondo_lgas,
+            "Osun" to R.array.osun_lgas,
+            "Oyo" to R.array.oyo_lgas,
+            "Plateau" to R.array.plateau_lgas,
+            "Rivers" to R.array.rivers_lgas,
+            "Sokoto" to R.array.sokoto_lgas,
+            "Taraba" to R.array.taraba_lgas,
+            "Yobe" to R.array.yobe_lgas,
+            "Zamfara" to R.array.zamfara_lgas
+        )
+    }
 }

@@ -1,6 +1,7 @@
 package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.apiresult.OnboardVehicleResult
 import ng.gov.imostate.model.result.ViewModelResult
@@ -27,6 +28,10 @@ class AddVehicleFragmentViewModel @Inject constructor(
                 ViewModelResult.Error(response.message ?: "Unknown Error")
             }
         }
+    }
+
+    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {
+        return vehicleRepository.findVehicleDriverRecordInDatabase(identifier)
     }
 
 }

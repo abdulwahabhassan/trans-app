@@ -55,4 +55,9 @@ interface ApiService {
         @Path("id") vehicleId: String,
     ): ApiResponse<TransactionResult>
 
+    @GET("agent/vehicle/rates")
+    suspend fun getRates(
+        @Header("Authorization") token: String
+    ): ApiResponse<RatesResult>
+
 }

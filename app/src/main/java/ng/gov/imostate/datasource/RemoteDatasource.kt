@@ -43,4 +43,8 @@ class RemoteDatasource  @Inject constructor(
     suspend fun getRecentTransaction(token: String, vehicleId: String): ApiResponse<TransactionResult> {
         return apiService.getRecentTransaction(token, vehicleId)
     }
+
+    suspend fun getRates(token: String): ApiResponse<RatesResult> {
+        return apiService.getRates(token)
+    }
 }

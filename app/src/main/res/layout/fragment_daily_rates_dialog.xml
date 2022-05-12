@@ -60,209 +60,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Please check daily"
-        android:fontFamily="@font/nunito_sans"
+        android:fontFamily="@font/nunito_sans_semibold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainLayout"
-        android:layout_width="match_parent"
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:paddingHorizontal="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:context=".ui.screens.TransactionDetailActivity">
+        android:indeterminate="true"
+        android:visibility="visible"
+        app:indicatorColor="@color/dark_blue"
+        app:trackColor="@color/sky_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/dailyRatesRV"
+        app:layout_constraintEnd_toEndOf="@+id/dailyRatesRV"
+        app:layout_constraintStart_toStartOf="@+id/dailyRatesRV"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-
-        <TextView
-            android:id="@+id/standardBusRateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/standardBusTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/standardBusTV"
-            app:layout_constraintTop_toTopOf="@+id/standardBusTV"
-            android:text="₦300.00" />
-
-        <TextView
-            android:id="@+id/tricycleTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Tricycle :"
-            app:layout_constraintEnd_toStartOf="@+id/tricycleRateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tricycleRateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/tricycleTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tricycleTV"
-            app:layout_constraintTop_toTopOf="@+id/tricycleTV"
-            android:text="₦150.00" />
-
-        <TextView
-            android:id="@+id/minibusTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Mini bus :"
-            app:layout_constraintEnd_toStartOf="@+id/minibusRateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tricycleTV" />
-
-        <TextView
-            android:id="@+id/minibusRateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/minibusTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/minibusTV"
-            app:layout_constraintTop_toTopOf="@+id/minibusTV"
-            android:text="₦250.00" />
-
-        <TextView
-            android:id="@+id/standardBusTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Standard bus :"
-            app:layout_constraintEnd_toStartOf="@+id/standardBusRateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/minibusTV" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <TextView
-            android:id="@+id/heavyDutyTruckTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Heavy duty truck :"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/heavyDutyTruckRateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/smallTruckTV" />
-
-        <TextView
-            android:id="@+id/heavyDutyTruckRateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/heavyDutyTruckTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/heavyDutyTruckTV"
-            app:layout_constraintTop_toTopOf="@+id/heavyDutyTruckTV"
-            android:text="₦1500.00" />
-
-        <TextView
-            android:id="@+id/smallTruckTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Small truck :"
-            app:layout_constraintEnd_toStartOf="@+id/smallTruckRateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/standardBusTV" />
-
-        <TextView
-            android:id="@+id/smallTruckRateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/smallTruckTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/smallTruckTV"
-            app:layout_constraintTop_toTopOf="@+id/smallTruckTV"
-            android:text="₦700.00" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/doneBTN"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dailyRatesRV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/dark_blue"
-        android:padding="15dp"
-        app:cornerRadius="8dp"
-        android:fontFamily="@font/nunito_sans_bold"
-        android:textColor="@color/white"
-        android:text="DONE"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="32dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainLayout"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:listitem="@layout/item_daily_rate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

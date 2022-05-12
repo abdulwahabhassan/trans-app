@@ -4,16 +4,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.adapter.DailyRatesAdapter
+import ng.gov.imostate.adapter.TransactionsAdapter
 import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
+import ng.gov.imostate.model.domain.Rate
+import ng.gov.imostate.model.domain.Transaction
+import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
+import ng.gov.imostate.util.Mock
+import ng.gov.imostate.viewmodel.AppViewModelsFactory
+import ng.gov.imostate.viewmodel.DailyRatesDialogFragmentViewModel
+import ng.gov.imostate.viewmodel.FindVehicleDialogFragmentViewModel
+import timber.log.Timber
+import www.sanju.motiontoast.MotionToastStyle
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class DailyRatesDialogFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentDailyRatesDialogBinding? = null
     private val binding get() = _binding!!
+    @Inject
+    lateinit var appViewModelFactory: AppViewModelsFactory
+    private lateinit var dailyRatesAdapter: DailyRatesAdapter
+    //view model
+    lateinit var viewModel: DailyRatesDialogFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +54,11 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(
+            this,
+            appViewModelFactory
+        ).get(DailyRatesDialogFragmentViewModel::class.java)
+
         with(binding) {
             dailyRatesTV.text = AppUtils.getCurrentFullDate()
 
@@ -38,12 +66,43 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
                 findNavController().popBackStack()
             }
 
-            doneBTN.setOnClickListener {
-                findNavController().popBackStack()
+        }
+
+        initRV()
+
+        initUI()
+    }
+
+    private fun initRV() {
+        dailyRatesAdapter = DailyRatesAdapter{ position: Int, rate: Rate ->
+
+        }
+        binding.dailyRatesRV.adapter = dailyRatesAdapter
+    }
+
+    private fun initUI() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                AppUtils.showView(false, binding.dailyRatesRV)
+                AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                val result = viewModel.getInitialUserPreferences().token?.let { token ->
+                    viewModel.getRates(token)
+                }!!
+                when (result) {
+                    is ViewModelResult.Success -> {
+                        Timber.d("${result.data?.rate}")
+                        dailyRatesAdapter.submitList(result.data?.rate)
+                        AppUtils.showView(true, binding.dailyRatesRV)
+                    }
+                    is ViewModelResult.Error -> {
+                        AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
+                        AppUtils.showView(false, binding.dailyRatesRV)
+                    }
+                }
+                AppUtils.showProgressIndicator(false, binding.progressIndicator)
             }
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

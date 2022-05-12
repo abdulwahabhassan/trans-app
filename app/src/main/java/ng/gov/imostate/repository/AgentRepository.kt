@@ -48,4 +48,19 @@ class AgentRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getRates(token: String) = withContext(dispatcher) {
+        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+            dataSource.getRates(token)
+        }) {
+            is ApiResult.Success -> {
+                Timber.d("$apiResult")
+                apiResult.response
+            }
+            is ApiResult.Error -> {
+                Timber.d("$apiResult")
+                ApiResponse(message = apiResult.message)
+            }
+        }
+    }
 }

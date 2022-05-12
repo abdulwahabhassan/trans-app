@@ -85,6 +85,12 @@ class AppViewModelsFactory @Inject constructor(
                     userPreferencesRepository
                 ) as T
             }
+            modelClass.isAssignableFrom(DailyRatesDialogFragmentViewModel::class.java) -> {
+                return DailyRatesDialogFragmentViewModel(
+                    userPreferencesRepository,
+                    agentRepository
+                ) as T
+            }
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

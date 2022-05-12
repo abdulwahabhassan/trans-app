@@ -19,7 +19,7 @@ object ApiModule {
     fun providesApiService(
         networkClient: NetworkClient
     ): ApiService {
-        return networkClient.getApiService(Api.STAGING)
+        return networkClient.getApiService(Api.PROD)
     }
 
     @Singleton

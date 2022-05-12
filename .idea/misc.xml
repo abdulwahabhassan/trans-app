@@ -45,6 +45,7 @@
         <entry key="app/src/main/res/layout/fragment_updates.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_vehicle_details.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/layout/fragment_vehicle_details_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_daily_rate.xml" value="0.17239583333333333" />
         <entry key="app/src/main/res/layout/item_store_image.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/item_transaction.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/item_update.xml" value="0.25" />

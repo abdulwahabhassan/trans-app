@@ -172,7 +172,7 @@ class AddVehicleFragment : Fragment() {
                         brand = vehicleBrand,
                         type = selectedVehicleCategory.toString(),
                         firstName = driverFirstName,
-                        middleName = driverMiddleName,
+                        middleName = driverMiddleName.ifEmpty { "-" },
                         lastName = driverLastName,
                         dOB = dob,
                         address = residentialAddress,
@@ -338,6 +338,7 @@ class AddVehicleFragment : Fragment() {
                             routes =
                                 vehicle.routes?.map { routeEntity -> routeEntity.routeID.toString() }
                                     ?.toMutableList() ?: emptyList<String>().toMutableList()
+                            vehicleRouteTV.text = "Vehicle Routes: $routes"
 
                             //radios
                             driverGenderRG.check(
@@ -588,6 +589,7 @@ class AddVehicleFragment : Fragment() {
                 validationErrorMessage = ""
             }
             if (routes.isEmpty()) {
+                Timber.d("validate routes: $routes")
                 validationErrorMessage = "Select route(s)"
                 successful = false
             } else {

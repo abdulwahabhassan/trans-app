@@ -124,7 +124,7 @@ class SuccessFragment : Fragment() {
     fun showConfirmExitDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("Info")
-            .setMessage("Kindly, confirm that you have successfully synced tag?")
+            .setMessage("Please confirm that you have successfully synced tag?")
             .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
             }

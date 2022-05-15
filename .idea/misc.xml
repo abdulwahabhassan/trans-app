@@ -57,6 +57,7 @@
         <entry key="app/src/main/res/layout/item_store_image.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/item_transaction.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_update.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_transaction_details.xml" value="0.21875" />
       </map>
     </option>
   </component>

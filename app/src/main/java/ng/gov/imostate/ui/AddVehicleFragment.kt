@@ -216,8 +216,8 @@ class AddVehicleFragment : Fragment() {
 
                                 AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
                                 val onBoardedVehicle = result.data?.onBoardVehicle
-                                val action = Hilt_AddVehicleFragmentDirections
-                                    .actionHiltAddVehicleFragmentToSuccessFragment(
+                                val action = AddVehicleFragmentDirections
+                                    .actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.vehiclePlates.toString(),
                                         onBoardedVehicle?.driver?.firstName.toString() + " " + onBoardedVehicle?.driver?.lastName.toString(),
                                     AppUtils.getCurrentDate(),
@@ -265,6 +265,7 @@ class AddVehicleFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                     val vehicle = viewModel.findVehicleDriverRecordInDatabase(binding.platesNumberET.text.toString())
                     if (vehicle != null) {
+                        Timber.d("$vehicle")
                         with(this@AddVehicleFragment.binding) {
 
                             //text fields

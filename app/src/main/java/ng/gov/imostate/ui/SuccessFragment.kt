@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -16,10 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import ng.gov.imostate.databinding.FragmentSuccessBinding
 import ng.gov.imostate.model.domain.Data
-import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.*
-import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
 
@@ -39,6 +39,13 @@ class SuccessFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //override on back pressed
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showConfirmExitDialog()
+            }
+        })
 
     }
 
@@ -61,6 +68,7 @@ class SuccessFragment : Fragment() {
         ).get(SuccessFragmentViewModel::class.java)
 
         with(binding) {
+
             syncTagBTN.setOnClickListener {
                 //do network call to retrieve last transaction for this vehicle id (navArgs.id)
                 //if successfully retrieved, set sharedNfcViewModel data
@@ -111,6 +119,19 @@ class SuccessFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun showConfirmExitDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Info")
+            .setMessage("Kindly, confirm that you have successfully synced tag?")
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                findNavController().popBackStack()
+            }.show()
     }
 
     override fun onDestroy() {

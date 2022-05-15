@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_grey"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:context=".ui.screens.TransactionDetailActivity">
+
+
+            <TextView
+                android:id="@+id/amountTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/amountLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/amountLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/amountLabelTV"
+                tools:text="$5.00" />
+
+            <TextView
+                android:id="@+id/senderLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Sender :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/senderTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/senderTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/senderLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/senderLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/senderLabelTV"
+                tools:text="Mike James" />
+
+            <TextView
+                android:id="@+id/receiverLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Receiver :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/receiverTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/senderLabelTV" />
+
+            <TextView
+                android:id="@+id/receiverTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/receiverLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/receiverLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/receiverLabelTV"
+                tools:text="NUT Limited" />
+
+            <TextView
+                android:id="@+id/amountLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Amount :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/amountTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiverLabelTV" />
+
+            <TextView
+                android:id="@+id/vehiclePlatesLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Vehicle Plates:"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/vehiclePlatesTV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addressLabelTV" />
+
+            <TextView
+                android:id="@+id/vehiclePlatesTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/vehiclePlatesLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/vehiclePlatesLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/vehiclePlatesLabelTV"
+                tools:text="IMO-101-OWR" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="174dp" />
+
+            <TextView
+                android:id="@+id/addressLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Address :"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/addressTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateLabelTV" />
+
+            <TextView
+                android:id="@+id/addressTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/addressLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/addressLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/addressLabelTV"
+                tools:text="Dipo" />
+
+            <TextView
+                android:id="@+id/dateLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Date :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/dateTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amountLabelTV" />
+
+            <TextView
+                android:id="@+id/dateTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/dateLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/dateLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/dateLabelTV"
+                tools:text="22-10-12" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/doneBTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:padding="15dp"
+        android:layout_marginTop="16dp"
+        android:text="Done"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

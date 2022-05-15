@@ -33,7 +33,14 @@
         android:id="@+id/addVehicleFragment"
         android:name="ng.gov.imostate.ui.AddVehicleFragment"
         android:label="fragment_add_vehicle"
-        tools:layout="@layout/fragment_add_vehicle" />
+        tools:layout="@layout/fragment_add_vehicle" >
+        <action
+            android:id="@+id/action_addVehicleFragment_to_successFragment"
+            app:destination="@id/successFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="ng.gov.imostate.ui.TransactionsFragment"
@@ -135,18 +142,6 @@
             app:destination="@id/successFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/homeFragment"/>
-    </fragment>
-    <fragment
-        android:id="@+id/hilt_AddVehicleFragment"
-        android:name="ng.gov.imostate.ui.Hilt_AddVehicleFragment"
-        android:label="Hilt_AddVehicleFragment"
-        tools:layout="@layout/fragment_add_vehicle">
-        <action
-            android:id="@+id/action_hilt_AddVehicleFragment_to_successFragment"
-            app:destination="@id/successFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"

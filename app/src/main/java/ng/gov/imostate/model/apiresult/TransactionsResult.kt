@@ -1,5 +1,7 @@
 package ng.gov.imostate.model.apiresult
 
+import ng.gov.imostate.model.domain.Transaction
+
 data class TransactionsResult(
-    val transactions: List<Any>
+        val transactions: List<Transaction>
 )

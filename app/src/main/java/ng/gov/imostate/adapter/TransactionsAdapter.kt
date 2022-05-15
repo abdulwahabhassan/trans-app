@@ -58,17 +58,14 @@ class TransactionsAdapter(
         fun bind(transaction: Transaction) {
             Timber.d("$transaction")
             with(binding) {
-                transactionTitleTV.text = transaction.title
+                transactionTitleTV.text = transaction.accountFrom
                 transactionAmountTV.text = StringBuilder("₦").append(
                     AppUtils.formatCurrency(
                         transaction.amount
                     )
                 )
-                transactionDateTV.text = transaction.date
-                transactionIV.setImageResource(listOf(
-                    R.drawable.ic_transaction_credit,
-                    R.drawable.ic_transaction_vehicle
-                ).random())
+                transactionDateTV.text = transaction.createdAt.substring(0, 10)
+                transactionIV.setImageResource(R.drawable.ic_transaction_credit)
             }
         }
 

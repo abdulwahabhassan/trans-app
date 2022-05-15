@@ -10,7 +10,6 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,17 +19,18 @@ import com.dantsu.escposprinter.connection.DeviceConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.R
 import ng.gov.imostate.adapter.TransactionsAdapter
 import ng.gov.imostate.databinding.FragmentTransactionsBinding
+import ng.gov.imostate.databinding.LayoutTransactionDetailsBinding
 import ng.gov.imostate.model.domain.Transaction
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.printer.AsyncBluetoothEscPosPrint
 import ng.gov.imostate.printer.AsyncEscPosPrint
 import ng.gov.imostate.printer.AsyncEscPosPrinter
 import ng.gov.imostate.util.AppUtils
-import ng.gov.imostate.util.Mock
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.TransactionsFragmentViewModel
 import timber.log.Timber
@@ -243,9 +243,40 @@ class TransactionsFragment : Fragment() {
 
     private fun initRV() {
         transactionsAdapter = TransactionsAdapter{ position: Int, transaction: Transaction ->
-
+            showTransactionDetailsDialog(transaction)
         }
         binding.transactionsRV.adapter = transactionsAdapter
+    }
+
+    //show bottomSheetDialog to select transaction type from options
+    private fun showTransactionDetailsDialog(transaction: Transaction){
+
+        val binding = LayoutTransactionDetailsBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            this.binding.root,
+            false
+        )
+
+        val transactionDetailsSheet = BottomSheetDialog(requireContext())
+        transactionDetailsSheet.setContentView(binding.root)
+        transactionDetailsSheet.dismissWithAnimation = true
+
+        if (transactionDetailsSheet.isShowing) {
+            transactionDetailsSheet.dismiss()
+        }
+        transactionDetailsSheet.show()
+
+        with(binding) {
+            binding.doneBTN.setOnClickListener {
+                transactionDetailsSheet.dismiss()
+            }
+            senderTV.text = transaction.accountFrom
+            receiverTV.text = transaction.accountTo
+            amountTV.text = transaction.amount
+            dateTV.text = transaction.createdAt.substring(0, 10)
+            vehiclePlatesTV.text = transaction.vehicleFrom.vehiclePlates
+        }
+
     }
 
     private fun initUI() {
@@ -260,7 +291,7 @@ class TransactionsFragment : Fragment() {
                 when (result) {
                     is ViewModelResult.Success -> {
                         Timber.d("${result.data?.transactions}")
-                        transactionsAdapter.submitList(Mock.getTransactions())
+                        transactionsAdapter.submitList(result.data?.transactions)
                         AppUtils.showView(true, binding.transactionsRV)
                     }
                     is ViewModelResult.Error -> {

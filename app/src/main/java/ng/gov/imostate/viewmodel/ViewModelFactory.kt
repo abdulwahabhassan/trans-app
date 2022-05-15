@@ -92,6 +92,12 @@ class AppViewModelsFactory @Inject constructor(
                     agentRepository
                 ) as T
             }
+            modelClass.isAssignableFrom(FundWalletFragmentViewModel::class.java) -> {
+                return FundWalletFragmentViewModel(
+                    userPreferencesRepository,
+                    agentRepository
+                ) as T
+            }
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

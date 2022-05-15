@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.datasource.RemoteDatasource
+import ng.gov.imostate.model.request.FundWalletAccountDetailsRequest
 import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.response.ApiResponse
 import ng.gov.imostate.model.result.ApiResult
@@ -52,6 +53,23 @@ class AgentRepository @Inject constructor(
     suspend fun getRates(token: String) = withContext(dispatcher) {
         when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
             dataSource.getRates(token)
+        }) {
+            is ApiResult.Success -> {
+                Timber.d("$apiResult")
+                apiResult.response
+            }
+            is ApiResult.Error -> {
+                Timber.d("$apiResult")
+                ApiResponse(message = apiResult.message)
+            }
+        }
+    }
+
+    suspend fun getFundWalletAccountDetails(
+        token: String,
+        fundWalletAccountDetailsRequest: FundWalletAccountDetailsRequest) = withContext(dispatcher) {
+        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+            dataSource.getFundWalletAccountDetails(token, fundWalletAccountDetailsRequest)
         }) {
             is ApiResult.Success -> {
                 Timber.d("$apiResult")

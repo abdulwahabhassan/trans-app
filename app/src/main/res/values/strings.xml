@@ -57,35 +57,35 @@
         <item>Zamfara</item>
     </string-array>
 
-<!--    <string-array name="imo_state_local_government_areas">-->
-<!--        <item>Aboh Mbaise</item>-->
-<!--        <item>Ahiazu Mbaise</item>-->
-<!--        <item>Ehime Mbano</item>-->
-<!--        <item>Ezinihitte Mbaise</item>-->
-<!--        <item>Ideato North</item>-->
-<!--        <item>Ideato South</item>-->
-<!--        <item>Ihitte/Uboma</item>-->
-<!--        <item>Ikeduru</item>-->
-<!--        <item>Isiala Mbano</item>-->
-<!--        <item>Isu</item>-->
-<!--        <item>Mbaitoli</item>-->
-<!--        <item>Ngor Okpala</item>-->
-<!--        <item>Njaba</item>-->
-<!--        <item>Nkwerre</item>-->
-<!--        <item>Nwangele</item>-->
-<!--        <item>Obowo</item>-->
-<!--        <item>Oguta</item>-->
-<!--        <item>Ohaji/Egbema</item>-->
-<!--        <item>Okigwe</item>-->
-<!--        <item>Onuimo</item>-->
-<!--        <item>Orlu</item>-->
-<!--        <item>Orsu</item>-->
-<!--        <item>Oru East</item>-->
-<!--        <item>Owerri West</item>-->
-<!--        <item>Owerri Municipal</item>-->
-<!--        <item>Oru West</item>-->
-<!--        <item>Owerri North</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="imo_state_local_government_areas">-->
+    <!--        <item>Aboh Mbaise</item>-->
+    <!--        <item>Ahiazu Mbaise</item>-->
+    <!--        <item>Ehime Mbano</item>-->
+    <!--        <item>Ezinihitte Mbaise</item>-->
+    <!--        <item>Ideato North</item>-->
+    <!--        <item>Ideato South</item>-->
+    <!--        <item>Ihitte/Uboma</item>-->
+    <!--        <item>Ikeduru</item>-->
+    <!--        <item>Isiala Mbano</item>-->
+    <!--        <item>Isu</item>-->
+    <!--        <item>Mbaitoli</item>-->
+    <!--        <item>Ngor Okpala</item>-->
+    <!--        <item>Njaba</item>-->
+    <!--        <item>Nkwerre</item>-->
+    <!--        <item>Nwangele</item>-->
+    <!--        <item>Obowo</item>-->
+    <!--        <item>Oguta</item>-->
+    <!--        <item>Ohaji/Egbema</item>-->
+    <!--        <item>Okigwe</item>-->
+    <!--        <item>Onuimo</item>-->
+    <!--        <item>Orlu</item>-->
+    <!--        <item>Orsu</item>-->
+    <!--        <item>Oru East</item>-->
+    <!--        <item>Owerri West</item>-->
+    <!--        <item>Owerri Municipal</item>-->
+    <!--        <item>Oru West</item>-->
+    <!--        <item>Owerri North</item>-->
+    <!--    </string-array>-->
 
     <string-array name="abia_lgas">
         <item>Aba North</item>
@@ -329,7 +329,7 @@
         <item>Warri North</item>
         <item>Warri South</item>
     </string-array>
-    
+
     <string-array name="ebonyi_lgas">
         <item>Abakaliki</item>
         <item>Afikpo-North</item>
@@ -365,7 +365,7 @@
         <item>Owan-West</item>
         <item>Uhunmwonde</item>
     </string-array>
-    
+
     <string-array name="ekiti_lgas">
         <item>Ado-Ekiti</item>
         <item>Efon</item>
@@ -448,7 +448,7 @@
         <item>Owerri-North</item>
         <item>Owerri-West</item>
     </string-array>
-    
+
     <string-array name="jigawa_lgas">
         <item>Auyo</item>
         <item>Babura</item>
@@ -504,14 +504,14 @@
         <item>Zaria</item>
     </string-array>
 
-   <string-array name="fct_lgas">
-       <item>Abuja</item>
-       <item>Kwali</item>
-       <item>Kuje</item>
-       <item>Gwagwalada</item>
-       <item>Bwari</item>
-       <item>Abaji</item>
-   </string-array>
+    <string-array name="fct_lgas">
+        <item>Abuja</item>
+        <item>Kwali</item>
+        <item>Kuje</item>
+        <item>Gwagwalada</item>
+        <item>Bwari</item>
+        <item>Abaji</item>
+    </string-array>
 
     <string-array name="kano_lgas">
         <item>Ajingi</item>
@@ -559,7 +559,7 @@
         <item>Warawa</item>
         <item>Wudil</item>
     </string-array>
-    
+
     <string-array name="katsina_lgas">
         <item>Bakori</item>
         <item>Batagarawa</item>
@@ -684,7 +684,7 @@
         <item>Shomolu</item>
         <item>Surulere</item>
     </string-array>
-    
+
     <string-array name="nassarawa_lgas">
         <item>Akwanga</item>
         <item>Awe</item>
@@ -888,8 +888,7 @@
         <item>Tai</item>
     </string-array>
 
-        
-    
+
     <string-array name="sokoto_lgas">
         <item>Binji</item>
         <item>Bodinga</item>

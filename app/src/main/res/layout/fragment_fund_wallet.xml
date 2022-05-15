@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.FundWalletFragment"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:text="Fund Wallet"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="32dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/backArrowIV"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:backgroundTint="@color/dark_blue"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/promptTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="32dp"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:text="Top up your wallet by making a payment to any of the listed accounts"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/promptTV">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/rvProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible"
+            app:indicatorColor="@color/dark_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/fundWalletAccountDetailsRV"
+            app:layout_constraintEnd_toEndOf="@+id/fundWalletAccountDetailsRV"
+            app:layout_constraintStart_toStartOf="@+id/fundWalletAccountDetailsRV"
+            app:layout_constraintTop_toTopOf="@+id/fundWalletAccountDetailsRV"
+            app:trackColor="@color/sky_blue" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fundWalletAccountDetailsRV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/madePaymentBTN"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            android:layout_marginHorizontal="24dp"
+            android:overScrollMode="never"
+            tools:listitem="@layout/item_account_details" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:indicatorColor="@color/dark_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/madePaymentBTN"
+            app:layout_constraintEnd_toEndOf="@+id/madePaymentBTN"
+            app:layout_constraintStart_toStartOf="@+id/madePaymentBTN"
+            app:layout_constraintTop_toTopOf="@+id/madePaymentBTN"
+            app:trackColor="@color/sky_blue" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/madePaymentBTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/dark_blue"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:padding="15dp"
+            android:text="I HAVE MADE THE TRANSFER"
+            android:textColor="@color/white"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,18 +14,6 @@ interface VehicleLocalDao {
     @Query("SELECT * FROM vehicle WHERE vehicle_plates Like (:identifier)")
     suspend fun getVehicle(identifier: String): VehicleEntity?
 
-//    @Query(
-//        "SELECT vehicle.vehicle_plates AS identifier, " +
-//                "driver.first_name AS driverFirstName, " +
-//                "driver.last_name AS driverLastName, " +
-//                "vehicle.vehicle_licence_exp_date AS vehicleLicenseExpiryDate, " +
-//                "vehicle.type AS vehicleType " +
-//                "FROM vehicle, driver " +
-//                "WHERE vehicle.id = driver.vehicle_id AND vehicle.vehicle_plates LIKE :identifier "
-//    )
-//    suspend fun getVehicleDriverRecord(identifier: String): VehicleDriverRecord?
-
-
     @Query("SELECT * FROM vehicle WHERE vehicle_plates = :identifier")
     suspend fun getVehicleDriverRecord(identifier: String): VehicleEntity?
 
@@ -36,11 +24,3 @@ interface VehicleLocalDao {
     suspend fun insertAllVehicles(vehicles: List<VehicleEntity>)
 
 }
-
-//data class VehicleDriverRecord(
-//    val identifier: String?,
-//    val driverFirstName: String?,
-//    val driverLastName: String?,
-//    val vehicleType: String?,
-//    val vehicleLicenseExpiryDate: String?
-//)

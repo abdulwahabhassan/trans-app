@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/connectivity_offline_bg.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/account_details_item_bg.xml" value="0.2045" />
         <entry key="app/src/main/res/drawable/amount_to_pay_text_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/balance_text_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/balance_text_green_bg.xml" value="0.187" />
@@ -24,19 +25,22 @@
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/sync_btn_bg.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/transaction_item_bg.xml" value="0.165" />
         <entry key="app/src/main/res/drawable/transaction_rv_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/vehicle_details_bg.xml" value="0.267" />
         <entry key="app/src/main/res/layout/activity_gallery.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19739583333333333" />
-        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1953125" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_add_vehicle.xml" value="0.16118633139909735" />
         <entry key="app/src/main/res/layout/fragment_daily_rates.xml" value="0.24707946777343748" />
         <entry key="app/src/main/res/layout/fragment_daily_rates_dialog.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_find_vehicle_dialog.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/fragment_fund_wallet.xml" value="0.196875" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20031982421875" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.18697916666666667" />
         <entry key="app/src/main/res/layout/fragment_login_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_more.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/fragment_nfc_reader_result.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_out_standing_payment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
@@ -48,9 +52,10 @@
         <entry key="app/src/main/res/layout/fragment_updates.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_vehicle_details.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/layout/fragment_vehicle_details_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_account_details.xml" value="0.196875" />
         <entry key="app/src/main/res/layout/item_daily_rate.xml" value="0.17239583333333333" />
         <entry key="app/src/main/res/layout/item_store_image.xml" value="0.20052083333333334" />
-        <entry key="app/src/main/res/layout/item_transaction.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/item_transaction.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_update.xml" value="0.25" />
       </map>
     </option>

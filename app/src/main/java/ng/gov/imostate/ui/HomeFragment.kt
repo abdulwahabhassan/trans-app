@@ -143,7 +143,8 @@ class HomeFragment : Fragment() {
 
             }
             paymentBTN.setOnClickListener {
-
+                val action = HomeFragmentDirections.actionHomeFragmentToPaymentFragment()
+                findNavController().navigate(action)
             }
             dailyRatesTV.setOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesDialogFragment()

@@ -7,7 +7,6 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @Headers("Content-Type: application/json")
     @POST("agent/vehicle/onboard")
     suspend fun onboardVehicle(
         @Header("Authorization") token: String,
@@ -20,7 +19,6 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): ApiResponse<LoginResult>
 
-    @Headers("Content-Type: application/json")
     @POST("agent/vehicle/vend/{id}")
     suspend fun createSyncTransactions(
         @Header("Authorization") token: String,
@@ -59,5 +57,11 @@ interface ApiService {
     suspend fun getRates(
         @Header("Authorization") token: String
     ): ApiResponse<RatesResult>
+
+    @GET("")
+    suspend fun getFundWalletAccountDetails(
+        @Header("Authorization") token: String,
+        @Body fundWalletAccountDetailsRequest: FundWalletAccountDetailsRequest
+    ): ApiResponse<FundWalletAccountDetailsResult>
 
 }

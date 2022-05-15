@@ -14,6 +14,7 @@ import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -214,7 +215,14 @@ class AddVehicleFragment : Fragment() {
                                 Timber.d("${result.data}")
 
                                 AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
-                                findNavController().popBackStack()
+                                val onBoardedVehicle = result.data?.onBoardVehicle
+                                val action = Hilt_AddVehicleFragmentDirections
+                                    .actionHiltAddVehicleFragmentToSuccessFragment(
+                                        onBoardedVehicle?.vehiclePlates.toString(),
+                                        onBoardedVehicle?.driver?.firstName.toString() + " " + onBoardedVehicle?.driver?.lastName.toString(),
+                                    AppUtils.getCurrentDate(),
+                                    "0.00")
+                                findNavController().navigate(action)
                             }
                             is ViewModelResult.Error -> {
 

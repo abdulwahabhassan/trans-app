@@ -2,10 +2,7 @@ package ng.gov.imostate.datasource
 
 import ng.gov.imostate.api.ApiService
 import ng.gov.imostate.model.apiresult.*
-import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
-import ng.gov.imostate.model.request.GetVehicleRequest
-import ng.gov.imostate.model.request.LoginRequest
-import ng.gov.imostate.model.request.OnboardVehicleRequest
+import ng.gov.imostate.model.request.*
 import ng.gov.imostate.model.response.*
 import javax.inject.Inject
 
@@ -16,7 +13,8 @@ class RemoteDatasource  @Inject constructor(
         return apiService.login(loginRequest = loginRequest)
     }
 
-    suspend fun onboardVehicle(token: String, onboardVehicleRequest: OnboardVehicleRequest): ApiResponse<OnboardVehicleResult> {
+    suspend fun onboardVehicle(token: String, onboardVehicleRequest: OnboardVehicleRequest):
+            ApiResponse<OnboardVehicleResult> {
         return apiService.onboardVehicle(token, onboardVehicleRequest)
     }
 
@@ -32,7 +30,11 @@ class RemoteDatasource  @Inject constructor(
         return apiService.getDashboardMetrics(token)
     }
 
-    suspend fun createSyncTransactions(token: String, vehicleId: String, data: CreateSyncTransactionsRequest): ApiResponse<SyncTransactionsResult> {
+    suspend fun createSyncTransactions(
+        token: String,
+        vehicleId: String,
+        data: CreateSyncTransactionsRequest)
+    : ApiResponse<SyncTransactionsResult> {
         return apiService.createSyncTransactions(token, vehicleId = vehicleId, data = data)
     }
 
@@ -40,11 +42,21 @@ class RemoteDatasource  @Inject constructor(
         return apiService.getTransactions(token)
     }
 
-    suspend fun getRecentTransaction(token: String, vehicleId: String): ApiResponse<TransactionResult> {
+    suspend fun getRecentTransaction(
+        token: String,
+        vehicleId: String
+    ): ApiResponse<TransactionResult> {
         return apiService.getRecentTransaction(token, vehicleId)
     }
 
     suspend fun getRates(token: String): ApiResponse<RatesResult> {
         return apiService.getRates(token)
+    }
+
+    suspend fun getFundWalletAccountDetails(
+        token: String,
+        fundWalletAccountDetailsRequest: FundWalletAccountDetailsRequest
+    ): ApiResponse<FundWalletAccountDetailsResult> {
+        return apiService.getFundWalletAccountDetails(token, fundWalletAccountDetailsRequest)
     }
 }

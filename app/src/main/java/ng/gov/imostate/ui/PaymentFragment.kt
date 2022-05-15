@@ -33,6 +33,20 @@ class PaymentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
 
+            backArrowIV.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            makePaymentBTN.setOnClickListener {
+                amountTIP.error = ""
+                val amount = amountET.text.toString()
+                if (amount.isNotEmpty() && amount.toDouble() != 0.00) {
+                    val action = PaymentFragmentDirections.actionPaymentFragmentToFundWalletFragment(amount)
+                    findNavController().navigate(action)
+                } else {
+                    amountTIP.error = "Please enter valid amount"
+                }
+            }
         }
     }
 

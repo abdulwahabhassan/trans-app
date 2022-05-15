@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_updatesFragment"
             app:destination="@id/updatesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/addVehicleFragment"
@@ -132,5 +135,35 @@
             app:destination="@id/successFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/homeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/hilt_AddVehicleFragment"
+        android:name="ng.gov.imostate.ui.Hilt_AddVehicleFragment"
+        android:label="Hilt_AddVehicleFragment"
+        tools:layout="@layout/fragment_add_vehicle">
+        <action
+            android:id="@+id/action_hilt_AddVehicleFragment_to_successFragment"
+            app:destination="@id/successFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="ng.gov.imostate.ui.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_fundWalletFragment"
+            app:destination="@id/fundWalletFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fundWalletFragment"
+        android:name="ng.gov.imostate.ui.FundWalletFragment"
+        android:label="fragment_fund_wallet"
+        tools:layout="@layout/fragment_fund_wallet" >
+        <argument
+            android:name="amount"
+            app:argType="string" />
     </fragment>
 </navigation>

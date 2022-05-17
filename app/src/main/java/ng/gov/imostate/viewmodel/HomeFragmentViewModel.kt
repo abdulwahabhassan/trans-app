@@ -98,10 +98,6 @@ class HomeFragmentViewModel @Inject constructor(
         agentRepository.insertRatesToDatabase(rates)
     }
 
-    suspend fun getRatesInDatabase(): List<RateEntity> {
-        return agentRepository.getRatesInDatabase()
-    }
-
     suspend fun insertVehiclesToDatabase(vehicles: List<VehicleEntity>) {
         vehicleRepository.insertVehiclesToDatabase(vehicles)
     }

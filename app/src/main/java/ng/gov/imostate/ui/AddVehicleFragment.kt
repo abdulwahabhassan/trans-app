@@ -64,29 +64,6 @@ class AddVehicleFragment : Fragment() {
             appViewModelFactory
         ).get(AddVehicleFragmentViewModel::class.java)
 
-//        if (BuildConfig.DEBUG) {
-//            with(binding) {
-//                fleetNumberET.setText("627JK2787")
-//                plateNumberET.setText("IMO-1526-HDB")
-//                vehicleBrandET.setText("Toyota")
-//                vehicleModelET.setText("Camry")
-//                passengerCapacityET.setText("4")
-//                driverFirstNameET.setText("Adams")
-//                driverMiddleNameET.setText("Jones")
-//                driverLastNameET.setText("Maple")
-//                dobET.setText("1987-12-01")
-//                driverGenderRG.check(R.id.maleCB)
-//                meansOfIdRG.check(R.id.ninSlipRB)
-//                idNumberET.setText("NG2728301")
-//                imssinNumberET.setText("IMS73630")
-//                phoneNumberET.setText("09022332211")
-//                emailET.setText("abc@gmail.com")
-//                residentialAddressET.setText("No.16 new owerri")
-//                acctNumberET.setText("2302928190")
-//                bvnET.setText("400019229")
-//            }
-//        }
-
         showMinimal()
 
         setUpBankNameSpinner()
@@ -229,7 +206,9 @@ class AddVehicleFragment : Fragment() {
                                         onBoardedVehicle?.vehiclePlates.toString(),
                                         onBoardedVehicle?.driver?.firstName.toString() + " " + onBoardedVehicle?.driver?.lastName.toString(),
                                     AppUtils.getCurrentDate(),
-                                    "7.00")
+                                        //get the appropriate rate for the category of this vehicle
+                                        //in the database if it exists else use the value of 0.00
+                                    viewModel.getRateInDatabase(onBoardedVehicle?.type ?: "")?.amount ?: "0.00")
                                 findNavController().navigate(action)
                             }
                             is ViewModelResult.Error -> {

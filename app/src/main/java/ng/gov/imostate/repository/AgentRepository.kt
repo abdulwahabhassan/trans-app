@@ -85,8 +85,12 @@ class AgentRepository @Inject constructor(
         }
     }
 
-    suspend fun getRatesInDatabase(): List<RateEntity> {
+    suspend fun getAllRatesInDatabase(): List<RateEntity> {
         return ratesLocalDao.getAllRates()
+    }
+
+    suspend fun getRateInDatabase(category: String): RateEntity? {
+        return ratesLocalDao.getRate(category)
     }
 
     suspend fun insertRatesToDatabase(rates: List<RateEntity>) {

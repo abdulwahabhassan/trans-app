@@ -11,10 +11,10 @@
 
     <string-array name="vehicle_category">
         <item>Tricycle</item>
-        <item>Mini bus</item>
-        <item>Standard bus</item>
-        <item>Small truck</item>
-        <item>Heavy duty truck</item>
+        <item>Mini-bus</item>
+        <item>Bus</item>
+        <item>Small-truck</item>
+        <item>Heavy-duty-truck</item>
     </string-array>
 
     <string-array name="nigerian_states">

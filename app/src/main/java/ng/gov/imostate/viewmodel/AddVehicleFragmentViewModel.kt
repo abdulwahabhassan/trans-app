@@ -2,11 +2,13 @@ package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.Mapper
+import ng.gov.imostate.database.entity.RateEntity
 import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.apiresult.OnboardVehicleResult
 import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.model.result.ViewModelResult
+import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.VehicleRepository
 import ng.gov.imostate.repository.UserPreferencesRepository
@@ -17,7 +19,8 @@ import javax.inject.Inject
 class AddVehicleFragmentViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     private val vehicleRepository: VehicleRepository,
-    private val transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionRepository,
+    private val agentRepository: AgentRepository
 ) : BaseViewModel(
     userPreferencesRepository
 ){
@@ -32,6 +35,10 @@ class AddVehicleFragmentViewModel @Inject constructor(
                 ViewModelResult.Error(response.message ?: "Unknown Error")
             }
         }
+    }
+
+    suspend fun getRateInDatabase(category: String): RateEntity? {
+        return agentRepository.getRateInDatabase(category)
     }
 
     suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {

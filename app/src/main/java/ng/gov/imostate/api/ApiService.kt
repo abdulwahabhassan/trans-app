@@ -19,10 +19,9 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): ApiResponse<LoginResult>
 
-    @POST("agent/vehicle/vend/{id}")
+    @POST("agent/vehicle/vend")
     suspend fun createSyncTransactions(
         @Header("Authorization") token: String,
-        @Path("id") vehicleId: String,
         @Body data: CreateSyncTransactionsRequest
     ): ApiResponse<SyncTransactionsResult>
 

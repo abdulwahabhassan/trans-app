@@ -1,15 +1,11 @@
 package ng.gov.imostate
 
-import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.RouteEntity
-import ng.gov.imostate.database.entity.VehicleEntity
-import ng.gov.imostate.model.domain.Driver
-import ng.gov.imostate.model.domain.Route
-import ng.gov.imostate.model.domain.Vehicle
+import ng.gov.imostate.database.entity.*
+import ng.gov.imostate.model.domain.*
 
 object Mapper {
 
-    fun mapVehicleToVehicleEntity(vehicle: Vehicle): VehicleEntity {
+    private fun mapVehicleToVehicleEntity(vehicle: Vehicle): VehicleEntity {
         return VehicleEntity(
             vehicle.id,
             vehicle.vehiclePlates,
@@ -29,6 +25,32 @@ object Mapper {
             vehicle.driver?.let { mapDriverToDriverEntity(it) },
             vehicle.routes?.let { mapListOfRouteToListOfRouteEntity(it) }
         )
+    }
+
+    fun mapTransactionToTransactionEntity(transactionData: TransactionData): TransactionEntity {
+        return TransactionEntity(
+            transactionData.vehicleId.toString(),
+            transactionData.to
+        )
+    }
+
+    private fun mapTransactionEntityToTransaction(transactionEntity: TransactionEntity): TransactionData {
+        return TransactionData(
+            transactionEntity.vehicleId,
+            transactionEntity.to
+        )
+    }
+
+    fun mapListOfTransactionToListOfTransactionEntity(transactions: List<TransactionData>): List<TransactionEntity> {
+        return transactions.map { transactionData ->
+            mapTransactionToTransactionEntity(transactionData)
+        }
+    }
+
+    fun mapListOfTransactionEntityToListOfTransaction(transactions: List<TransactionEntity>): List<TransactionData> {
+        return transactions.map { transactionEntity ->
+            mapTransactionEntityToTransaction(transactionEntity)
+        }
     }
 
     private fun mapDriverToDriverEntity(driver: Driver): DriverEntity {
@@ -81,6 +103,44 @@ object Mapper {
     fun mapListOfVehicleToListOfVehicleEntity(vehicles: List<Vehicle>): List<VehicleEntity> {
         return vehicles.map { vehicle ->
             mapVehicleToVehicleEntity(vehicle)
+        }
+    }
+
+    fun mapRateToRateEntity(rate: Rate): RateEntity {
+        return RateEntity(
+            rate.id,
+            rate.from,
+            rate.to,
+            rate.status,
+            rate.amount,
+            rate.createdAt,
+            rate.updatedAt,
+            rate.category
+        )
+    }
+
+    fun mapRateEntityToRate(rate: RateEntity): Rate {
+        return Rate(
+            rate.id,
+            rate.from,
+            rate.to,
+            rate.status,
+            rate.amount,
+            rate.createdAt,
+            rate.updatedAt,
+            rate.category
+        )
+    }
+
+    fun mapListOfRateToListOfRateEntity(rates: List<Rate>): List<RateEntity> {
+        return rates.map { rate ->
+            mapRateToRateEntity(rate)
+        }
+    }
+
+    fun mapListOfRateEntityToListOfRate(rates: List<RateEntity>): List<Rate> {
+        return rates.map { rate ->
+            mapRateEntityToRate(rate)
         }
     }
 }

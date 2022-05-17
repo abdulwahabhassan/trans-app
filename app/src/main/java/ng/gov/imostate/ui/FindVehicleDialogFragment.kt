@@ -75,12 +75,11 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
                     if(vehicle?.vehiclePlates == vehicleIdentifier) {
                         //debug purpose
                         val bundle = Bundle().also { bundle ->
-                            bundle.putString(DRIVER_NAME_KEY, vehicle.driver?.firstName + " " + vehicle.driver?.lastName)
-                            bundle.putString(VEHICLE_IDENTIFIER_KEY, vehicle.vehiclePlates)
+                            bundle.putString(MainActivity.DRIVER_NAME_KEY, vehicle.driver?.firstName + " " + vehicle.driver?.lastName)
+                            bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, vehicle.vehiclePlates)
+                            bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, vehicle.id.toString())
                             bundle.putString(VEHICLE_TYPE_KEY, vehicle.type)
-                            bundle.putString(VEHICLE_LICENSE_EXP_DATE_KEY,
-                                vehicle.vehicleLicenceExpDate
-                            )
+                            bundle.putString(VEHICLE_LICENSE_EXP_DATE_KEY, vehicle.vehicleLicenceExpDate)
                         }
                         //
 
@@ -101,7 +100,7 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    fun validateField(): Boolean {
+    private fun validateField(): Boolean {
         var success = true
         if (binding.platesNumberET.text.toString().isEmpty()) {
             binding.vehicleDetailsTIP.error = "Please fill vehicle license"
@@ -119,8 +118,6 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val VEHICLE_TYPE_KEY = "vehicleType"
-        const val VEHICLE_IDENTIFIER_KEY = "vehicleIdentifier"
-        const val DRIVER_NAME_KEY = "driverName"
         const val VEHICLE_LICENSE_EXP_DATE_KEY = "vehicleLicenseExpiryDate"
     }
 

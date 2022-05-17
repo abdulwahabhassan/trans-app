@@ -21,7 +21,8 @@ class AppViewModelsFactory @Inject constructor(
                 return HomeFragmentViewModel(
                     userPreferencesRepository,
                     agentRepository,
-                    vehicleRepository
+                    vehicleRepository,
+                    transactionRepository
                 ) as T
             }
             modelClass.isAssignableFrom(TransactionsFragmentViewModel::class.java) -> {
@@ -38,7 +39,8 @@ class AppViewModelsFactory @Inject constructor(
             modelClass.isAssignableFrom(AddVehicleFragmentViewModel::class.java) -> {
                 return AddVehicleFragmentViewModel(
                     userPreferencesRepository,
-                    vehicleRepository
+                    vehicleRepository,
+                    transactionRepository
                 ) as T
             }
             modelClass.isAssignableFrom(LoginFragmentViewModel::class.java) -> {

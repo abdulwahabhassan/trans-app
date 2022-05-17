@@ -10,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import ng.gov.imostate.database.AppRoomDatabase
 import ng.gov.imostate.database.converters.Converters
 import ng.gov.imostate.database.dao.DriverLocalDao
+import ng.gov.imostate.database.dao.RateLocalDao
+import ng.gov.imostate.database.dao.TransactionLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
 import javax.inject.Singleton
 
@@ -33,12 +35,20 @@ object DatabaseModule {
         return AppRoomDatabase.getInstance(appContext).driverLocalDao()
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideTypeConverter(
-//        moshi: Moshi
-//    ): Converters {
-//        return Converters(moshi)
-//    }
+    @Provides
+    @Singleton
+    fun provideTransactionLocalDAO(
+        @ApplicationContext appContext: Context
+    ): TransactionLocalDao {
+        return AppRoomDatabase.getInstance(appContext).transactionLocalDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRateLocalDAO(
+        @ApplicationContext appContext: Context
+    ): RateLocalDao {
+        return AppRoomDatabase.getInstance(appContext).rateLocalDao()
+    }
 
 }

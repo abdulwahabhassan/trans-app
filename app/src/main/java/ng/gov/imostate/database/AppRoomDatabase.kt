@@ -12,17 +12,22 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import ng.gov.imostate.database.converters.Converters
 import ng.gov.imostate.database.dao.DriverLocalDao
+import ng.gov.imostate.database.dao.RateLocalDao
+import ng.gov.imostate.database.dao.TransactionLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
+import ng.gov.imostate.database.entity.*
 import ng.gov.imostate.worker.DatabaseWorker
-import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.RouteEntity
-import ng.gov.imostate.database.entity.UserEntity
-import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.util.Constants
 import timber.log.Timber
 
 @Database(
-    entities = [UserEntity::class, DriverEntity::class, VehicleEntity::class, RouteEntity::class],
+    entities = [
+        DriverEntity::class,
+        VehicleEntity::class,
+        RouteEntity::class,
+        TransactionEntity::class,
+        RateEntity::class
+               ],
     version = 1,
     exportSchema = false
 )
@@ -30,6 +35,8 @@ abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun vehicleLocalDao(): VehicleLocalDao
     abstract fun driverLocalDao(): DriverLocalDao
+    abstract fun transactionLocalDao(): TransactionLocalDao
+    abstract fun rateLocalDao(): RateLocalDao
 
     companion object {
 

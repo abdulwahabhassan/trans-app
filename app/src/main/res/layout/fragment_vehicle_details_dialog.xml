@@ -56,7 +56,7 @@
             tools:text="2022-12-01" />
 
         <TextView
-            android:id="@+id/vehicleLicenseLabelTV"
+            android:id="@+id/vehiclePlatesLabelTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -65,13 +65,13 @@
             android:fontFamily="@font/nunito_sans_semibold"
             android:text="Vehicle Identifier :"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/vehicleLicenseTV"
+            app:layout_constraintEnd_toStartOf="@+id/vehiclePlatesTV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <TextView
-            android:id="@+id/vehicleLicenseTV"
+            android:id="@+id/vehiclePlatesTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -80,11 +80,11 @@
             android:maxLines="1"
             android:textAlignment="viewEnd"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/vehicleLicenseLabelTV"
+            app:layout_constraintBottom_toBottomOf="@+id/vehiclePlatesLabelTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vehicleLicenseLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/vehicleLicenseLabelTV"
+            app:layout_constraintStart_toEndOf="@+id/vehiclePlatesLabelTV"
+            app:layout_constraintTop_toTopOf="@+id/vehiclePlatesLabelTV"
             tools:text="IMO-511-OWR" />
 
         <TextView
@@ -101,7 +101,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vehicleRegistrationTV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseLabelTV" />
+            app:layout_constraintTop_toBottomOf="@+id/vehiclePlatesLabelTV" />
 
         <TextView
             android:id="@+id/vehicleRegistrationTV"

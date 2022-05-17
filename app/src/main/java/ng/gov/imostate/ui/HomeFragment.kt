@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.collect
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentHomeBinding
+import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
@@ -43,22 +44,87 @@ class HomeFragment : Fragment() {
         if (isConnected) {
             getDashboardMetrics()
             syncDatabase()
+            getDailyRates()
         }
     }
 
     private fun syncDatabase() {
+        getPreOnboardedVehicleRecords()
+        syncTransactionRecords()
+    }
+
+    private fun getDailyRates() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val result = viewModel.getInitialUserPreferences().token?.let { token ->
+                viewModel.getRates(token)
+            }!!
+            when (result) {
+                is ViewModelResult.Success -> {
+                    Timber.d("${result.data?.rate}")
+                    if (result.data?.rate?.isNotEmpty() == true) {
+                        //update daily rates in app database
+                        viewModel.insertRatesToDatabase(Mapper.mapListOfRateToListOfRateEntity(
+                            result.data.rate
+                        ))
+                    }
+                }
+                is ViewModelResult.Error -> {
+                    AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
+                }
+            }
+        }
+    }
+
+    private fun getPreOnboardedVehicleRecords() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            //get pre-registered vehicles from pre-existing data records
             when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getAllVehicles(it) }!!) {
                 is ViewModelResult.Success -> {
                     val vehicles = viewModelResult.data?.vehicles
                     if (!vehicles.isNullOrEmpty()) {
+                        Timber.d("vehicles from pre-existing database: ${viewModelResult.data}")
+                        //insert pre-registered vehicles from pre-existing data records to app's database
                         viewModel.insertVehiclesToDatabase(Mapper.mapListOfVehicleToListOfVehicleEntity(vehicles))
                     }
-                    val lastSyncTime = AppUtils.getCurrentFullDateTime()
-                    viewModel.updateLastSyncTime(lastSyncTime)
                 }
                 is ViewModelResult.Error -> {
                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                }
+            }
+        }
+    }
+
+    private fun syncTransactionRecords() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            //get all vehicle transactions saved to database and sync to remote database/server
+            val transactions = Mapper.mapListOfTransactionEntityToListOfTransaction(
+                viewModel.getAllTransactionsInDatabase()
+            )
+
+            Timber.d("transactions in database: $transactions")
+
+            if (transactions.isNotEmpty()) {
+                when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let { token ->
+                    viewModel.createSyncTransactions(token, CreateSyncTransactionsRequest(transactions))
+                }!!) {
+                    is ViewModelResult.Success -> {
+                        Timber.d("synced transactions: ${viewModelResult.data}")
+                        AppUtils.showToast(
+                            requireActivity(),
+                            "${viewModelResult.data?.status}",
+                            MotionToastStyle.INFO
+                        )
+                        //update time last synced
+                        val lastSyncTime = AppUtils.getCurrentFullDateTime()
+                        viewModel.updateLastSyncTime(lastSyncTime)
+                        //delete synced transactions from app's database
+                        viewModel.deleteAllTransactionsInDatabase(
+                            Mapper.mapListOfTransactionToListOfTransactionEntity(transactions)
+                        )
+                    }
+                    is ViewModelResult.Error -> {
+                        AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                    }
                 }
             }
         }
@@ -155,8 +221,6 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
-
     }
 
     private fun observeLastSyncTime() {
@@ -165,7 +229,8 @@ class HomeFragment : Fragment() {
                 viewModel.userPreferences.collect { userPreferences ->
                     when (userPreferences) {
                         is ViewModelResult.Success -> {
-                            binding.lastSyncTV.text = userPreferences.data.lastSyncTime ?: ""
+                            binding.lastSyncTV.text = "Last synced: ${userPreferences.data.lastSyncTime ?:
+                            viewModel.getInitialUserPreferences().lastSyncTime ?: ""}"
                         }
                         is ViewModelResult.Error -> {
                             AppUtils.showToast(
@@ -183,7 +248,7 @@ class HomeFragment : Fragment() {
 
     private fun getDashboardMetrics() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            when(val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }) {
+            when(val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }!!) {
                 is ViewModelResult.Success -> {
                     val dashBoardMetrics = viewModelResult.data?.metrics
                     with(binding) {

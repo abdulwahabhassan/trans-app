@@ -23,6 +23,7 @@ import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
 import ng.gov.imostate.databinding.FragmentFindVehicleDialogBinding
 import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
@@ -212,16 +213,23 @@ class AddVehicleFragment : Fragment() {
                         when (result) {
                             is ViewModelResult.Success -> {
 
-                                Timber.d("${result.data}")
+                                Timber.d("onboarded vehicle: ${result.data}")
 
                                 AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
+                                //insert/update newly created transaction to app's database to be synced later to cloud database/server
+                                viewModel.insertTransactionToDatabase(
+                                    TransactionData(result.data?.onBoardVehicle?.id.toString(),
+                                        AppUtils.getCurrentDate())
+                                )
+
                                 val onBoardedVehicle = result.data?.onBoardVehicle
                                 val action = AddVehicleFragmentDirections
                                     .actionAddVehicleFragmentToSuccessFragment(
+                                        onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates.toString(),
                                         onBoardedVehicle?.driver?.firstName.toString() + " " + onBoardedVehicle?.driver?.lastName.toString(),
                                     AppUtils.getCurrentDate(),
-                                    "0.00")
+                                    "7.00")
                                 findNavController().navigate(action)
                             }
                             is ViewModelResult.Error -> {

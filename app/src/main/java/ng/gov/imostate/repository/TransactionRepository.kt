@@ -4,6 +4,9 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
+import ng.gov.imostate.database.dao.TransactionLocalDao
+import ng.gov.imostate.database.entity.TransactionEntity
+import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.request.LoginRequest
@@ -15,14 +18,15 @@ import javax.inject.Inject
 
 class TransactionRepository @Inject constructor(
     private val moshi: Moshi,
+    private val transactionLocalDao: TransactionLocalDao,
     @ApplicationContext private val context: Context,
     private val dataSource: RemoteDatasource,
     private val networkConnectivityUtil: NetworkConnectivityUtil
 ): BaseRepository() {
 
-    suspend fun createSyncTransactions(token: String, vehicleId: String, data: CreateSyncTransactionsRequest) = withContext(dispatcher) {
+    suspend fun createSyncTransactions(token: String, data: CreateSyncTransactionsRequest) = withContext(dispatcher) {
         when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
-            dataSource.createSyncTransactions(token, vehicleId, data)
+            dataSource.createSyncTransactions(token, data)
         }) {
             is ApiResult.Success -> {
                 Timber.d("$apiResult")
@@ -64,4 +68,17 @@ class TransactionRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getAllTransactionsInDatabase(): List<TransactionEntity> {
+        return transactionLocalDao.getAllTransactions()
+    }
+
+    suspend fun deleteAllTransactionsInDatabase(transactions: List<TransactionEntity>) {
+        transactionLocalDao.deleteAllTransactions(transactions)
+    }
+
+    suspend fun insertTransactionToDatabase(transaction: TransactionEntity) {
+        transactionLocalDao.insertTransaction(transaction)
+    }
+
 }

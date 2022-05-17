@@ -41,9 +41,10 @@ class NfcReaderResultFragment : Fragment() {
         super.onCreate(savedInstanceState)
         data = Data(
             arguments?.getString(MainActivity.DRIVER_NAME_KEY) ?: "",
-            arguments?.getString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY) ?: "",
+            arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY) ?: "",
             arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)?: "",
-            arguments?.getDouble(MainActivity.OUTSTANDING_BAL_KEY) ?: 0.00
+            arguments?.getDouble(MainActivity.OUTSTANDING_BAL_KEY) ?: 0.00,
+            arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY) ?: ""
         )
     }
 
@@ -64,17 +65,7 @@ class NfcReaderResultFragment : Fragment() {
             appViewModelFactory
         ).get(NfcReaderResultFragmentViewModel::class.java)
 
-        //observeNfcMode()
-
         with(binding) {
-//            syncTagBTN.setOnClickListener {
-//                val nfcMode = sharedNfcViewModel.getNfcMode()
-//                if (nfcMode == NfcMode.WRITE.name) {
-//                    sharedNfcViewModel.setNfcMode(NfcMode.READ)
-//                } else {
-//                    sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
-//                }
-//            }
             payOutstandingBTN.setOnClickListener {
                 showDatePicker()
             }
@@ -95,32 +86,15 @@ class NfcReaderResultFragment : Fragment() {
             outstandingBalancePeriodTV.text = "${AppUtils.formatDateToFullDate(data.lpd)} - ${AppUtils.getCurrentFullDate()}"
 
             Timber.d("$data")
+
             driverTV.text = data.name
-            vehicleLicenseTV.text = data.vrn
-            lastPaymentDateTV.text = data.lpd
+            vehiclePlatesTV.text = data.vpn
+            lastPaymentDateTV.text = AppUtils.formatDateToFullDate(data.lpd)
             outstandingBalanceTV.text = "Outstanding Balance: ₦${AppUtils.formatCurrency(data.ob)}"
 
         }
 
     }
-
-//    private fun observeNfcMode() {
-//        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-//                sharedNfcViewModel.nfcMode.collect { nfcMode ->
-//                    if (nfcMode == NfcMode.WRITE.name) {
-//                        binding.nfcWriteModeLAV.playAnimation()
-//                        binding.nfcWriteModeLAV.visibility = VISIBLE
-//                        binding.syncTagBTN.text = "STOP SYNC"
-//                    } else {
-//                        binding.nfcWriteModeLAV.pauseAnimation()
-//                        binding.nfcWriteModeLAV.visibility = INVISIBLE
-//                        binding.syncTagBTN.text = "SYNC TAG"
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     private fun showDatePicker() {
         val builder : MaterialDatePicker.Builder<Pair<Long, Long>> =
@@ -149,12 +123,12 @@ class NfcReaderResultFragment : Fragment() {
 
             val bundle = Bundle().also { bundle ->
                 bundle.putString(MainActivity.DRIVER_NAME_KEY, data.name)
-                bundle.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY, data.vrn)
+                bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, data.vid)
                 bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
                 bundle.putDouble(MainActivity.OUTSTANDING_BAL_KEY, data.ob)
-                bundle.putString(VEHICLE_ID, data.vrn)
-                bundle.putString(DATEFROM, dateFrom)
-                bundle.putString(DATETO, dateTo)
+                bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, data.vpn)
+                bundle.putString(DATE_FROM_KEY, dateFrom)
+                bundle.putString(DATE_TO_KEY, dateTo)
             }
 
             //do api call
@@ -170,9 +144,8 @@ class NfcReaderResultFragment : Fragment() {
     }
 
     companion object {
-        const val DATEFROM = "dateFrom"
-        const val DATETO = "dateTo"
-        const val VEHICLE_ID = "id"
+        const val DATE_FROM_KEY = "dateFrom"
+        const val DATE_TO_KEY = "dateTo"
     }
 
 }

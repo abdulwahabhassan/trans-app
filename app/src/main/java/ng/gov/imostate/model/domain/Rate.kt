@@ -3,7 +3,7 @@ package ng.gov.imostate.model.domain
 import com.squareup.moshi.Json
 
 data class Rate (
-    val id: Long,
+    val id: Long?,
     val from: String?,
     val to: String?,
     val status: String?,

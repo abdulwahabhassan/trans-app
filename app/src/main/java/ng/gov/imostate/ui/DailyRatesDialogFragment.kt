@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.Mapper
 import ng.gov.imostate.adapter.DailyRatesAdapter
 import ng.gov.imostate.adapter.TransactionsAdapter
 import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
@@ -85,13 +86,12 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 AppUtils.showView(false, binding.dailyRatesRV)
                 AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                val result = viewModel.getInitialUserPreferences().token?.let { token ->
-                    viewModel.getRates(token)
-                }!!
-                when (result) {
+                when (val result = viewModel.getRates()) {
                     is ViewModelResult.Success -> {
-                        Timber.d("${result.data?.rate}")
-                        dailyRatesAdapter.submitList(result.data?.rate)
+                        Timber.d("${result.data}")
+                        dailyRatesAdapter.submitList(
+                            Mapper.mapListOfRateEntityToListOfRate(result.data)
+                        )
                         AppUtils.showView(true, binding.dailyRatesRV)
                     }
                     is ViewModelResult.Error -> {
@@ -107,6 +107,5 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
         super.onDestroy()
         _binding = null
     }
-
 
 }

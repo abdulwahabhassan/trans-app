@@ -32,10 +32,9 @@ class RemoteDatasource  @Inject constructor(
 
     suspend fun createSyncTransactions(
         token: String,
-        vehicleId: String,
         data: CreateSyncTransactionsRequest)
     : ApiResponse<SyncTransactionsResult> {
-        return apiService.createSyncTransactions(token, vehicleId = vehicleId, data = data)
+        return apiService.createSyncTransactions(token, data = data)
     }
 
     suspend fun getTransactions(token: String,): ApiResponse<TransactionsResult> {

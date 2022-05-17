@@ -64,6 +64,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="60dp"
         android:src="@drawable/ic_camera"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/userPhotoIV"
         app:layout_constraintEnd_toEndOf="@+id/userPhotoIV"
         app:layout_constraintHorizontal_bias="1.0"

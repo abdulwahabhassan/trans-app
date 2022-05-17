@@ -10,7 +10,6 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.*
 import android.os.Bundle
-import android.view.Gravity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -316,7 +315,7 @@ class MainActivity : AppCompatActivity() {
                         val data = AppUtils.convertToData(json, moshi)
 
                         if (data != null) {
-                            if (data.name == "" && data.vrn == "" && data.lpd == "" && data.ob == 0.00) {
+                            if (data.name == "" && data.vid == "" && data.lpd == "" && data.ob == 0.00) {
                                 Timber.d("Record is empty")
                                 AppUtils.showToast(
                                     this,
@@ -326,7 +325,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "Name: ${data.name}\nVRN: ${data.vrn}",
+                                    "VID: ${data.vid}/nNAME: ${data.name} VPN: ${data.vpn}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload
@@ -359,9 +358,10 @@ class MainActivity : AppCompatActivity() {
     private fun goToScannedTagResultScreen(data: Data) {
         val bundle = Bundle().also {
             it.putString(DRIVER_NAME_KEY, data.name)
-            it.putString(VEHICLE_REGISTRATION_NUMBER_KEY, data.vrn)
+            it.putString(VEHICLE_ID_NUMBER_KEY, data.vid)
             it.putString(LAST_PAYMENT_DATE_KEY, data.lpd)
             it.putDouble(OUTSTANDING_BAL_KEY, data.ob)
+            it.putString(VEHICLE_PLATES_NUMBER_KEY, data.vpn)
         }
         if (navController.currentDestination?.id == R.id.nfcReaderResultFragment) {
             navController.popBackStack()
@@ -374,8 +374,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val VEHICLE_PLATES_NUMBER_KEY = "VPN"
         const val DRIVER_NAME_KEY = "DN"
-        const val VEHICLE_REGISTRATION_NUMBER_KEY = "VRN"
+        const val VEHICLE_ID_NUMBER_KEY = "VID"
         const val LAST_PAYMENT_DATE_KEY = "LPD"
         const val OUTSTANDING_BAL_KEY = "OB"
     }

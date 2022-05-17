@@ -1,11 +1,8 @@
 package ng.gov.imostate.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
@@ -17,7 +14,6 @@ import ng.gov.imostate.databinding.FragmentVehicleDetailsDialogBinding
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.VehicleDetailsDialogFragmentViewModel
-import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,8 +44,8 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
 
         with(binding) {
 
-            driverTV.text = arguments?.getString(FindVehicleDialogFragment.DRIVER_NAME_KEY)
-            vehicleLicenseTV.text = arguments?.getString(FindVehicleDialogFragment.VEHICLE_IDENTIFIER_KEY)
+            driverTV.text = arguments?.getString(MainActivity.DRIVER_NAME_KEY)
+            vehiclePlatesTV.text = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
             vehicleTypeTV.text = arguments?.getString(FindVehicleDialogFragment.VEHICLE_TYPE_KEY)
             vehicleLicenseExpiryDateTV.text = arguments?.getString(FindVehicleDialogFragment.VEHICLE_LICENSE_EXP_DATE_KEY)
 
@@ -61,16 +57,18 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                             .actionVehicleDetailsDialogFragmentToTagVehicleFragment(
                                 "200",
                                 AppUtils.getCurrentDate(),
-                                arguments?.getString(FindVehicleDialogFragment.DRIVER_NAME_KEY),
-                                arguments?.getString(FindVehicleDialogFragment.VEHICLE_IDENTIFIER_KEY)
+                                arguments?.getString(MainActivity.DRIVER_NAME_KEY),
+                                arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY),
+                                arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
                             )
                         findNavController().navigate(action)
                     }
                     VIEW_LAST_TRANSACTION -> {
                 //make api call to get last transaction for this vehicle if it exists
                 val bundle = Bundle().also {
-                    it.putString(MainActivity.DRIVER_NAME_KEY, arguments?.getString(FindVehicleDialogFragment.DRIVER_NAME_KEY))
-                    it.putString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY, arguments?.getString(FindVehicleDialogFragment.VEHICLE_IDENTIFIER_KEY))
+                    it.putString(MainActivity.DRIVER_NAME_KEY, arguments?.getString(MainActivity.DRIVER_NAME_KEY))
+                    it.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY))
+                    it.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY))
                     it.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2021-10-02")
                     it.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 5100.00)
                 }

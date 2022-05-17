@@ -23,8 +23,7 @@ import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentOutStandingPaymentBinding
-import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
-import ng.gov.imostate.model.result.ViewModelResult
+import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.printer.AsyncBluetoothEscPosPrint
 import ng.gov.imostate.printer.AsyncEscPosPrint
 import ng.gov.imostate.printer.AsyncEscPosPrinter
@@ -46,9 +45,9 @@ class OutStandingPaymentFragment : Fragment() {
     lateinit var viewModel: OutstandingPaymentFragmentViewModel
     var selectedDevice: BluetoothConnection? = null
     var driverName: String? = ""
-    var vehicleRegistrationNumber: String? = ""
     private var outstandingBalance: Double? = 0.00
-    var lastPaymentDate: String? = ""
+    private var lastPaymentDate: String? = ""
+    var vehiclePlatesNumber: String? = ""
     var vehicleId: String? = ""
     var dateFrom: String? = ""
     var dateTo: String? = ""
@@ -72,12 +71,12 @@ class OutStandingPaymentFragment : Fragment() {
         viewModel = ViewModelProvider(this, appViewModelFactory).get(OutstandingPaymentFragmentViewModel::class.java)
 
         driverName = arguments?.getString(MainActivity.DRIVER_NAME_KEY)
-        vehicleRegistrationNumber = arguments?.getString(MainActivity.VEHICLE_REGISTRATION_NUMBER_KEY)
+        vehiclePlatesNumber = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
         outstandingBalance = arguments?.getDouble(MainActivity.OUTSTANDING_BAL_KEY)
         lastPaymentDate = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
-        vehicleId = arguments?.getString(NfcReaderResultFragment.VEHICLE_ID)
-        dateFrom = arguments?.getString(NfcReaderResultFragment.DATEFROM)
-        dateTo = arguments?.getString(NfcReaderResultFragment.DATETO)
+        vehicleId = arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY)
+        dateFrom = arguments?.getString(NfcReaderResultFragment.DATE_FROM_KEY)
+        dateTo = arguments?.getString(NfcReaderResultFragment.DATE_TO_KEY)
 
         with(binding) {
 
@@ -103,48 +102,25 @@ class OutStandingPaymentFragment : Fragment() {
                     viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                         AppUtils.showProgressIndicator(true, binding.progressIndicator)
                         AppUtils.showView(false, binding.markAsPaidBTN)
-                        viewModel.getInitialUserPreferences().token?.let { token ->
                         if (vehicleId != null) {
-                            val result = vehicleId?.let { vehicleId ->
-                                viewModel.createSyncTransactions(
-                                    token, vehicleId, CreateSyncTransactionsRequest(
-                                        listOf())
+                            //insert/update newly created transaction to app's database
+                            //to be synced later to cloud database/server
+                            viewModel.insertTransactionToDatabase(
+                                TransactionData(vehicleId, dateTo)
+                            )
+                            printBluetooth()
+                            val action = OutStandingPaymentFragmentDirections
+                                .actionOutStandingPaymentFragmentToSuccessFragment(
+                                    vehicleId!!,
+                                    vehiclePlatesNumber,
+                                    driverName,
+                                    lastPaymentDate,
+                                    outstandingBalance.toString()
                                 )
-                            }
-                            when (result) {
-                                is ViewModelResult.Success -> {
-                                    printBluetooth()
-                                    val action = OutStandingPaymentFragmentDirections
-                                        .actionOutStandingPaymentFragmentToSuccessFragment(
-                                            vehicleId!!,
-                                            driverName,
-                                            lastPaymentDate,
-                                            outstandingBalance.toString()
-                                        )
-                                    findNavController().navigate(action)
-                                }
-                                is ViewModelResult.Error -> {
-                                    //debugging purpose
-                                    printBluetooth()
-                                    val action = OutStandingPaymentFragmentDirections
-                                        .actionOutStandingPaymentFragmentToSuccessFragment(
-                                            vehicleId!!,
-                                            driverName,
-                                            lastPaymentDate,
-                                            outstandingBalance.toString()
-                                        )
-                                    findNavController().navigate(action)
-                                    //
-
-                                    //AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
-                                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                                    AppUtils.showView(true, binding.markAsPaidBTN)
-                                }
-                            }
+                            findNavController().navigate(action)
                         } else {
                             AppUtils.showToast(requireActivity(), "Vehicle ID is unknown", MotionToastStyle.ERROR)
                         }
-                    }
                     }
                 } else {
                     val alertDialog = AlertDialog.Builder(requireContext())

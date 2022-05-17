@@ -78,8 +78,12 @@
         android:label="fragment_success"
         tools:layout="@layout/fragment_success" >
         <argument
-            android:name="id"
+            android:name="vehicleId"
             app:argType="string" />
+        <argument
+            android:name="vehiclePlatesNumber"
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="driverName"
             app:argType="string"
@@ -135,6 +139,10 @@
             app:nullable="true" />
         <argument
             android:name="vehicleIdentifier"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="vehiclePlatesNumber"
             app:argType="string"
             app:nullable="true" />
         <action

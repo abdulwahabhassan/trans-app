@@ -70,34 +70,26 @@ class SuccessFragment : Fragment() {
         with(binding) {
 
             syncTagBTN.setOnClickListener {
-                //do network call to retrieve last transaction for this vehicle id (navArgs.id)
-                //if successfully retrieved, set sharedNfcViewModel data
-                viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                    AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                    AppUtils.showView(false, binding.syncTagBTN)
-                    val result = viewModel.getInitialUserPreferences().token?.let { token ->
-                        viewModel.getRecentTransaction(
-                            token, args.id)
-                    }!!
+                AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                AppUtils.showView(false, binding.syncTagBTN)
 
-                    //placeholder code
-                    val nfcMode = sharedNfcViewModel.getNfcMode()
-                    if (nfcMode == NfcMode.WRITE.name) {
-                        sharedNfcViewModel.setNfcMode(NfcMode.READ)
-                    } else {
-                        //sharedNfcViewModel.setData(result.data.tagData)
-                        sharedNfcViewModel.setData(
-                            Data(args.driverName.toString(),
-                                args.id, args.lastPayDate.toString(),
-                                args.outstandingBalance?.toDouble() ?: 0.00
-                            )
+                val nfcMode = sharedNfcViewModel.getNfcMode()
+                if (nfcMode == NfcMode.WRITE.name) {
+                    sharedNfcViewModel.setNfcMode(NfcMode.READ)
+                } else {
+                    sharedNfcViewModel.setData(
+                        Data(
+                            args.driverName.toString(),
+                            args.vehicleId,
+                            args.lastPayDate.toString(),
+                            args.outstandingBalance?.toDouble() ?: 0.00,
+                            args.vehiclePlatesNumber.toString()
                         )
-                        sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
-                    }
-                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                    AppUtils.showView(true, binding.syncTagBTN)
+                    )
+                    sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
                 }
-
+                AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                AppUtils.showView(true, binding.syncTagBTN)
             }
         }
 

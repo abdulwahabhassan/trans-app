@@ -33,7 +33,10 @@ import ng.gov.imostate.viewmodel.OutstandingPaymentFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,12 +48,13 @@ class OutStandingPaymentFragment : Fragment() {
     lateinit var viewModel: OutstandingPaymentFragmentViewModel
     var selectedDevice: BluetoothConnection? = null
     var driverName: String? = ""
-    private var outstandingBalance: Double? = 0.00
+    private var vehicleCategory: String? = ""
     private var lastPaymentDate: String? = ""
     var vehiclePlatesNumber: String? = ""
     var vehicleId: String? = ""
     var dateFrom: String? = ""
     var dateTo: String? = ""
+    var outstandingBalance: Double? = 0.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +69,7 @@ class OutStandingPaymentFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NewApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -72,11 +77,13 @@ class OutStandingPaymentFragment : Fragment() {
 
         driverName = arguments?.getString(MainActivity.DRIVER_NAME_KEY)
         vehiclePlatesNumber = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
-        outstandingBalance = arguments?.getDouble(MainActivity.OUTSTANDING_BAL_KEY)
+        vehicleCategory = arguments?.getString(MainActivity.VEHICLE_CATEGORY)
         lastPaymentDate = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
         vehicleId = arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY)
         dateFrom = arguments?.getString(NfcReaderResultFragment.DATE_FROM_KEY)
         dateTo = arguments?.getString(NfcReaderResultFragment.DATE_TO_KEY)
+        outstandingBalance = arguments?.getDouble(NfcReaderResultFragment.OUTSTANDING_BALANCE)
+
 
         with(binding) {
 
@@ -88,8 +95,44 @@ class OutStandingPaymentFragment : Fragment() {
                 outstandingBalanceTV.setTextColor(getResources().getColor(R.color.red))
             }
             outstandingBalanceTV.text = "Outstanding balance ₦${AppUtils.formatCurrency(outstandingBalance.toString())}"
-            amountToPayTV.text = "₦${AppUtils.formatCurrency(outstandingBalance.toString())}"
-            periodTV.text = "${AppUtils.formatDateToFullDate(dateFrom ?: "")} - ${AppUtils.formatDateToFullDate(dateTo ?: "")}"
+
+            //format dates
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val dateToPayFrom = dateFrom?.let { sdf.parse(it) }
+            val dateToPayTo = dateTo?.let { sdf.parse(it) }
+
+            //calculate number of selected days from first selected date to second selected date
+            val daysDifference = dateToPayTo?.time!! - dateToPayFrom?.time!!
+            val numOfSelectedDays = TimeUnit.DAYS.convert(daysDifference, TimeUnit.MILLISECONDS)
+
+            Timber.d("selected start pay date: $dateToPayFrom")
+            Timber.d("selected end pay date: $dateToPayTo")
+            Timber.d("number of days selected: $numOfSelectedDays")
+
+            //array to hold valid days
+            val validDaysArray = arrayListOf<String>()
+
+            numOfSelectedDays.downTo(0).forEach {
+                val date = LocalDate.parse(dateTo).minusDays(it)
+                    .format(DateTimeFormatter.ofPattern("E, dd MMM yyyy", Locale.UK))
+                Timber.d("numOfDays: $it date: ${date}")
+                //exempt saturdays and sundays
+                if (!date.contains("Sat", true) && !date.contains("Sun", true)) {
+                    validDaysArray.add(date)
+                }
+            }
+            Timber.d("valid days array: $validDaysArray")
+
+            val numOfEligibleDaysOwed = validDaysArray.size
+
+            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                val rate = vehicleCategory?.let { viewModel.getRateInDatabase(it) }
+                if (rate?.amount != null) {
+                    val amountToPay = rate.amount.toDouble().times(numOfEligibleDaysOwed.toDouble())
+                    amountToPayTV.text = "₦${AppUtils.formatCurrency(amountToPay.toString())}"
+                }
+                periodTV.text = "${AppUtils.formatDateToFullDate(dateFrom ?: "")} - ${AppUtils.formatDateToFullDate(dateTo ?: "")}"
+            }
 
 
             backArrowIV.setOnClickListener {
@@ -114,8 +157,8 @@ class OutStandingPaymentFragment : Fragment() {
                                     vehicleId!!,
                                     vehiclePlatesNumber,
                                     driverName,
-                                    lastPaymentDate,
-                                    outstandingBalance.toString()
+                                    dateTo,
+                                    vehicleCategory.toString()
                                 )
                             findNavController().navigate(action)
                         } else {
@@ -250,7 +293,7 @@ class OutStandingPaymentFragment : Fragment() {
             [C]--------------------------------
             [R]TOTAL CHARGE :[R]510.99 NGN
             [R]TAX :[R]1.50 NGN
-            [R]OUTSTANDING BAL : $outstandingBalance NGN
+            [R]OUTSTANDING BAL : $vehicleCategory NGN
             [L]
             [C]================================
             [L]

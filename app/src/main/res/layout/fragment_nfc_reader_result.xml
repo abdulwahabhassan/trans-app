@@ -37,6 +37,7 @@
             android:background="@drawable/balance_text_red_bg"
             android:fontFamily="@font/nunito_sans_bold"
             android:paddingHorizontal="16dp"
+            android:visibility="invisible"
             android:paddingVertical="8dp"
             android:layout_marginBottom="8dp"
             android:textAlignment="center"
@@ -53,6 +54,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/nunito_sans_bold"
             android:textColor="@color/black"
+            android:visibility="invisible"
             app:shapeAppearanceOverlay="@style/RoundShapeAppearance"
             tools:text="02/12/21 - 03/01/22" />
 
@@ -298,6 +300,7 @@
             android:backgroundTint="@color/dark_blue"
             android:fontFamily="@font/nunito_sans_bold"
             android:padding="15dp"
+            android:visibility="invisible"
             android:text="Pay Outstanding"
             android:textColor="@color/white"
             app:cornerRadius="8dp"

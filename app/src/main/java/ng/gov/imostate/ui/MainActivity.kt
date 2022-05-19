@@ -315,7 +315,7 @@ class MainActivity : AppCompatActivity() {
                         val data = AppUtils.convertToData(json, moshi)
 
                         if (data != null) {
-                            if (data.name == "" && data.vid == "" && data.lpd == "" && data.ob == 0.00) {
+                            if (data.name == "" && data.vid == "" && data.lpd == "" && data.vc == "") {
                                 Timber.d("Record is empty")
                                 AppUtils.showToast(
                                     this,
@@ -325,7 +325,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "NAME: ${data.name} VPN: ${data.vpn} VID: ${data.vid}",
+                                    "NAME: ${data.name}\nPLATES NO.: ${data.vpn}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload
@@ -360,7 +360,7 @@ class MainActivity : AppCompatActivity() {
             it.putString(DRIVER_NAME_KEY, data.name)
             it.putString(VEHICLE_ID_NUMBER_KEY, data.vid)
             it.putString(LAST_PAYMENT_DATE_KEY, data.lpd)
-            it.putDouble(OUTSTANDING_BAL_KEY, data.ob)
+            it.putString(VEHICLE_CATEGORY, data.vc)
             it.putString(VEHICLE_PLATES_NUMBER_KEY, data.vpn)
         }
         if (navController.currentDestination?.id == R.id.nfcReaderResultFragment) {
@@ -378,7 +378,7 @@ class MainActivity : AppCompatActivity() {
         const val DRIVER_NAME_KEY = "DN"
         const val VEHICLE_ID_NUMBER_KEY = "VID"
         const val LAST_PAYMENT_DATE_KEY = "LPD"
-        const val OUTSTANDING_BAL_KEY = "OB"
+        const val VEHICLE_CATEGORY = "VC"
     }
 
 }

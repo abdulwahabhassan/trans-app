@@ -124,6 +124,7 @@ class HomeFragment : Fragment() {
                     }
                     is ViewModelResult.Error -> {
                         AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                        Timber.d("synced transactions error: ${viewModelResult.errorMessage}")
                     }
                 }
             }

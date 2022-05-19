@@ -203,12 +203,12 @@ class AddVehicleFragment : Fragment() {
                                 val action = AddVehicleFragmentDirections
                                     .actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.id.toString(),
-                                        onBoardedVehicle?.vehiclePlates.toString(),
-                                        onBoardedVehicle?.driver?.firstName.toString() + " " + onBoardedVehicle?.driver?.lastName.toString(),
-                                    AppUtils.getCurrentDate(),
-                                        //get the appropriate rate for the category of this vehicle
-                                        //in the database if it exists else use the value of 0.00
-                                    viewModel.getRateInDatabase(onBoardedVehicle?.type ?: "")?.amount ?: "0.00")
+                                        onBoardedVehicle?.vehiclePlates,
+                                        onBoardedVehicle?.driver?.firstName.toString() + " " + onBoardedVehicle?.driver?.lastName ,
+//                                    AppUtils.getCurrentDate(),
+                                        "2022-04-01",
+                                        onBoardedVehicle?.type
+                                    )
                                 findNavController().navigate(action)
                             }
                             is ViewModelResult.Error -> {

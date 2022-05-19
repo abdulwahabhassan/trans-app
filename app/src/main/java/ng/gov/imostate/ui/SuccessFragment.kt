@@ -20,6 +20,7 @@ import ng.gov.imostate.databinding.FragmentSuccessBinding
 import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.*
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -82,10 +83,11 @@ class SuccessFragment : Fragment() {
                             args.driverName.toString(),
                             args.vehicleId,
                             args.lastPayDate.toString(),
-                            args.outstandingBalance?.toDouble() ?: 0.00,
+                            args.vehicleCategory.toString(),
                             args.vehiclePlatesNumber.toString()
                         )
                     )
+                    Timber.d("lastpaydatesuccessfragment: ${args.lastPayDate}")
                     sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
                 }
                 AppUtils.showProgressIndicator(false, binding.progressIndicator)
@@ -121,6 +123,7 @@ class SuccessFragment : Fragment() {
                 dialog.dismiss()
             }
             .setPositiveButton("Yes") { dialog, _ ->
+                sharedNfcViewModel.setNfcMode(NfcMode.READ)
                 dialog.dismiss()
                 findNavController().popBackStack()
             }.show()

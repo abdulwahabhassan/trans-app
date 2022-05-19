@@ -85,38 +85,38 @@ object AppUtils {
     }
 
     fun getCurrentDateTime(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK)
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentFullDate(): String {
-        val sdf = SimpleDateFormat("E, dd MMM yyyy", Locale.US)
+        val sdf = SimpleDateFormat("E, dd MMM yyyy", Locale.UK)
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentFullDateTime(): String {
-        val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+        val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.UK)
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
         val now = Date()
         return sdf.format(now)
     }
 
     fun formatDateTimeToFullDateTime(date: String): String{
-        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.US)
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK)
+        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.UK)
         return formatter.format(parser.parse(date) ?: "")
     }
 
     fun formatDateToFullDate(date: String): String{
-        val parser = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.US)
+        val parser = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
+        val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.UK)
         return formatter.format(parser.parse(date) ?: "")
     }
 

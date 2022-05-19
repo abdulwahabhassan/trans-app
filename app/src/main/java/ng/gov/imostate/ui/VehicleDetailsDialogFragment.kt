@@ -70,7 +70,7 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                     it.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY))
                     it.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY))
                     it.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "2021-10-02")
-                    it.putDouble(MainActivity.OUTSTANDING_BAL_KEY, 5100.00)
+                    it.putDouble(MainActivity.VEHICLE_CATEGORY, 5100.00)
                 }
 
                 //navigate if last transactions exists else show toast

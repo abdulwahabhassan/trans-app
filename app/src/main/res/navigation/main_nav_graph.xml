@@ -93,7 +93,7 @@
             app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="outstandingBalance"
+            android:name="vehicleCategory"
             app:argType="string"
             app:nullable="true" />
     </fragment>

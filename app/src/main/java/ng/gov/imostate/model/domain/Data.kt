@@ -9,8 +9,8 @@ data class Data (
     val vid: String,
     @Json(name = "lpd")
     val lpd: String,
-    @Json(name = "ob")
-    val ob: Double,
+    @Json(name = "vc")
+    val vc: String,
     @Json(name = "vpn")
     val vpn: String
 )

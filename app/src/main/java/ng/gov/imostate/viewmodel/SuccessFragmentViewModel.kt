@@ -20,27 +20,5 @@ class SuccessFragmentViewModel @Inject constructor(
 ) : BaseViewModel(
     userPreferencesRepository
 ){
-    suspend fun getVehicle(token: String, getVehicleRequest: GetVehicleRequest): ViewModelResult<Any?> {
-        val response = vehicleRepository.getVehicle(token, getVehicleRequest)
-        return  when (response.success) {
-            true -> {
-                ViewModelResult.Success(response.result)
-            }
-            else -> {
-                ViewModelResult.Error(response.message ?: "Unknown Error")
-            }
-        }
-    }
 
-    suspend fun getRecentTransaction(token: String, vehicleId: String): ViewModelResult<TransactionResult?> {
-        val response = transactionRepository.getRecentTransaction(token, vehicleId)
-        return  when (response.success) {
-            true -> {
-                ViewModelResult.Success(response.result)
-            }
-            else -> {
-                ViewModelResult.Error(response.message ?: "Unknown Error")
-            }
-        }
-    }
 }

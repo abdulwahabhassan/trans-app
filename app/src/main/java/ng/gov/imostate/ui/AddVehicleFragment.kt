@@ -1,6 +1,8 @@
 package ng.gov.imostate.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -79,7 +81,6 @@ class AddVehicleFragment : Fragment() {
         setUpVehicleRoutesSpinner()
 
         with(binding) {
-
             DateInputMask(roadWorthinessExpiryDateET).listen()
             DateInputMask(vehicleLicenseExpiryDateET).listen()
             DateInputMask(vehicleInsuranceExpiryDateET).listen()

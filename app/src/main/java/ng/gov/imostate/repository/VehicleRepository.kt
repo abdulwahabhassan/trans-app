@@ -41,19 +41,23 @@ class VehicleRepository @Inject constructor(
         }
     }
 
-    suspend fun getVehicle(token: String, getVehicleRequest: GetVehicleRequest) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
-            dataSource.getVehicle(token, getVehicleRequest)
-        }) {
-            is ApiResult.Success -> {
-                Timber.d("$apiResult")
-                apiResult.response
-            }
-            is ApiResult.Error -> {
-                Timber.d("$apiResult")
-                ApiResponse(message = apiResult.message)
-            }
-        }
+//    suspend fun getVehicle(token: String, vehicleId: String) = withContext(dispatcher) {
+//        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+//            dataSource.getVehicle(token, vehicleId)
+//        }) {
+//            is ApiResult.Success -> {
+//                Timber.d("$apiResult")
+//                apiResult.response
+//            }
+//            is ApiResult.Error -> {
+//                Timber.d("$apiResult")
+//                ApiResponse(message = apiResult.message)
+//            }
+//        }
+//    }
+
+        suspend fun getVehicle(token: String, vehicleId: String) = withContext(dispatcher) {
+            dataSource.getVehicle(token, vehicleId)
     }
 
     suspend fun onboardVehicle(token: String, onboardVehicleRequest: OnboardVehicleRequest) = withContext(dispatcher) {

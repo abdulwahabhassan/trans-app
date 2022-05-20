@@ -69,6 +69,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is ViewModelResult.Error -> {
+                    Timber.d("${result.errorMessage}")
                     AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
                 }
             }
@@ -88,6 +89,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is ViewModelResult.Error -> {
+                    Timber.d("${viewModelResult.errorMessage}")
                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                 }
             }
@@ -123,8 +125,9 @@ class HomeFragment : Fragment() {
                         )
                     }
                     is ViewModelResult.Error -> {
-                        AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                         Timber.d("synced transactions error: ${viewModelResult.errorMessage}")
+                        AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+
                     }
                 }
             }
@@ -231,6 +234,7 @@ class HomeFragment : Fragment() {
                             viewModel.getInitialUserPreferences().lastSyncTime ?: ""}"
                         }
                         is ViewModelResult.Error -> {
+                            Timber.d("${userPreferences.errorMessage}")
                             AppUtils.showToast(
                                 requireActivity(),
                                 userPreferences.errorMessage,
@@ -259,6 +263,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is ViewModelResult.Error -> {
+                    Timber.d("${viewModelResult.errorMessage}")
                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                 }
             }

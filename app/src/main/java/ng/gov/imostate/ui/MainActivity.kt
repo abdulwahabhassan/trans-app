@@ -360,7 +360,7 @@ class MainActivity : AppCompatActivity() {
             it.putString(DRIVER_NAME_KEY, data.name)
             it.putString(VEHICLE_ID_NUMBER_KEY, data.vid)
             it.putString(LAST_PAYMENT_DATE_KEY, data.lpd)
-            it.putString(VEHICLE_CATEGORY, data.vc)
+            it.putString(VEHICLE_CATEGORY_KEY, data.vc)
             it.putString(VEHICLE_PLATES_NUMBER_KEY, data.vpn)
         }
         if (navController.currentDestination?.id == R.id.nfcReaderResultFragment) {
@@ -374,11 +374,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val VEHICLE_LICENSE_EXPIRY_DATE_KEY = "VLEDK"
         const val VEHICLE_PLATES_NUMBER_KEY = "VPN"
         const val DRIVER_NAME_KEY = "DN"
         const val VEHICLE_ID_NUMBER_KEY = "VID"
         const val LAST_PAYMENT_DATE_KEY = "LPD"
-        const val VEHICLE_CATEGORY = "VC"
+        const val VEHICLE_CATEGORY_KEY = "VC"
+        const val DATE_ONBOARDED_KEY = "DOK"
     }
 
 }

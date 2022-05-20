@@ -77,7 +77,7 @@ class OutStandingPaymentFragment : Fragment() {
 
         driverName = arguments?.getString(MainActivity.DRIVER_NAME_KEY)
         vehiclePlatesNumber = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
-        vehicleCategory = arguments?.getString(MainActivity.VEHICLE_CATEGORY)
+        vehicleCategory = arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY)
         lastPaymentDate = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
         vehicleId = arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY)
         dateFrom = arguments?.getString(NfcReaderResultFragment.DATE_FROM_KEY)

@@ -12,7 +12,7 @@
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/vehicle_details_bg"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/vehicleLicenseExpiryDateLabelTV"
             app:layout_constraintTop_toTopOf="@+id/vehicleLicenseExpiryDateLabelTV"
-            tools:text="2022-12-01" />
+            tools:text="Fri, 01 March 2022" />
 
         <TextView
             android:id="@+id/vehiclePlatesLabelTV"
@@ -63,7 +63,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Vehicle Identifier :"
+            android:text="Vehicle Plates :"
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/vehiclePlatesTV"
             app:layout_constraintHorizontal_bias="0.5"
@@ -88,38 +88,36 @@
             tools:text="IMO-511-OWR" />
 
         <TextView
-            android:id="@+id/vehicleRegistrationLabelTV"
+            android:id="@+id/lastPaidDateLabelTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Driver Name :"
+            android:text="Last Paid Date :"
             android:textColor="@color/black"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/vehicleRegistrationTV"
+            app:layout_constraintEnd_toStartOf="@+id/lastPaidDateTV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vehiclePlatesLabelTV" />
 
         <TextView
-            android:id="@+id/vehicleRegistrationTV"
+            android:id="@+id/lastPaidDateTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:fontFamily="@font/nunito_sans_semibold"
             android:maxLines="1"
-            android:text="Eze Peter"
+            tools:text="Tue, 25 Jan 2022"
             android:textAlignment="viewEnd"
             android:textColor="@color/black"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/vehicleRegistrationLabelTV"
+            app:layout_constraintBottom_toBottomOf="@+id/lastPaidDateLabelTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vehicleRegistrationLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/vehicleRegistrationLabelTV" />
+            app:layout_constraintStart_toEndOf="@+id/lastPaidDateLabelTV"
+            app:layout_constraintTop_toTopOf="@+id/lastPaidDateLabelTV" />
 
         <TextView
             android:id="@+id/vehicleLicenseExpiryDateLabelTV"
@@ -134,7 +132,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vehicleLicenseExpiryDateTV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleRegistrationLabelTV" />
+            app:layout_constraintTop_toBottomOf="@+id/lastPaidDateLabelTV" />
 
         <TextView
             android:id="@+id/lastPaymentDateLabelTV"
@@ -149,7 +147,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/lastPaymentDateTV"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/driverLabelTV" />
+            app:layout_constraintTop_toBottomOf="@+id/dateOnBoardedLabelTV" />
 
         <TextView
             android:id="@+id/lastPaymentDateTV"
@@ -177,7 +175,7 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/driverLabelTV"
+            android:id="@+id/dateOnBoardedLabelTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -185,16 +183,16 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Driver Name :"
+            android:text="Date on-boarded :"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/driverTV"
+            app:layout_constraintEnd_toStartOf="@+id/dateOnBoardedTV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vehicleTypeLabelTV" />
 
         <TextView
-            android:id="@+id/driverTV"
+            android:id="@+id/dateOnBoardedTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -203,12 +201,12 @@
             android:maxLines="1"
             android:textAlignment="viewEnd"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/driverLabelTV"
+            app:layout_constraintBottom_toBottomOf="@+id/dateOnBoardedLabelTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/driverLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/driverLabelTV"
-            tools:text="Eze Kome" />
+            app:layout_constraintStart_toEndOf="@+id/dateOnBoardedLabelTV"
+            app:layout_constraintTop_toTopOf="@+id/dateOnBoardedLabelTV"
+            tools:text="Mon, 23 April 2022" />
 
         <TextView
             android:id="@+id/vehicleTypeLabelTV"
@@ -245,7 +243,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/viewLastTransactionBTN"
+        android:id="@+id/seeTransactionsBTN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
@@ -253,7 +251,7 @@
         android:backgroundTint="@color/dark_blue"
         android:fontFamily="@font/nunito_sans_bold"
         android:padding="15dp"
-        android:text="VIEW LAST TRANSACTION"
+        android:text="SEE TRANSACTIONS"
         android:textColor="@color/white"
         app:cornerRadius="8dp"
         android:layout_marginBottom="32dp"

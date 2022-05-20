@@ -53,7 +53,7 @@ class NfcReaderResultFragment : Fragment() {
             arguments?.getString(MainActivity.DRIVER_NAME_KEY) ?: "",
             arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY) ?: "",
             arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)?: "",
-            arguments?.getString(MainActivity.VEHICLE_CATEGORY) ?: "",
+            arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY) ?: "",
             arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY) ?: ""
         )
     }
@@ -222,7 +222,7 @@ class NfcReaderResultFragment : Fragment() {
                         bundle.putString(MainActivity.DRIVER_NAME_KEY, data.name)
                         bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, data.vid)
                         bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
-                        bundle.putString(MainActivity.VEHICLE_CATEGORY, data.vc)
+                        bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, data.vc)
                         bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, data.vpn)
                         bundle.putDouble(OUTSTANDING_BALANCE, outstandingBalance)
                         bundle.putString(DATE_FROM_KEY, dateFrom)

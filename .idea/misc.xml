@@ -14,12 +14,16 @@
         <entry key="app/src/main/res/drawable/dash_board_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_add_vehicle.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/ic_award.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.207" />
         <entry key="app/src/main/res/drawable/ic_more.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.1615" />
+        <entry key="app/src/main/res/drawable/ic_payments.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_print.xml" value="0.207" />
         <entry key="app/src/main/res/drawable/ic_scan.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_sync.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/ic_transactions.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_updates.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/log_out_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/rank_text_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.187" />
@@ -36,7 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_daily_rates_dialog.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_find_vehicle_dialog.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/fragment_fund_wallet.xml" value="0.196875" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20031982421875" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.18697916666666667" />
         <entry key="app/src/main/res/layout/fragment_login_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_more.xml" value="0.19895833333333332" />

@@ -19,4 +19,10 @@
     <color name="dark_blue">#123282</color>
     <color name="line_grey">#DCDCDC</color>
     <color name="dark_grey">#8F969C</color>
+    <color name="transparent_blue">#EBF1FF</color>
+    <color name="transparent_green">#EBFFED</color>
+    <color name="transparent_purple">#F6EBFF</color>
+    <color name="transparent_yellow">#FFF5E7</color>
+    <color name="transparent_pink">#FFEBEB</color>
+    <color name="transparent_ash">#D9D9D9</color>
 </resources>

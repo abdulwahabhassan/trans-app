@@ -206,15 +206,12 @@ class HomeFragment : Fragment() {
                 val action = HomeFragmentDirections.actionHomeFragmentToUpdatesFragment()
                 findNavController().navigate(action)
             }
-            moreBTN.setOnClickListener {
-
+            dailyRatesBTN.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesDialogFragment()
+                findNavController().navigate(action)
             }
             paymentBTN.setOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToPaymentFragment()
-                findNavController().navigate(action)
-            }
-            dailyRatesTV.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesDialogFragment()
                 findNavController().navigate(action)
             }
             userPhotoIV.setOnClickListener{

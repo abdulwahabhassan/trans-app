@@ -9,14 +9,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="172dp"
             android:background="@color/dark_blue"
-            android:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="15dp"
                 android:background="@drawable/rank_text_bg"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/dark_blue"
                 android:fontFamily="@font/nunito_sans_bold"
                 android:gravity="center"
                 android:text="1"
@@ -138,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="96dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +211,8 @@
                                 app:layout_constraintEnd_toStartOf="@+id/walletBalanceTV"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/blue" />
 
                             <TextView
                                 android:id="@+id/walletBalanceTV"
@@ -237,6 +238,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:text="Wallet Balance"
                                 android:textSize="12sp"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
@@ -274,7 +276,8 @@
                                 app:layout_constraintEnd_toStartOf="@+id/totalCreditedTV"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/blue" />
 
                             <TextView
                                 android:id="@+id/totalCreditedTV"
@@ -300,6 +303,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:text="Total Credited"
                                 android:textSize="12sp"
+                                android:textColor="@color/white"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
@@ -337,7 +341,8 @@
                                 app:layout_constraintEnd_toStartOf="@+id/totalVendedTV"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/blue" />
 
                             <TextView
                                 android:id="@+id/totalVendedTV"
@@ -363,6 +368,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:text="Total Vended"
                                 android:textSize="12sp"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
@@ -400,7 +406,8 @@
                                 app:layout_constraintEnd_toStartOf="@+id/dailyExpectedTV"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/blue" />
 
                             <TextView
                                 android:id="@+id/dailyExpectedTV"
@@ -426,6 +433,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:text="Daily Expected"
                                 android:textSize="12sp"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
@@ -438,20 +446,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dailyRatesTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/daily_rates_text_bg"
-            android:padding="4dp"
-            android:text="@string/daily_rates"
-            android:fontFamily="@font/nunito_sans"
-            android:textColor="@color/blue"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
-
         <GridLayout
             android:id="@+id/keyboardLayout"
             android:layout_width="match_parent"
@@ -459,48 +453,52 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginBottom="16dp"
             android:columnCount="2"
+            android:layout_marginTop="16dp"
             app:flow_horizontalAlign="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dailyRatesTV"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView2"
             app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addVehicleBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:rippleColor="@color/sky_blue"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/transparent_green"
                 android:drawableTop="@drawable/ic_add_vehicle"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
+                android:paddingTop="8dp"
                 android:text="Add Vehicle"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scanVehicleBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:rippleColor="@color/sky_blue"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/white_wash"
                 android:drawableTop="@drawable/ic_scan"
+                android:drawableTint="@color/black"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
+                android:paddingTop="8dp"
                 android:text="Manual"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/paymentBTN"
@@ -510,15 +508,16 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:rippleColor="@color/sky_blue"
-                android:backgroundTint="@color/white"
-                android:drawableTop="@drawable/ic_payment"
+                android:backgroundTint="@color/transparent_purple"
+                android:drawableTop="@drawable/ic_payments"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
+                android:paddingTop="8dp"
                 android:text="Payment"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/transactionsBTN"
@@ -527,16 +526,17 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
-                app:rippleColor="@color/sky_blue"
                 android:layout_margin="8dp"
-                android:backgroundTint="@color/white"
-                android:drawableTop="@drawable/ic_transaction"
+                android:backgroundTint="@color/transparent_yellow"
+                android:drawableTop="@drawable/ic_transactions"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
+                android:paddingTop="8dp"
                 android:text="Transaction"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/updatesBTN"
@@ -546,33 +546,36 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:rippleColor="@color/sky_blue"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/transparent_pink"
                 android:drawableTop="@drawable/ic_updates"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
+                android:paddingTop="8dp"
                 android:text="Updates"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/moreBTN"
+                android:id="@+id/dailyRatesBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:rippleColor="@color/sky_blue"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/transparent_blue"
                 android:drawableTop="@drawable/ic_more"
+                android:drawableTint="@color/blue"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
-                android:text="More"
+                android:paddingTop="8dp"
+                android:text="Daily Rates"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
         </GridLayout>
 
 

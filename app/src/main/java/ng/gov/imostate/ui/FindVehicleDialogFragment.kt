@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -30,7 +31,7 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
-    lateinit var viewModel: FindVehicleDialogFragmentViewModel
+    val viewModel: FindVehicleDialogFragmentViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +48,6 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(
-            this,
-            appViewModelFactory
-        ).get(FindVehicleDialogFragmentViewModel::class.java)
-
         binding.backArrowIV.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -64,69 +60,57 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
 
                     val vehicleIdentifier = binding.platesNumberET.text.toString()
 
-//                    when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getVehicle(it, vehicleIdentifier) }!!) {
-//                        is ViewModelResult.Success -> {
-//                           if (viewModelResult.data != null) {
-//                               val bundle = Bundle().also { bundle ->
-//                                   bundle.putString(MainActivity.DATE_ONBOARDED_KEY, viewModelResult.data.createdAt)
-//                                   bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, viewModelResult.data.vehiclePlates)
-//                                   bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, viewModelResult.data.id.toString())
-//                                   bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, viewModelResult.data.type)
-//                                   bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, viewModelResult.data.lastPaid)
-//                                   bundle.putString(MainActivity.VEHICLE_LICENSE_EXPIRY_DATE_KEY, viewModelResult.data.vehicleLicenceExpDate)
-//                               }
-//                               findNavController().navigate(
-//                                   R.id.vehicleDetailsDialogFragment, bundle,
-//                                   NavOptions.Builder().setLaunchSingleTop(true).setPopUpTo(R.id.homeFragment, false).build())
-//                           } else {
-//                               AppUtils.showToast(requireActivity(), "Data is empty", MotionToastStyle.ERROR)
-//                               Timber.d("$viewModelResult")
-//                           }
-//                       }
-//                       is ViewModelResult.Error -> {
-//                           AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
-//                       }
-//                   }
+                    when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let {
+                        viewModel.getVehicle(it, vehicleIdentifier)
+                    }!!) {
+                        is ViewModelResult.Success -> {
+                           if (viewModelResult.data?.vehicle != null) {
+                               Timber.d("$viewModelResult")
+                               val bundle = Bundle().also { bundle ->
+                                   bundle.putString(
+                                       MainActivity.DATE_ONBOARDED_KEY,
+                                       viewModelResult.data.vehicle?.createdAt?.substring(0, 10)
+                                           ?.let { it1 -> AppUtils.formatDateToFullDate(it1) }
+                                   )
+                                   bundle.putString(
+                                       MainActivity.VEHICLE_PLATES_NUMBER_KEY,
+                                       viewModelResult.data.vehicle?.vehiclePlates
+                                   )
+                                   bundle.putString(
+                                       MainActivity.VEHICLE_ID_NUMBER_KEY,
+                                       viewModelResult.data.vehicle?.id.toString()
+                                   )
+                                   bundle.putString(
+                                       MainActivity.VEHICLE_CATEGORY_KEY,
+                                       viewModelResult.data.vehicle?.type
+                                   )
+                                   bundle.putString(
+                                       MainActivity.LAST_PAYMENT_DATE_KEY,
+                                       viewModelResult.data.vehicle?.lastPaid?.let { it1 ->
+                                           AppUtils.formatDateToFullDate(it1)
+                                       }
+                                   )
+                                   bundle.putString(
+                                       MainActivity.VEHICLE_LICENSE_EXPIRY_DATE_KEY,
+                                       viewModelResult.data.vehicle?.vehicleLicenceExpDate?.let { it1 ->
+                                           AppUtils.formatDateToFullDate(it1)
+                                       }
+                                   )
+                               }
+                               findNavController().navigate(
+                                   R.id.vehicleDetailsDialogFragment, bundle,
+                                   NavOptions.Builder().setLaunchSingleTop(true).setPopUpTo(R.id.homeFragment, false).build())
+                           } else {
+                               AppUtils.showToast(requireActivity(), "Vehicle not found", MotionToastStyle.ERROR)
+                               Timber.d("$viewModelResult")
+                           }
+                       }
+                       is ViewModelResult.Error -> {
+                           Timber.d("$viewModelResult")
+                           AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                       }
+                   }
 
-                    val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getVehicle(it, vehicleIdentifier) }
-                    if (viewModelResult != null) {
-                        val bundle = Bundle().also { bundle ->
-                            bundle.putString(MainActivity.DATE_ONBOARDED_KEY, viewModelResult.createdAt)
-                            bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, viewModelResult.vehiclePlates)
-                            bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, viewModelResult.id.toString())
-                            bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, viewModelResult.type)
-                            bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, viewModelResult.lastPaid)
-                            bundle.putString(MainActivity.VEHICLE_LICENSE_EXPIRY_DATE_KEY, viewModelResult.vehicleLicenceExpDate)
-                        }
-                        findNavController().navigate(
-                            R.id.vehicleDetailsDialogFragment, bundle,
-                            NavOptions.Builder().setLaunchSingleTop(true).setPopUpTo(R.id.homeFragment, false).build())
-                    } else {
-                        AppUtils.showToast(requireActivity(), "Response is empty", MotionToastStyle.ERROR)
-                        Timber.d("$viewModelResult")
-                    }
-
-//                    if(vehicle?.vehiclePlates == vehicleIdentifier) {
-//                        //debug purpose
-//                        val bundle = Bundle().also { bundle ->
-//                            bundle.putString(MainActivity.DRIVER_NAME_KEY, vehicle.driver?.firstName + " " + vehicle.driver?.lastName)
-//                            bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, vehicle.vehiclePlates)
-//                            bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, vehicle.id.toString())
-//                            bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, vehicle.type)
-//                            bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, "")
-//                        }
-//                        //
-//
-//                        findNavController().navigate(
-//                                R.id.vehicleDetailsDialogFragment, bundle,
-//                                NavOptions.Builder().setLaunchSingleTop(true).setPopUpTo(R.id.homeFragment, false).build())
-//                    } else {
-//                        AppUtils.showToast(
-//                            requireActivity(),
-//                            "Vehicle not found in database",
-//                            MotionToastStyle.ERROR
-//                        )
-//                    }
                     AppUtils.showProgressIndicator(false, binding.progressIndicator)
                     AppUtils.showView(true, binding.continueBTN)
                 }

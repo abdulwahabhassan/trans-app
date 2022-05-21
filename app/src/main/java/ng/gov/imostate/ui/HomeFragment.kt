@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.collect
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentHomeBinding
+import ng.gov.imostate.model.domain.TransactionType
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
@@ -202,7 +203,10 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(action)
             }
             transactionsBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToTransactionsFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToTransactionsFragment(
+                    TransactionType.AGENT_TRANSACTION.name,
+                    null
+                )
                 findNavController().navigate(action)
             }
             updatesBTN.setOnClickListener {

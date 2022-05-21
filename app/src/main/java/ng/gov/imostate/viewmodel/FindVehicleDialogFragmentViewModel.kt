@@ -18,36 +18,16 @@ class FindVehicleDialogFragmentViewModel @Inject constructor(
 ) : BaseViewModel(
     userPreferencesRepository
 ){
-//    suspend fun getVehicle(token: String, vehicleId: String): ViewModelResult<VehicleResult?> {
-//        val response = vehicleRepository.getVehicle(token, vehicleId)
-//        return  when (response.success) {
-//            true -> {
-//                ViewModelResult.Success(response.result)
-//            }
-//            else -> {
-//                ViewModelResult.Error(response.message ?: "Unknown Error")
-//            }
-//        }
-//    }
-
-    suspend fun getVehicle(token: String, vehicleId: String): VehicleResult {
-        return vehicleRepository.getVehicle(token, vehicleId)
+    suspend fun getVehicle(token: String, vehicleId: String): ViewModelResult<VehicleResult?> {
+        val response = vehicleRepository.getVehicle(token, vehicleId)
+        return  when (response.success) {
+            true -> {
+                ViewModelResult.Success(response.result)
+            }
+            else -> {
+                ViewModelResult.Error(response.message ?: "Unknown Error")
+            }
+        }
     }
-
-//    suspend fun findVehicleInDatabase(identifier: String): VehicleEntity? {
-//        return vehicleRepository.findVehicleInDatabase(identifier)
-//    }
-
-    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {
-        return vehicleRepository.findVehicleDriverRecordInDatabase(identifier)
-    }
-
-//    suspend fun getAllVehiclesInDatabase(): List<VehicleEntity> {
-//        return vehicleRepository.getAllVehiclesInDatabase()
-//    }
-//
-//    suspend fun getAllDriversInDatabase(): List<DriverEntity> {
-//        return vehicleRepository.getAllDriversInDatabase()
-//    }
 
 }

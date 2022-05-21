@@ -7,12 +7,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import ng.gov.imostate.model.apiresult.VehicleResult
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.UserPreferencesRepository
 import timber.log.Timber
 
 open class BaseViewModel (
-    protected val userPreferencesRepository: UserPreferencesRepository
+    protected val userPreferencesRepository: UserPreferencesRepository,
 ): ViewModel() {
 
     private var _userPreferences:
@@ -56,4 +57,5 @@ open class BaseViewModel (
     suspend fun updateLastSyncTime(time: String) {
         userPreferencesRepository.updateLastSyncTime(time)
     }
+
 }

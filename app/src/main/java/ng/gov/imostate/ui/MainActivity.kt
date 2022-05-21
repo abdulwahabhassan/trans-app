@@ -325,7 +325,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "NAME: ${data.name}\nPLATES NO.: ${data.vpn}",
+                                    "NAME: ${data.name}\nPLATES NO.: ${data.vpn} ID: ${data.vid}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload

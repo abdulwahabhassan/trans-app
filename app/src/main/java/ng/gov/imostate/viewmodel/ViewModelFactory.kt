@@ -28,7 +28,8 @@ class AppViewModelsFactory @Inject constructor(
             modelClass.isAssignableFrom(TransactionsFragmentViewModel::class.java) -> {
                 return TransactionsFragmentViewModel(
                     userPreferencesRepository,
-                    transactionRepository
+                    transactionRepository,
+                    vehicleRepository
                 ) as T
             }
             modelClass.isAssignableFrom(ProfileActivityViewModel::class.java) -> {
@@ -83,7 +84,8 @@ class AppViewModelsFactory @Inject constructor(
             }
             modelClass.isAssignableFrom(VehicleDetailsDialogFragmentViewModel::class.java) -> {
                 return VehicleDetailsDialogFragmentViewModel(
-                    userPreferencesRepository
+                    userPreferencesRepository,
+                    vehicleRepository
                 ) as T
             }
             modelClass.isAssignableFrom(TagVehicleFragmentViewModel::class.java) -> {

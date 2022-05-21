@@ -25,17 +25,11 @@ interface ApiService {
         @Body data: CreateSyncTransactionsRequest
     ): ApiResponse<SyncTransactionsResult>
 
-//    @GET("agent/vehicle/{id}")
-//    suspend fun getVehicle(
-//        @Header("Authorization") token: String,
-//        @Path("id") vehicleId: String,
-//    ): ApiResponse<VehicleResult>
-
     @GET("agent/vehicle/{id}")
     suspend fun getVehicle(
         @Header("Authorization") token: String,
         @Path("id") vehicleId: String,
-    ): VehicleResult
+    ): ApiResponse<VehicleResult>
 
     @GET("agent/vehicle/all")
     suspend fun getAllVehicles(

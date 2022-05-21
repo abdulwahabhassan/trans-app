@@ -50,22 +50,22 @@
                 tools:text="$5.00" />
 
             <TextView
-                android:id="@+id/senderLabelTV"
+                android:id="@+id/internalRefLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Sender :"
+                android:text="Internal Ref :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/senderTV"
+                app:layout_constraintEnd_toStartOf="@+id/internalRefTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/senderTV"
+                android:id="@+id/internalRefTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -74,30 +74,30 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/senderLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/internalRefLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/senderLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/senderLabelTV"
+                app:layout_constraintStart_toEndOf="@+id/internalRefLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/internalRefLabelTV"
                 tools:text="Mike James" />
 
             <TextView
-                android:id="@+id/receiverLabelTV"
+                android:id="@+id/statusLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Receiver :"
+                android:text="Status :"
                 android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/receiverTV"
+                app:layout_constraintEnd_toStartOf="@+id/statusTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/senderLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/internalRefLabelTV" />
 
             <TextView
-                android:id="@+id/receiverTV"
+                android:id="@+id/statusTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -105,14 +105,13 @@
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
-                android:textAllCaps="true"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/receiverLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/statusLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/receiverLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/receiverLabelTV"
-                tools:text="NUT Limited" />
+                app:layout_constraintStart_toEndOf="@+id/statusLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/statusLabelTV"
+                tools:text="Collected" />
 
             <TextView
                 android:id="@+id/amountLabelTV"
@@ -127,10 +126,10 @@
                 app:layout_constraintEnd_toStartOf="@+id/amountTV"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/receiverLabelTV" />
+                app:layout_constraintTop_toBottomOf="@+id/statusLabelTV" />
 
             <TextView
-                android:id="@+id/vehiclePlatesLabelTV"
+                android:id="@+id/daysCountLabelTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -138,15 +137,15 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Vehicle Plates :"
+                android:text="Day Count :"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/vehiclePlatesTV"
+                app:layout_constraintEnd_toStartOf="@+id/daysCountTV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addressLabelTV" />
 
             <TextView
-                android:id="@+id/vehiclePlatesTV"
+                android:id="@+id/daysCountTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -155,12 +154,12 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/vehiclePlatesLabelTV"
+                app:layout_constraintBottom_toBottomOf="@+id/daysCountLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/vehiclePlatesLabelTV"
-                app:layout_constraintTop_toTopOf="@+id/vehiclePlatesLabelTV"
-                tools:text="IMO-101-OWR" />
+                app:layout_constraintStart_toEndOf="@+id/daysCountLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/daysCountLabelTV"
+                tools:text="5" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline13"

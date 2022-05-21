@@ -45,7 +45,15 @@
         android:id="@+id/transactionsFragment"
         android:name="ng.gov.imostate.ui.TransactionsFragment"
         android:label="fragment_transactions"
-        tools:layout="@layout/fragment_transactions" />
+        tools:layout="@layout/fragment_transactions" >
+        <argument
+            android:name="transactionType"
+            app:argType="string" />
+        <argument
+            android:name="vehicleId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <dialog
         android:id="@+id/findVehicleDialogFragment"
         android:name="ng.gov.imostate.ui.FindVehicleDialogFragment"
@@ -117,40 +125,9 @@
         android:label="fragment_vehicle_details_dialog"
         tools:layout="@layout/fragment_vehicle_details_dialog" >
         <action
-            android:id="@+id/action_vehicleDetailsDialogFragment_to_tagVehicleFragment"
-            app:destination="@id/tagVehicleFragment" />
+            android:id="@+id/action_vehicleDetailsDialogFragment_to_transactionsFragment"
+            app:destination="@id/transactionsFragment" />
     </dialog>
-    <fragment
-        android:id="@+id/tagVehicleFragment"
-        android:name="ng.gov.imostate.ui.TagVehicleFragment"
-        android:label="fragment_tag_vehicle"
-        tools:layout="@layout/fragment_tag_vehicle" >
-        <argument
-            android:name="amount"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="payDate"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="driverName"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="vehicleIdentifier"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="vehiclePlatesNumber"
-            app:argType="string"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_tagVehicleFragment_to_successFragment"
-            app:destination="@id/successFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/homeFragment"/>
-    </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="ng.gov.imostate.ui.PaymentFragment"

@@ -9,10 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ng.gov.imostate.database.AppRoomDatabase
 import ng.gov.imostate.database.converters.Converters
-import ng.gov.imostate.database.dao.DriverLocalDao
-import ng.gov.imostate.database.dao.RateLocalDao
-import ng.gov.imostate.database.dao.TransactionLocalDao
-import ng.gov.imostate.database.dao.VehicleLocalDao
+import ng.gov.imostate.database.dao.*
 import javax.inject.Singleton
 
 @Module
@@ -49,6 +46,14 @@ object DatabaseModule {
         @ApplicationContext appContext: Context
     ): RateLocalDao {
         return AppRoomDatabase.getInstance(appContext).rateLocalDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRouteLocalDAO(
+        @ApplicationContext appContext: Context
+    ): RouteLocalDao {
+        return AppRoomDatabase.getInstance(appContext).routeLocalDao()
     }
 
 }

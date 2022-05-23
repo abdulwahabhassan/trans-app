@@ -5,7 +5,9 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.RateLocalDao
+import ng.gov.imostate.database.dao.RouteLocalDao
 import ng.gov.imostate.database.entity.RateEntity
+import ng.gov.imostate.database.entity.RouteEntity
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.FundWalletAccountDetailsRequest
 import ng.gov.imostate.model.request.LoginRequest
@@ -20,6 +22,7 @@ class AgentRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val dataSource: RemoteDatasource,
     private val ratesLocalDao: RateLocalDao,
+    private val routeLocalDao: RouteLocalDao,
     private val networkConnectivityUtil: NetworkConnectivityUtil
     ): BaseRepository() {
 
@@ -34,6 +37,21 @@ class AgentRepository @Inject constructor(
             is ApiResult.Error -> {
                 Timber.d("$apiResult")
                ApiResponse(message = apiResult.message)
+            }
+        }
+    }
+
+    suspend fun getCurrentUser(token: String) = withContext(dispatcher) {
+        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+            dataSource.getCurrentUser(token)
+        }) {
+            is ApiResult.Success -> {
+                Timber.d("$apiResult")
+                apiResult.response
+            }
+            is ApiResult.Error -> {
+                Timber.d("$apiResult")
+                ApiResponse(message = apiResult.message)
             }
         }
     }
@@ -89,11 +107,19 @@ class AgentRepository @Inject constructor(
         return ratesLocalDao.getAllRates()
     }
 
+    suspend fun getAllRoutesInDatabase(): List<RouteEntity> {
+        return routeLocalDao.getAllRoutes()
+    }
+
     suspend fun getRateInDatabase(category: String): RateEntity? {
         return ratesLocalDao.getRate(category)
     }
 
     suspend fun insertRatesToDatabase(rates: List<RateEntity>) {
         ratesLocalDao.insertAllRates(rates)
+    }
+
+    suspend fun insertRoutesToDatabase(routes: List<RouteEntity>) {
+        routeLocalDao.insertAllRoutes(routes)
     }
 }

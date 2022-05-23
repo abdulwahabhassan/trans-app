@@ -11,10 +11,7 @@ import androidx.work.workDataOf
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import ng.gov.imostate.database.converters.Converters
-import ng.gov.imostate.database.dao.DriverLocalDao
-import ng.gov.imostate.database.dao.RateLocalDao
-import ng.gov.imostate.database.dao.TransactionLocalDao
-import ng.gov.imostate.database.dao.VehicleLocalDao
+import ng.gov.imostate.database.dao.*
 import ng.gov.imostate.database.entity.*
 import ng.gov.imostate.worker.DatabaseWorker
 import ng.gov.imostate.util.Constants
@@ -37,6 +34,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun driverLocalDao(): DriverLocalDao
     abstract fun transactionLocalDao(): TransactionLocalDao
     abstract fun rateLocalDao(): RateLocalDao
+    abstract fun routeLocalDao(): RouteLocalDao
 
     companion object {
 

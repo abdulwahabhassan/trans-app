@@ -68,8 +68,8 @@ class LoginFragment : Fragment() {
         with(binding) {
 
             if (AppUtils.isDebugBuild()) {
-                userEmailET.setText("testagent@gmail.com")
-                passwordET.setText("3BYAm8F7")
+                userEmailET.setText("hassanabdulwahab@gmail.com")
+                passwordET.setText("XpGjSzRM")
             }
 
             loginBTN.setOnClickListener {

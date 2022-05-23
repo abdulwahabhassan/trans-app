@@ -11,6 +11,8 @@ data class RouteEntity(
     @PrimaryKey val id: Long? = null,
     @ColumnInfo(name = "route_id")
     val routeID: Long? = null,
+    val from: String? = null,
+    val to: String? = null,
     @ColumnInfo(name = "vehicle_id")
     val vehicleID: Long? = null,
     @ColumnInfo(name = "driver_id")

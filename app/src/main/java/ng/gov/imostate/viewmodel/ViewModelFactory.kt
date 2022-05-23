@@ -2,6 +2,7 @@ package ng.gov.imostate.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.squareup.moshi.Moshi
 import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.VehicleRepository
@@ -12,7 +13,8 @@ class AppViewModelsFactory @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val agentRepository: AgentRepository,
     private val transactionRepository: TransactionRepository,
-    private val vehicleRepository: VehicleRepository
+    private val vehicleRepository: VehicleRepository,
+    private val moshi: Moshi
 ) : ViewModelProvider.Factory{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -22,7 +24,8 @@ class AppViewModelsFactory @Inject constructor(
                     userPreferencesRepository,
                     agentRepository,
                     vehicleRepository,
-                    transactionRepository
+                    transactionRepository,
+                    moshi
                 ) as T
             }
             modelClass.isAssignableFrom(TransactionsFragmentViewModel::class.java) -> {

@@ -134,9 +134,5 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    companion object {
-        const val VEHICLE_TYPE_KEY = "vehicleType"
-        const val VEHICLE_LICENSE_EXP_DATE_KEY = "vehicleLicenseExpiryDate"
-    }
 
 }

@@ -1,8 +1,6 @@
 package ng.gov.imostate.ui
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +10,19 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.checkbox.MaterialCheckBox
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
+import ng.gov.imostate.adapter.RoutesAdapter
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
 import ng.gov.imostate.databinding.FragmentFindVehicleDialogBinding
+import ng.gov.imostate.databinding.LayoutSelectRoutesBinding
 import ng.gov.imostate.model.domain.Route
 import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.model.request.OnboardVehicleRequest
@@ -34,20 +33,20 @@ import ng.gov.imostate.viewmodel.AddVehicleFragmentViewModel
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddVehicleFragment : Fragment() {
 
     private var _binding: FragmentAddVehicleBinding? = null
-    private val binding get() = _binding!!
+    private val mainBinding get() = _binding!!
     private var lgaIndex: Int  = 0
     private var validationErrorMessage: String = ""
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
     lateinit var viewModel: AddVehicleFragmentViewModel
+    private lateinit var routesAdapter: RoutesAdapter
     var routes = mutableListOf<String>()
 
     override fun onCreateView(
@@ -55,7 +54,7 @@ class AddVehicleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddVehicleBinding.inflate(inflater, container, false)
-        return binding.root
+        return mainBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,9 +77,9 @@ class AddVehicleFragment : Fragment() {
 
         setUpVehicleCategorySpinner()
 
-        setUpVehicleRoutesSpinner()
+        //setUpVehicleRoutesSpinner()
 
-        with(binding) {
+        with(mainBinding) {
             DateInputMask(roadWorthinessExpiryDateET).listen()
             DateInputMask(vehicleLicenseExpiryDateET).listen()
             DateInputMask(vehicleInsuranceExpiryDateET).listen()
@@ -108,6 +107,10 @@ class AddVehicleFragment : Fragment() {
 
             autoFillBTN.setOnClickListener {
                 showFindVehicleDialog()
+            }
+
+            vehicleRouteTIL.setOnClickListener {
+                showSelectRoutesDialog()
             }
 
             addVehicleBTN.setOnClickListener {
@@ -141,10 +144,10 @@ class AddVehicleFragment : Fragment() {
                     val roadWorthinessExpiryDate = roadWorthinessExpiryDateET.text.toString()
                     val vehicleLicenseExpiryDate = vehicleLicenseExpiryDateET.text.toString()
                     val vehicleInsuranceExpiryDate = vehicleInsuranceExpiryDateET.text.toString()
-                    val selectedDriverGender = binding.root.findViewById<AppCompatRadioButton>(driverGenderRG.checkedRadioButtonId)?.text ?: ""
-                    val selectedMaritalStatus = binding.root.findViewById<AppCompatRadioButton>(maritalStatusRG.checkedRadioButtonId)?.text ?: ""
-                    val selectedBloodGroup = binding.root.findViewById<AppCompatRadioButton>(bloodGroupRG.checkedRadioButtonId)?.text ?: ""
-                    val selectedMeansOfId = binding.root.findViewById<AppCompatRadioButton>(meansOfIdRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedDriverGender = mainBinding.root.findViewById<AppCompatRadioButton>(driverGenderRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedMaritalStatus = mainBinding.root.findViewById<AppCompatRadioButton>(maritalStatusRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedBloodGroup = mainBinding.root.findViewById<AppCompatRadioButton>(bloodGroupRG.checkedRadioButtonId)?.text ?: ""
+                    val selectedMeansOfId = mainBinding.root.findViewById<AppCompatRadioButton>(meansOfIdRG.checkedRadioButtonId)?.text ?: ""
 
                     val onboardVehicleRequest = OnboardVehicleRequest(
                         vehiclePlates = plateNumber,
@@ -183,8 +186,8 @@ class AddVehicleFragment : Fragment() {
                     Timber.d("$onboardVehicleRequest")
 
                     viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                        AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                        AppUtils.showView(false, binding.addVehicleBTN)
+                        AppUtils.showProgressIndicator(true, mainBinding.progressIndicator)
+                        AppUtils.showView(false, mainBinding.addVehicleBTN)
                         val result = viewModel.getInitialUserPreferences().token?.let { token ->
                             viewModel.onboardVehicle(token, onboardVehicleRequest)
                         }!!
@@ -217,8 +220,8 @@ class AddVehicleFragment : Fragment() {
                                 Timber.d(result.errorMessage)
 
                                 AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
-                                AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                                AppUtils.showView(true, binding.addVehicleBTN)
+                                AppUtils.showProgressIndicator(false, mainBinding.progressIndicator)
+                                AppUtils.showView(true, mainBinding.addVehicleBTN)
                             }
                         }
                     }
@@ -229,11 +232,71 @@ class AddVehicleFragment : Fragment() {
         }
     }
 
-    //show bottomSheetDialog to select account type from options
+    private fun showSelectRoutesDialog() {
+        val selectedRoutes = mutableListOf<Route>()
+        val binding = LayoutSelectRoutesBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            this.mainBinding.root,
+            false
+        )
+
+        val selectRoutesSheet = BottomSheetDialog(requireContext())
+        selectRoutesSheet.setContentView(binding.root)
+        selectRoutesSheet.dismissWithAnimation = true
+
+        selectRoutesSheet.show()
+
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                AppUtils.showToast(requireActivity(), newText, MotionToastStyle.INFO)
+                return true
+            }
+
+        })
+
+        binding.doneBTN.setOnClickListener {
+            selectRoutesSheet.dismiss()
+            mainBinding.vehicleRouteTIL.text = selectedRoutes.map { "${it.from} to ${it.to}"}.toString().removePrefix("[").removeSuffix("]")
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            Timber.d("Ok")
+            AppUtils.showView(false, binding.routesRV)
+            routesAdapter = RoutesAdapter { position, itemAtPosition ->
+                itemAtPosition.selected = !itemAtPosition.selected
+                if (itemAtPosition.selected == true) {
+                    if (!selectedRoutes.contains(itemAtPosition)) {
+                        selectedRoutes.add(itemAtPosition)
+                    }
+                } else {
+                    if (selectedRoutes.contains(itemAtPosition)) {
+                        selectedRoutes.remove(itemAtPosition)
+                    }
+                }
+                routesAdapter.notifyItemChanged(position)
+            }
+            binding.routesRV.adapter = routesAdapter
+            val routes = Mapper.mapListOfRouteEntityToListOfRoute(viewModel.getAllRoutesInDatabase())
+            Timber.d("$routes")
+            if(routes.isNotEmpty()) {
+                routesAdapter.submitList(routes)
+                AppUtils.showView(true, binding.routesRV)
+            } else {
+                AppUtils.showToast(requireActivity(), "No routes available", MotionToastStyle.INFO)
+            }
+        }
+    }
+
+
+    //show bottomSheetDialog to find vehicle
     private fun showFindVehicleDialog() {
         val binding = FragmentFindVehicleDialogBinding.inflate(
             LayoutInflater.from(requireContext()),
-            binding.root,
+            mainBinding.root,
             false
         )
         val findVehicleBottomSheetDialog = BottomSheetDialog(requireContext())
@@ -254,7 +317,7 @@ class AddVehicleFragment : Fragment() {
                     val vehicle = viewModel.findVehicleDriverRecordInDatabase(binding.platesNumberET.text.toString())
                     if (vehicle != null) {
                         Timber.d("$vehicle")
-                        with(this@AddVehicleFragment.binding) {
+                        with(this@AddVehicleFragment.mainBinding) {
 
                             //text fields
                             fleetNumberET.setText(vehicle.fleetNumber)
@@ -412,7 +475,7 @@ class AddVehicleFragment : Fragment() {
     private fun validateFields(): Boolean {
         var successful = true
 
-        with(binding) {
+        with(mainBinding) {
             if (fleetNumberTIL.isVisible && fleetNumberET.text.isNullOrEmpty()){
                 fleetNumberTIL.error = "Please fill fleet number"
                 successful = false
@@ -554,10 +617,10 @@ class AddVehicleFragment : Fragment() {
 
             Timber.d("$selectedBank $selectedLocalGovtArea $selectedStateOfOrigin $selectedStateOfReg $selectedVehicleCategory $routes")
 
-            val selectedDriverGender = binding.root.findViewById<AppCompatRadioButton>(driverGenderRG.checkedRadioButtonId)?.text ?: ""
-            val selectedMaritalStatus = binding.root.findViewById<AppCompatRadioButton>(maritalStatusRG.checkedRadioButtonId)?.text ?: ""
-            val selectedBloodGroup = binding.root.findViewById<AppCompatRadioButton>(bloodGroupRG.checkedRadioButtonId)?.text ?: ""
-            val selectedMeansOfId = binding.root.findViewById<AppCompatRadioButton>(meansOfIdRG.checkedRadioButtonId)?.text ?: ""
+            val selectedDriverGender = mainBinding.root.findViewById<AppCompatRadioButton>(driverGenderRG.checkedRadioButtonId)?.text ?: ""
+            val selectedMaritalStatus = mainBinding.root.findViewById<AppCompatRadioButton>(maritalStatusRG.checkedRadioButtonId)?.text ?: ""
+            val selectedBloodGroup = mainBinding.root.findViewById<AppCompatRadioButton>(bloodGroupRG.checkedRadioButtonId)?.text ?: ""
+            val selectedMeansOfId = mainBinding.root.findViewById<AppCompatRadioButton>(meansOfIdRG.checkedRadioButtonId)?.text ?: ""
 
             Timber.d("$selectedDriverGender $selectedMaritalStatus $selectedBloodGroup $selectedMeansOfId")
 
@@ -585,13 +648,13 @@ class AddVehicleFragment : Fragment() {
             } else {
                 validationErrorMessage = ""
             }
-            if (routes.isEmpty()) {
-                Timber.d("validate routes: $routes")
-                validationErrorMessage = "Select route(s)"
-                successful = false
-            } else {
-                validationErrorMessage = ""
-            }
+//            if (routes.isEmpty()) {
+//                Timber.d("validate routes: $routes")
+//                validationErrorMessage = "Select route(s)"
+//                successful = false
+//            } else {
+//                validationErrorMessage = ""
+//            }
         }
         return successful
     }
@@ -602,41 +665,41 @@ class AddVehicleFragment : Fragment() {
             requireContext(), R.array.banks_names, android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.bankNameSpinner.adapter = spinnerAdapter
-        binding.bankNameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mainBinding.bankNameSpinner.adapter = spinnerAdapter
+        mainBinding.bankNameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
     }
 
-    private fun setUpVehicleRoutesSpinner(){
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-            requireContext(), R.array.vehicle_routes, android.R.layout.simple_spinner_item
-        )
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.vehicleRouteSpinner.adapter = spinnerAdapter
-        binding.vehicleRouteSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val selectedItem = resources.getStringArray(R.array.vehicle_routes)[p2]
-                if (routes.contains(selectedItem)) {
-                    routes.remove(selectedItem)
-                } else {
-                    routes.add(selectedItem)
-                }
-                binding.vehicleRouteTV.text = "Vehicle Routes: " + "${routes}"
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-        }
-    }
+//    private fun setUpVehicleRoutesSpinner(){
+//        val spinnerAdapter = ArrayAdapter.createFromResource(
+//            requireContext(), R.array.vehicle_routes, android.R.layout.simple_spinner_item
+//        )
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.vehicleRouteSpinner.adapter = spinnerAdapter
+//        binding.vehicleRouteSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                val selectedItem = resources.getStringArray(R.array.vehicle_routes)[p2]
+//                if (routes.contains(selectedItem)) {
+//                    routes.remove(selectedItem)
+//                } else {
+//                    routes.add(selectedItem)
+//                }
+//                binding.vehicleRouteTV.text = "Vehicle Routes: " + "${routes}"
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {}
+//        }
+//    }
 
     private fun setUpStateOfOriginSpinner(){
         val spinnerAdapter = ArrayAdapter.createFromResource(
             requireContext(), R.array.nigerian_states, android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.stateOfOriginSpinner.adapter = spinnerAdapter
-        binding.stateOfOriginSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mainBinding.stateOfOriginSpinner.adapter = spinnerAdapter
+        mainBinding.stateOfOriginSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {
                 val state = resources.getStringArray(R.array.nigerian_states)[position]
                 setUpLocalGovernmentAreaSpinner(state, lgaIndex)
@@ -653,14 +716,14 @@ class AddVehicleFragment : Fragment() {
             )
         }
         spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.localGovernmentSpinner.adapter = spinnerAdapter
-        binding.localGovernmentSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mainBinding.localGovernmentSpinner.adapter = spinnerAdapter
+        mainBinding.localGovernmentSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {
                 lgaIndex = 0 //reset index
             }
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
-        binding.localGovernmentSpinner.setSelection(position)
+        mainBinding.localGovernmentSpinner.setSelection(position)
     }
 
     private fun setUpStateOfRegistrationSpinner(){
@@ -668,8 +731,8 @@ class AddVehicleFragment : Fragment() {
             requireContext(), R.array.nigerian_states, android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.stateOfRegistrationSpinner.adapter = spinnerAdapter
-        binding.stateOfRegistrationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mainBinding.stateOfRegistrationSpinner.adapter = spinnerAdapter
+        mainBinding.stateOfRegistrationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
@@ -680,15 +743,15 @@ class AddVehicleFragment : Fragment() {
             requireContext(), R.array.vehicle_category, android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.vehicleCategorySpinner.adapter = spinnerAdapter
-        binding.vehicleCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mainBinding.vehicleCategorySpinner.adapter = spinnerAdapter
+        mainBinding.vehicleCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
     }
 
     private fun showFull() {
-        with(binding) {
+        with(mainBinding) {
             roadWorthinessExpiryDateTV.visibility = VISIBLE
             roadWorthinessExpiryDateTIL.visibility = VISIBLE
 
@@ -716,7 +779,7 @@ class AddVehicleFragment : Fragment() {
     }
 
     private fun showMinimal() {
-        with(binding) {
+        with(mainBinding) {
             roadWorthinessExpiryDateTV.visibility = GONE
             roadWorthinessExpiryDateTIL.visibility = GONE
 
@@ -742,6 +805,7 @@ class AddVehicleFragment : Fragment() {
             stateOfRegistrationSpinner.visibility = GONE
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

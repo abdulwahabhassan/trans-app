@@ -58,4 +58,11 @@ class RemoteDatasource  @Inject constructor(
     ): ApiResponse<FundWalletAccountDetailsResult> {
         return apiService.getFundWalletAccountDetails(token, fundWalletAccountDetailsRequest)
     }
+
+    suspend fun getCurrentUser(
+        token: String
+    ): ApiResponse<CurrentUserResult> {
+        return apiService.getCurrentUser(token)
+    }
+
 }

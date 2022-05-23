@@ -29,5 +29,7 @@ data class User (
     @Json(name = "updated_at")
     val updatedAt: String?,
     val bvn: String?,
-    val profile: Profile?
+    val profile: Profile?,
+    @Json(name = "last_sync")
+    val lastSync: String?
 )

@@ -63,4 +63,8 @@ interface ApiService {
         @Body fundWalletAccountDetailsRequest: FundWalletAccountDetailsRequest
     ): ApiResponse<FundWalletAccountDetailsResult>
 
+    @GET("users/me")
+    suspend fun getCurrentUser(
+        @Header("Authorization") token: String
+    ): ApiResponse<CurrentUserResult>
 }

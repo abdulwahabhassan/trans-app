@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TransactionsFragment">
+    android:orientation="vertical"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    tools:context=".ui.AddVehicleFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/backArrowIV"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/dark_blue"
+        <TextView
+            android:id="@+id/doneBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/log_out_bg"
+            android:fontFamily="@font/nunito_sans_extrabold"
             android:padding="8dp"
-            android:src="@drawable/ic_arrow_left"
+            android:text="DONE"
+            android:layout_marginTop="16dp"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_blue"
+            android:textSize="12sp"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/dark_blue" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/phoneNumberPromptTV"
@@ -33,16 +42,17 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:fontFamily="@font/nunito_sans_extrabold"
-            android:text="Transactions"
+            android:text="Select Routes"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/dark_blue"
             android:textSize="16sp"
+            android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
+            app:layout_constraintTop_toBottomOf="@+id/doneBTN" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
@@ -53,10 +63,10 @@
             android:background="@drawable/search_view_bg"
             android:backgroundTintMode="src_over"
             android:baselineAligned="false"
-            android:focusedByDefault="true"
-            app:iconifiedByDefault="false"
-            android:visibility="gone"
             android:inputType="text"
+            android:visibility="gone"
+            android:focusedByDefault="false"
+            app:iconifiedByDefault="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,50 +79,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progressIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="visible"
-        app:indicatorColor="@color/dark_blue"
-        app:layout_constraintBottom_toBottomOf="@+id/transactionsRV"
-        app:layout_constraintEnd_toEndOf="@+id/transactionsRV"
-        app:layout_constraintStart_toStartOf="@+id/transactionsRV"
-        app:layout_constraintTop_toTopOf="@+id/transactionsRV"
-        app:trackColor="@color/sky_blue" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/transactionsRV"
+        android:id="@+id/routesRV"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="16dp"
+        android:layout_height="match_parent"
         android:overScrollMode="never"
         android:paddingHorizontal="2dp"
+        android:layout_gravity="center"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/doneBTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
-        tools:listitem="@layout/item_transaction" />
+        tools:listitem="@layout/item_route" />
 
-    <TextView
-        android:id="@+id/button_bluetooth_browse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/log_out_bg"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="4dp"
-        android:drawableTint="@color/dark_blue"
-        android:drawableStart="@drawable/ic_print"
-        android:textColor="@color/dark_blue"
-        android:textAllCaps="false"
-        app:cornerRadius="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

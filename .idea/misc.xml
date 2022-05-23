@@ -59,10 +59,12 @@
         <entry key="app/src/main/res/layout/item_account_details.xml" value="0.196875" />
         <entry key="app/src/main/res/layout/item_collection.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/item_daily_rate.xml" value="0.17239583333333333" />
+        <entry key="app/src/main/res/layout/item_route.xml" value="0.271875" />
         <entry key="app/src/main/res/layout/item_store_image.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/item_transaction.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_collection_details.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/layout_select_routes.xml" value="0.271875" />
         <entry key="app/src/main/res/layout/layout_transaction_details.xml" value="0.21875" />
       </map>
     </option>

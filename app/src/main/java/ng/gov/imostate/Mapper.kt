@@ -86,6 +86,8 @@ object Mapper {
         return RouteEntity(
             route.id,
             route.routeID,
+            route.from,
+            route.to,
             route.vehicleID,
             route.driverID,
             route.status,
@@ -94,7 +96,27 @@ object Mapper {
         )
     }
 
-    private fun mapListOfRouteToListOfRouteEntity(routes: List<Route>): List<RouteEntity> {
+    private fun mapRouteEntityToRoute(route: RouteEntity): Route {
+        return Route(
+            route.id,
+            route.routeID,
+            route.from,
+            route.to,
+            route.vehicleID,
+            route.driverID,
+            route.status,
+            route.createdAt,
+            route.updatedAt
+        )
+    }
+
+    fun mapListOfRouteEntityToListOfRoute(routes: List<RouteEntity>): List<Route> {
+        return routes.map { route ->
+            mapRouteEntityToRoute(route)
+        }
+    }
+
+    fun mapListOfRouteToListOfRouteEntity(routes: List<Route>): List<RouteEntity> {
         return routes.map { route ->
             mapRouteToRouteEntity(route)
         }

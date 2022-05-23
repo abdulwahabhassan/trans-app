@@ -55,6 +55,7 @@ class OutStandingPaymentFragment : Fragment() {
     var dateFrom: String? = ""
     var dateTo: String? = ""
     var outstandingBalance: Double? = 0.00
+    var amountToPay: Double = 0.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,7 +129,7 @@ class OutStandingPaymentFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                 val rate = vehicleCategory?.let { viewModel.getRateInDatabase(it) }
                 if (rate?.amount != null) {
-                    val amountToPay = rate.amount.toDouble().times(numOfEligibleDaysOwed.toDouble())
+                    amountToPay = rate.amount.toDouble().times(numOfEligibleDaysOwed.toDouble())
                     amountToPayTV.text = "₦${AppUtils.formatCurrency(amountToPay.toString())}"
                 }
                 periodTV.text = "${AppUtils.formatDateToFullDate(dateFrom ?: "")} - ${AppUtils.formatDateToFullDate(dateTo ?: "")}"
@@ -140,40 +141,51 @@ class OutStandingPaymentFragment : Fragment() {
             }
 
             markAsPaidBTN.setOnClickListener {
-                if (getBluetoothDevice() != null) {
-                    //do payment and navigate to success fragment with vehicle unique identifier
-                    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                        AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                        AppUtils.showView(false, binding.markAsPaidBTN)
-                        if (vehicleId != null) {
-                            //insert/update newly created transaction to app's database
-                            //to be synced later to cloud database/server
-                            viewModel.insertTransactionToDatabase(
-                                TransactionData(vehicleId, dateTo)
-                            )
-                            printBluetooth()
-                            val action = OutStandingPaymentFragmentDirections
-                                .actionOutStandingPaymentFragmentToSuccessFragment(
-                                    vehicleId!!,
-                                    vehiclePlatesNumber,
-                                    driverName,
-                                    dateTo,
-                                    vehicleCategory.toString()
+                if (amountToPay != 0.00) {
+                    if (getBluetoothDevice() != null) {
+                        //do payment and navigate to success fragment with vehicle unique identifier
+                        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                            AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                            AppUtils.showView(false, binding.markAsPaidBTN)
+                            if (vehicleId != null) {
+                                //insert/update newly created transaction to app's database
+                                //to be synced later to cloud database/server
+                                viewModel.insertTransactionToDatabase(
+                                    TransactionData(vehicleId, dateTo)
                                 )
-                            findNavController().navigate(action)
-                        } else {
-                            AppUtils.showToast(requireActivity(), "Vehicle ID is unknown", MotionToastStyle.ERROR)
+                                printBluetooth()
+                                val action = OutStandingPaymentFragmentDirections
+                                    .actionOutStandingPaymentFragmentToSuccessFragment(
+                                        vehicleId!!,
+                                        vehiclePlatesNumber,
+                                        driverName,
+                                        dateTo,
+                                        vehicleCategory.toString()
+                                    )
+                                findNavController().navigate(action)
+                            } else {
+                                AppUtils.showToast(requireActivity(), "Vehicle ID is unknown", MotionToastStyle.ERROR)
+                            }
                         }
+                    } else {
+                        val alertDialog = AlertDialog.Builder(requireContext())
+                        alertDialog.setTitle("No printer found")
+                        alertDialog.setMessage("Check that bluetooth is on")
+                        alertDialog.setNegativeButton("OK") { p0, _ -> p0?.dismiss() }
+                        val alert = alertDialog.create()
+                        alert.setCanceledOnTouchOutside(false)
+                        alert.show()
                     }
                 } else {
                     val alertDialog = AlertDialog.Builder(requireContext())
-                    alertDialog.setTitle("No printer found")
-                    alertDialog.setMessage("Check that bluetooth is on")
+                    alertDialog.setTitle("Invalid amount")
+                    alertDialog.setMessage("This amount is invalid")
                     alertDialog.setNegativeButton("OK") { p0, _ -> p0?.dismiss() }
                     val alert = alertDialog.create()
                     alert.setCanceledOnTouchOutside(false)
                     alert.show()
                 }
+
             }
         }
     }

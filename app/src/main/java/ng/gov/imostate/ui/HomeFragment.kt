@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
         if (isConnected) {
             getDashboardMetrics()
             syncDatabase()
-            getDailyRates()
+            getCurrentUser()
         }
     }
 
@@ -54,28 +54,43 @@ class HomeFragment : Fragment() {
         syncTransactionRecords()
     }
 
-    private fun getDailyRates() {
+    private fun getCurrentUser() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            val result = viewModel.getInitialUserPreferences().token?.let { token ->
-                viewModel.getRates(token)
+            val viewModelResult = viewModel.getInitialUserPreferences().token?.let { token ->
+                viewModel.getCurrentUser(token)
             }!!
-            when (result) {
-                is ViewModelResult.Success -> {
-                    Timber.d("${result.data?.rate}")
-                    if (result.data?.rate?.isNotEmpty() == true) {
-                        //update daily rates in app database
-                        viewModel.insertRatesToDatabase(Mapper.mapListOfRateToListOfRateEntity(
-                            result.data.rate
-                        ))
-                    }
-                }
+            when (viewModelResult) {
+                is ViewModelResult.Success -> {}
                 is ViewModelResult.Error -> {
-                    Timber.d("${result.errorMessage}")
-                    AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
+                    Timber.d(viewModelResult.errorMessage)
+                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                 }
             }
         }
+
     }
+//    private fun getDailyRates() {
+//        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+//            val result = viewModel.getInitialUserPreferences().token?.let { token ->
+//                viewModel.getRates(token)
+//            }!!
+//            when (result) {
+//                is ViewModelResult.Success -> {
+//                    Timber.d("${result.data?.rate}")
+//                    if (result.data?.rate?.isNotEmpty() == true) {
+//                        //update daily rates in app database
+//                        viewModel.insertRatesToDatabase(Mapper.mapListOfRateToListOfRateEntity(
+//                            result.data.rate
+//                        ))
+//                    }
+//                }
+//                is ViewModelResult.Error -> {
+//                    Timber.d("${result.errorMessage}")
+//                    AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
+//                }
+//            }
+//        }
+//    }
 
     private fun getPreOnboardedVehicleRecords() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -258,16 +273,18 @@ class HomeFragment : Fragment() {
                 is ViewModelResult.Success -> {
                     val dashBoardMetrics = viewModelResult.data?.metrics
                     with(binding) {
-                        walletBalanceTV.text = dashBoardMetrics?.currentBalance
+                        walletBalanceTV.text = dashBoardMetrics?.metrics?.currentBalance
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
-                        totalCreditedTV.text = dashBoardMetrics?.totalAmountCredited
+                        totalCreditedTV.text = dashBoardMetrics?.metrics?.totalAmountCredited
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
-                        totalVendedTV.text = dashBoardMetrics?.totalAmountVended
+                        totalVendedTV.text = dashBoardMetrics?.metrics?.totalAmountVended
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                       paidOutTV.text = dashBoardMetrics?.metrics?.paidOut
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                     }
                 }
                 is ViewModelResult.Error -> {
-                    Timber.d("${viewModelResult.errorMessage}")
+                    Timber.d(viewModelResult.errorMessage)
                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                 }
             }

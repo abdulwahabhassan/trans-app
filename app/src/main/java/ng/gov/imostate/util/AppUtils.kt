@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.util.Base64
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
 import com.google.gson.Gson
 import com.squareup.moshi.Moshi
@@ -246,5 +247,15 @@ object AppUtils {
             "Yobe" to R.array.yobe_lgas,
             "Zamfara" to R.array.zamfara_lgas
         )
+    }
+
+    fun hideKeyboard(context: Context?, view: View?) {
+        if (context != null) {
+            val imm =
+                context.applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (view != null) {
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
+        }
     }
 }

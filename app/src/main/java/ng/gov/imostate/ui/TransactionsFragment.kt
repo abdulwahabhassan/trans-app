@@ -10,6 +10,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -84,12 +85,30 @@ class TransactionsFragment : Fragment() {
 
         initUI()
 
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+               AppUtils.showToast(requireActivity(), newText, MotionToastStyle.INFO)
+                val filteredTransactions = transactionsAdapter.currentList.filter { transaction ->
+                    transaction.accountFrom.contains(newText.toString(), true) ||
+                            transaction.accountTo.contains(newText.toString(), true) ||
+                            transaction.internalReference.contains(newText.toString(), true)
+                }
+                transactionsAdapter.submitList(filteredTransactions)
+                return true
+            }
+
+        })
+
         binding.buttonBluetoothBrowse.setOnClickListener {
             browseBluetoothDevice()
         }
-        binding.generateLastReceiptBTN.setOnClickListener {
-            printBluetooth()
-        }
+//        binding.generateLastReceiptBTN.setOnClickListener {
+//            printBluetooth()
+//        }
 
     }
 

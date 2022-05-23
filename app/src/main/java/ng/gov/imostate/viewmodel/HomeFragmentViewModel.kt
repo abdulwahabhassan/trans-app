@@ -1,15 +1,12 @@
 package ng.gov.imostate.viewmodel
 
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import ng.gov.imostate.database.entity.RateEntity
+import ng.gov.imostate.Mapper
 import ng.gov.imostate.database.entity.TransactionEntity
 import ng.gov.imostate.database.entity.VehicleEntity
-import ng.gov.imostate.model.apiresult.MetricsResult
-import ng.gov.imostate.model.apiresult.RatesResult
-import ng.gov.imostate.model.apiresult.SyncTransactionsResult
-import ng.gov.imostate.model.apiresult.VehiclesResult
-import ng.gov.imostate.model.domain.TransactionData
+import ng.gov.imostate.model.apiresult.*
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.AgentRepository
@@ -17,7 +14,6 @@ import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.repository.VehicleRepository
 import ng.gov.imostate.util.NetworkConnectivityUtil
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -26,7 +22,8 @@ class HomeFragmentViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     private val agentRepository: AgentRepository,
     private val vehicleRepository: VehicleRepository,
-    private val transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionRepository,
+    private val moshi: Moshi
 ) : BaseViewModel(userPreferencesRepository) {
 
     private val _connectionState = MutableStateFlow(value = ViewModelResult.Success(false))
@@ -94,9 +91,33 @@ class HomeFragmentViewModel @Inject constructor(
         }
     }
 
-    suspend fun insertRatesToDatabase(rates: List<RateEntity>) {
-        agentRepository.insertRatesToDatabase(rates)
+
+    suspend fun getCurrentUser(token: String): ViewModelResult<CurrentUserResult?> {
+        val response = agentRepository.getCurrentUser(token)
+        return  when (response.success) {
+            true -> {
+
+                response.meta?.rates?.let { rates ->
+                    Mapper.mapListOfRateToListOfRateEntity(rates)
+                }?.let { agentRepository.insertRatesToDatabase(it) }
+
+                //put routes to database
+                response.meta?.route?.let { routes ->
+                    Mapper.mapListOfRouteToListOfRouteEntity(routes)
+                }?.let { agentRepository.insertRoutesToDatabase(it) }
+
+                ViewModelResult.Success(response.result)
+
+            }
+            else -> {
+                ViewModelResult.Error(response.message ?: "Unknown Error")
+            }
+        }
     }
+
+//    suspend fun insertRatesToDatabase(rates: List<RateEntity>) {
+//        agentRepository.insertRatesToDatabase(rates)
+//    }
 
     suspend fun insertVehiclesToDatabase(vehicles: List<VehicleEntity>) {
         vehicleRepository.insertVehiclesToDatabase(vehicles)

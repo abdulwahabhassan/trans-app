@@ -10,7 +10,6 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -23,6 +22,7 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnection
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import ng.gov.imostate.R
 import ng.gov.imostate.adapter.CollectionsAdapter
 import ng.gov.imostate.adapter.TransactionsAdapter
@@ -91,13 +91,40 @@ class TransactionsFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-               AppUtils.showToast(requireActivity(), newText, MotionToastStyle.INFO)
-                val filteredTransactions = transactionsAdapter.currentList.filter { transaction ->
-                    transaction.accountFrom.contains(newText.toString(), true) ||
-                            transaction.accountTo.contains(newText.toString(), true) ||
-                            transaction.internalReference.contains(newText.toString(), true)
+                when (args.transactionType) {
+                    TransactionType.AGENT_TRANSACTION.name -> {
+                        when (val result = viewModel.transactions.value) {
+                            is ViewModelResult.Success -> {
+                                val filteredTransactions = result.data.filter { transaction ->
+                                    transaction.accountFrom.contains(newText.toString(), true) ||
+                                    transaction.accountTo.contains(newText.toString(), true) ||
+                                    transaction.internalReference.contains(newText.toString(), true) ||
+                                    transaction.amount.contains(newText.toString(), true)
+                                }
+                                transactionsAdapter.submitList(filteredTransactions)
+                            }
+                            else -> {}
+                        }
+                    }
+                    TransactionType.VEHICLE_TRANSACTION.name -> {
+                        when (val result = viewModel.collections.value) {
+                            is ViewModelResult.Success -> {
+                                val filteredCollection = result.data.filter { collection ->
+                                    collection.amount?.contains(newText.toString(), true) == true ||
+                                    collection.vehicleID.toString().contains(newText.toString(), true) ||
+                                    collection.flaggedMessage?.contains(newText.toString(), true) == true ||
+                                    collection.date?.contains(newText.toString(), true) == true
+                                    collection.vehicleID.toString().contains(newText.toString(), true)
+                                    collection.internalReference.toString().contains(newText.toString(), true)
+                                    collection.pointsAggregated.toString().contains(newText.toString(), true)
+
+                                }
+                                collectionsAdapter.submitList(filteredCollection)
+                            }
+                        }
+                    }
+
                 }
-                transactionsAdapter.submitList(filteredTransactions)
                 return true
             }
 
@@ -106,9 +133,9 @@ class TransactionsFragment : Fragment() {
         binding.buttonBluetoothBrowse.setOnClickListener {
             browseBluetoothDevice()
         }
-//        binding.generateLastReceiptBTN.setOnClickListener {
-//            printBluetooth()
-//        }
+        binding.generateLastReceiptBTN.setOnClickListener {
+            printBluetooth()
+        }
 
     }
 
@@ -338,7 +365,7 @@ class TransactionsFragment : Fragment() {
             senderTV.text = transaction.accountFrom
             receiverTV.text = transaction.accountTo
             amountTV.text = transaction.amount
-            dateTV.text = transaction.createdAt.substring(0, 10)
+            dateTV.text = AppUtils.formatDateToFullDate(transaction.createdAt.substring(0, 10))
             vehiclePlatesTV.text = transaction.vehicleFrom.vehiclePlates
         }
     }
@@ -350,21 +377,23 @@ class TransactionsFragment : Fragment() {
                     viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                         AppUtils.showView(false, binding.transactionsRV)
                         AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                        val result = viewModel.getInitialUserPreferences().token?.let { token ->
-                            viewModel.getTransactions(token)
-                        }!!
-                        when (result) {
-                            is ViewModelResult.Success -> {
-                                Timber.d("${result.data?.transactions}")
-                                transactionsAdapter.submitList(result.data?.transactions)
-                                AppUtils.showView(true, binding.transactionsRV)
-                            }
-                            is ViewModelResult.Error -> {
-                                AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
-                                AppUtils.showView(false, binding.transactionsRV)
+                        viewModel.transactions.collect { viewModelResult ->
+                            when (viewModelResult) {
+                                is ViewModelResult.Success -> {
+                                    Timber.d("${viewModelResult.data}")
+                                    if (viewModelResult.data.isNotEmpty()) {
+                                        transactionsAdapter.submitList(viewModelResult.data)
+                                        AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                                        AppUtils.showView(true, binding.transactionsRV)
+                                    }
+                                }
+                                is ViewModelResult.Error -> {
+                                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                                    AppUtils.showView(false, binding.transactionsRV)
+                                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                                }
                             }
                         }
-                        AppUtils.showProgressIndicator(false, binding.progressIndicator)
                     }
                 }
             }

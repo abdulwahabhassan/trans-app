@@ -4,6 +4,6 @@ import com.squareup.moshi.Json
 import ng.gov.imostate.model.domain.Vehicle
 
 data class VehiclesResult(
-    @Json(name = "vehicle")
+    @Json(name = "vehicles")
     val vehicles: List<Vehicle>?
 )

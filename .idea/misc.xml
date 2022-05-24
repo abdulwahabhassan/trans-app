@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../.gradle/caches/transforms-3/99efadab7d4f40e245797247e62484aa/transformed/MotionToast-1.4/res/drawable/ic_check_green.xml" value="0.133" />
         <entry key="app/src/main/res/drawable-v24/connectivity_offline_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/account_details_item_bg.xml" value="0.2045" />
         <entry key="app/src/main/res/drawable/amount_to_pay_text_bg.xml" value="0.187" />
@@ -16,6 +17,7 @@
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_award.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.133" />
         <entry key="app/src/main/res/drawable/ic_more.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.1615" />
         <entry key="app/src/main/res/drawable/ic_payments.xml" value="0.1555" />
@@ -23,6 +25,7 @@
         <entry key="app/src/main/res/drawable/ic_scan.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/ic_sync.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/ic_transactions.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_unchecked.xml" value="0.133" />
         <entry key="app/src/main/res/drawable/ic_updates.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/log_out_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/rank_text_bg.xml" value="0.187" />
@@ -64,7 +67,7 @@
         <entry key="app/src/main/res/layout/item_transaction.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_collection_details.xml" value="0.21822916666666667" />
-        <entry key="app/src/main/res/layout/layout_select_routes.xml" value="0.271875" />
+        <entry key="app/src/main/res/layout/layout_select_routes.xml" value="0.165" />
         <entry key="app/src/main/res/layout/layout_transaction_details.xml" value="0.21875" />
       </map>
     </option>

@@ -33,6 +33,8 @@ data class Vehicle(
     @Json(name = "last_paid")
     val lastPaid: String?,
     val driver: Driver?,
+    @Json(name = "driver_name")
+    val driverName: String?,
     val routes: List<Route>?,
     val collection: List<Collection>?
 )

@@ -73,8 +73,13 @@ class RoutesAdapter(
                         Locale.getDefault()
                     ) else it.toString()
                 }
+                if (route.status.equals("active", true)) {
+                    routeStatusTV.setTextColor(root.context.resources.getColor(R.color.green))
+                } else {
+                    routeStatusTV.setTextColor(root.context.resources.getColor(R.color.red))
+                }
                 routeStatusTV.text = route.status
-                if (route.selected == true) {
+                if (route.selected) {
                     selectedIV.setImageResource(R.drawable.ic_check)
                 } else {
                     selectedIV.setImageResource(R.drawable.ic_unchecked)

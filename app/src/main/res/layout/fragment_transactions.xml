@@ -38,10 +38,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
 
         <androidx.appcompat.widget.SearchView
@@ -55,7 +53,6 @@
             android:baselineAligned="false"
             android:focusedByDefault="true"
             app:iconifiedByDefault="false"
-            android:visibility="gone"
             android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,13 +87,32 @@
         android:overScrollMode="never"
         android:paddingHorizontal="2dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/generateLastReceiptBTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
         tools:listitem="@layout/item_transaction" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/generateLastReceiptBTN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:padding="15dp"
+        android:text="PRINT LAST RECEIPT"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transactionsRV"
+        app:strokeColor="@color/dark_blue" />
 
     <TextView
         android:id="@+id/button_bluetooth_browse"

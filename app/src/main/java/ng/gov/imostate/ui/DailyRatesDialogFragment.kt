@@ -88,9 +88,9 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
                 AppUtils.showProgressIndicator(true, binding.progressIndicator)
                 when (val result = viewModel.getRates()) {
                     is ViewModelResult.Success -> {
-                        Timber.d("${result.data}")
+                        Timber.d("${Mapper.mapListOfRateEntityToListOfRate(result.data)}")
                         dailyRatesAdapter.submitList(
-                            Mapper.mapListOfRateEntityToListOfRate(result.data)
+                            Mapper.mapListOfRateEntityToListOfRate(result.data).distinctBy { it.category }
                         )
                         AppUtils.showView(true, binding.dailyRatesRV)
                     }

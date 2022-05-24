@@ -362,7 +362,7 @@ class TransactionsFragment : Fragment() {
             binding.doneBTN.setOnClickListener {
                 transactionDetailsSheet.dismiss()
             }
-            senderTV.text = transaction.accountFrom
+            senderTV.text = transaction.vehicleFrom.driverName
             receiverTV.text = transaction.accountTo
             amountTV.text = transaction.amount
             dateTV.text = AppUtils.formatDateToFullDate(transaction.createdAt.substring(0, 10))

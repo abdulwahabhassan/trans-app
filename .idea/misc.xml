@@ -29,6 +29,7 @@
         <entry key="app/src/main/res/drawable/ic_updates.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/log_out_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/rank_text_bg.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/rates_bg.xml" value="0.165" />
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/sync_btn_bg.xml" value="0.187" />
@@ -61,7 +62,7 @@
         <entry key="app/src/main/res/layout/fragment_vehicle_details_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_account_details.xml" value="0.196875" />
         <entry key="app/src/main/res/layout/item_collection.xml" value="0.21822916666666667" />
-        <entry key="app/src/main/res/layout/item_daily_rate.xml" value="0.17239583333333333" />
+        <entry key="app/src/main/res/layout/item_daily_rate.xml" value="0.165" />
         <entry key="app/src/main/res/layout/item_route.xml" value="0.271875" />
         <entry key="app/src/main/res/layout/item_store_image.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/item_transaction.xml" value="0.25" />

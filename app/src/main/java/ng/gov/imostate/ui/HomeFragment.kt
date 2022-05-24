@@ -207,7 +207,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(action)
             }
             dailyRatesBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesDialogFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesFragment()
                 findNavController().navigate(action)
             }
             paymentBTN.setOnClickListener {
@@ -257,7 +257,7 @@ class HomeFragment : Fragment() {
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                         totalVendedTV.text = dashBoardMetrics?.metrics?.totalAmountVended
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
-                       paidOutTV.text = dashBoardMetrics?.metrics?.paidOut
+                       currentPayableTV.text = dashBoardMetrics?.metrics?.currentPayable
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                     }
                 }

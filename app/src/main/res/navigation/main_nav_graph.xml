@@ -20,8 +20,8 @@
             android:id="@+id/action_homeFragment_to_findVehicleDialogFragment"
             app:destination="@id/findVehicleDialogFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_dailyRatesDialogFragment"
-            app:destination="@id/dailyRatesDialogFragment" />
+            android:id="@+id/action_homeFragment_to_dailyRatesFragment"
+            app:destination="@id/dailyRatesFragment" />
         <action
             android:id="@+id/action_homeFragment_to_updatesFragment"
             app:destination="@id/updatesFragment" />
@@ -64,11 +64,11 @@
         android:name="ng.gov.imostate.ui.NfcReaderResultFragment"
         android:label="fragment_reader_result"
         tools:layout="@layout/fragment_nfc_reader_result" />
-    <dialog
-        android:id="@+id/dailyRatesDialogFragment"
-        android:name="ng.gov.imostate.ui.DailyRatesDialogFragment"
-        android:label="fragment_daily_rates_dialog"
-        tools:layout="@layout/fragment_daily_rates_dialog" />
+    <fragment
+        android:id="@+id/dailyRatesFragment"
+        android:name="ng.gov.imostate.ui.DailyRatesFragment"
+        android:label="fragment_daily_rates"
+        tools:layout="@layout/fragment_daily_rates" />
     <fragment
         android:id="@+id/outStandingPaymentFragment"
         android:name="ng.gov.imostate.ui.OutStandingPaymentFragment"

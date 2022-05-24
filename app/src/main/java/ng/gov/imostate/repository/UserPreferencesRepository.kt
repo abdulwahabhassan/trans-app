@@ -34,7 +34,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
             loggedIn = preferences[PreferencesKeys.LOGGED_IN],
             agentName = preferences[PreferencesKeys.AGENT_NAME],
             agentId = preferences[PreferencesKeys.AGENT_ID],
-            businessName = preferences[PreferencesKeys.BUSINESS_NAME],
+            photo = preferences[PreferencesKeys.PHOTO],
             agentFirstName = preferences[PreferencesKeys.AGENT_FIRST_NAME],
             agentMiddleName = preferences[PreferencesKeys.AGENT_MIDDLE_NAME],
             agentLastName = preferences[PreferencesKeys.AGENT_LAST_NAME],
@@ -71,7 +71,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
                preferences[PreferencesKeys.TOKEN] = token!!
                preferences[PreferencesKeys.AGENT_NAME] = agentName!!
                preferences[PreferencesKeys.AGENT_ID] = agentId!!
-               preferences[PreferencesKeys.BUSINESS_NAME] = businessName!!
+               preferences[PreferencesKeys.PHOTO] = photo!!
                preferences[PreferencesKeys.AGENT_FIRST_NAME] = agentFirstName!!
                preferences[PreferencesKeys.AGENT_MIDDLE_NAME] = agentMiddleName!!
                preferences[PreferencesKeys.AGENT_LAST_NAME] = agentLastName!!
@@ -95,7 +95,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val loggedIn: Boolean? = false,
         val agentName: String? = null,
         val agentId: Long? = null,
-        val businessName: String? = null,
+        val photo: String? = null,
         val agentFirstName: String? = null,
         val agentMiddleName: String? = null,
         val agentLastName: String? = null,
@@ -119,7 +119,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val LOGGED_IN = booleanPreferencesKey("loggedIn")
         val AGENT_NAME = stringPreferencesKey("agentName")
         val AGENT_ID = longPreferencesKey("agentId")
-        val BUSINESS_NAME = stringPreferencesKey("businessName")
+        val PHOTO = stringPreferencesKey("businessName")
         val AGENT_FIRST_NAME = stringPreferencesKey("agentFirstName")
         val AGENT_MIDDLE_NAME = stringPreferencesKey("agentMiddleName")
         val AGENT_LAST_NAME = stringPreferencesKey("agentLastName")

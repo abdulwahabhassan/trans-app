@@ -1,13 +1,11 @@
 package ng.gov.imostate.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import ng.gov.imostate.R
-import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
 import ng.gov.imostate.databinding.FragmentPaymentBinding
 
 

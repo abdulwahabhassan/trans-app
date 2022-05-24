@@ -37,7 +37,8 @@ class AppViewModelsFactory @Inject constructor(
             }
             modelClass.isAssignableFrom(ProfileActivityViewModel::class.java) -> {
                 return ProfileActivityViewModel(
-                    userPreferencesRepository
+                    userPreferencesRepository,
+                    agentRepository
                 ) as T
             }
             modelClass.isAssignableFrom(AddVehicleFragmentViewModel::class.java) -> {

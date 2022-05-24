@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ng.gov.imostate.contract.GalleryActivityContract
 import ng.gov.imostate.databinding.ActivityProfileBinding
+import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.ProfileActivityViewModel
@@ -98,12 +99,25 @@ class ProfileActivity : AppCompatActivity() {
 
             lifecycleScope.launchWhenResumed {
                 val user = activityViewModel.getInitialUserPreferences()
+                //userPhotoIV.setImageResource()
                 onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else AppUtils.formatDateToFullDate(user.onboardingDate)
                 emailTV.text = if (user.email.isNullOrEmpty()) "_" else "${user.email}"
                 addressTV.text = if (user.address.isNullOrEmpty()) "_" else "${user.address}"
                 nameTV.text = if (user.agentName.isNullOrEmpty()) "_" else "${user.agentName}"
-                businessNameTV.text = if (user.businessName.isNullOrEmpty()) "_" else "${user.businessName}"
                 phonenumberTV.text = if (user.phone.isNullOrEmpty()) "_" else "${user.phone}"
+                activityViewModel.getInitialUserPreferences().token?.let { token ->
+                    when (val viewModelResult = activityViewModel.getDashBoardMetrics(token)) {
+                        is ViewModelResult.Success -> {
+                            paidOutDateTV.text = viewModelResult.data?.metrics?.metrics?.paidOut?.let {
+                                "₦${AppUtils.formatCurrency(it)}"
+                            }
+                        }
+                        is ViewModelResult.Error -> {
+                            paidOutDateTV.text = "-"
+                        }
+                    }
+                }
+
             }
 
         }

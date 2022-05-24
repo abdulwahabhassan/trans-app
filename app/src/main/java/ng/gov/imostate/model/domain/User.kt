@@ -10,12 +10,6 @@ data class User (
     val address: String?,
     @Json(name = "business_name")
     val businessName: String?,
-    @Json(name = "agent_first_name")
-    val agentFirstName: String?,
-    @Json(name = "agent_middle_name")
-    val agentMiddleName: String?,
-    @Json(name = "agent_last_name")
-    val agentLastName: String?,
     @Json(name = "onboarding_date")
     val onboardingDate: String?,
     val email: String?,
@@ -30,6 +24,4 @@ data class User (
     val updatedAt: String?,
     val bvn: String?,
     val profile: Profile?,
-    @Json(name = "last_sync")
-    val lastSync: String?
 )

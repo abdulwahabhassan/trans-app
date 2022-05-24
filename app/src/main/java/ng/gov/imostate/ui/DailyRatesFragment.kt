@@ -13,25 +13,21 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.adapter.DailyRatesAdapter
-import ng.gov.imostate.adapter.TransactionsAdapter
-import ng.gov.imostate.databinding.FragmentDailyRatesDialogBinding
+import ng.gov.imostate.databinding.FragmentDailyRatesBinding
 import ng.gov.imostate.model.domain.Rate
-import ng.gov.imostate.model.domain.Transaction
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils
-import ng.gov.imostate.util.Mock
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.DailyRatesDialogFragmentViewModel
-import ng.gov.imostate.viewmodel.FindVehicleDialogFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class DailyRatesDialogFragment : BottomSheetDialogFragment() {
+class DailyRatesFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentDailyRatesDialogBinding? = null
+    private var _binding: FragmentDailyRatesBinding? = null
     private val binding get() = _binding!!
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
@@ -48,7 +44,7 @@ class DailyRatesDialogFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDailyRatesDialogBinding.inflate(inflater, container, false)
+        _binding = FragmentDailyRatesBinding.inflate(inflater, container, false)
         return binding.root
     }
 

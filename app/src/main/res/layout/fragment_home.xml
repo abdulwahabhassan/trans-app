@@ -301,7 +301,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="16dp"
-                                android:text="Total Credited"
+                                android:text="Total Credited "
                                 android:textSize="12sp"
                                 android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
@@ -403,14 +403,14 @@
                                 android:layout_marginEnd="8dp"
                                 android:src="@drawable/ic_transaction_credit"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/paidOutTV"
+                                app:layout_constraintEnd_toStartOf="@+id/currentPayableTV"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:tint="@color/blue" />
 
                             <TextView
-                                android:id="@+id/paidOutTV"
+                                android:id="@+id/currentPayableTV"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
@@ -431,14 +431,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="16dp"
-                                android:text="Paid out"
+                                android:text="Payable"
                                 android:textSize="12sp"
                                 android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
-                                app:layout_constraintStart_toStartOf="@+id/paidOutTV"
-                                app:layout_constraintTop_toBottomOf="@+id/paidOutTV" />
+                                app:layout_constraintStart_toStartOf="@+id/currentPayableTV"
+                                app:layout_constraintTop_toBottomOf="@+id/currentPayableTV" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -494,26 +494,7 @@
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
                 android:paddingTop="8dp"
-                android:text="Scan Vehicle"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:rippleColor="@color/sky_blue" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/paymentBTN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/transparent_purple"
-                android:drawableTop="@drawable/ic_payments"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0"
-                android:padding="8dp"
-                android:text="Make Payments"
+                android:text="Scan Vehicle "
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -539,24 +520,24 @@
                 app:rippleColor="@color/sky_blue" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/dailyRatesBTN"
+                android:id="@+id/paymentBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                android:backgroundTint="@color/transparent_blue"
-                android:drawableTop="@drawable/ic_more"
-                android:drawableTint="@color/blue"
+                android:backgroundTint="@color/transparent_purple"
+                android:drawableTop="@drawable/ic_payments"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0"
                 android:padding="8dp"
-                android:text="Daily Rates"
+                android:text="Fund Wallet"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:rippleColor="@color/sky_blue" />
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/updatesBTN"
@@ -572,6 +553,26 @@
                 android:letterSpacing="0"
                 android:padding="8dp"
                 android:text="News / Updates"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:rippleColor="@color/sky_blue" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dailyRatesBTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/transparent_blue"
+                android:drawableTop="@drawable/ic_more"
+                android:drawableTint="@color/blue"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0"
+                android:padding="8dp"
+                android:text="Daily Rates"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="14sp"

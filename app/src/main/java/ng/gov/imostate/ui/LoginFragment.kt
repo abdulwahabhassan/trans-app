@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,7 +16,6 @@ import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.LoginFragmentViewModel
-import ng.gov.imostate.viewmodel.MainActivityViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
@@ -95,10 +93,10 @@ class LoginFragment : Fragment() {
                                 token = "Bearer ${token ?: ""}",
                                 agentName = user?.name ?: "",
                                 agentId = user?.id ?: 0,
-                                businessName = user?.businessName ?: "",
-                                agentFirstName = user?.agentFirstName ?: "",
-                                agentMiddleName = user?.agentLastName ?: "",
-                                agentLastName = user?.agentLastName ?: "",
+                                photo = user?.profile?.photo ?: "",
+                                agentFirstName = user?.profile?.agentFirstName ?: "",
+                                agentMiddleName = user?.profile?.agentLastName ?: "",
+                                agentLastName = user?.profile?.agentLastName ?: "",
                                 type = user?.type ?: "",
                                 phone = user?.phone ?: "",
                                 address = user?.address ?: "",

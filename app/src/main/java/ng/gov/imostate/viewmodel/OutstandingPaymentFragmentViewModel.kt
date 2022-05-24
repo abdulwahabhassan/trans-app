@@ -3,6 +3,7 @@ package ng.gov.imostate.viewmodel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.database.entity.RateEntity
+import ng.gov.imostate.model.apiresult.MetricsResult
 import ng.gov.imostate.model.apiresult.SyncTransactionsResult
 import ng.gov.imostate.model.apiresult.TransactionsResult
 import ng.gov.imostate.model.domain.TransactionData
@@ -21,6 +22,19 @@ class OutstandingPaymentFragmentViewModel @Inject constructor(
 ) : BaseViewModel(
     userPreferencesRepository
 ){
+
+    suspend fun getDashBoardMetrics(token: String,): ViewModelResult<MetricsResult?> {
+        val response = agentRepository.getDashBoardMetrics(token)
+        return  when (response.success) {
+            true -> {
+                ViewModelResult.Success(response.result)
+            }
+            else -> {
+                ViewModelResult.Error(response.message ?: "Unknown Error")
+            }
+        }
+    }
+
     suspend fun insertTransactionToDatabase(transaction: TransactionData) {
         transactionRepository.insertTransactionToDatabase(
             Mapper.mapTransactionToTransactionEntity(transaction)

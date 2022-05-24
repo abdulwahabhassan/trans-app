@@ -52,4 +52,8 @@ class AddVehicleFragmentViewModel @Inject constructor(
         )
     }
 
+    suspend fun getCategories(): List<String> {
+        return agentRepository.getAllCategoriesInDatabase()
+    }
+
 }

@@ -69,28 +69,6 @@ class HomeFragment : Fragment() {
         }
 
     }
-//    private fun getDailyRates() {
-//        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-//            val result = viewModel.getInitialUserPreferences().token?.let { token ->
-//                viewModel.getRates(token)
-//            }!!
-//            when (result) {
-//                is ViewModelResult.Success -> {
-//                    Timber.d("${result.data?.rate}")
-//                    if (result.data?.rate?.isNotEmpty() == true) {
-//                        //update daily rates in app database
-//                        viewModel.insertRatesToDatabase(Mapper.mapListOfRateToListOfRateEntity(
-//                            result.data.rate
-//                        ))
-//                    }
-//                }
-//                is ViewModelResult.Error -> {
-//                    Timber.d("${result.errorMessage}")
-//                    AppUtils.showToast(requireActivity(), result.errorMessage, MotionToastStyle.ERROR)
-//                }
-//            }
-//        }
-//    }
 
     private fun getPreOnboardedVehicleRecords() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -105,7 +83,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is ViewModelResult.Error -> {
-                    Timber.d("${viewModelResult.errorMessage}")
+                    Timber.d(viewModelResult.errorMessage)
                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                 }
             }

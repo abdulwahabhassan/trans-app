@@ -75,13 +75,13 @@ class VehicleRepository @Inject constructor(
         vehicleLocalDao.insertAllVehicles(vehicles)
     }
 
+    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {
+        return vehicleLocalDao.getVehicleDriverRecord(identifier)
+    }
+
     suspend fun findVehicleInDatabase(identifier: String): VehicleEntity? {
         return vehicleLocalDao.
         getVehicle(identifier)
-    }
-
-    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {
-        return vehicleLocalDao.getVehicleDriverRecord(identifier)
     }
 
     suspend fun getAllVehiclesInDatabase(): List<VehicleEntity> {

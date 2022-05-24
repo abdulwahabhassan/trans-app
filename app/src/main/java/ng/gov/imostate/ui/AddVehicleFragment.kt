@@ -44,6 +44,7 @@ class AddVehicleFragment : Fragment() {
     private var lgaIndex: Int  = 0
     private var validationErrorMessage: String = ""
     private var selectedRoutes = mutableListOf<Route>()
+    private var vehicleCategories = listOf<String>()
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
@@ -78,8 +79,6 @@ class AddVehicleFragment : Fragment() {
 
         setUpVehicleCategorySpinner()
 
-        //setUpVehicleRoutesSpinner()
-
         with(mainBinding) {
             DateInputMask(roadWorthinessExpiryDateET).listen()
             DateInputMask(vehicleLicenseExpiryDateET).listen()
@@ -110,7 +109,7 @@ class AddVehicleFragment : Fragment() {
                 showFindVehicleDialog()
             }
 
-            vehicleRouteTIL.setOnClickListener {
+            selectedVehicleRoutesTV.setOnClickListener {
                 showSelectRoutesDialog()
             }
 
@@ -261,7 +260,7 @@ class AddVehicleFragment : Fragment() {
 
         binding.doneBTN.setOnClickListener {
             selectRoutesSheet.dismiss()
-            mainBinding.vehicleRouteTIL.text = selectedRoutes.map { "${it.from?.replaceFirstChar {
+            mainBinding.selectedVehicleRoutesTV.text = selectedRoutes.map { "${it.from?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) 
                 else it.toString() 
             }} to ${it.to?.replaceFirstChar {
@@ -355,36 +354,38 @@ class AddVehicleFragment : Fragment() {
                             //spinners
                             stateOfRegistrationSpinner.setSelection(
                                 if (resources.getStringArray(R.array.nigerian_states)
-                                        .indexOf(vehicle.stateOfRegistration ?:
+                                        .indexOf(vehicle.stateOfRegistration?.let { it1 ->
+                                            AppUtils.capitalize(it1) } ?:
                                         resources.getStringArray(R.array.nigerian_states).first()) != -1)
                                     resources.getStringArray(R.array.nigerian_states)
-                                        .indexOf(vehicle.stateOfRegistration ?:
+                                        .indexOf(vehicle.stateOfRegistration?.let { it1 ->
+                                            AppUtils.capitalize(it1) } ?:
                                         resources.getStringArray(R.array.nigerian_states).first())
                                 else 0,
                                 true
                             )
                             vehicleCategorySpinner.setSelection(
-                               if (resources.getStringArray(R.array.vehicle_category)
-                                       .indexOf(vehicle.type ?:
-                                       resources.getStringArray(R.array.vehicle_category).first()) != -1)
-                                   resources.getStringArray(R.array.vehicle_category)
-                                       .indexOf(vehicle.type ?:
-                                       resources.getStringArray(R.array.vehicle_category).first())
+                               if (vehicleCategories.indexOf(vehicle.type ?:
+                                   vehicleCategories.first()) != -1)
+                                   vehicleCategories.indexOf(vehicle.type ?:
+                                   vehicleCategories.first())
                                else 0,
                                 true
                             )
                             stateOfOriginSpinner.setSelection(
                                 if (resources.getStringArray(R.array.nigerian_states)
-                                        .indexOf(vehicle.driver?.stateOfOrigin ?:
+                                        .indexOf(vehicle.driver?.stateOfOrigin?.let { it1 ->
+                                                AppUtils.capitalize(it1) } ?:
                                         resources.getStringArray(R.array.nigerian_states).first()) != -1)
                                     resources.getStringArray(R.array.nigerian_states)
-                                        .indexOf(vehicle.driver?.stateOfOrigin ?:
+                                        .indexOf(vehicle.driver?.stateOfOrigin?.let { it1 ->
+                                            AppUtils.capitalize(it1) } ?:
                                         resources.getStringArray(R.array.nigerian_states).first())
                                 else 0,
                                 true
                             )
 
-                            val stringArrayResId = AppUtils.mapOfLgaStringArray().get(vehicle.driver?.stateOfOrigin)
+                            val stringArrayResId = AppUtils.mapOfLgaStringArray()[vehicle.driver?.stateOfOrigin]
                             lgaIndex = if (stringArrayResId != null) {
                                 resources.getStringArray(stringArrayResId).indexOf(vehicle.driver?.localGovt)
                             } else {
@@ -407,31 +408,31 @@ class AddVehicleFragment : Fragment() {
                                 Mapper.mapListOfRouteEntityToListOfRoute(
                                     it1
                                 ).toMutableList()
-                            }!!
+                            } ?: emptyList<Route>().toMutableList()
 
-                            vehicleRouteTIL.text = selectedRoutes.map { routeEntity ->
+                            selectedVehicleRoutesTV.text = selectedRoutes.map { routeEntity ->
                                 routeEntity.from + "to" + routeEntity.to
                             }.toString().removePrefix("[").removeSuffix("]")
 
                             //radios
                             driverGenderRG.check(
                                 if (vehicle.driver?.gender.equals(
-                                        "male",
+                                        "female",
                                         true
                                     )
-                                ) R.id.maleCB else R.id.femaleCB
+                                ) R.id.femaleCB else R.id.maleCB
                             )
                             meansOfIdRG.check(
                                 when {
                                     vehicle.driver?.meansOfID.equals(
-                                        "NIN",
+                                        "Permanent Voters Card",
                                         true
-                                    ) -> R.id.ninSlipRB
+                                    ) -> R.id.votersCardRB
                                     vehicle.driver?.meansOfID.equals(
                                         "National ID Card",
                                         true
                                     ) -> R.id.nationalIdCardRB
-                                    else -> R.id.votersCardRB
+                                    else -> R.id.ninSlipRB
                                 }
                             )
 
@@ -674,6 +675,7 @@ class AddVehicleFragment : Fragment() {
 
 
     private fun setUpBankNameSpinner(){
+
         val spinnerAdapter = ArrayAdapter.createFromResource(
             requireContext(), R.array.banks_names, android.R.layout.simple_spinner_item
         )
@@ -686,6 +688,7 @@ class AddVehicleFragment : Fragment() {
     }
 
     private fun setUpStateOfOriginSpinner(){
+
         val spinnerAdapter = ArrayAdapter.createFromResource(
             requireContext(), R.array.nigerian_states, android.R.layout.simple_spinner_item
         )
@@ -731,19 +734,25 @@ class AddVehicleFragment : Fragment() {
     }
 
     private fun setUpVehicleCategorySpinner(){
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-            requireContext(), R.array.vehicle_category, android.R.layout.simple_spinner_item
-        )
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mainBinding.vehicleCategorySpinner.adapter = spinnerAdapter
-        mainBinding.vehicleCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            vehicleCategories = viewModel.getCategories().distinct()
+            Timber.d("$vehicleCategories")
+            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, vehicleCategories)
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            mainBinding.vehicleCategorySpinner.adapter = spinnerAdapter
+            mainBinding.vehicleCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, l: Long) {}
+                override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+            }
         }
     }
 
     private fun showFull() {
         with(mainBinding) {
+//until verified to be non-compulsory
+//            imssinNumberTV.visibility = VISIBLE
+//            imssinNumberTIL.visibility = VISIBLE
+
             roadWorthinessExpiryDateTV.visibility = VISIBLE
             roadWorthinessExpiryDateTIL.visibility = VISIBLE
 
@@ -772,6 +781,11 @@ class AddVehicleFragment : Fragment() {
 
     private fun showMinimal() {
         with(mainBinding) {
+
+//until verified to be non-compulsory
+//            imssinNumberTV.visibility = GONE
+//            imssinNumberTIL.visibility = GONE
+
             roadWorthinessExpiryDateTV.visibility = GONE
             roadWorthinessExpiryDateTIL.visibility = GONE
 

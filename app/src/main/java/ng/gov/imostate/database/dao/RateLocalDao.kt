@@ -15,4 +15,8 @@ interface RateLocalDao {
 
     @Query("SELECT * FROM rate WHERE rate.category LIKE :category")
     suspend fun getRate(category: String): RateEntity?
+
+    @Query("SELECT category FROM rate")
+    suspend fun getAllCategories(): List<String>
+
 }

@@ -258,4 +258,13 @@ object AppUtils {
             }
         }
     }
+
+    fun capitalize(word: String): String {
+        return word.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }
+    }
+
 }

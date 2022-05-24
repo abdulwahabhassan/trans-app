@@ -122,4 +122,8 @@ class AgentRepository @Inject constructor(
     suspend fun insertRoutesToDatabase(routes: List<RouteEntity>) {
         routeLocalDao.insertAllRoutes(routes)
     }
+
+    suspend fun getAllCategoriesInDatabase(): List<String> {
+        return ratesLocalDao.getAllCategories()
+    }
 }

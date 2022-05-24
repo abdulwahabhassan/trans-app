@@ -4,13 +4,13 @@ import com.squareup.moshi.Json
 
 data class Data (
     @Json(name = "name")
-    val name: String,
+    val name: String = "",
     @Json(name = "vid")
-    val vid: String,
+    val vid: String = "",
     @Json(name = "lpd")
-    val lpd: String,
+    val lpd: String = "",
     @Json(name = "vc")
-    val vc: String,
+    val vc: String = "",
     @Json(name = "vpn")
-    val vpn: String
+    val vpn: String = ""
 )

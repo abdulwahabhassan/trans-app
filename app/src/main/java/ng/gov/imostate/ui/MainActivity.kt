@@ -153,18 +153,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun writeDataToTag(tagFromIntent: Tag, data: Data?) {
-        Timber.d("Writing To Tag")
-        val records = arrayListOf<NdefRecord>()
-        val jsonRecord = createNdefJsonRecord(data)
-        if (jsonRecord != null) {
-            records.add(jsonRecord)
-            //this will embed the package name of the application inside an NDEF record, thereby
-            //preventing other applications from filtering for the same intent and
-            //potentially handling the data in tag
-            records.add(createAndroidApplicationRecord())
-            writeNdefRecordsToTag(records.toTypedArray(), tagFromIntent)
+        val tagData = readAndReturnTagData(tagFromIntent)
+        //only write to tag if their vpn are the same otherwise if the tag is null which could
+        //mean that it is a new tag that hasn't been onboarded yet with any record,
+        //then write to it
+        Timber.d("tagData: ${tagData} dataToWrite: $data")
+        if (tagData != null) {
+            if (tagData.vpn == data?.vpn) {
+                Timber.d("Writing To Tag")
+                val records = arrayListOf<NdefRecord>()
+                val jsonRecord = createNdefJsonRecord(data)
+                if (jsonRecord != null) {
+                    records.add(jsonRecord)
+                    //this will embed the package name of the application inside an NDEF record, thereby
+                    //preventing other applications from filtering for the same intent and
+                    //potentially handling the data in tag
+                    records.add(createAndroidApplicationRecord())
+                    writeNdefRecordsToTag(records.toTypedArray(), tagFromIntent)
+                } else {
+                    AppUtils.showToast(this, "Can't create record", MotionToastStyle.ERROR)
+                }
+            } else {
+                AppUtils.showToast(this, "Tag and vehicle are incompatible", MotionToastStyle.ERROR)
+            }
         } else {
-            AppUtils.showToast(this, "Can't create record", MotionToastStyle.ERROR)
+            Timber.d("Writing To Tag")
+            val records = arrayListOf<NdefRecord>()
+            val jsonRecord = createNdefJsonRecord(data)
+            if (jsonRecord != null) {
+                records.add(jsonRecord)
+                //this will embed the package name of the application inside an NDEF record, thereby
+                //preventing other applications from filtering for the same intent and
+                //potentially handling the data in tag
+                records.add(createAndroidApplicationRecord())
+                writeNdefRecordsToTag(records.toTypedArray(), tagFromIntent)
+            } else {
+                AppUtils.showToast(this, "Can't create record", MotionToastStyle.ERROR)
+            }
         }
     }
     private fun createNdefJsonRecord(data: Data?): NdefRecord? {
@@ -292,6 +317,49 @@ class MainActivity : AppCompatActivity() {
             "application/json",
             json?.toByteArray(Charset.forName("US-ASCII"))
         )
+    }
+
+    private fun readAndReturnTagData(tag: Tag): Data? {
+        var tagData: Data? = null
+        Timber.d("Reading Tag from Intent")
+        //log tag
+        Timber.d("$tag")
+        //log and toast payload
+        val ndef = Ndef.get(tag)
+        try {
+            ndef.connect()
+            if (ndef.ndefMessage.records != null) {
+                ndef.ndefMessage.records.map {
+                    //you only need to work with the first record, which has a MIME type of "application/json"
+                    //and not the second record (application record) which has a MIME type of "android.com:pkg"
+                    if (it.toMimeType() == "application/json") {
+                        val json = String(it.payload, Charset.forName("US-ASCII"))
+                        val moshi = Moshi.Builder()
+                            .add(KotlinJsonAdapterFactory())
+                            .build()
+
+                        val data = AppUtils.convertToData(json, moshi)
+
+                        tagData = if (data != null) {
+                            data
+                        } else {
+                            Timber.d("Tag contains record but data conversion returns null")
+                            Data()
+                        }
+                    }
+                    //log tag content of all records
+                    Timber.d("PAYLOAD ${String(it.payload, Charset.forName("US-ASCII"))}")
+                    Timber.d("ID ${String(it.id, Charset.forName("US-ASCII"))}")
+                    Timber.d("TYPE ${String(it.type, Charset.forName("US-ASCII"))}")
+                }
+            }
+        } catch (e: Exception) {
+            Timber.d(e.message)
+            tagData = Data()
+        } finally {
+            ndef.close()
+        }
+        return tagData
     }
 
     private fun readTag(tag: Tag) {

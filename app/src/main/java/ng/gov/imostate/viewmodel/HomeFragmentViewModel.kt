@@ -13,7 +13,9 @@ import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.repository.VehicleRepository
+import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.NetworkConnectivityUtil
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -97,12 +99,14 @@ class HomeFragmentViewModel @Inject constructor(
         return  when (response.success) {
             true -> {
 
+                //put rates to database
                 response.meta?.rates?.let { rates ->
                     Mapper.mapListOfRateToListOfRateEntity(rates)
                 }?.let { agentRepository.insertRatesToDatabase(it) }
 
                 //put routes to database
                 response.meta?.route?.let { routes ->
+                    Timber.d("$routes")
                     Mapper.mapListOfRouteToListOfRouteEntity(routes)
                 }?.let { agentRepository.insertRoutesToDatabase(it) }
 
@@ -114,10 +118,6 @@ class HomeFragmentViewModel @Inject constructor(
             }
         }
     }
-
-//    suspend fun insertRatesToDatabase(rates: List<RateEntity>) {
-//        agentRepository.insertRatesToDatabase(rates)
-//    }
 
     suspend fun insertVehiclesToDatabase(vehicles: List<VehicleEntity>) {
         vehicleRepository.insertVehiclesToDatabase(vehicles)

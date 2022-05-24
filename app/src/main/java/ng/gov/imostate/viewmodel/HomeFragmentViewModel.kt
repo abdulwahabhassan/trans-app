@@ -93,11 +93,14 @@ class HomeFragmentViewModel @Inject constructor(
         }
     }
 
-
     suspend fun getCurrentUser(token: String): ViewModelResult<CurrentUserResult?> {
         val response = agentRepository.getCurrentUser(token)
         return  when (response.success) {
             true -> {
+                //put current wallet balance to data store
+                response.result?.user?.profile?.currentBalance?.let { currentBalance ->
+                    userPreferencesRepository.updateCurrentWalletBalance(2000.00)
+                }
 
                 //put rates to database
                 response.meta?.rates?.let { rates ->

@@ -3,6 +3,7 @@ package ng.gov.imostate.viewmodel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.database.entity.RateEntity
+import ng.gov.imostate.database.entity.TransactionEntity
 import ng.gov.imostate.model.apiresult.MetricsResult
 import ng.gov.imostate.model.apiresult.SyncTransactionsResult
 import ng.gov.imostate.model.apiresult.TransactionsResult
@@ -39,6 +40,10 @@ class OutstandingPaymentFragmentViewModel @Inject constructor(
         transactionRepository.insertTransactionToDatabase(
             Mapper.mapTransactionToTransactionEntity(transaction)
         )
+    }
+
+    suspend fun getAllTransactionsInDatabase(): List<TransactionEntity> {
+        return transactionRepository.getAllTransactionsInDatabase()
     }
 
     suspend fun getRateInDatabase(category: String): RateEntity? {

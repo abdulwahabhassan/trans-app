@@ -200,7 +200,9 @@ class AddVehicleFragment : Fragment() {
                                 //insert/update newly created transaction to app's database to be synced later to cloud database/server
                                 viewModel.insertTransactionToDatabase(
                                     TransactionData(result.data?.onBoardVehicle?.id.toString(),
-                                        AppUtils.getCurrentDate())
+                                        AppUtils.getCurrentDate(),
+                                        0.00
+                                    )
                                 )
 
                                 val onBoardedVehicle = result.data?.onBoardVehicle

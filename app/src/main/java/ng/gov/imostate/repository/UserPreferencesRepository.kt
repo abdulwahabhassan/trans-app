@@ -49,8 +49,15 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
             createdAt = preferences[PreferencesKeys.CREATED_AT],
             updatedAt = preferences[PreferencesKeys.UPDATED_AT],
             bvn = preferences[PreferencesKeys.BVN],
-            lastSyncTime = preferences[PreferencesKeys.LAST_SYNC_TIME]
+            lastSyncTime = preferences[PreferencesKeys.LAST_SYNC_TIME],
+            currentWalletBalance = preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] ?: 0.00
         )
+    }
+
+    suspend fun updateCurrentWalletBalance(balance: Double) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] = balance
+        }
     }
 
     suspend fun updateLoginStatus(loggedIn: Boolean) {
@@ -86,6 +93,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
                preferences[PreferencesKeys.CREATED_AT] = createdAt!!
                preferences[PreferencesKeys.UPDATED_AT] = updatedAt!!
                preferences[PreferencesKeys.BVN] = bvn!!
+               preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] = currentWalletBalance
            }
         }
     }
@@ -110,7 +118,8 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val createdAt: String? = null,
         val updatedAt: String? = null,
         val bvn: String? = null,
-        val lastSyncTime: String? = null
+        val lastSyncTime: String? = null,
+        val currentWalletBalance: Double = 0.00
     )
 
     //define preferences keys
@@ -135,6 +144,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val UPDATED_AT = stringPreferencesKey("updatedAt")
         val BVN = stringPreferencesKey("bvn")
         val LAST_SYNC_TIME = stringPreferencesKey("last_syn_time")
+        val CURRENT_WALLET_BALANCE = doublePreferencesKey("current_wallet_balance")
     }
 
 }

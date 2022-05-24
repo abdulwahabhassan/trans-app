@@ -21,6 +21,7 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentOutStandingPaymentBinding
 import ng.gov.imostate.model.domain.TransactionData
@@ -142,39 +143,64 @@ class OutStandingPaymentFragment : Fragment() {
 
             markAsPaidBTN.setOnClickListener {
                 if (amountToPay != 0.00) {
-                    if (getBluetoothDevice() != null) {
-                        //do payment and navigate to success fragment with vehicle unique identifier
-                        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                            AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                            AppUtils.showView(false, binding.markAsPaidBTN)
-                            if (vehicleId != null) {
-                                //insert/update newly created transaction to app's database
-                                //to be synced later to cloud database/server
-                                viewModel.insertTransactionToDatabase(
-                                    TransactionData(vehicleId, dateTo)
-                                )
-                                printBluetooth()
-                                val action = OutStandingPaymentFragmentDirections
-                                    .actionOutStandingPaymentFragmentToSuccessFragment(
-                                        vehicleId!!,
-                                        vehiclePlatesNumber,
-                                        driverName,
-                                        dateTo,
-                                        vehicleCategory.toString()
+                    viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                        //verify that agent has enough balance left to collect payment from vehicle
+                        val lastSyncBalance = viewModel.getInitialUserPreferences().currentWalletBalance
+                        val transactions = Mapper.mapListOfTransactionEntityToListOfTransaction(
+                            viewModel.getAllTransactionsInDatabase()
+                        )
+                        val totalOfflineTransactionAmount = transactions.sumOf { it.amount ?: 0.00 }
+                        val actualBalance = lastSyncBalance - totalOfflineTransactionAmount
+                        Timber.d("lastSyncBalance: $lastSyncBalance " +
+                                "totalOfflineTransactionAmount: $totalOfflineTransactionAmount " +
+                                "actualBalance: $actualBalance"
+                        )
+                        //if balance is more than amount to be paid by vehicle, allow the payment,
+                        //otherwise deny it
+                        if (actualBalance > amountToPay) {
+                            if (getBluetoothDevice() != null) {
+                                //do payment and navigate to success fragment with vehicle unique identifier
+                                AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                                AppUtils.showView(false, binding.markAsPaidBTN)
+                                if (vehicleId != null) {
+                                    //insert/update newly created transaction to app's database
+                                    //to be synced later to cloud database/server
+                                    viewModel.insertTransactionToDatabase(
+                                        TransactionData(vehicleId, dateTo, amountToPay)
                                     )
-                                findNavController().navigate(action)
+                                    printBluetooth()
+                                    val action = OutStandingPaymentFragmentDirections
+                                        .actionOutStandingPaymentFragmentToSuccessFragment(
+                                            vehicleId!!,
+                                            vehiclePlatesNumber,
+                                            driverName,
+                                            dateTo,
+                                            vehicleCategory.toString()
+                                        )
+                                    findNavController().navigate(action)
+                                } else {
+                                    AppUtils.showToast(
+                                        requireActivity(),
+                                        "Vehicle ID is unknown",
+                                        MotionToastStyle.ERROR
+                                    )
+                                }
                             } else {
-                                AppUtils.showToast(requireActivity(), "Vehicle ID is unknown", MotionToastStyle.ERROR)
+                                val alertDialog = AlertDialog.Builder(requireContext())
+                                alertDialog.setTitle("No printer found")
+                                alertDialog.setMessage("Check that bluetooth is on")
+                                alertDialog.setNegativeButton("OK") { p0, _ -> p0?.dismiss() }
+                                val alert = alertDialog.create()
+                                alert.setCanceledOnTouchOutside(false)
+                                alert.show()
                             }
+                        } else {
+                            AppUtils.showToast(
+                                requireActivity(),
+                                "Insufficient wallet balance, fund your wallet",
+                                MotionToastStyle.ERROR
+                            )
                         }
-                    } else {
-                        val alertDialog = AlertDialog.Builder(requireContext())
-                        alertDialog.setTitle("No printer found")
-                        alertDialog.setMessage("Check that bluetooth is on")
-                        alertDialog.setNegativeButton("OK") { p0, _ -> p0?.dismiss() }
-                        val alert = alertDialog.create()
-                        alert.setCanceledOnTouchOutside(false)
-                        alert.show()
                     }
                 } else {
                     val alertDialog = AlertDialog.Builder(requireContext())

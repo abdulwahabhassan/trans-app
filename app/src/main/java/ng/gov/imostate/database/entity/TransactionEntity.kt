@@ -11,5 +11,6 @@ data class TransactionEntity (
     @ColumnInfo(name = "vehicle_id")
     val vehicleId: String,
     @ColumnInfo(name = "to")
-    val to: String?
+    val to: String?,
+    val amount: Double?
     )

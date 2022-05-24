@@ -43,9 +43,9 @@ class HomeFragment : Fragment() {
     private fun updateUI(isConnected: Boolean) {
         updateNetworkStatusUI(isConnected)
         if (isConnected) {
+            getCurrentUser()
             getDashboardMetrics()
             syncDatabase()
-            getCurrentUser()
         }
     }
 
@@ -56,15 +56,9 @@ class HomeFragment : Fragment() {
 
     private fun getCurrentUser() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            val viewModelResult = viewModel.getInitialUserPreferences().token?.let { token ->
+            viewModel.getInitialUserPreferences().token?.let { token ->
+                //keep app up to date with latest rates, routes and agent's current wallet balance
                 viewModel.getCurrentUser(token)
-            }!!
-            when (viewModelResult) {
-                is ViewModelResult.Success -> {}
-                is ViewModelResult.Error -> {
-                    Timber.d(viewModelResult.errorMessage)
-                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
-                }
             }
         }
 

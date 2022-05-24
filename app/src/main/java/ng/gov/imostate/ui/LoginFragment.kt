@@ -108,7 +108,8 @@ class LoginFragment : Fragment() {
                                 createdAt = user?.createdAt ?: "",
                                 updatedAt = user?.updatedAt ?: "",
                                 bvn = user?.bvn ?: "",
-                                lastSyncTime = viewModel.getInitialUserPreferences().lastSyncTime ?: ""
+                                lastSyncTime = viewModel.getInitialUserPreferences().lastSyncTime ?: "",
+                                currentWalletBalance = user?.profile?.currentBalance?.toDouble() ?: 0.00
                             )
 
                             viewModel.updateUserPreference(userPreferences)

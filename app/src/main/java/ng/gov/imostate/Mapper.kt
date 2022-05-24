@@ -30,14 +30,16 @@ object Mapper {
     fun mapTransactionToTransactionEntity(transactionData: TransactionData): TransactionEntity {
         return TransactionEntity(
             transactionData.vehicleId.toString(),
-            transactionData.to
+            transactionData.to,
+            transactionData.amount
         )
     }
 
     private fun mapTransactionEntityToTransaction(transactionEntity: TransactionEntity): TransactionData {
         return TransactionData(
             transactionEntity.vehicleId,
-            transactionEntity.to
+            transactionEntity.to,
+            transactionEntity.amount
         )
     }
 

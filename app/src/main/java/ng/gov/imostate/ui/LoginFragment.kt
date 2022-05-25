@@ -91,28 +91,35 @@ class LoginFragment : Fragment() {
                             val user = viewModelResult.data?.user
                             val userPreferences = UserPreferencesRepository.UserPreferences(
                                 token = "Bearer ${token ?: ""}",
-                                agentName = user?.name ?: "",
-                                agentId = user?.id ?: 0,
-                                photo = user?.profile?.photo ?: "",
-                                agentFirstName = user?.profile?.agentFirstName ?: "",
-                                agentMiddleName = user?.profile?.agentLastName ?: "",
-                                agentLastName = user?.profile?.agentLastName ?: "",
-                                type = user?.type ?: "",
-                                phone = user?.phone ?: "",
-                                address = user?.address ?: "",
-                                onboardingDate = user?.onboardingDate ?: "",
-                                email = user?.email ?: "",
-                                emailVerifiedAt = user?.emailVerifiedAt ?: "",
-                                status = user?.status ?: "",
-                                createdBy = user?.createdBy ?: 0,
-                                createdAt = user?.createdAt ?: "",
-                                updatedAt = user?.updatedAt ?: "",
-                                bvn = user?.bvn ?: "",
-                                lastSyncTime = viewModel.getInitialUserPreferences().lastSyncTime ?: "",
-                                currentWalletBalance = user?.profile?.currentBalance?.toDouble() ?: 0.00
+                                loggedIn = true,
+                                agentName = user?.name,
+                                agentId = user?.id,
+                                photo = user?.profile?.photo,
+                                agentFirstName = user?.profile?.agentFirstName,
+                                agentMiddleName = user?.profile?.agentLastName,
+                                agentLastName = user?.profile?.agentLastName,
+                                type = user?.type,
+                                phone = user?.phone,
+                                address = user?.address,
+                                onboardingDate = user?.onboardingDate,
+                                email = user?.email,
+                                emailVerifiedAt = user?.emailVerifiedAt,
+                                status = user?.status,
+                                createdBy = user?.createdBy,
+                                createdAt = user?.createdAt,
+                                updatedAt = user?.updatedAt,
+                                bvn = user?.bvn,
+                                lastSyncTime = viewModel.getInitialUserPreferences().lastSyncTime,
+                                currentWalletBalance = user?.profile?.currentBalance?.toDouble(),
+                                currentTotalVended = user?.profile?.totalAmountVended?.toDouble(),
+                                currentTotalCredited = user?.profile?.totalAmountCredited?.toDouble(),
+                                currentPayable = user?.profile?.currentPayable?.toDouble(),
+                                currentPaidOut = user?.profile?.paidOut?.toDouble()
                             )
 
                             viewModel.updateUserPreference(userPreferences)
+
+                            //keep user logged in until they log out
                             viewModel.updateAgentLogInStatus(true)
 
                             val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()

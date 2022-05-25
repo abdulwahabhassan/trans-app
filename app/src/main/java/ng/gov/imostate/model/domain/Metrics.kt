@@ -4,7 +4,10 @@ import com.squareup.moshi.Json
 
 data class MMetrics (
     val metrics: Metrics,
-    val points: List<Point>
+    val points: List<Point>,
+    @Json(name = "tax_free_days")
+    val taxFreeDays: List<Holiday>,
+    val routes: List<AgentRoute>
 )
 
 data class Metrics (

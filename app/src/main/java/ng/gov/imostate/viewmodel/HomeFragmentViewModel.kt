@@ -4,6 +4,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import ng.gov.imostate.Mapper
+import ng.gov.imostate.database.entity.AgentRouteEntity
 import ng.gov.imostate.database.entity.TransactionEntity
 import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.model.apiresult.*
@@ -13,7 +14,6 @@ import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.repository.VehicleRepository
-import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.NetworkConnectivityUtil
 import timber.log.Timber
 import javax.inject.Inject
@@ -52,6 +52,10 @@ class HomeFragmentViewModel @Inject constructor(
                 ViewModelResult.Error(response.message ?: "Unknown Error")
             }
         }
+    }
+
+    suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {
+        agentRepository.insertAllAgentRoutesToDatabase(routes)
     }
 
     suspend fun getAllVehicles(token: String): ViewModelResult<VehiclesResult?> {
@@ -97,9 +101,15 @@ class HomeFragmentViewModel @Inject constructor(
         val response = agentRepository.getCurrentUser(token)
         return  when (response.success) {
             true -> {
-                //put current wallet balance to data store
-                response.result?.user?.profile?.currentBalance?.let { currentBalance ->
-                    userPreferencesRepository.updateCurrentWalletBalance(2000.00)
+                //put agent current wallet information to data store
+                response.result?.user?.profile?.let {
+                    userPreferencesRepository.updateCurrentWalletInfo(
+                        response.result.user.profile.currentBalance?.toDouble() ?: 0.00,
+                        response.result.user.profile.totalAmountVended?.toDouble() ?: 0.00,
+                        response.result.user.profile.totalAmountCredited?.toDouble() ?: 0.00,
+                        response.result.user.profile.currentPayable?.toDouble() ?: 0.00,
+                        response.result.user.profile.paidOut?.toDouble() ?: 0.00
+                    )
                 }
 
                 //put rates to database

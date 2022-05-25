@@ -43,6 +43,7 @@ object Mapper {
         )
     }
 
+
     fun mapListOfTransactionToListOfTransactionEntity(transactions: List<TransactionData>): List<TransactionEntity> {
         return transactions.map { transactionData ->
             mapTransactionToTransactionEntity(transactionData)
@@ -166,5 +167,34 @@ object Mapper {
         return rates.map { rate ->
             mapRateEntityToRate(rate)
         }
+    }
+
+    fun mapAgentRouteToAgentRouteEntity(agentRoute: AgentRoute): AgentRouteEntity {
+        return AgentRouteEntity(
+            agentRoute.id,
+            agentRoute.userId,
+            agentRoute.routeId,
+            agentRoute.status,
+            agentRoute.createdAt,
+            agentRoute.updatedAt)
+    }
+
+    fun mapAgentRouteEntityToAgentRoute(agentRouteEntity: AgentRouteEntity): AgentRoute {
+        return AgentRoute(
+            agentRouteEntity.id,
+            agentRouteEntity.userId,
+            agentRouteEntity.routeId,
+            agentRouteEntity.status,
+            agentRouteEntity.createdAt,
+            agentRouteEntity.updatedAt
+        )
+    }
+
+    fun mapListOfAgentRouteToListOfAgentRouteEntity(routes: List<AgentRoute>): List<AgentRouteEntity> {
+        return routes.map { route -> mapAgentRouteToAgentRouteEntity(route) }
+    }
+
+    fun mapListOfAgentRouteEntityToListOfAgentRoute(routes: List<AgentRouteEntity>): List<AgentRoute> {
+        return routes.map { route -> mapAgentRouteEntityToAgentRoute(route) }
     }
 }

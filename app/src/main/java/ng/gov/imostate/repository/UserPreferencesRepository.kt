@@ -50,13 +50,23 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
             updatedAt = preferences[PreferencesKeys.UPDATED_AT],
             bvn = preferences[PreferencesKeys.BVN],
             lastSyncTime = preferences[PreferencesKeys.LAST_SYNC_TIME],
-            currentWalletBalance = preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] ?: 0.00
+            currentWalletBalance = preferences[PreferencesKeys.CURRENT_WALLET_BALANCE],
+            currentTotalVended = preferences[PreferencesKeys.CURRENT_TOTAL_VENDED],
+            currentTotalCredited = preferences[PreferencesKeys.CURRENT_TOTAL_CREDITED],
+            currentPayable = preferences[PreferencesKeys.CURRENT_PAYABLE],
+            currentPaidOut = preferences[PreferencesKeys.CURRENT_PAID_OUT]
         )
     }
 
-    suspend fun updateCurrentWalletBalance(balance: Double) {
+    suspend fun updateCurrentWalletInfo(
+        balance: Double, vended: Double, credited: Double, payable: Double, paidOut: Double
+    ) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] = balance
+            preferences[PreferencesKeys.CURRENT_TOTAL_VENDED] = vended
+            preferences[PreferencesKeys.CURRENT_TOTAL_CREDITED] = credited
+            preferences[PreferencesKeys.CURRENT_PAYABLE] = payable
+            preferences[PreferencesKeys.CURRENT_PAID_OUT] = paidOut
         }
     }
 
@@ -75,51 +85,59 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
     suspend fun updateUserPreferences(userPreferences: UserPreferences) {
         dataStore.edit { preferences ->
            with(userPreferences) {
-               preferences[PreferencesKeys.TOKEN] = token!!
-               preferences[PreferencesKeys.AGENT_NAME] = agentName!!
-               preferences[PreferencesKeys.AGENT_ID] = agentId!!
-               preferences[PreferencesKeys.PHOTO] = photo!!
-               preferences[PreferencesKeys.AGENT_FIRST_NAME] = agentFirstName!!
-               preferences[PreferencesKeys.AGENT_MIDDLE_NAME] = agentMiddleName!!
-               preferences[PreferencesKeys.AGENT_LAST_NAME] = agentLastName!!
-               preferences[PreferencesKeys.TYPE] = type!!
-               preferences[PreferencesKeys.PHONE] = phone!!
-               preferences[PreferencesKeys.ADDRESS] = address!!
-               preferences[PreferencesKeys.ONBOARDING_DATE] = onboardingDate!!
-               preferences[PreferencesKeys.EMAIL] = email!!
-               preferences[PreferencesKeys.EMAIL_VERIFIED_AT] = emailVerifiedAt!!
-               preferences[PreferencesKeys.STATUS] = status!!
-               preferences[PreferencesKeys.CREATED_BY] = createdBy!!
-               preferences[PreferencesKeys.CREATED_AT] = createdAt!!
-               preferences[PreferencesKeys.UPDATED_AT] = updatedAt!!
-               preferences[PreferencesKeys.BVN] = bvn!!
-               preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] = currentWalletBalance
+               preferences[PreferencesKeys.TOKEN] = token ?: ""
+               preferences[PreferencesKeys.AGENT_NAME] = agentName ?: ""
+               preferences[PreferencesKeys.AGENT_ID] = agentId ?: 0
+               preferences[PreferencesKeys.PHOTO] = photo ?: ""
+               preferences[PreferencesKeys.AGENT_FIRST_NAME] = agentFirstName ?: ""
+               preferences[PreferencesKeys.AGENT_MIDDLE_NAME] = agentMiddleName ?: ""
+               preferences[PreferencesKeys.AGENT_LAST_NAME] = agentLastName ?: ""
+               preferences[PreferencesKeys.TYPE] = type ?: ""
+               preferences[PreferencesKeys.PHONE] = phone ?: ""
+               preferences[PreferencesKeys.ADDRESS] = address ?: ""
+               preferences[PreferencesKeys.ONBOARDING_DATE] = onboardingDate ?: ""
+               preferences[PreferencesKeys.EMAIL] = email ?: ""
+               preferences[PreferencesKeys.EMAIL_VERIFIED_AT] = emailVerifiedAt ?: ""
+               preferences[PreferencesKeys.STATUS] = status ?: ""
+               preferences[PreferencesKeys.CREATED_BY] = createdBy ?: 0
+               preferences[PreferencesKeys.CREATED_AT] = createdAt ?: ""
+               preferences[PreferencesKeys.UPDATED_AT] = updatedAt ?: ""
+               preferences[PreferencesKeys.BVN] = bvn ?: ""
+               preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] = currentWalletBalance ?: 0.00
+               preferences[PreferencesKeys.CURRENT_TOTAL_VENDED] = currentTotalVended ?: 0.00
+               preferences[PreferencesKeys.CURRENT_TOTAL_CREDITED] = currentTotalCredited ?: 0.00
+               preferences[PreferencesKeys.CURRENT_PAYABLE] = currentPayable ?: 0.00
+               preferences[PreferencesKeys.CURRENT_PAID_OUT] = currentPaidOut ?: 0.00
            }
         }
     }
 
     data class UserPreferences(
-        val token: String? = null,
+        val token: String? = "",
         val loggedIn: Boolean? = false,
-        val agentName: String? = null,
-        val agentId: Long? = null,
-        val photo: String? = null,
-        val agentFirstName: String? = null,
-        val agentMiddleName: String? = null,
-        val agentLastName: String? = null,
-        val type: String? = null,
-        val phone: String? = null,
-        val address: String? = null,
-        val onboardingDate: String? = null,
-        val email:String? = null,
-        val emailVerifiedAt: String? = null,
-        val status: String? = null,
-        val createdBy: Long? = null,
-        val createdAt: String? = null,
-        val updatedAt: String? = null,
-        val bvn: String? = null,
-        val lastSyncTime: String? = null,
-        val currentWalletBalance: Double = 0.00
+        val agentName: String? = "",
+        val agentId: Long? = 0,
+        val photo: String? = "",
+        val agentFirstName: String? = "",
+        val agentMiddleName: String? = "",
+        val agentLastName: String? = "",
+        val type: String? = "",
+        val phone: String? = "",
+        val address: String? = "",
+        val onboardingDate: String? = "",
+        val email:String? = "",
+        val emailVerifiedAt: String? = "",
+        val status: String? = "",
+        val createdBy: Long? = 0,
+        val createdAt: String? = "",
+        val updatedAt: String? = "",
+        val bvn: String? = "",
+        val lastSyncTime: String? = "",
+        val currentWalletBalance: Double? = 0.00,
+        val currentTotalVended: Double? = 0.00,
+        val currentTotalCredited: Double? = 0.00,
+        val currentPayable: Double? = 0.00,
+        val currentPaidOut: Double? = 0.00
     )
 
     //define preferences keys
@@ -145,6 +163,10 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val BVN = stringPreferencesKey("bvn")
         val LAST_SYNC_TIME = stringPreferencesKey("last_syn_time")
         val CURRENT_WALLET_BALANCE = doublePreferencesKey("current_wallet_balance")
+        val CURRENT_TOTAL_VENDED = doublePreferencesKey("current_total_vended")
+        val CURRENT_TOTAL_CREDITED = doublePreferencesKey("current_total_credited")
+        val CURRENT_PAYABLE = doublePreferencesKey("current_payable")
+        val CURRENT_PAID_OUT = doublePreferencesKey("current_paid_out")
     }
 
 }

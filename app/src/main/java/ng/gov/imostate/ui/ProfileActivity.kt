@@ -98,13 +98,13 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launchWhenResumed {
-                val user = activityViewModel.getInitialUserPreferences()
+                val prefs = activityViewModel.getInitialUserPreferences()
                 //userPhotoIV.setImageResource()
-                onBoardingDateTV.text = if (user.onboardingDate.isNullOrEmpty()) "_" else AppUtils.formatDateToFullDate(user.onboardingDate)
-                emailTV.text = if (user.email.isNullOrEmpty()) "_" else "${user.email}"
-                addressTV.text = if (user.address.isNullOrEmpty()) "_" else "${user.address}"
-                nameTV.text = if (user.agentName.isNullOrEmpty()) "_" else "${user.agentName}"
-                phonenumberTV.text = if (user.phone.isNullOrEmpty()) "_" else "${user.phone}"
+                onBoardingDateTV.text = if (prefs.onboardingDate.isNullOrEmpty()) "_" else AppUtils.formatDateToFullDate(prefs.onboardingDate)
+                emailTV.text = if (prefs.email.isNullOrEmpty()) "_" else "${prefs.email}"
+                addressTV.text = if (prefs.address.isNullOrEmpty()) "_" else "${prefs.address}"
+                nameTV.text = if (prefs.agentName.isNullOrEmpty()) "_" else "${prefs.agentName}"
+                phonenumberTV.text = if (prefs.phone.isNullOrEmpty()) "_" else "${prefs.phone}"
                 activityViewModel.getInitialUserPreferences().token?.let { token ->
                     when (val viewModelResult = activityViewModel.getDashBoardMetrics(token)) {
                         is ViewModelResult.Success -> {
@@ -113,7 +113,10 @@ class ProfileActivity : AppCompatActivity() {
                             }
                         }
                         is ViewModelResult.Error -> {
-                            paidOutDateTV.text = "-"
+                            //display previously cached wallet info from last sync to dashboard
+                            paidOutDateTV.text = prefs.currentPaidOut?.let {
+                                "₦${AppUtils.formatCurrency(it)}"
+                            }
                         }
                     }
                 }

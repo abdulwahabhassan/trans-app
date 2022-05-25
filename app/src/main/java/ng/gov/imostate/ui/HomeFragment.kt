@@ -244,6 +244,7 @@ class HomeFragment : Fragment() {
             when(val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }!!) {
                 is ViewModelResult.Success -> {
                     val dashBoardMetrics = viewModelResult.data?.metrics
+                    //display current wallet info to dashboard
                     with(binding) {
                         walletBalanceTV.text = dashBoardMetrics?.metrics?.currentBalance
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
@@ -254,10 +255,27 @@ class HomeFragment : Fragment() {
                        currentPayableTV.text = dashBoardMetrics?.metrics?.currentPayable
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                     }
+                    //insert agent's assigned routes to database
+                    Timber.d("${dashBoardMetrics?.routes}")
+                    dashBoardMetrics?.routes?.let { routes ->
+                        Mapper.mapListOfAgentRouteToListOfAgentRouteEntity(routes)
+                    }?.let { viewModel.insertAllAgentRoutesToDatabase(it) }
                 }
                 is ViewModelResult.Error -> {
                     Timber.d(viewModelResult.errorMessage)
                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                    //display previously cached wallet info from last sync to dashboard
+                    val prefs = viewModel.getInitialUserPreferences()
+                    with(binding) {
+                        walletBalanceTV.text = prefs.currentWalletBalance
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        totalCreditedTV.text = prefs.currentTotalCredited
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        totalVendedTV.text = prefs.currentTotalVended
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                        currentPayableTV.text = prefs.currentPayable
+                            ?.let { "₦${AppUtils.formatCurrency(it)}" }
+                    }
                 }
             }
         }

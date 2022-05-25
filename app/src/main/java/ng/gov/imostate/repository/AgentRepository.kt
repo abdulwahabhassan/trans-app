@@ -4,8 +4,10 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
+import ng.gov.imostate.database.dao.AgentRouteLocalDao
 import ng.gov.imostate.database.dao.RateLocalDao
 import ng.gov.imostate.database.dao.RouteLocalDao
+import ng.gov.imostate.database.entity.AgentRouteEntity
 import ng.gov.imostate.database.entity.RateEntity
 import ng.gov.imostate.database.entity.RouteEntity
 import ng.gov.imostate.datasource.RemoteDatasource
@@ -23,6 +25,7 @@ class AgentRepository @Inject constructor(
     private val dataSource: RemoteDatasource,
     private val ratesLocalDao: RateLocalDao,
     private val routeLocalDao: RouteLocalDao,
+    private val agentRouteLocalDao: AgentRouteLocalDao,
     private val networkConnectivityUtil: NetworkConnectivityUtil
     ): BaseRepository() {
 
@@ -125,5 +128,12 @@ class AgentRepository @Inject constructor(
 
     suspend fun getAllCategoriesInDatabase(): List<String> {
         return ratesLocalDao.getAllCategories()
+    }
+    suspend fun getAllAgentRoutesInDatabase(userId: Long): List<AgentRouteEntity> {
+        return agentRouteLocalDao.getAllAgentRoutes(userId)
+    }
+
+    suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {
+        agentRouteLocalDao.insertAllAgentRoutes(routes)
     }
 }

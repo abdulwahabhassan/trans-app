@@ -23,7 +23,8 @@ import timber.log.Timber
         VehicleEntity::class,
         RouteEntity::class,
         TransactionEntity::class,
-        RateEntity::class
+        RateEntity::class,
+        AgentRouteEntity::class
                ],
     version = 1,
     exportSchema = false
@@ -35,6 +36,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun transactionLocalDao(): TransactionLocalDao
     abstract fun rateLocalDao(): RateLocalDao
     abstract fun routeLocalDao(): RouteLocalDao
+    abstract fun agentRouteLocalDao(): AgentRouteLocalDao
 
     companion object {
 
@@ -52,25 +54,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
                 appContext,
                 AppRoomDatabase::class.java,
                 Constants.DATABASE_NAME
-            )
-//                .addCallback(
-//                    object : RoomDatabase.Callback() {
-//                        override fun onCreate(db: SupportSQLiteDatabase) {
-//                            super.onCreate(db)
-//                            val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
-//                                .setInputData(
-//                                    workDataOf(
-////                                        DatabaseWorker.VEHICLE_KEY_FILENAME to Constants.VEHICLE_DATA_FILENAME,
-////                                        DatabaseWorker.DRIVER_KEY_FILENAME to Constants.DRIVER_DATA_FILENAME
-//                                        DatabaseWorker.VEHICLE_DRIVER_KEY_FILENAME to Constants.VEHICLE_DRIVER_DATA_FILENAME
-//                                    )
-//                                )
-//                                .build()
-//                            WorkManager.getInstance(appContext).enqueue(request)
-//                        }
-//                    }
-//                )
-                .addTypeConverter(Converters(
+            ).addTypeConverter(Converters(
                 Moshi.Builder()
                     .add(KotlinJsonAdapterFactory())
                     .build())

@@ -150,7 +150,7 @@ class OutStandingPaymentFragment : Fragment() {
                             viewModel.getAllTransactionsInDatabase()
                         )
                         val totalOfflineTransactionAmount = transactions.sumOf { it.amount ?: 0.00 }
-                        val actualBalance = lastSyncBalance - totalOfflineTransactionAmount
+                        val actualBalance = (lastSyncBalance ?: 0.00) - totalOfflineTransactionAmount
                         Timber.d("lastSyncBalance: $lastSyncBalance " +
                                 "totalOfflineTransactionAmount: $totalOfflineTransactionAmount " +
                                 "actualBalance: $actualBalance"

@@ -56,4 +56,11 @@ object DatabaseModule {
         return AppRoomDatabase.getInstance(appContext).routeLocalDao()
     }
 
+    @Provides
+    @Singleton
+    fun provideAgentRouteLocalDAO(
+        @ApplicationContext appContext: Context
+    ): AgentRouteLocalDao {
+        return AppRoomDatabase.getInstance(appContext).agentRouteLocalDao()
+    }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -63,13 +64,14 @@ class SuccessFragment : Fragment() {
 
         observeNfcMode()
 
+        observeNfcSyncMode()
+
         viewModel = ViewModelProvider(
             this,
             appViewModelFactory
         ).get(SuccessFragmentViewModel::class.java)
 
         with(binding) {
-
             syncTagBTN.setOnClickListener {
                 AppUtils.showProgressIndicator(true, binding.progressIndicator)
                 AppUtils.showView(false, binding.syncTagBTN)
@@ -103,12 +105,32 @@ class SuccessFragment : Fragment() {
                 sharedNfcViewModel.nfcMode.collect { nfcMode ->
                     if (nfcMode == NfcMode.WRITE.name) {
                         binding.nfcWriteModeLAV.playAnimation()
-                        binding.nfcWriteModeLAV.visibility = View.VISIBLE
+                        binding.nfcWriteModeLAV.visibility = VISIBLE
                         binding.syncTagBTN.text = "STOP SYNC"
+                        binding.successLAV.visibility = INVISIBLE
                     } else {
                         binding.nfcWriteModeLAV.pauseAnimation()
-                        binding.nfcWriteModeLAV.visibility = View.INVISIBLE
-                        binding.syncTagBTN.text = "SYNC TAG"
+                        binding.nfcWriteModeLAV.visibility = INVISIBLE
+                        binding.syncTagBTN.text =
+                            if (binding.successTV.text.toString() == "Successfully Synced Tag")
+                                "RE-SYNC TAG" else "SYNC TAG"
+                        binding.successLAV.visibility = VISIBLE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeNfcSyncMode() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                sharedNfcViewModel.nfcSyncMode.collect { nfcSyncMode ->
+                    if (nfcSyncMode == NfcSyncMode.SYNCED.name) {
+                        binding.successTV.text = "Successfully Synced Tag"
+                        binding.syncTagBTN.text = "RE-SYNC TAG"
+                        binding.successLAV.playAnimation()
+                        //reset sync mode to un-synced
+                        sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.UNSYNCED)
                     }
                 }
             }

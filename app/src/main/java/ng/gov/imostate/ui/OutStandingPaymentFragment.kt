@@ -165,9 +165,29 @@ class OutStandingPaymentFragment : Fragment() {
                                 if (vehicleId != null) {
                                     //insert/update newly created transaction to app's database
                                     //to be synced later to cloud database/server
-                                    viewModel.insertTransactionToDatabase(
-                                        TransactionData(vehicleId, dateTo, amountToPay)
-                                    )
+                                        val transaction =
+                                            viewModel.getTransactionInDatabase(vehicleId!!)
+                                                ?.let { transactionEntity ->
+                                                    Mapper.mapTransactionEntityToTransaction(
+                                                        transactionEntity
+                                                    )
+                                                }
+                                    Timber.d("$transaction")
+                                    //if transaction already exists in database, update it else
+                                    //insert a new transaction
+                                    if (transaction != null) {
+                                        //update the current 'amount' and 'date to' in database
+                                        val transactionData = transaction.copy(
+                                            to = dateTo,
+                                            amount = (transaction.amount ?: 0.00) + amountToPay
+                                        )
+                                        viewModel.insertTransactionToDatabase(transactionData)
+                                    } else {
+                                        viewModel.insertTransactionToDatabase(
+                                            TransactionData(vehicleId, dateTo, amountToPay)
+                                        )
+                                    }
+
                                     printBluetooth()
                                     val action = OutStandingPaymentFragmentDirections
                                         .actionOutStandingPaymentFragmentToSuccessFragment(

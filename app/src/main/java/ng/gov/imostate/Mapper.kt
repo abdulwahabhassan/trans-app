@@ -35,7 +35,7 @@ object Mapper {
         )
     }
 
-    private fun mapTransactionEntityToTransaction(transactionEntity: TransactionEntity): TransactionData {
+    fun mapTransactionEntityToTransaction(transactionEntity: TransactionEntity): TransactionData {
         return TransactionData(
             transactionEntity.vehicleId,
             transactionEntity.to,

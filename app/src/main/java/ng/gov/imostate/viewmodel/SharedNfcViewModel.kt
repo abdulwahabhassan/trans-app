@@ -21,10 +21,21 @@ class SharedNfcViewModel @Inject constructor() : ViewModel() {
     val nfcMode:
             StateFlow<String> = _nfcMode
 
+    private var _nfcSyncMode:
+            MutableStateFlow<String> =
+        MutableStateFlow(NfcSyncMode.UNSYNCED.name)
+
+    val nfcSyncMode:
+            StateFlow<String> = _nfcSyncMode
+
     private var data: Data? = null
 
     fun setNfcMode(mode: NfcMode) {
         _nfcMode.value = mode.name
+    }
+
+    fun setNfcSyncMode(syncMode: NfcSyncMode) {
+        _nfcSyncMode.value = syncMode.name
     }
 
     fun getNfcMode(): String {
@@ -44,4 +55,9 @@ class SharedNfcViewModel @Inject constructor() : ViewModel() {
 enum class NfcMode {
     READ,
     WRITE
+}
+
+enum class NfcSyncMode {
+    SYNCED,
+    UNSYNCED
 }

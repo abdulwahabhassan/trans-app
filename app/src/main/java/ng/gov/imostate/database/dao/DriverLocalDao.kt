@@ -1,9 +1,6 @@
 package ng.gov.imostate.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import ng.gov.imostate.database.entity.DriverEntity
 import ng.gov.imostate.database.entity.VehicleEntity
@@ -16,4 +13,5 @@ interface DriverLocalDao {
 
     @Query("SELECT * FROM driver")
     suspend fun getAllDrivers(): List<DriverEntity>
+
 }

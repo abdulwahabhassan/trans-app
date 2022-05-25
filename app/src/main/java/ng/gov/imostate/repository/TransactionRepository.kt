@@ -81,4 +81,8 @@ class TransactionRepository @Inject constructor(
         transactionLocalDao.insertTransaction(transaction)
     }
 
+    suspend fun getTransactionInDatabase(vehicleId: String): TransactionEntity? {
+        return transactionLocalDao.getTransaction(vehicleId)
+    }
+
 }

@@ -46,6 +46,10 @@ class OutstandingPaymentFragmentViewModel @Inject constructor(
         return transactionRepository.getAllTransactionsInDatabase()
     }
 
+    suspend fun getTransactionInDatabase(vehicleId: String): TransactionEntity? {
+        return transactionRepository.getTransactionInDatabase(vehicleId)
+    }
+
     suspend fun getRateInDatabase(category: String): RateEntity? {
         return agentRepository.getRateInDatabase(category)
     }

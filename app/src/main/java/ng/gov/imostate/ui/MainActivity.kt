@@ -25,10 +25,7 @@ import ng.gov.imostate.R
 import ng.gov.imostate.databinding.ActivityMainBinding
 import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
-import ng.gov.imostate.viewmodel.AppViewModelsFactory
-import ng.gov.imostate.viewmodel.MainActivityViewModel
-import ng.gov.imostate.viewmodel.NfcMode
-import ng.gov.imostate.viewmodel.SharedNfcViewModel
+import ng.gov.imostate.viewmodel.*
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import java.nio.charset.Charset
@@ -133,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 //writeTestDataToTag(tagFromIntent)
                                 writeDataToTag(tagFromIntent, sharedNfcViewModel.getData())
-                                //rest to read mode. This is the default mode and must be rest back
+                                //reset to read mode. This is the default mode and must be rest back
                                 //after every write operation
                                 sharedNfcViewModel.setNfcMode(NfcMode.READ)
                                 //reset data to null after write operation
@@ -224,11 +221,12 @@ class MainActivity : AppCompatActivity() {
         try {
             ndef.connect()
             ndef.writeNdefMessage(message)
-            AppUtils.showToast(this, "Successfully synced tag", MotionToastStyle.SUCCESS)
+            //AppUtils.showToast(this, "Successfully synced tag", MotionToastStyle.SUCCESS)
+            ndef.close()
+            sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.SYNCED)
         } catch (e: Exception) {
             AppUtils.showToast(this, e.message, MotionToastStyle.ERROR)
             Timber.d(e.message)
-        } finally {
             ndef.close()
         }
     }
@@ -355,7 +353,8 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Timber.d(e.message)
-            tagData = Data()
+            //I commented this out because of an exception is caught, it invalidates tag and vehicle pairing
+//            tagData = Data()
         } finally {
             ndef.close()
         }

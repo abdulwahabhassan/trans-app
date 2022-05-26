@@ -6,32 +6,33 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ng.gov.imostate.R
+import ng.gov.imostate.service.TransAppFirebaseMessagingService
 import ng.gov.imostate.ui.MainActivity
 
 class NotificationBuilder(
     private val context: Context,
     private val messageBody: String,
-    private val messageTitle: String
+    private val messageTitle: String,
+    private val time: String = AppUtils.getCurrentFullDateTime()
     ) {
 
-    //LocalBroadcastManager is an helper to register for and send broadcasts of Intents to
-    //local objects within your app
-    private var localBroadcastManager: LocalBroadcastManager? = null
-
-    init {
-        //create an instance of local broadcast manager
-        localBroadcastManager = LocalBroadcastManager.getInstance(context)
-    }
-
     // Create an explicit intent for an Activity in your app
-    private val intent = Intent(context, MainActivity::class.java).apply {
-        putExtra(MainActivity.DATA_PAYLOAD_MESSAGE, messageBody)
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    private val intent = Intent(
+        TransAppFirebaseMessagingService.FIREBASE_MESSAGING_EVENT,
+        Uri.EMPTY,
+        context,
+        MainActivity::class.java
+    ).apply {
+        putExtra(MainActivity.DATA_PAYLOAD_TITLE_KEY, messageTitle)
+        putExtra(MainActivity.DATA_PAYLOAD_BODY_KEY, messageBody)
+        putExtra(MainActivity.DATA_PAYLOAD_TIME_KEY, time)
+        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     }
 
     // Create pending intent
@@ -81,7 +82,6 @@ class NotificationBuilder(
         createNotificationChannel()
 
         //build a notify and post it to the user's status bar by calling
-        //NotificationManagerCompat.notify()
         with(NotificationManagerCompat.from(context)) {
             // notificationId is a unique int for each notification that you must define
             notify(NOTIFICATION_ID, createNotificationBuilder().build())

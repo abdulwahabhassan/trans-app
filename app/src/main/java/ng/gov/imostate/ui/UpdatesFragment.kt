@@ -10,8 +10,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.adapter.UpdatesAdapter
 import ng.gov.imostate.databinding.FragmentUpdatesBinding
 import ng.gov.imostate.model.domain.Update
+import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.Mock
 import timber.log.Timber
+import www.sanju.motiontoast.MotionToastStyle
 
 @AndroidEntryPoint
 class UpdatesFragment : Fragment() {
@@ -35,13 +37,32 @@ class UpdatesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding) {
 
-            initRV()
+        initUI()
 
-            initUI()
+        initRV()
 
+        Timber.d(
+            "${arguments?.getBoolean(MainActivity.DATA_PUSH_NOTIFICATION_KEY)} " +
+                    "${arguments?.getString(MainActivity.DATA_PAYLOAD_TITLE_KEY)} " +
+                    "${arguments?.getString(MainActivity.DATA_PAYLOAD_BODY_KEY)} " +
+                    "${arguments?.getString(MainActivity.DATA_PAYLOAD_TIME_KEY)}"
+        )
+
+        if(arguments?.getBoolean(MainActivity.DATA_PUSH_NOTIFICATION_KEY) == true) {
+            AppUtils.showToast(
+                requireActivity(),
+                "${arguments?.getBoolean(MainActivity.DATA_PUSH_NOTIFICATION_KEY)} " +
+                        "${arguments?.getString(MainActivity.DATA_PAYLOAD_TITLE_KEY)} " +
+                        "${arguments?.getString(MainActivity.DATA_PAYLOAD_BODY_KEY)} " +
+                        "${arguments?.getString(MainActivity.DATA_PAYLOAD_TIME_KEY)}",
+                MotionToastStyle.INFO
+            )
+            setUpdatesAdapter(Mock.getUpdates())
+        } else {
+            setUpdatesAdapter(Mock.getUpdates())
         }
+
     }
 
     private fun initRV() {
@@ -52,8 +73,6 @@ class UpdatesFragment : Fragment() {
     }
 
     private fun initUI() {
-        updatesAdapter.submitList(Mock.getUpdates())
-
         with(binding) {
             backArrowIV.setOnClickListener {
                 findNavController().popBackStack()
@@ -61,6 +80,9 @@ class UpdatesFragment : Fragment() {
         }
     }
 
+    private fun setUpdatesAdapter(updates: List<Update>) {
+        updatesAdapter.submitList(updates)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

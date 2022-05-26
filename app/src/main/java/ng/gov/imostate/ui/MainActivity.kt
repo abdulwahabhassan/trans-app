@@ -2,8 +2,6 @@ package ng.gov.imostate.ui
 
 //import timber.log.Timber
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.nfc.NdefMessage
@@ -16,7 +14,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -31,6 +28,7 @@ import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.ActivityMainBinding
 import ng.gov.imostate.model.domain.Data
+import ng.gov.imostate.service.TransAppFirebaseMessagingService
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.*
 import timber.log.Timber
@@ -77,12 +75,10 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        //init intent
-        val intent = Intent(this, javaClass).apply {
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
         //init pending intent
-        pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, javaClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        }, 0)
         //init nfc tech discovered filter
         val techDiscoveredIntentFilter = IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED)
         //init nfc ndef discovered filter
@@ -97,16 +93,8 @@ class MainActivity : AppCompatActivity() {
                 Ndef::class.java.name
             )
         )
-//FIREBASE CLOUD MESSAGING
-        //get the intent that started this activities,
-        //check if its bundle contains the specifiedKey
-        //use the value of the key
-        val bundle = intent.extras
-        if (bundle != null) {
-            Timber.d("${bundle.getString("title")} ${bundle.getString("body")}")
-            AppUtils.showToast(this, "${bundle.getString("title")} ${bundle.getString("body")}", MotionToastStyle.INFO)
-        }
 
+//FIREBASE CLOUD MESSAGING
         //On initial startup of your app, the FCM SDK generates a registration token for
         //the client app instance.
         //you'll need to access this token by extending FirebaseMessagingService and
@@ -126,10 +114,22 @@ class MainActivity : AppCompatActivity() {
 //FIREBASE CLOUD MESSAGING
 
         Timber.d("On Create intent: $intent")
-        Timber.d("On Create data: ${intent.data}")
-        Timber.d("On Create type: ${intent.type}")
+        Timber.d("On Create action: ${intent.action}")
         Timber.d("On Create extras: ${intent.extras}")
-        //resolveIntent(intent)
+
+//PROCESS DATA PAYLOAD OF FCM NOTIFICATION RECEIVED IN BACKGROUND AND OPENED(CLICKED) WHILE
+//APP IS STILL IN BACKGROUND
+        val title = intent.extras?.getString(DATA_PAYLOAD_TITLE_KEY)
+        val body = intent.extras?.getString(DATA_PAYLOAD_BODY_KEY)
+        Timber.d("payload title: $title payload body: $body")
+        if (title != null && body != null) {
+            goToUpdatesScreen(
+                title,
+                body,
+                AppUtils.getCurrentFullDateTime()
+            )
+        }
+
 
     }
 
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
             // Retrieve token as a String, Log and toast it
             val msg = getString(R.string.msg_token_fmt, token)
             Timber.d(msg)
-            AppUtils.showToast(this, msg, MotionToastStyle.INFO)
+            //AppUtils.showToast(this, msg, MotionToastStyle.INFO)
 
             //When the device token is retrieved, Firebase can now connect with the device
 
@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        Timber.d("New Intent: ${intent.action}")
+        Timber.d("New Intent: $intent")
         resolveIntent(intent)
     }
 
@@ -218,11 +218,54 @@ class MainActivity : AppCompatActivity() {
                             AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
                         }
                     }
+                    TransAppFirebaseMessagingService.FIREBASE_MESSAGING_EVENT -> {
+                        Timber.d("Title Payload: ${intent.extras?.getString(DATA_PAYLOAD_TITLE_KEY)}")
+                        Timber.d("Body Payload: ${intent.extras?.getString(DATA_PAYLOAD_BODY_KEY)}")
+                        Timber.d("Time Payload: ${intent.extras?.getString(DATA_PAYLOAD_TIME_KEY)}")
+
+                        goToUpdatesScreen(
+                            intent.extras?.getString(DATA_PAYLOAD_TITLE_KEY),
+                            intent.extras?.getString(DATA_PAYLOAD_BODY_KEY),
+                            intent.extras?.getString(DATA_PAYLOAD_TIME_KEY)
+                        )
+                    }
+                    else -> {
+                        //PROCESS DATA PAYLOAD OF FCM NOTIFICATION RECEIVED IN BACKGROUND AND OPENED
+                        //(CLICKED) WHILE APP IS IN FOREGROUND
+                        val title = intent.extras?.getString(DATA_PAYLOAD_TITLE_KEY)
+                        val body = intent.extras?.getString(DATA_PAYLOAD_BODY_KEY)
+                        Timber.d("payload title: $title payload body: $body")
+                        if (title != null && body != null) {
+                            goToUpdatesScreen(
+                                title,
+                                body,
+                                AppUtils.getCurrentFullDateTime()
+                            )
+                        }
+                    }
+
                 }
             } else {
                 AppUtils.showToast(this@MainActivity, "You need to login first", MotionToastStyle.INFO)
             }
         }
+    }
+
+    private fun goToUpdatesScreen(title: String?, body: String?, time: String?) {
+        val bundle = Bundle().also {
+            it.putString(DATA_PAYLOAD_TITLE_KEY, title)
+            it.putString(DATA_PAYLOAD_BODY_KEY, body)
+            it.putString(DATA_PAYLOAD_TIME_KEY, time)
+            it.putBoolean(DATA_PUSH_NOTIFICATION_KEY, true)
+        }
+        if (navController.currentDestination?.id == R.id.updatesFragment) {
+            navController.popBackStack()
+        }
+        navController.navigate(
+            R.id.updatesFragment,
+            bundle,
+            NavOptions.Builder().setLaunchSingleTop(true).build()
+        )
     }
 
     private fun writeDataToTag(tagFromIntent: Tag, data: Data?) {
@@ -517,6 +560,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val DATA_PUSH_NOTIFICATION_KEY = "PushNotification"
+        const val DATA_PAYLOAD_TIME_KEY = "time"
         const val VEHICLE_LICENSE_EXPIRY_DATE_KEY = "VLEDK"
         const val VEHICLE_PLATES_NUMBER_KEY = "VPN"
         const val DRIVER_NAME_KEY = "DN"
@@ -524,9 +569,9 @@ class MainActivity : AppCompatActivity() {
         const val LAST_PAYMENT_DATE_KEY = "LPD"
         const val VEHICLE_CATEGORY_KEY = "VC"
         const val DATE_ONBOARDED_KEY = "DOK"
-        const val DATA_PAYLOAD_TITLE = "DataPayloadMessageTitle"
         private const val TAG = "MainActivity"
-        const val DATA_PAYLOAD_MESSAGE = "body"
+        const val DATA_PAYLOAD_BODY_KEY = "body"
+        const val DATA_PAYLOAD_TITLE_KEY = "title"
     }
 
 }

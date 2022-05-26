@@ -1,29 +1,21 @@
 package ng.gov.imostate.service
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import ng.gov.imostate.ui.MainActivity
+import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.NotificationBuilder
 import timber.log.Timber
+import www.sanju.motiontoast.MotionToastStyle
 
 class TransAppFirebaseMessagingService: FirebaseMessagingService() {
-
-    //LocalBroadcastManager is an helper to register for and send broadcasts of Intents to
-    //local objects within your app
-    private var localBroadcastManager: LocalBroadcastManager? = null
 
     //Called if the FCM registration token is updated. This may occur if the security of
     //the previous token had been compromised. Note that this is called when the
     //FCM registration token is initially generated so this is where you would retrieve the token.
-
-    override fun onCreate() {
-        super.onCreate()
-
-        //create an instance of local broadcast manager
-        //localBroadcastManager = LocalBroadcastManager.getInstance(this)
-    }
-
     override fun onNewToken(token: String) {
         Timber.d("Refreshed token: $token") //we could save to database
 
@@ -54,14 +46,11 @@ class TransAppFirebaseMessagingService: FirebaseMessagingService() {
 
         //use local broadcaster to show dialog containing notification content instead of displaying
         //notification in the notification tray
-
         NotificationBuilder(this, body ?: "", title ?: "").postNotification()
+    }
 
-        //broadcast the remote message received within your app
-        val intent = Intent("FCMPushNotification")
-        intent.putExtra("body", body)
-        intent.putExtra("title", title)
-        localBroadcastManager?.sendBroadcast(intent)
+    companion object {
+        const val FIREBASE_MESSAGING_EVENT = "com.google.firebase.MESSAGING_EVENT"
     }
 
 }

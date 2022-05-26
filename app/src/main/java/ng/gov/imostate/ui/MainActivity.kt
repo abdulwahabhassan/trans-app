@@ -2,6 +2,8 @@ package ng.gov.imostate.ui
 
 //import timber.log.Timber
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.nfc.NdefMessage
@@ -14,9 +16,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailabilityLight
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var moshi: Moshi
     private lateinit var activityViewModel: MainActivityViewModel
     private val sharedNfcViewModel: SharedNfcViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,14 +97,84 @@ class MainActivity : AppCompatActivity() {
                 Ndef::class.java.name
             )
         )
+//FIREBASE CLOUD MESSAGING
+        //get the intent that started this activities,
+        //check if its bundle contains the specifiedKey
+        //use the value of the key
+        val bundle = intent.extras
+        if (bundle != null) {
+            Timber.d("${bundle.getString("title")} ${bundle.getString("body")}")
+            AppUtils.showToast(this, "${bundle.getString("title")} ${bundle.getString("body")}", MotionToastStyle.INFO)
+        }
 
-        Timber.d("On Create: ${intent}")
-        Timber.d("On Create: ${intent.data}")
-        Timber.d("On Create: ${intent.type}")
-        Timber.d("On Create: ${intent.action}")
+        //On initial startup of your app, the FCM SDK generates a registration token for
+        //the client app instance.
+        //you'll need to access this token by extending FirebaseMessagingService and
+        //overriding onNewToken.
+
+        //if app has Google play services installed, go ahead and retrieve token
+        if (checkGooglePlayServices()) {
+            Timber.d("Device has google play services")
+            //retrieve token
+            getFCMRegistrationToken()
+
+        } else {
+            //You won't be able to send notifications to this device
+            Timber.d("Device doesn't have google play services")
+
+        }
+//FIREBASE CLOUD MESSAGING
+
+        Timber.d("On Create intent: $intent")
+        Timber.d("On Create data: ${intent.data}")
+        Timber.d("On Create type: ${intent.type}")
+        Timber.d("On Create extras: ${intent.extras}")
         //resolveIntent(intent)
 
     }
+
+    private fun checkGooglePlayServices(): Boolean {
+        val status = GoogleApiAvailabilityLight.getInstance().isGooglePlayServicesAvailable(this)
+        return if (status != ConnectionResult.SUCCESS) {
+            Timber.d("Error")
+            //Ask user to update google play services and manage the error.
+            false
+        } else {
+            Timber.d("Google play services updated")
+            true
+        }
+
+    }
+
+    private fun getFCMRegistrationToken() {
+        //Because the token could be rotated after initial startup, you are strongly recommended
+        //to retrieve the latest updated registration token.
+
+        //To retrieve the registration token for the client app instance
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.d("Fetching FCM registration token failed: ${task.exception}")
+                return@OnCompleteListener
+            }
+
+            //Get new FCM registration token if task was successful
+            val token = task.result
+
+            //The device token is a unique identifier that contains two things:
+            //- Which device will receive the notification.
+            //- The app within that device that will receive the notification.
+
+            // Retrieve token as a String, Log and toast it
+            val msg = getString(R.string.msg_token_fmt, token)
+            Timber.d(msg)
+            AppUtils.showToast(this, msg, MotionToastStyle.INFO)
+
+            //When the device token is retrieved, Firebase can now connect with the device
+
+        })
+
+    }
+
 
     public override fun onPause() {
         super.onPause()
@@ -448,6 +524,9 @@ class MainActivity : AppCompatActivity() {
         const val LAST_PAYMENT_DATE_KEY = "LPD"
         const val VEHICLE_CATEGORY_KEY = "VC"
         const val DATE_ONBOARDED_KEY = "DOK"
+        const val DATA_PAYLOAD_TITLE = "DataPayloadMessageTitle"
+        private const val TAG = "MainActivity"
+        const val DATA_PAYLOAD_MESSAGE = "body"
     }
 
 }

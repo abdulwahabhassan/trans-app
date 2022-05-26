@@ -18,7 +18,7 @@
     <application
         android:name=".TransApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_vehicle_white"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -56,6 +56,18 @@
             android:name=".ui.GalleryActivity"
             android:exported="false"
             android:label="Gallery" />
+
+        <service
+            android:name=".service.TransAppFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+    <!--set default notification icon for fcm-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_vehicle_white" />
 
         <meta-data
             android:name="preloaded_fonts"

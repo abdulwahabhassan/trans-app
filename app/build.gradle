@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id "dagger.hilt.android.plugin"
     id "androidx.navigation.safeargs"
+    id "com.google.gms.google-services"
 }
 
 android {
@@ -88,4 +89,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     //work
     implementation 'androidx.work:work-runtime-ktx:2.5.0'
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.2')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

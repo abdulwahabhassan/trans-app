@@ -156,8 +156,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Timber.d("Home fragment started")
-
         viewModel = ViewModelProvider(
             this,
             appViewModelFactory

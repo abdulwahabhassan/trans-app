@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "954338786626",
+    "project_id": "trans-app-5006d",
+    "storage_bucket": "trans-app-5006d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954338786626:android:cc24049b1325a960f9dcdb",
+        "android_client_info": {
+          "package_name": "ng.gov.imostate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954338786626-ubemq4dn2p264bpjadakt1bqdf1mv97o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpxE7xSdg69HKPjHY_YeOzD67ybGJY9jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954338786626-ubemq4dn2p264bpjadakt1bqdf1mv97o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,9 @@
     <string name="pay_outstanding"> <u>Pay Outstanding</u></string>
     <string name="daily_rates"><b><u>Daily Rates</u></b></string>
     <string name="transactions_btn_text"><b>Transactions</b>\nView latest transactions</string>
+    <string name="channel_name">FCM Channel</string>
+    <string name="channel_description">push notification channel</string>
+    <string name="msg_token_fmt">Token: %s</string>
 
     <string-array name="vehicle_routes">
         <item>1</item>

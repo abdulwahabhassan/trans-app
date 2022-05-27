@@ -169,7 +169,7 @@ object Mapper {
         }
     }
 
-    fun mapAgentRouteToAgentRouteEntity(agentRoute: AgentRoute): AgentRouteEntity {
+    private fun mapAgentRouteToAgentRouteEntity(agentRoute: AgentRoute): AgentRouteEntity {
         return AgentRouteEntity(
             agentRoute.id,
             agentRoute.userId,
@@ -179,7 +179,7 @@ object Mapper {
             agentRoute.updatedAt)
     }
 
-    fun mapAgentRouteEntityToAgentRoute(agentRouteEntity: AgentRouteEntity): AgentRoute {
+    private fun mapAgentRouteEntityToAgentRoute(agentRouteEntity: AgentRouteEntity): AgentRoute {
         return AgentRoute(
             agentRouteEntity.id,
             agentRouteEntity.userId,
@@ -196,5 +196,27 @@ object Mapper {
 
     fun mapListOfAgentRouteEntityToListOfAgentRoute(routes: List<AgentRouteEntity>): List<AgentRoute> {
         return routes.map { route -> mapAgentRouteEntityToAgentRoute(route) }
+    }
+
+    private fun mapUpdateEntityToUpdate(update: UpdateEntity): Update {
+        return Update(update.id, update.title, update.body, update.time)
+    }
+
+    private fun mapUpdateToUpdateEntity(update: Update): UpdateEntity {
+        return UpdateEntity(update.id, update.title, update.body, update.time)
+    }
+
+    fun mapListOfUpdateEntityToListOfUpdate(updates: List<UpdateEntity>): List<Update> {
+        return updates.map { updateEntity ->
+            mapUpdateEntityToUpdate(updateEntity)
+        }
+
+    }
+
+    fun mapListOfUpdateToListOfUpdateEntity(updates: List<Update>): List<UpdateEntity> {
+        return updates.map { update ->
+            mapUpdateToUpdateEntity(update)
+        }
+
     }
 }

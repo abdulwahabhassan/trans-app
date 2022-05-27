@@ -24,7 +24,8 @@ import timber.log.Timber
         RouteEntity::class,
         TransactionEntity::class,
         RateEntity::class,
-        AgentRouteEntity::class
+        AgentRouteEntity::class,
+        UpdateEntity::class
                ],
     version = 1,
     exportSchema = false
@@ -37,6 +38,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun rateLocalDao(): RateLocalDao
     abstract fun routeLocalDao(): RouteLocalDao
     abstract fun agentRouteLocalDao(): AgentRouteLocalDao
+    abstract fun updateLocalDao(): UpdateLocalDao
 
     companion object {
 

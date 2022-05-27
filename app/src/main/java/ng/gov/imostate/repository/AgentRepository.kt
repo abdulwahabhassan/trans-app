@@ -7,9 +7,8 @@ import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.AgentRouteLocalDao
 import ng.gov.imostate.database.dao.RateLocalDao
 import ng.gov.imostate.database.dao.RouteLocalDao
-import ng.gov.imostate.database.entity.AgentRouteEntity
-import ng.gov.imostate.database.entity.RateEntity
-import ng.gov.imostate.database.entity.RouteEntity
+import ng.gov.imostate.database.dao.UpdateLocalDao
+import ng.gov.imostate.database.entity.*
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.FundWalletAccountDetailsRequest
 import ng.gov.imostate.model.request.LoginRequest
@@ -26,6 +25,7 @@ class AgentRepository @Inject constructor(
     private val ratesLocalDao: RateLocalDao,
     private val routeLocalDao: RouteLocalDao,
     private val agentRouteLocalDao: AgentRouteLocalDao,
+    private val updateLocalDao: UpdateLocalDao,
     private val networkConnectivityUtil: NetworkConnectivityUtil
     ): BaseRepository() {
 
@@ -104,6 +104,18 @@ class AgentRepository @Inject constructor(
                 ApiResponse(message = apiResult.message)
             }
         }
+    }
+
+    suspend fun getAllUpdatesInDatabase(): List<UpdateEntity> {
+        return updateLocalDao.getAllUpdates()
+    }
+
+    suspend fun insertUpdateToDatabase(update: UpdateEntity) {
+        updateLocalDao.insertUpdate(update)
+    }
+
+    suspend fun getUpdateInDatabase(updateId: Long): UpdateEntity? {
+        return updateLocalDao.getUpdate(updateId)
     }
 
     suspend fun getAllRatesInDatabase(): List<RateEntity> {

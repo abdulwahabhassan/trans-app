@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var connectionState: Boolean = false
-
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model

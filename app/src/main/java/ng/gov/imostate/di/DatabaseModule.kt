@@ -63,4 +63,12 @@ object DatabaseModule {
     ): AgentRouteLocalDao {
         return AppRoomDatabase.getInstance(appContext).agentRouteLocalDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideUpdateLocalDAO(
+        @ApplicationContext appContext: Context
+    ): UpdateLocalDao {
+        return AppRoomDatabase.getInstance(appContext).updateLocalDao()
+    }
 }

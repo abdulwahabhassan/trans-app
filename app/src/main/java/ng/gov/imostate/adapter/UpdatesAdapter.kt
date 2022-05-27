@@ -59,7 +59,8 @@ class UpdatesAdapter(
         fun bind(update: Update) {
             Timber.d("$update")
             with(binding) {
-                updateTitleTV.text = update.title
+                updateTitleTV.text = update.title ?: "-"
+                dateTV.text = update.time ?: "-"
             }
         }
 

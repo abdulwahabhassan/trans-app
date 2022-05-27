@@ -104,7 +104,8 @@ class HomeFragmentViewModel @Inject constructor(
                 //put agent current wallet information to data store
                 response.result?.user?.profile?.let {
                     userPreferencesRepository.updateCurrentWalletInfo(
-                        response.result.user.profile.currentBalance?.toDouble() ?: 0.00,
+//                        response.result.user.profile.currentBalance?.toDouble() ?: 0.00,
+                        6000.00,
                         response.result.user.profile.totalAmountVended?.toDouble() ?: 0.00,
                         response.result.user.profile.totalAmountCredited?.toDouble() ?: 0.00,
                         response.result.user.profile.currentPayable?.toDouble() ?: 0.00,

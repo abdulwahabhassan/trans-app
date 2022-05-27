@@ -113,9 +113,9 @@ class TransactionsFragment : Fragment() {
                                     collection.amount?.contains(newText.toString(), true) == true ||
                                     collection.vehicleID.toString().contains(newText.toString(), true) ||
                                     collection.flaggedMessage?.contains(newText.toString(), true) == true ||
-                                    collection.date?.contains(newText.toString(), true) == true
-                                    collection.vehicleID.toString().contains(newText.toString(), true)
-                                    collection.internalReference.toString().contains(newText.toString(), true)
+                                    collection.date?.contains(newText.toString(), true) == true ||
+                                    collection.vehicleID.toString().contains(newText.toString(), true) ||
+                                    collection.internalReference.toString().contains(newText.toString(), true) ||
                                     collection.pointsAggregated.toString().contains(newText.toString(), true)
 
                                 }

@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.database.entity.AgentRouteEntity
 import ng.gov.imostate.database.entity.TransactionEntity
-import ng.gov.imostate.database.entity.VehicleEntity
+import ng.gov.imostate.database.entity.VehicleCurrentEntity
+import ng.gov.imostate.database.entity.VehiclePreviousEntity
 import ng.gov.imostate.model.apiresult.*
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
@@ -58,8 +59,20 @@ class HomeFragmentViewModel @Inject constructor(
         agentRepository.insertAllAgentRoutesToDatabase(routes)
     }
 
-    suspend fun getAllVehicles(token: String): ViewModelResult<VehiclesResult?> {
-        val response = vehicleRepository.getAllVehicles(token)
+    suspend fun getAllVehiclesFromCurrentEnumeration(token: String): ViewModelResult<VehiclesResult?> {
+        val response = vehicleRepository.getAllVehiclesFromCurrentEnumeration(token)
+        return when (response.success) {
+            true -> {
+                ViewModelResult.Success(response.result)
+            }
+            else -> {
+                ViewModelResult.Error(response.message ?: "Unknown Error")
+            }
+        }
+    }
+
+    suspend fun getAllVehiclesFromPreviousEnumeration(token: String, lastVehicleId: Long): ViewModelResult<VehiclesResult?> {
+        val response = vehicleRepository.getAllVehiclesFromPreviousEnumeration(token, lastVehicleId)
         return when (response.success) {
             true -> {
                 ViewModelResult.Success(response.result)
@@ -133,8 +146,8 @@ class HomeFragmentViewModel @Inject constructor(
         }
     }
 
-    suspend fun insertVehiclesToDatabase(vehicles: List<VehicleEntity>) {
-        vehicleRepository.insertVehiclesToDatabase(vehicles)
+    suspend fun insertVehiclesFromPreviousEnumerationToDatabase(vehicles: List<VehiclePreviousEntity>) {
+        vehicleRepository.insertVehiclesFromPreviousEnumerationToDatabase(vehicles)
     }
 
     suspend fun getAllTransactionsInDatabase(): List<TransactionEntity> {
@@ -149,6 +162,14 @@ class HomeFragmentViewModel @Inject constructor(
         super.onCleared()
         NetworkConnectivityUtil.instance?.networkConnectivityStatus
             ?.removeObserver(activeNetworkStateObserver)
+    }
+
+    suspend fun getLastVehicleIdFromPreviousEnumerationInDatabase(): Long? {
+        return vehicleRepository.getLastVehicleIdFromPreviousEnumerationInDatabase()
+    }
+
+    fun insertVehiclesFromCurrentEnumerationToDatabase(vehicles: List<VehicleCurrentEntity>) {
+        vehicleRepository.insertVehiclesFromCurrentEnumerationToDatabase(vehicles)
     }
 
 }

@@ -1,11 +1,7 @@
 package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.model.apiresult.VehicleResult
-import ng.gov.imostate.model.domain.Vehicle
-import ng.gov.imostate.model.request.GetVehicleRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.repository.VehicleRepository

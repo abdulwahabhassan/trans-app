@@ -325,7 +325,9 @@ class AddVehicleFragment : Fragment() {
                 binding.vehicleDetailsTIP.error = "Please input vehicle plate number"
             } else {
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                    val vehicle = viewModel.findVehicleDriverRecordInDatabase(binding.platesNumberET.text.toString())
+                    val vehicle = viewModel.findVehicleDriverRecordFromPreviousEnumerationInDatabase(
+                        binding.platesNumberET.text.toString()
+                    )
                     if (vehicle != null) {
                         Timber.d("$vehicle")
                         with(this@AddVehicleFragment.mainBinding) {

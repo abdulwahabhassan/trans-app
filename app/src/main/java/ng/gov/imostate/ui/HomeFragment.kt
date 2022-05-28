@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun syncDatabase() {
-        getPreOnboardedVehicleRecords()
+        getVehicleRecords()
         syncTransactionRecords()
     }
 
@@ -63,16 +63,51 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun getPreOnboardedVehicleRecords() {
+    private fun getVehicleRecords() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            //get pre-registered vehicles from pre-existing data records
-            when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getAllVehicles(it) }!!) {
+            //get current vehicles from current enumeration data records
+            when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let {
+                viewModel.getAllVehiclesFromCurrentEnumeration(it)
+            }!!) {
                 is ViewModelResult.Success -> {
                     val vehicles = viewModelResult.data?.vehicles
                     if (!vehicles.isNullOrEmpty()) {
-                        Timber.d("vehicles from pre-existing database: ${viewModelResult.data}")
-                        //insert pre-registered vehicles from pre-existing data records to app's database
-                        viewModel.insertVehiclesToDatabase(Mapper.mapListOfVehicleToListOfVehicleEntity(vehicles))
+                        Timber.d("vehicles from current enumeration database: ${viewModelResult.data}")
+                        //insert vehicles from current enumeration data records to app's database
+                        viewModel.insertVehiclesFromCurrentEnumerationToDatabase(
+                            Mapper.mapListOfVehicleToListOfVehicleCurrentEntity(vehicles)
+                        )
+
+                        //using the records from current enumeration to populate the previous
+                        //enumeration vehicle table database
+                        //TO BE REMOVED LATER!!
+                        viewModel.insertVehiclesFromPreviousEnumerationToDatabase(
+                            Mapper.mapListOfVehicleToListOfVehiclePreviousEntity(vehicles)
+                        )
+                    }
+                }
+                is ViewModelResult.Error -> {
+                    Timber.d(viewModelResult.errorMessage)
+                    AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val lastVehicleId = viewModel.getLastVehicleIdFromPreviousEnumerationInDatabase()
+            Timber.d("last vehicle id: $lastVehicleId")
+            //get vehicles from previous enumeration data records
+            when (val viewModelResult = viewModel.getInitialUserPreferences().token?.let {
+                viewModel.getAllVehiclesFromPreviousEnumeration(it, lastVehicleId ?: 0)
+            }!!) {
+                is ViewModelResult.Success -> {
+                    val vehicles = viewModelResult.data?.vehicles
+                    if (!vehicles.isNullOrEmpty()) {
+                        Timber.d("vehicles from previous enumeration database: ${viewModelResult.data}")
+                        //insert vehicles from previous enumeration data records to app's database
+                        viewModel.insertVehiclesFromPreviousEnumerationToDatabase(
+                            Mapper.mapListOfVehicleToListOfVehiclePreviousEntity(vehicles)
+                        )
                     }
                 }
                 is ViewModelResult.Error -> {

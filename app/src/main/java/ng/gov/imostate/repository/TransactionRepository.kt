@@ -6,10 +6,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.TransactionLocalDao
 import ng.gov.imostate.database.entity.TransactionEntity
-import ng.gov.imostate.database.entity.VehicleEntity
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
-import ng.gov.imostate.model.request.LoginRequest
 import ng.gov.imostate.model.response.ApiResponse
 import ng.gov.imostate.model.result.ApiResult
 import ng.gov.imostate.util.NetworkConnectivityUtil

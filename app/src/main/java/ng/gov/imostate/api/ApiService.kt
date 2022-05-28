@@ -32,8 +32,14 @@ interface ApiService {
     ): ApiResponse<VehicleResult>
 
     @GET("agent/vehicle/all")
-    suspend fun getAllVehicles(
+    suspend fun getAllVehiclesFromCurrentEnumeration(
         @Header("Authorization") token: String
+    ): ApiResponse<VehiclesResult>
+
+    @GET("agent/vehicle/offline")
+    suspend fun getAllVehiclesFromPreviousEnumeration(
+        @Header("Authorization") token: String,
+        @Query("last_vehicle_id") lastVehicleId: Long
     ): ApiResponse<VehiclesResult>
 
     @GET("agent/vehicle/metrics")

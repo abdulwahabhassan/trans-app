@@ -6,10 +6,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.DriverLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
-import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.VehicleEntity
+import ng.gov.imostate.database.entity.VehicleCurrentEntity
+import ng.gov.imostate.database.entity.VehiclePreviousEntity
 import ng.gov.imostate.datasource.RemoteDatasource
-import ng.gov.imostate.model.request.GetVehicleRequest
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.response.ApiResponse
 import ng.gov.imostate.model.result.ApiResult
@@ -26,9 +25,24 @@ class VehicleRepository @Inject constructor(
     private val networkConnectivityUtil: NetworkConnectivityUtil
 ): BaseRepository() {
 
-    suspend fun getAllVehicles(token: String,) = withContext(dispatcher) {
+    suspend fun getAllVehiclesFromCurrentEnumeration(token: String,) = withContext(dispatcher) {
         when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
-            dataSource.getAllVehicles(token)
+            dataSource.getAllVehiclesFromCurrentEnumeration(token)
+        }) {
+            is ApiResult.Success -> {
+                Timber.d("$apiResult")
+                apiResult.response
+            }
+            is ApiResult.Error -> {
+                Timber.d("$apiResult")
+                ApiResponse(message = apiResult.message)
+            }
+        }
+    }
+
+    suspend fun getAllVehiclesFromPreviousEnumeration(token: String, lastVehicleId: Long) = withContext(dispatcher) {
+        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+            dataSource.getAllVehiclesFromPreviousEnumeration(token, lastVehicleId)
         }) {
             is ApiResult.Success -> {
                 Timber.d("$apiResult")
@@ -71,24 +85,19 @@ class VehicleRepository @Inject constructor(
         }
     }
 
-    suspend fun insertVehiclesToDatabase(vehicles: List<VehicleEntity>) {
-        vehicleLocalDao.insertAllVehicles(vehicles)
+    suspend fun insertVehiclesFromPreviousEnumerationToDatabase(vehiclePrevious: List<VehiclePreviousEntity>) {
+        vehicleLocalDao.insertAllVehiclesFromPreviousEnumeration(vehiclePrevious)
     }
 
-    suspend fun findVehicleDriverRecordInDatabase(identifier: String): VehicleEntity? {
-        return vehicleLocalDao.getVehicleDriverRecord(identifier)
+    suspend fun findVehicleDriverRecordFromPreviousEnumerationInDatabase(identifier: String): VehiclePreviousEntity? {
+        return vehicleLocalDao.getVehicleDriverRecordFromPreviousEnumeration(identifier)
     }
 
-    suspend fun findVehicleInDatabase(identifier: String): VehicleEntity? {
-        return vehicleLocalDao.
-        getVehicle(identifier)
+    suspend fun getLastVehicleIdFromPreviousEnumerationInDatabase(): Long? {
+        return vehicleLocalDao.getLastVehicleIdFromPreviousEnumerationInDatabase()
     }
 
-    suspend fun getAllVehiclesInDatabase(): List<VehicleEntity> {
-        return vehicleLocalDao.getAllVehicles()
-    }
-
-    suspend fun getAllDriversInDatabase(): List<DriverEntity> {
-        return driverLocalDao.getAllDrivers()
+    fun insertVehiclesFromCurrentEnumerationToDatabase(vehicleCurrent: List<VehicleCurrentEntity>) {
+        vehicleLocalDao.insertAllVehiclesFromCurrentEnumeration(vehicleCurrent)
     }
 }

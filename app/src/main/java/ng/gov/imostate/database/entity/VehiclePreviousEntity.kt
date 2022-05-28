@@ -8,9 +8,9 @@ import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import ng.gov.imostate.database.converters.Converters
 
-@Entity(tableName = "vehicle")
+@Entity(tableName = "vehicle_previous")
 @TypeConverters(Converters::class)
-data class VehicleEntity(
+data class VehiclePreviousEntity(
     @ColumnInfo(name = "id")
     @PrimaryKey val id: Long?,
     @ColumnInfo(name = "vehicle_plates")

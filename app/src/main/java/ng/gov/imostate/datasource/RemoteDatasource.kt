@@ -18,8 +18,12 @@ class RemoteDatasource  @Inject constructor(
         return apiService.onboardVehicle(token, onboardVehicleRequest)
     }
 
-    suspend fun getAllVehicles(token: String,): ApiResponse<VehiclesResult> {
-        return apiService.getAllVehicles(token)
+    suspend fun getAllVehiclesFromCurrentEnumeration(token: String,): ApiResponse<VehiclesResult> {
+        return apiService.getAllVehiclesFromCurrentEnumeration(token)
+    }
+
+    suspend fun getAllVehiclesFromPreviousEnumeration(token: String, lastVehicleId: Long): ApiResponse<VehiclesResult> {
+        return apiService.getAllVehiclesFromPreviousEnumeration(token, lastVehicleId)
     }
 
     suspend fun getVehicle(token: String, vehicleId: String): ApiResponse<VehicleResult> {

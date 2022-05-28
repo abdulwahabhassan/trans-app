@@ -1,10 +1,7 @@
 package ng.gov.imostate.database.dao
 
 import androidx.room.*
-import ng.gov.imostate.database.entity.DriverEntity
 import ng.gov.imostate.database.entity.TransactionEntity
-import ng.gov.imostate.database.entity.VehicleEntity
-import retrofit2.http.DELETE
 
 @Dao
 interface TransactionLocalDao {

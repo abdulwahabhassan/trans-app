@@ -8,10 +8,8 @@ import kotlinx.coroutines.withContext
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
-import com.squareup.moshi.Moshi
 import ng.gov.imostate.database.AppRoomDatabase
-import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.VehicleEntity
+import ng.gov.imostate.database.entity.VehiclePreviousEntity
 import timber.log.Timber
 
 class DatabaseWorker (
@@ -63,11 +61,11 @@ class DatabaseWorker (
             if (vehicleDriverFileName != null) {
                 applicationContext.assets.open(vehicleDriverFileName).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
-                        val vehicleListType = object : TypeToken<List<VehicleEntity>>() {}.type
-                        val vehicles: List<VehicleEntity> = Gson().fromJson(jsonReader, vehicleListType)
-                        Timber.d("vehicles and drivers $vehicles")
+                        val vehicleListType = object : TypeToken<List<VehiclePreviousEntity>>() {}.type
+                        val vehiclePrevious: List<VehiclePreviousEntity> = Gson().fromJson(jsonReader, vehicleListType)
+                        Timber.d("vehicles and drivers $vehiclePrevious")
                         val database = AppRoomDatabase.getInstance(applicationContext)
-                        database.vehicleLocalDao().insertAllVehicles(vehicles)
+                        database.vehicleLocalDao().insertAllVehiclesFromPreviousEnumeration(vehiclePrevious)
                         Timber.d("Success database - all vehicles and drivers set in database")
                         Result.success()
                     }

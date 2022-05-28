@@ -4,23 +4,25 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
-import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.VehicleEntity
+import ng.gov.imostate.database.entity.VehicleCurrentEntity
+import ng.gov.imostate.database.entity.VehiclePreviousEntity
 
 @Dao
 interface VehicleLocalDao {
 
-    @Query("SELECT * FROM vehicle WHERE vehicle_plates Like (:identifier)")
-    suspend fun getVehicle(identifier: String): VehicleEntity?
+    @Query("SELECT * FROM vehicle_previous WHERE vehicle_plates = :identifier")
+    suspend fun getVehicleDriverRecordFromPreviousEnumeration(identifier: String): VehiclePreviousEntity?
 
-    @Query("SELECT * FROM vehicle WHERE vehicle_plates = :identifier")
-    suspend fun getVehicleDriverRecord(identifier: String): VehicleEntity?
-
-    @Query("SELECT * FROM vehicle")
-    suspend fun getAllVehicles(): List<VehicleEntity>
+    @Query("SELECT * FROM vehicle_previous")
+    suspend fun getAllVehiclesFromPreviousEnumeration(): List<VehiclePreviousEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllVehicles(vehicles: List<VehicleEntity>)
+    suspend fun insertAllVehiclesFromPreviousEnumeration(vehiclePrevious: List<VehiclePreviousEntity>)
+
+    @Query("SELECT id FROM vehicle_previous ORDER BY id DESC LIMIT 1")
+    suspend fun getLastVehicleIdFromPreviousEnumerationInDatabase(): Long?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertAllVehiclesFromCurrentEnumeration(vehicleCurrent: List<VehicleCurrentEntity>)
 
 }

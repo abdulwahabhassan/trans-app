@@ -5,8 +5,8 @@ import ng.gov.imostate.model.domain.*
 
 object Mapper {
 
-    private fun mapVehicleToVehicleEntity(vehicle: Vehicle): VehicleEntity {
-        return VehicleEntity(
+    private fun mapVehicleToVehiclePreviousEntity(vehicle: Vehicle): VehiclePreviousEntity {
+        return VehiclePreviousEntity(
             vehicle.id,
             vehicle.vehiclePlates,
             vehicle.brand,
@@ -26,6 +26,41 @@ object Mapper {
             vehicle.routes?.let { mapListOfRouteToListOfRouteEntity(it) }
         )
     }
+
+    fun mapListOfVehicleToListOfVehicleCurrentEntity(vehicles: List<Vehicle>): List<VehicleCurrentEntity> {
+        return vehicles.map { vehicle ->
+            mapVehicleToVehicleCurrentEntity(vehicle)
+        }
+    }
+
+    private fun mapVehicleToVehicleCurrentEntity(vehicle: Vehicle): VehicleCurrentEntity {
+        return VehicleCurrentEntity(
+            vehicle.id,
+            vehicle.vehiclePlates,
+            vehicle.brand,
+            vehicle.type,
+            vehicle.fleetNumber,
+            vehicle.stateOfRegistration,
+            vehicle.chasisNumber,
+            vehicle.engineNumber,
+            vehicle.vehicleModel,
+            vehicle.passengerCapacity,
+            vehicle.roadWorthinessExpDate,
+            vehicle.vehicleLicenceExpDate,
+            vehicle.vehicleInsuranceExpDate,
+            vehicle.createdAt,
+            vehicle.updatedAt,
+            vehicle.driver?.let { mapDriverToDriverEntity(it) },
+            vehicle.routes?.let { mapListOfRouteToListOfRouteEntity(it) }
+        )
+    }
+
+    fun mapListOfVehicleToListOfVehiclePreviousEntity(vehicles: List<Vehicle>): List<VehiclePreviousEntity> {
+        return vehicles.map { vehicle ->
+            mapVehicleToVehiclePreviousEntity(vehicle)
+        }
+    }
+
 
     fun mapTransactionToTransactionEntity(transactionData: TransactionData): TransactionEntity {
         return TransactionEntity(
@@ -122,12 +157,6 @@ object Mapper {
     fun mapListOfRouteToListOfRouteEntity(routes: List<Route>): List<RouteEntity> {
         return routes.map { route ->
             mapRouteToRouteEntity(route)
-        }
-    }
-
-    fun mapListOfVehicleToListOfVehicleEntity(vehicles: List<Vehicle>): List<VehicleEntity> {
-        return vehicles.map { vehicle ->
-            mapVehicleToVehicleEntity(vehicle)
         }
     }
 

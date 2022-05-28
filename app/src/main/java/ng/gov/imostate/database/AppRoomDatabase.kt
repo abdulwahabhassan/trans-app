@@ -4,23 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import ng.gov.imostate.database.converters.Converters
 import ng.gov.imostate.database.dao.*
 import ng.gov.imostate.database.entity.*
-import ng.gov.imostate.worker.DatabaseWorker
 import ng.gov.imostate.util.Constants
 import timber.log.Timber
 
 @Database(
     entities = [
         DriverEntity::class,
-        VehicleEntity::class,
+        VehiclePreviousEntity::class,
+        VehicleCurrentEntity::class,
         RouteEntity::class,
         TransactionEntity::class,
         RateEntity::class,

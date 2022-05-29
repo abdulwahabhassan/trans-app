@@ -2,7 +2,7 @@ package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.Mapper
-import ng.gov.imostate.database.entity.RouteEntity
+import ng.gov.imostate.database.entity.VehicleRouteEntity
 import ng.gov.imostate.database.entity.VehiclePreviousEntity
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.apiresult.OnboardVehicleResult
@@ -37,7 +37,7 @@ class AddVehicleFragmentViewModel @Inject constructor(
         }
     }
 
-    suspend fun getAllRoutesInDatabase(): List<RouteEntity> {
+    suspend fun getAllRoutesInDatabase(): List<VehicleRouteEntity> {
         return agentRepository.getAllRoutesInDatabase()
     }
 

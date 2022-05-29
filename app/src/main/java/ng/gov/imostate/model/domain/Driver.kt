@@ -37,7 +37,7 @@ data class Driver(
     @Json(name = "json_data")
     val jsonData: String?,
     @Json(name = "vehicle_id")
-    val vehicleID: Long?,
+    val vehicleId: Long?,
     val status: String?,
     @Json(name = "created_at")
     val createdAt: String?,

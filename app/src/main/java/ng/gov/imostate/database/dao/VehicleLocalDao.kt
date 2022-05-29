@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ng.gov.imostate.database.entity.VehicleCurrentEntity
 import ng.gov.imostate.database.entity.VehiclePreviousEntity
+import ng.gov.imostate.database.entity.VehicleRouteEntity
 
 @Dao
 interface VehicleLocalDao {
@@ -13,16 +14,16 @@ interface VehicleLocalDao {
     @Query("SELECT * FROM vehicle_previous WHERE vehicle_plates = :identifier")
     suspend fun getVehicleDriverRecordFromPreviousEnumeration(identifier: String): VehiclePreviousEntity?
 
-    @Query("SELECT * FROM vehicle_previous")
-    suspend fun getAllVehiclesFromPreviousEnumeration(): List<VehiclePreviousEntity>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllVehiclesFromPreviousEnumeration(vehiclePrevious: List<VehiclePreviousEntity>)
+    suspend fun insertAllVehiclesFromPreviousEnumeration(vehicles: List<VehiclePreviousEntity>)
 
     @Query("SELECT id FROM vehicle_previous ORDER BY id DESC LIMIT 1")
-    suspend fun getLastVehicleIdFromPreviousEnumerationInDatabase(): Long?
+    suspend fun getLastVehicleIdFromPreviousEnumeration(): Long?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAllVehiclesFromCurrentEnumeration(vehicleCurrent: List<VehicleCurrentEntity>)
+    suspend fun insertAllVehiclesFromCurrentEnumeration(vehicles: List<VehicleCurrentEntity>)
+
+    @Query("SELECT * FROM vehicle_current WHERE vehicle_plates = :identifier")
+    suspend fun getVehicleFromCurrentEnumeration(identifier: String): VehicleCurrentEntity?
 
 }

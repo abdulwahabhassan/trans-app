@@ -2,12 +2,13 @@ package ng.gov.imostate.model.domain
 
 import com.squareup.moshi.Json
 
-data class MMetrics (
-    val metrics: Metrics,
-    val points: List<Point>,
+data class DashBoardMetrics (
+    val metrics: Metrics?,
+    val points: List<Point>?,
     @Json(name = "tax_free_days")
-    val taxFreeDays: List<Holiday>,
-    val routes: List<AgentRoute>
+    val taxFreeDays: List<Holiday>?,
+    val routes: List<AgentRoute>?,
+    val settings: List<Setting>?
 )
 
 data class Metrics (

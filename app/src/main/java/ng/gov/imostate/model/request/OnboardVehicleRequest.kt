@@ -1,7 +1,7 @@
 package ng.gov.imostate.model.request
 
 import com.squareup.moshi.Json
-import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.model.domain.VehicleRoute
 
 data class OnboardVehicleRequest (
     @Json(name = "vehicle_plates")
@@ -22,7 +22,7 @@ data class OnboardVehicleRequest (
     val imssin: String,
     val email: String,
     val phone: String,
-    val routes: List<Route>,
+    val vehicleRoutes: List<VehicleRoute>,
     @Json(name = "state_of_registration")
     val stateOfRegistration: String,
     val gender: String,

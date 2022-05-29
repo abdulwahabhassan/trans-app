@@ -23,7 +23,7 @@ object Mapper {
             vehicle.createdAt,
             vehicle.updatedAt,
             vehicle.driver?.let { mapDriverToDriverEntity(it) },
-            vehicle.routes?.let { mapListOfRouteToListOfRouteEntity(it) }
+            vehicle.vehicleRoutes?.let { mapListOfRouteToListOfRouteEntity(it) }
         )
     }
 
@@ -31,6 +31,31 @@ object Mapper {
         return vehicles.map { vehicle ->
             mapVehicleToVehicleCurrentEntity(vehicle)
         }
+    }
+
+    fun mapVehicleCurrentEntityToVehicle(vehicle: VehicleCurrentEntity): Vehicle {
+        return Vehicle(
+            vehicle.id,
+            vehicle.vehiclePlates,
+            vehicle.brand,
+            vehicle.type,
+            vehicle.fleetNumber,
+            vehicle.stateOfRegistration,
+            vehicle.chasisNumber,
+            vehicle.engineNumber,
+            vehicle.vehicleModel,
+            vehicle.passengerCapacity,
+            vehicle.roadWorthinessExpDate,
+            vehicle.vehicleLicenceExpDate,
+            vehicle.vehicleInsuranceExpDate,
+            vehicle.createdAt,
+            vehicle.updatedAt,
+            vehicle.lastPaid,
+            vehicle.driver?.let { mapDriverEntityToDriver(it) },
+            vehicle.driver?.firstName + vehicle.driver?.middleName + vehicle.driver?.lastName,
+            vehicle.vehicleRoutes?.let { mapListOfRouteEntityToListOfRoute(it) },
+            emptyList()
+        )
     }
 
     private fun mapVehicleToVehicleCurrentEntity(vehicle: Vehicle): VehicleCurrentEntity {
@@ -50,8 +75,9 @@ object Mapper {
             vehicle.vehicleInsuranceExpDate,
             vehicle.createdAt,
             vehicle.updatedAt,
+            vehicle.lastPaid,
             vehicle.driver?.let { mapDriverToDriverEntity(it) },
-            vehicle.routes?.let { mapListOfRouteToListOfRouteEntity(it) }
+            vehicle.vehicleRoutes?.let { mapListOfRouteToListOfRouteEntity(it) }
         )
     }
 
@@ -113,6 +139,35 @@ object Mapper {
             driver.phone,
             driver.imssin,
             driver.jsonData,
+            driver.vehicleId,
+            driver.status,
+            driver.createdAt,
+            driver.updatedAt
+        )
+    }
+
+    private fun mapDriverEntityToDriver(driver: DriverEntity): Driver {
+        return Driver(
+            driver.id,
+            driver.firstName,
+            driver.middleName,
+            driver.lastName,
+            driver.dOB,
+            driver.address,
+            driver.email,
+            driver.gender,
+            driver.maritalStatus,
+            driver.bloodGroup,
+            driver.meansOfID,
+            driver.idNumber,
+            driver.stateOfOrigin,
+            driver.localGovt,
+            driver.bankName,
+            driver.accountNumber,
+            driver.bvn,
+            driver.phone,
+            driver.imssin,
+            driver.jsonData,
             driver.vehicleID,
             driver.status,
             driver.createdAt,
@@ -120,42 +175,42 @@ object Mapper {
         )
     }
 
-    private fun mapRouteToRouteEntity(route: Route): RouteEntity {
-        return RouteEntity(
-            route.id,
-            route.routeID,
-            route.from,
-            route.to,
-            route.vehicleID,
-            route.driverID,
-            route.status,
-            route.createdAt,
-            route.updatedAt
+    private fun mapRouteToRouteEntity(vehicleRoute: VehicleRoute): VehicleRouteEntity {
+        return VehicleRouteEntity(
+            vehicleRoute.id,
+            vehicleRoute.routeID,
+            vehicleRoute.from,
+            vehicleRoute.to,
+            vehicleRoute.vehicleID,
+            vehicleRoute.driverID,
+            vehicleRoute.status,
+            vehicleRoute.createdAt,
+            vehicleRoute.updatedAt
         )
     }
 
-    private fun mapRouteEntityToRoute(route: RouteEntity): Route {
-        return Route(
-            route.id,
-            route.routeID,
-            route.from,
-            route.to,
-            route.vehicleID,
-            route.driverID,
-            route.status,
-            route.createdAt,
-            route.updatedAt
+    private fun mapRouteEntityToRoute(vehicleRoute: VehicleRouteEntity): VehicleRoute {
+        return VehicleRoute(
+            vehicleRoute.id,
+            vehicleRoute.routeID,
+            vehicleRoute.from,
+            vehicleRoute.to,
+            vehicleRoute.vehicleID,
+            vehicleRoute.driverID,
+            vehicleRoute.status,
+            vehicleRoute.createdAt,
+            vehicleRoute.updatedAt
         )
     }
 
-    fun mapListOfRouteEntityToListOfRoute(routes: List<RouteEntity>): List<Route> {
-        return routes.map { route ->
+    fun mapListOfRouteEntityToListOfRoute(vehicleRoutes: List<VehicleRouteEntity>): List<VehicleRoute> {
+        return vehicleRoutes.map { route ->
             mapRouteEntityToRoute(route)
         }
     }
 
-    fun mapListOfRouteToListOfRouteEntity(routes: List<Route>): List<RouteEntity> {
-        return routes.map { route ->
+    fun mapListOfRouteToListOfRouteEntity(vehicleRoutes: List<VehicleRoute>): List<VehicleRouteEntity> {
+        return vehicleRoutes.map { route ->
             mapRouteToRouteEntity(route)
         }
     }

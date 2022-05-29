@@ -287,11 +287,22 @@ class HomeFragment : Fragment() {
                        currentPayableTV.text = dashBoardMetrics?.metrics?.currentPayable
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                     }
-                    //insert agent's assigned routes to database
-                    Timber.d("${dashBoardMetrics?.routes}")
+                    val databaseRoutes = viewModel.getAllAgentRoutes()
+                    Timber.d("agents database routes to be deleted $databaseRoutes")
+                    //delete former agent's assigned routes in database
+                    viewModel.deleteAllAgentRoutes(databaseRoutes)
+
+                    //insert current retrieved agent's routes to database
+                    Timber.d("agents remote routes to be inserted ${dashBoardMetrics?.routes}")
                     dashBoardMetrics?.routes?.let { routes ->
                         Mapper.mapListOfAgentRouteToListOfAgentRouteEntity(routes)
                     }?.let { viewModel.insertAllAgentRoutesToDatabase(it) }
+
+                    //retrieve settings values for whether agent can collect money from vehicles
+                    //outside their route
+                    val setting = dashBoardMetrics?.settings?.find { it.setting_key == "allow_agents_collect_outside_route" }
+                    //save setting value to appConfig
+                    viewModel.updateAgentCollectionSettingValue(setting?.value ?: "No")
                 }
                 is ViewModelResult.Error -> {
                     Timber.d(viewModelResult.errorMessage)

@@ -8,6 +8,7 @@ import ng.gov.imostate.database.dao.DriverLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
 import ng.gov.imostate.database.entity.VehicleCurrentEntity
 import ng.gov.imostate.database.entity.VehiclePreviousEntity
+import ng.gov.imostate.database.entity.VehicleRouteEntity
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.response.ApiResponse
@@ -94,10 +95,14 @@ class VehicleRepository @Inject constructor(
     }
 
     suspend fun getLastVehicleIdFromPreviousEnumerationInDatabase(): Long? {
-        return vehicleLocalDao.getLastVehicleIdFromPreviousEnumerationInDatabase()
+        return vehicleLocalDao.getLastVehicleIdFromPreviousEnumeration()
     }
 
-    fun insertVehiclesFromCurrentEnumerationToDatabase(vehicleCurrent: List<VehicleCurrentEntity>) {
+    suspend fun insertVehiclesFromCurrentEnumerationToDatabase(vehicleCurrent: List<VehicleCurrentEntity>) {
         vehicleLocalDao.insertAllVehiclesFromCurrentEnumeration(vehicleCurrent)
+    }
+
+    suspend fun getVehicleFromCurrentEnumerationInDatabase(identifier: String): VehicleCurrentEntity? {
+        return vehicleLocalDao.getVehicleFromCurrentEnumeration(identifier)
     }
 }

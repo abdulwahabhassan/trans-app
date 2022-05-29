@@ -23,7 +23,7 @@ import ng.gov.imostate.adapter.RoutesAdapter
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
 import ng.gov.imostate.databinding.FragmentFindVehicleDialogBinding
 import ng.gov.imostate.databinding.LayoutSelectRoutesBinding
-import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.model.domain.VehicleRoute
 import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.result.ViewModelResult
@@ -43,7 +43,7 @@ class AddVehicleFragment : Fragment() {
     private val mainBinding get() = _binding!!
     private var lgaIndex: Int  = 0
     private var validationErrorMessage: String = ""
-    private var selectedRoutes = mutableListOf<Route>()
+    private var selectedRoutes = mutableListOf<VehicleRoute>()
     private var vehicleCategories = listOf<String>()
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
@@ -162,7 +162,7 @@ class AddVehicleFragment : Fragment() {
                         imssin = imssin,
                         email = email,
                         phone = phoneNumber,
-                        routes = selectedRoutes.map { Route(routeID = it.id) },
+                        vehicleRoutes = selectedRoutes.map { VehicleRoute(routeID = it.id) },
                         stateOfRegistration = selectedStateOfReg.toString(),
                         gender = selectedDriverGender.toString(),
                         maritalStatus = selectedMaritalStatus.toString(),
@@ -408,11 +408,11 @@ class AddVehicleFragment : Fragment() {
                                 else 0,
                                 true
                             )
-                            selectedRoutes = vehicle.routes?.let { it1 ->
+                            selectedRoutes = vehicle.vehicleVehicleRoutes?.let { it1 ->
                                 Mapper.mapListOfRouteEntityToListOfRoute(
                                     it1
                                 ).toMutableList()
-                            } ?: emptyList<Route>().toMutableList()
+                            } ?: emptyList<VehicleRoute>().toMutableList()
 
                             selectedVehicleRoutesTV.text = selectedRoutes.map { routeEntity ->
                                 routeEntity.from + "to" + routeEntity.to

@@ -17,6 +17,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentNfcReaderResultBinding
 import ng.gov.imostate.model.domain.Data
@@ -77,7 +78,59 @@ class NfcReaderResultFragment : Fragment() {
 
         with(binding) {
             payOutstandingBTN.setOnClickListener {
-                showDatePicker()
+                viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                    //check first if agent is allowed to collect from outside routes
+                    when (viewModel.getInitialUserPreferences().collectionSetting) {
+                        "Yes" -> {
+                            showDatePicker()
+                        }
+                        else -> {
+                            //check if vehicle belongs to agent's route
+                        //show picker if yes else don't show
+                            val vehicleInDatabase = viewModel.getVehicleFromCurrentEnumerationInDatabase(data.vpn)
+
+                            if (vehicleInDatabase != null) {
+                                val vehicle = Mapper.mapVehicleCurrentEntityToVehicle(vehicleInDatabase)
+                                val vehicleRoutes = vehicle.vehicleRoutes
+                                Timber.d("agent routes $vehicleRoutes")
+                                //intersect both lists of route ids and if the result contains at least one
+                                //common element, show date picker
+                                if (vehicleRoutes != null)  {
+                                    val agentRoutes = Mapper.mapListOfAgentRouteEntityToListOfAgentRoute(
+                                        viewModel.getAllAgentsRouteInDatabase()
+                                    )
+                                    Timber.d("agent routes $agentRoutes")
+
+                                    val common = agentRoutes.map { it.routeId }
+                                        .intersect(vehicleRoutes.map { it.routeID })
+                                    Timber.d("common $common")
+                                    if (common.isNotEmpty()) {
+                                        showDatePicker()
+                                    } else {
+                                        showInCompatibleRoutes()
+                                    }
+                                } else {
+                                    AlertDialog.Builder(requireContext())
+                                        .setTitle("No Routes Found")
+                                        .setMessage("This vehicle has no route assigned")
+                                        .setNegativeButton("Ok") { dialog, _ ->
+                                            dialog.dismiss()
+                                        }.show()
+                                }
+                            } else {
+                                AlertDialog.Builder(requireContext())
+                                    .setTitle("Vehicle Not Found")
+                                    .setMessage("vehicle not found in database")
+                                    .setNegativeButton("Ok") { dialog, _ ->
+                                        dialog.dismiss()
+                                    }.show()
+                            }
+
+                        }
+                    }
+
+                }
+
             }
             backArrowIV.setOnClickListener {
                 findNavController().popBackStack()
@@ -250,6 +303,15 @@ class NfcReaderResultFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("Invalid date selection")
             .setMessage("Valid date selection must begin from the next day (${AppUtils.formatDateToFullDate(compulsoryStartDate)}) after last payment")
+            .setNegativeButton("Ok") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+    private fun showInCompatibleRoutes() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Incompatible Routes")
+            .setMessage("This vehicle has no route that you are allowed to collect payment from")
             .setNegativeButton("Ok") { dialog, _ ->
                 dialog.dismiss()
             }.show()

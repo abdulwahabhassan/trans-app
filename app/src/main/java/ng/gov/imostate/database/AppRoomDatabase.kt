@@ -17,7 +17,7 @@ import timber.log.Timber
         DriverEntity::class,
         VehiclePreviousEntity::class,
         VehicleCurrentEntity::class,
-        RouteEntity::class,
+        VehicleRouteEntity::class,
         TransactionEntity::class,
         RateEntity::class,
         AgentRouteEntity::class,

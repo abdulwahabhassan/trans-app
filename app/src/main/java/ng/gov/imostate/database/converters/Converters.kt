@@ -5,11 +5,9 @@ import androidx.room.TypeConverter
 import com.google.gson.reflect.TypeToken
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import ng.gov.imostate.database.entity.DriverEntity
-import ng.gov.imostate.database.entity.RouteEntity
-import ng.gov.imostate.model.domain.Driver
-import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.database.entity.VehicleRouteEntity
+import ng.gov.imostate.model.domain.VehicleRoute
 import javax.inject.Inject
 
 @ProvidedTypeConverter
@@ -42,16 +40,16 @@ class Converters @Inject constructor (
 //    }
 
     @TypeConverter
-    fun fromListOfRoute(value: List<RouteEntity>?): String? {
-        val routeListType = object : TypeToken<List<Route?>?>() {}.type
-        val adapter: JsonAdapter<List<RouteEntity>>? = moshi.adapter(routeListType)
+    fun fromListOfRoute(value: List<VehicleRouteEntity>?): String? {
+        val routeListType = object : TypeToken<List<VehicleRouteEntity?>?>() {}.type
+        val adapter: JsonAdapter<List<VehicleRouteEntity>>? = moshi.adapter(routeListType)
         return adapter?.toJson(value)
     }
 
     @TypeConverter
-    fun toListOfRoute(json: String?): List<RouteEntity>? {
-        val routeListType = object : TypeToken<List<RouteEntity?>?>() {}.type
-        val adapter: JsonAdapter<List<RouteEntity>>? = moshi.adapter(routeListType)
+    fun toListOfRoute(json: String?): List<VehicleRouteEntity>? {
+        val routeListType = object : TypeToken<List<VehicleRouteEntity?>?>() {}.type
+        val adapter: JsonAdapter<List<VehicleRouteEntity>>? = moshi.adapter(routeListType)
         return if (json.isNullOrEmpty()) emptyList() else adapter?.fromJson(json)
     }
 }

@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "agent_route")
 data class AgentRouteEntity(
-    @PrimaryKey
     val id: Long? = null,
     @ColumnInfo(name = "user_id")
     val userId: Long? = null,
+    @PrimaryKey
     @ColumnInfo(name = "route_id")
     val routeId: Long? = null,
     @ColumnInfo(name = "status")

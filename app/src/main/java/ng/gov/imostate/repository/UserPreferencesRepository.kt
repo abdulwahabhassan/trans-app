@@ -45,9 +45,6 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
             email = preferences[PreferencesKeys.EMAIL],
             emailVerifiedAt = preferences[PreferencesKeys.EMAIL_VERIFIED_AT],
             status = preferences[PreferencesKeys.STATUS],
-            createdBy = preferences[PreferencesKeys.CREATED_BY],
-            createdAt = preferences[PreferencesKeys.CREATED_AT],
-            updatedAt = preferences[PreferencesKeys.UPDATED_AT],
             bvn = preferences[PreferencesKeys.BVN],
             lastSyncTime = preferences[PreferencesKeys.LAST_SYNC_TIME],
             currentWalletBalance = preferences[PreferencesKeys.CURRENT_WALLET_BALANCE],
@@ -82,6 +79,12 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         }
     }
 
+    suspend fun updateAgentCollectionSettingValue(value: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.COLLECTION_SETTING] = value
+        }
+    }
+
     suspend fun updateUserPreferences(userPreferences: UserPreferences) {
         dataStore.edit { preferences ->
            with(userPreferences) {
@@ -99,15 +102,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
                preferences[PreferencesKeys.EMAIL] = email ?: ""
                preferences[PreferencesKeys.EMAIL_VERIFIED_AT] = emailVerifiedAt ?: ""
                preferences[PreferencesKeys.STATUS] = status ?: ""
-               preferences[PreferencesKeys.CREATED_BY] = createdBy ?: 0
-               preferences[PreferencesKeys.CREATED_AT] = createdAt ?: ""
-               preferences[PreferencesKeys.UPDATED_AT] = updatedAt ?: ""
                preferences[PreferencesKeys.BVN] = bvn ?: ""
-               preferences[PreferencesKeys.CURRENT_WALLET_BALANCE] = currentWalletBalance ?: 0.00
-               preferences[PreferencesKeys.CURRENT_TOTAL_VENDED] = currentTotalVended ?: 0.00
-               preferences[PreferencesKeys.CURRENT_TOTAL_CREDITED] = currentTotalCredited ?: 0.00
-               preferences[PreferencesKeys.CURRENT_PAYABLE] = currentPayable ?: 0.00
-               preferences[PreferencesKeys.CURRENT_PAID_OUT] = currentPaidOut ?: 0.00
            }
         }
     }
@@ -128,16 +123,14 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val email:String? = "",
         val emailVerifiedAt: String? = "",
         val status: String? = "",
-        val createdBy: Long? = 0,
-        val createdAt: String? = "",
-        val updatedAt: String? = "",
         val bvn: String? = "",
         val lastSyncTime: String? = "",
         val currentWalletBalance: Double? = 0.00,
         val currentTotalVended: Double? = 0.00,
         val currentTotalCredited: Double? = 0.00,
         val currentPayable: Double? = 0.00,
-        val currentPaidOut: Double? = 0.00
+        val currentPaidOut: Double? = 0.00,
+        val collectionSetting: String? = ""
     )
 
     //define preferences keys
@@ -157,9 +150,6 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val EMAIL = stringPreferencesKey("email")
         val EMAIL_VERIFIED_AT = stringPreferencesKey("emailVerifiedAt")
         val STATUS = stringPreferencesKey("status")
-        val CREATED_BY = longPreferencesKey("createdBy")
-        val CREATED_AT = stringPreferencesKey("createdAt")
-        val UPDATED_AT = stringPreferencesKey("updatedAt")
         val BVN = stringPreferencesKey("bvn")
         val LAST_SYNC_TIME = stringPreferencesKey("last_syn_time")
         val CURRENT_WALLET_BALANCE = doublePreferencesKey("current_wallet_balance")
@@ -167,6 +157,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val CURRENT_TOTAL_CREDITED = doublePreferencesKey("current_total_credited")
         val CURRENT_PAYABLE = doublePreferencesKey("current_payable")
         val CURRENT_PAID_OUT = doublePreferencesKey("current_paid_out")
+        val COLLECTION_SETTING = stringPreferencesKey("collectionSetting")
     }
 
 }

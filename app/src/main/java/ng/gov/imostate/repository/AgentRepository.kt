@@ -122,7 +122,7 @@ class AgentRepository @Inject constructor(
         return ratesLocalDao.getAllRates()
     }
 
-    suspend fun getAllRoutesInDatabase(): List<RouteEntity> {
+    suspend fun getAllRoutesInDatabase(): List<VehicleRouteEntity> {
         return routeLocalDao.getAllRoutes()
     }
 
@@ -134,18 +134,26 @@ class AgentRepository @Inject constructor(
         ratesLocalDao.insertAllRates(rates)
     }
 
-    suspend fun insertRoutesToDatabase(routes: List<RouteEntity>) {
-        routeLocalDao.insertAllRoutes(routes)
+    suspend fun insertRoutesToDatabase(vehicleRoutes: List<VehicleRouteEntity>) {
+        routeLocalDao.insertAllRoutes(vehicleRoutes)
     }
 
     suspend fun getAllCategoriesInDatabase(): List<String> {
         return ratesLocalDao.getAllCategories()
     }
-    suspend fun getAllAgentRoutesInDatabase(userId: Long): List<AgentRouteEntity> {
-        return agentRouteLocalDao.getAllAgentRoutes(userId)
+    suspend fun getAllAgentRoutesInDatabase(): List<AgentRouteEntity> {
+        return agentRouteLocalDao.getAllAgentRoutes()
     }
 
     suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {
         agentRouteLocalDao.insertAllAgentRoutes(routes)
+    }
+
+    suspend fun getAllAgentRoutes() {
+        agentRouteLocalDao.getAllAgentRoutes()
+    }
+
+    suspend fun deleteAllAgentRoutesInDatabase(routes: List<AgentRouteEntity>) {
+        agentRouteLocalDao.deleteAllAgentRoutes(routes)
     }
 }

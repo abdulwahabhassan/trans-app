@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 
-@Entity(tableName = "route")
-data class RouteEntity(
+@Entity(tableName = "vehicle_route")
+data class VehicleRouteEntity(
     @PrimaryKey val id: Long? = null,
     @ColumnInfo(name = "route_id")
     val routeID: Long? = null,

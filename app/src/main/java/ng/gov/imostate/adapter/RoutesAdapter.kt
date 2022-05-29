@@ -2,32 +2,26 @@ package ng.gov.imostate.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.R
-import ng.gov.imostate.databinding.ItemCollectionBinding
 import ng.gov.imostate.databinding.ItemRouteBinding
-import ng.gov.imostate.model.domain.Collection
-import ng.gov.imostate.model.domain.Route
+import ng.gov.imostate.model.domain.VehicleRoute
 import timber.log.Timber
-import java.lang.StringBuilder
 import java.util.*
 
 class RoutesAdapter(
-    private val onItemClicked: (position: Int, itemAtPosition: Route) -> Unit
-) : ListAdapter<Route, RoutesAdapter.RouteVH>(object :
-    DiffUtil.ItemCallback<Route>() {
+    private val onItemClicked: (position: Int, itemAtPosition: VehicleRoute) -> Unit
+) : ListAdapter<VehicleRoute, RoutesAdapter.RouteVH>(object :
+    DiffUtil.ItemCallback<VehicleRoute>() {
 
-    override fun areItemsTheSame(oldItem: Route, newItem: Route): Boolean {
+    override fun areItemsTheSame(oldItem: VehicleRoute, newItem: VehicleRoute): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Route, newItem: Route): Boolean {
+    override fun areContentsTheSame(oldItem: VehicleRoute, newItem: VehicleRoute): Boolean {
         return oldItem == newItem
     }
 
@@ -61,25 +55,25 @@ class RoutesAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(route: Route) {
-            Timber.d("$route")
+        fun bind(vehicleRoute: VehicleRoute) {
+            Timber.d("$vehicleRoute")
             with(binding) {
-                routeNameTV.text = route.from?.replaceFirstChar {
+                routeNameTV.text = vehicleRoute.from?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
-                } + " to " + route.to?.replaceFirstChar {
+                } + " to " + vehicleRoute.to?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
                 }
-                if (route.status.equals("active", true)) {
+                if (vehicleRoute.status.equals("active", true)) {
                     routeStatusTV.setTextColor(root.context.resources.getColor(R.color.green))
                 } else {
                     routeStatusTV.setTextColor(root.context.resources.getColor(R.color.red))
                 }
-                routeStatusTV.text = route.status
-                if (route.selected) {
+                routeStatusTV.text = vehicleRoute.status
+                if (vehicleRoute.selected) {
                     selectedIV.setImageResource(R.drawable.ic_check)
                 } else {
                     selectedIV.setImageResource(R.drawable.ic_unchecked)

@@ -114,6 +114,7 @@ class HomeFragmentViewModel @Inject constructor(
         val response = agentRepository.getCurrentUser(token)
         return  when (response.success) {
             true -> {
+                Timber.d("current user result ${response.result}")
                 //put agent current wallet information to data store
                 response.result?.user?.profile?.let {
                     userPreferencesRepository.updateCurrentWalletInfo(
@@ -128,12 +129,13 @@ class HomeFragmentViewModel @Inject constructor(
 
                 //put rates to database
                 response.meta?.rates?.let { rates ->
+                    Timber.d("rates $rates")
                     Mapper.mapListOfRateToListOfRateEntity(rates)
                 }?.let { agentRepository.insertRatesToDatabase(it) }
 
                 //put routes to database
-                response.meta?.route?.let { routes ->
-                    Timber.d("$routes")
+                response.meta?.vehicleRoute?.let { routes ->
+                    Timber.d("routes $routes")
                     Mapper.mapListOfRouteToListOfRouteEntity(routes)
                 }?.let { agentRepository.insertRoutesToDatabase(it) }
 
@@ -168,8 +170,20 @@ class HomeFragmentViewModel @Inject constructor(
         return vehicleRepository.getLastVehicleIdFromPreviousEnumerationInDatabase()
     }
 
-    fun insertVehiclesFromCurrentEnumerationToDatabase(vehicles: List<VehicleCurrentEntity>) {
+    suspend fun insertVehiclesFromCurrentEnumerationToDatabase(vehicles: List<VehicleCurrentEntity>) {
         vehicleRepository.insertVehiclesFromCurrentEnumerationToDatabase(vehicles)
+    }
+
+    suspend fun getAllAgentRoutes(): List<AgentRouteEntity> {
+        return agentRepository.getAllAgentRoutesInDatabase()
+    }
+
+    suspend fun deleteAllAgentRoutes(routes: List<AgentRouteEntity>) {
+        agentRepository.deleteAllAgentRoutesInDatabase(routes)
+    }
+
+    suspend fun updateAgentCollectionSettingValue(value: String) {
+        userPreferencesRepository.updateAgentCollectionSettingValue(value)
     }
 
 }

@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
-import com.squareup.moshi.Json
 import ng.gov.imostate.database.converters.Converters
 
 @Entity(tableName = "vehicle_previous")
@@ -44,6 +43,6 @@ data class VehiclePreviousEntity(
     val updatedAt: String?,
     @ColumnInfo
     val driver: DriverEntity?,
-    @ColumnInfo
-    val routes: List<RouteEntity>?
+    @ColumnInfo(name = "vehicle_routes")
+    val vehicleVehicleRoutes: List<VehicleRouteEntity>?
 )

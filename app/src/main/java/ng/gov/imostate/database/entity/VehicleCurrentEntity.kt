@@ -42,8 +42,10 @@ data class VehicleCurrentEntity(
     val createdAt: String?,
     @ColumnInfo(name = "updated_at")
     val updatedAt: String?,
+    @Json(name = "last_paid")
+    val lastPaid: String?,
     @ColumnInfo
     val driver: DriverEntity?,
-    @ColumnInfo
-    val routes: List<RouteEntity>?
+    @ColumnInfo(name = "vehicle_routes")
+    val vehicleRoutes: List<VehicleRouteEntity>?
 )

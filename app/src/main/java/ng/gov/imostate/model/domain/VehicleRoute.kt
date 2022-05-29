@@ -2,7 +2,7 @@ package ng.gov.imostate.model.domain
 
 import com.squareup.moshi.Json
 
-data class Route(
+data class VehicleRoute(
     val id: Long? = null,
     @Json(name = "route_id")
     val routeID: Long? = null,

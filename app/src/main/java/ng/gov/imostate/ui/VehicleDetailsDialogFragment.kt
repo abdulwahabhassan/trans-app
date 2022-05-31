@@ -53,7 +53,7 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
                 val action = VehicleDetailsDialogFragmentDirections
                     .actionVehicleDetailsDialogFragmentToTransactionsFragment(
                         TransactionType.VEHICLE_TRANSACTION.name,
-                        vehicleId
+                        arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
                     )
                 findNavController().navigate(action)
             }

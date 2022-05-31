@@ -6,6 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.DriverLocalDao
 import ng.gov.imostate.database.dao.VehicleLocalDao
+import ng.gov.imostate.database.dao.VehicleRouteLocalDao
 import ng.gov.imostate.database.entity.VehicleCurrentEntity
 import ng.gov.imostate.database.entity.VehiclePreviousEntity
 import ng.gov.imostate.database.entity.VehicleRouteEntity
@@ -21,6 +22,7 @@ class VehicleRepository @Inject constructor(
     private val moshi: Moshi,
     private val vehicleLocalDao: VehicleLocalDao,
     private val driverLocalDao: DriverLocalDao,
+    private val vehicleRouteLocalDao: VehicleRouteLocalDao,
     @ApplicationContext private val context: Context,
     private val dataSource: RemoteDatasource,
     private val networkConnectivityUtil: NetworkConnectivityUtil
@@ -104,5 +106,9 @@ class VehicleRepository @Inject constructor(
 
     suspend fun getVehicleFromCurrentEnumerationInDatabase(identifier: String): VehicleCurrentEntity? {
         return vehicleLocalDao.getVehicleFromCurrentEnumeration(identifier)
+    }
+
+    suspend fun getRoute(routeId: Long): VehicleRouteEntity? {
+        return vehicleRouteLocalDao.getRoute(routeId)
     }
 }

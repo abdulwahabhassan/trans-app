@@ -88,11 +88,11 @@ class NfcReaderResultFragment : Fragment() {
                             //check if vehicle belongs to agent's route
                         //show picker if yes else don't show
                             val vehicleInDatabase = viewModel.getVehicleFromCurrentEnumerationInDatabase(data.vpn)
-
+                            Timber.d("vehicle in database $vehicleInDatabase")
                             if (vehicleInDatabase != null) {
                                 val vehicle = Mapper.mapVehicleCurrentEntityToVehicle(vehicleInDatabase)
                                 val vehicleRoutes = vehicle.vehicleRoutes
-                                Timber.d("agent routes $vehicleRoutes")
+                                Timber.d("vehicle routes $vehicleRoutes")
                                 //intersect both lists of route ids and if the result contains at least one
                                 //common element, show date picker
                                 if (vehicleRoutes != null)  {

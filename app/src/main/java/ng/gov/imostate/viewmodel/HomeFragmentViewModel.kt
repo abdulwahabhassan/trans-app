@@ -134,9 +134,9 @@ class HomeFragmentViewModel @Inject constructor(
                 }?.let { agentRepository.insertRatesToDatabase(it) }
 
                 //put routes to database
-                response.meta?.vehicleRoute?.let { routes ->
+                response.meta?.route?.let { routes ->
                     Timber.d("routes $routes")
-                    Mapper.mapListOfRouteToListOfRouteEntity(routes)
+                    Mapper.mapListOfVehicleRouteToListOfVehicleRouteEntity(routes)
                 }?.let { agentRepository.insertRoutesToDatabase(it) }
 
                 ViewModelResult.Success(response.result)

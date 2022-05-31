@@ -5,14 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
+import ng.gov.imostate.model.domain.Route
 
 @Entity(tableName = "vehicle_route")
 data class VehicleRouteEntity(
     @PrimaryKey val id: Long? = null,
     @ColumnInfo(name = "route_id")
     val routeID: Long? = null,
-    val from: String? = null,
-    val to: String? = null,
     @ColumnInfo(name = "vehicle_id")
     val vehicleID: Long? = null,
     @ColumnInfo(name = "driver_id")
@@ -22,5 +21,9 @@ data class VehicleRouteEntity(
     @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
     @ColumnInfo(name = "updated_at")
-    val updatedAt: String? = null
+    val updatedAt: String? = null,
+    @ColumnInfo(name = "from")
+    val from: String? = null,
+    @ColumnInfo(name = "to")
+    val to: String? = null
 )

@@ -55,4 +55,8 @@ class AddVehicleFragmentViewModel @Inject constructor(
         return agentRepository.getAllCategoriesInDatabase()
     }
 
+    suspend fun getRoute(routeId: Long): VehicleRouteEntity? {
+        return vehicleRepository.getRoute(routeId)
+    }
+
 }

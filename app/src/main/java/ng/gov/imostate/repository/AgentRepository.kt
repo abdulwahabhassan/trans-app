@@ -6,7 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.AgentRouteLocalDao
 import ng.gov.imostate.database.dao.RateLocalDao
-import ng.gov.imostate.database.dao.RouteLocalDao
+import ng.gov.imostate.database.dao.VehicleRouteLocalDao
 import ng.gov.imostate.database.dao.UpdateLocalDao
 import ng.gov.imostate.database.entity.*
 import ng.gov.imostate.datasource.RemoteDatasource
@@ -23,7 +23,7 @@ class AgentRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val dataSource: RemoteDatasource,
     private val ratesLocalDao: RateLocalDao,
-    private val routeLocalDao: RouteLocalDao,
+    private val vehicleRouteLocalDao: VehicleRouteLocalDao,
     private val agentRouteLocalDao: AgentRouteLocalDao,
     private val updateLocalDao: UpdateLocalDao,
     private val networkConnectivityUtil: NetworkConnectivityUtil
@@ -123,7 +123,7 @@ class AgentRepository @Inject constructor(
     }
 
     suspend fun getAllRoutesInDatabase(): List<VehicleRouteEntity> {
-        return routeLocalDao.getAllRoutes()
+        return vehicleRouteLocalDao.getAllRoutes()
     }
 
     suspend fun getRateInDatabase(category: String): RateEntity? {
@@ -135,7 +135,7 @@ class AgentRepository @Inject constructor(
     }
 
     suspend fun insertRoutesToDatabase(vehicleRoutes: List<VehicleRouteEntity>) {
-        routeLocalDao.insertAllRoutes(vehicleRoutes)
+        vehicleRouteLocalDao.insertAllRoutes(vehicleRoutes)
     }
 
     suspend fun getAllCategoriesInDatabase(): List<String> {

@@ -32,7 +32,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun driverLocalDao(): DriverLocalDao
     abstract fun transactionLocalDao(): TransactionLocalDao
     abstract fun rateLocalDao(): RateLocalDao
-    abstract fun routeLocalDao(): RouteLocalDao
+    abstract fun routeLocalDao(): VehicleRouteLocalDao
     abstract fun agentRouteLocalDao(): AgentRouteLocalDao
     abstract fun updateLocalDao(): UpdateLocalDao
 

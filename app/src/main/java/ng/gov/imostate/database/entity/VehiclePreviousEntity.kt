@@ -44,5 +44,5 @@ data class VehiclePreviousEntity(
     @ColumnInfo
     val driver: DriverEntity?,
     @ColumnInfo(name = "vehicle_routes")
-    val vehicleVehicleRoutes: List<VehicleRouteEntity>?
+    val vehicleRoutes: List<VehicleRouteEntity>?
 )

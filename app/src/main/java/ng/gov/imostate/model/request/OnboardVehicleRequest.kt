@@ -22,7 +22,7 @@ data class OnboardVehicleRequest (
     val imssin: String,
     val email: String,
     val phone: String,
-    val vehicleRoutes: List<VehicleRoute>,
+    val routes: List<VehicleRoute>,
     @Json(name = "state_of_registration")
     val stateOfRegistration: String,
     val gender: String,

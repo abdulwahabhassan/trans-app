@@ -58,11 +58,11 @@ class RoutesAdapter(
         fun bind(vehicleRoute: VehicleRoute) {
             Timber.d("$vehicleRoute")
             with(binding) {
-                routeNameTV.text = vehicleRoute.from?.replaceFirstChar {
+                routeNameTV.text = vehicleRoute.route?.from?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
-                } + " to " + vehicleRoute.to?.replaceFirstChar {
+                } + " to " + vehicleRoute.route?.to?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
@@ -73,7 +73,7 @@ class RoutesAdapter(
                     routeStatusTV.setTextColor(root.context.resources.getColor(R.color.red))
                 }
                 routeStatusTV.text = vehicleRoute.status
-                if (vehicleRoute.selected) {
+                if (vehicleRoute.selected == true) {
                     selectedIV.setImageResource(R.drawable.ic_check)
                 } else {
                     selectedIV.setImageResource(R.drawable.ic_unchecked)

@@ -159,10 +159,10 @@ class AddVehicleFragment : Fragment() {
                         lastName = driverLastName,
                         dOB = dob,
                         address = residentialAddress,
-                        imssin = imssin,
+                        imssin = imssin.ifEmpty { "-" },
                         email = email,
                         phone = phoneNumber,
-                        vehicleRoutes = selectedRoutes.map { VehicleRoute(routeID = it.id) },
+                        routes = selectedRoutes.map { VehicleRoute(routeID = it.routeID, selected = null) },
                         stateOfRegistration = selectedStateOfReg.toString(),
                         gender = selectedDriverGender.toString(),
                         maritalStatus = selectedMaritalStatus.toString(),
@@ -262,10 +262,11 @@ class AddVehicleFragment : Fragment() {
 
         binding.doneBTN.setOnClickListener {
             selectRoutesSheet.dismiss()
-            mainBinding.selectedVehicleRoutesTV.text = selectedRoutes.map { "${it.from?.replaceFirstChar {
+            mainBinding.selectedVehicleRoutesTV.text = selectedRoutes.map { selectedRoute ->
+                "${selectedRoute.route?.from?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) 
                 else it.toString() 
-            }} to ${it.to?.replaceFirstChar {
+            }} to ${selectedRoute.route?.to?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) 
                 else it.toString() }}"}.toString()
                 .removePrefix("[").removeSuffix("]")
@@ -275,8 +276,8 @@ class AddVehicleFragment : Fragment() {
             Timber.d("Ok")
             AppUtils.showView(false, binding.routesRV)
             routesAdapter = RoutesAdapter { position, itemAtPosition ->
-                itemAtPosition.selected = !itemAtPosition.selected
-                if (itemAtPosition.selected) {
+                itemAtPosition.selected = !itemAtPosition.selected!!
+                if (itemAtPosition.selected == true) {
                     if (!selectedRoutes.contains(itemAtPosition)) {
                         selectedRoutes.add(itemAtPosition)
                     }
@@ -288,17 +289,14 @@ class AddVehicleFragment : Fragment() {
                 routesAdapter.notifyItemChanged(position)
             }
             binding.routesRV.adapter = routesAdapter
-            val routes = Mapper.mapListOfRouteEntityToListOfRoute(viewModel.getAllRoutesInDatabase())
-            Timber.d("$routes")
-            if(routes.isNotEmpty()) {
-                //show the routes with the latest state of each items based on whether they have
-                    //already been selected or not
-                val rts = routes.map { route -> selectedRoutes.find { route.id == it.id } ?: route }
-                routesAdapter.submitList(rts)
-                AppUtils.showView(true, binding.routesRV)
-            } else {
-                AppUtils.showToast(requireActivity(), "No routes available", MotionToastStyle.INFO)
+            val routes = Mapper.mapListOfVehicleRouteEntityToListOfVehicleRoute(viewModel.getAllRoutesInDatabase())
+            Timber.d("routes in database $routes")
+            val list = routes.map { vehicleRoute ->
+                selectedRoutes.find { it.routeID == vehicleRoute.routeID } ?: vehicleRoute
             }
+            Timber.d("list $list")
+            routesAdapter.submitList(list)
+            AppUtils.showView(true, binding.routesRV)
         }
     }
 
@@ -408,15 +406,35 @@ class AddVehicleFragment : Fragment() {
                                 else 0,
                                 true
                             )
-                            selectedRoutes = vehicle.vehicleVehicleRoutes?.let { it1 ->
-                                Mapper.mapListOfRouteEntityToListOfRoute(
-                                    it1
-                                ).toMutableList()
+
+                            selectedRoutes = vehicle.vehicleRoutes?.let { vehicleRouteEntities ->
+                                Mapper.mapListOfVehicleRouteEntityToListOfVehicleRoute(
+                                    vehicleRouteEntities
+                                ).map {
+                                    val retrievedRoute = it.routeID?.let { id ->
+                                        viewModel.getRoute(id)
+                                    }
+                                    it.copy(route = it.route?.copy(
+                                        from = retrievedRoute?.from,
+                                        to = retrievedRoute?.to
+                                    ))
+                                }.map { it.copy(selected = true) }.toMutableList()
                             } ?: emptyList<VehicleRoute>().toMutableList()
 
-                            selectedVehicleRoutesTV.text = selectedRoutes.map { routeEntity ->
-                                routeEntity.from + "to" + routeEntity.to
-                            }.toString().removePrefix("[").removeSuffix("]")
+                            Timber.d("slr $selectedRoutes")
+
+                            if (selectedRoutes.isNotEmpty()) {
+                                selectedVehicleRoutesTV.text = selectedRoutes.map { routeEntity ->
+                                    val route = routeEntity.routeID?.let { routeId ->
+                                        viewModel.getRoute(routeId)
+                                    }
+                                    if (route?.from != null && route.to != null) {
+                                        route.from + " to " + route.to
+                                    } else {
+                                        ""
+                                    }
+                                }.toString().removePrefix("[").removeSuffix("]")
+                            }
 
                             //radios
                             driverGenderRG.check(
@@ -753,9 +771,9 @@ class AddVehicleFragment : Fragment() {
 
     private fun showFull() {
         with(mainBinding) {
-//until verified to be non-compulsory
-//            imssinNumberTV.visibility = VISIBLE
-//            imssinNumberTIL.visibility = VISIBLE
+
+            imssinNumberTV.visibility = VISIBLE
+            imssinNumberTIL.visibility = VISIBLE
 
             roadWorthinessExpiryDateTV.visibility = VISIBLE
             roadWorthinessExpiryDateTIL.visibility = VISIBLE
@@ -786,9 +804,8 @@ class AddVehicleFragment : Fragment() {
     private fun showMinimal() {
         with(mainBinding) {
 
-//until verified to be non-compulsory
-//            imssinNumberTV.visibility = GONE
-//            imssinNumberTIL.visibility = GONE
+            imssinNumberTV.visibility = GONE
+            imssinNumberTIL.visibility = GONE
 
             roadWorthinessExpiryDateTV.visibility = GONE
             roadWorthinessExpiryDateTIL.visibility = GONE

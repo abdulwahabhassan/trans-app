@@ -1,14 +1,12 @@
 package ng.gov.imostate.di
 
 import android.content.Context
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ng.gov.imostate.database.AppRoomDatabase
-import ng.gov.imostate.database.converters.Converters
 import ng.gov.imostate.database.dao.*
 import javax.inject.Singleton
 
@@ -52,7 +50,7 @@ object DatabaseModule {
     @Singleton
     fun provideRouteLocalDAO(
         @ApplicationContext appContext: Context
-    ): RouteLocalDao {
+    ): VehicleRouteLocalDao {
         return AppRoomDatabase.getInstance(appContext).routeLocalDao()
     }
 

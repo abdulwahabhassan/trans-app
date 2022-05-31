@@ -221,7 +221,7 @@ object Mapper {
         }
     }
 
-    fun mapRateToRateEntity(rate: Rate): RateEntity {
+    private fun mapRateToRateEntity(rate: Rate): RateEntity {
         return RateEntity(
             rate.id,
             rate.from,
@@ -234,7 +234,7 @@ object Mapper {
         )
     }
 
-    fun mapRateEntityToRate(rate: RateEntity): Rate {
+    private fun mapRateEntityToRate(rate: RateEntity): Rate {
         return Rate(
             rate.id,
             rate.from,
@@ -308,5 +308,37 @@ object Mapper {
             mapUpdateToUpdateEntity(update)
         }
 
+    }
+
+    fun mapListOfTaxFreeDayToListOfTaxFreeDayEntity(taxFreeDays: List<Holiday>): List<HolidayEntity> {
+        return taxFreeDays.map { mapTaxFreeDayToTaxFreeDayEntity(it) }
+    }
+
+    private fun mapTaxFreeDayToTaxFreeDayEntity(holiday: Holiday): HolidayEntity {
+        return HolidayEntity(
+            holiday.id,
+            holiday.title,
+            holiday.date,
+            holiday.routeId,
+            holiday.createdAt,
+            holiday.updatedAt,
+            holiday.status
+        )
+    }
+
+    fun mapListOfTaxFreeDayEntityToListOfTaxFreeDay(taxFreeDays: List<HolidayEntity>): List<Holiday> {
+        return taxFreeDays.map { mapTaxFreeDayEntityToTaxFreeDay(it) }
+    }
+
+    private fun mapTaxFreeDayEntityToTaxFreeDay(holiday: HolidayEntity): Holiday {
+        return Holiday(
+            holiday.id,
+            holiday.title,
+            holiday.date,
+            holiday.routeId,
+            holiday.createdAt,
+            holiday.updatedAt,
+            holiday.status
+        )
     }
 }

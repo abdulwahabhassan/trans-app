@@ -2,6 +2,7 @@ package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ng.gov.imostate.Mapper
+import ng.gov.imostate.database.entity.HolidayEntity
 import ng.gov.imostate.database.entity.RateEntity
 import ng.gov.imostate.database.entity.TransactionEntity
 import ng.gov.imostate.model.apiresult.MetricsResult
@@ -54,4 +55,7 @@ class OutstandingPaymentFragmentViewModel @Inject constructor(
         return agentRepository.getRateInDatabase(category)
     }
 
+    suspend fun getAllHolidaysInDatabase(): List<HolidayEntity> {
+        return transactionRepository.getAllTaxFreeDays()
+    }
 }

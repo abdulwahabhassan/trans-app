@@ -1,6 +1,7 @@
 package ng.gov.imostate.database.dao
 
 import androidx.room.*
+import ng.gov.imostate.database.entity.HolidayEntity
 import ng.gov.imostate.database.entity.TransactionEntity
 
 @Dao
@@ -16,4 +17,13 @@ interface TransactionLocalDao {
 
     @Delete
     suspend fun deleteAllTransactions(transactions: List<TransactionEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllTaxFreeDays(holidays: List<HolidayEntity>)
+
+    @Delete
+    suspend fun deleteAllTaxFreeDays(holidays: List<HolidayEntity>)
+
+    @Query("SELECT * FROM holiday")
+    suspend fun getAllTaxFreeDays(): List<HolidayEntity>
 }

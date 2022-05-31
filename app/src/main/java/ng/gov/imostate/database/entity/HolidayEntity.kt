@@ -3,25 +3,22 @@ package ng.gov.imostate.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+import ng.gov.imostate.model.domain.Route
 
-@Entity(tableName = "rate")
-class RateEntity (
+@Entity(tableName = "holiday")
+data class HolidayEntity (
     @PrimaryKey
-    @ColumnInfo
     val id: Long?,
     @ColumnInfo
-    val from: String?,
+    val title: String?,
     @ColumnInfo
-    val to: String?,
-    @ColumnInfo
-    val status: String?,
-    @ColumnInfo
-    val amount: String?,
+    val date: String?,
+    @ColumnInfo(name = "route_id")
+    val routeId: Long?,
     @ColumnInfo(name = "created_at")
     val createdAt: String?,
     @ColumnInfo(name = "updated_at")
     val updatedAt: String?,
     @ColumnInfo
-    val category: String?
+    val status: String?
     )

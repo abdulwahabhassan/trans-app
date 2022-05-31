@@ -157,23 +157,35 @@ class NfcReaderResultFragment : Fragment() {
             Timber.d("current date: $currentDate")
             Timber.d("number of days since last paid: $numOfDaysSinceLastPaid")
 
-            val daysOwedArray = arrayListOf<String>()
-
-            numOfDaysSinceLastPaid.downTo(0).forEach {
-                val date = LocalDate.now(ZoneId.of("Africa/Lagos")).minusDays(it)
-                    .format(DateTimeFormatter.ofPattern("E, dd MMM yyyy", Locale.UK))
-                Timber.d("numOfDays: $it date: ${date}")
-                if (!date.contains("Sat", true) && !date.contains("Sun", true)) {
-                    //exempt saturdays and sundays
-                    daysOwedArray.add(date)
-                }
-            }
-            Timber.d("$daysOwedArray")
-
-            val numOfEligibleDaysOwed = daysOwedArray.size
-            Timber.d("${daysOwedArray.size}")
-
             viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+
+                val daysOwedArray = arrayListOf<String>()
+
+                val holidays = Mapper.mapListOfTaxFreeDayEntityToListOfTaxFreeDay(
+                    viewModel.getAllHolidaysInDatabase()
+                )
+                val holiDates = holidays.map { holiday -> holiday.date?.let { date -> AppUtils.formatDateToFullDate(date) } }
+                Timber.d("Holidates $holiDates")
+
+                numOfDaysSinceLastPaid.downTo(0).forEach {
+                    val date = LocalDate.now(ZoneId.of("Africa/Lagos")).minusDays(it)
+                        .format(DateTimeFormatter.ofPattern("E, dd MMM yyyy", Locale.UK))
+                    Timber.d("numOfDays: $it date: ${date}")
+                    //exempt saturdays and sundays
+                    if (!date.contains("Sat", true) && !date.contains("Sun", true)) {
+                        //exempt holidays
+                        if (!holiDates.contains(date)) {
+                            daysOwedArray.add(date)
+                        } else {
+                            Timber.d("found an holiday $date")
+                        }
+                    }
+                }
+                Timber.d("$daysOwedArray")
+
+                val numOfEligibleDaysOwed = daysOwedArray.size
+                Timber.d("${daysOwedArray.size}")
+
                 val rate = viewModel.getRateInDatabase(data.vc)
                 if (rate?.amount != null) {
                     outstandingBalance = rate.amount.toDouble().times(numOfEligibleDaysOwed.toDouble())

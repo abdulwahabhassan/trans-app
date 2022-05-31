@@ -70,7 +70,8 @@ class AppViewModelsFactory @Inject constructor(
                 return NfcReaderResultFragmentViewModel(
                     userPreferencesRepository,
                     agentRepository,
-                    vehicleRepository
+                    vehicleRepository,
+                    transactionRepository
                 ) as T
             }
             modelClass.isAssignableFrom(SuccessFragmentViewModel::class.java) -> {

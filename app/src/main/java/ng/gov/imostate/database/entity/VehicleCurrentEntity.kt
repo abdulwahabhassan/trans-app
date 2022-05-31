@@ -11,8 +11,9 @@ import ng.gov.imostate.database.converters.Converters
 @Entity(tableName = "vehicle_current")
 @TypeConverters(Converters::class)
 data class VehicleCurrentEntity(
-    @ColumnInfo(name = "id")
-    @PrimaryKey val id: Long?,
+    @PrimaryKey
+    @ColumnInfo
+    val id: Long?,
     @ColumnInfo(name = "vehicle_plates")
     val vehiclePlates: String?,
     @ColumnInfo

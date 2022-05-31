@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import ng.gov.imostate.database.dao.TransactionLocalDao
+import ng.gov.imostate.database.entity.HolidayEntity
 import ng.gov.imostate.database.entity.TransactionEntity
 import ng.gov.imostate.datasource.RemoteDatasource
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
@@ -81,6 +82,18 @@ class TransactionRepository @Inject constructor(
 
     suspend fun getTransactionInDatabase(vehicleId: String): TransactionEntity? {
         return transactionLocalDao.getTransaction(vehicleId)
+    }
+
+    suspend fun insertAllTaxFreeDays(holidays: List<HolidayEntity>) {
+        transactionLocalDao.insertAllTaxFreeDays(holidays)
+    }
+
+    suspend fun getAllTaxFreeDays(): List<HolidayEntity> {
+        return transactionLocalDao.getAllTaxFreeDays()
+    }
+
+    suspend fun deleteAllTaxFreeDaysInDatabase(taxFreeDays: List<HolidayEntity>) {
+        transactionLocalDao.deleteAllTaxFreeDays(taxFreeDays)
     }
 
 }

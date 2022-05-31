@@ -4,10 +4,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import ng.gov.imostate.Mapper
-import ng.gov.imostate.database.entity.AgentRouteEntity
-import ng.gov.imostate.database.entity.TransactionEntity
-import ng.gov.imostate.database.entity.VehicleCurrentEntity
-import ng.gov.imostate.database.entity.VehiclePreviousEntity
+import ng.gov.imostate.database.entity.*
 import ng.gov.imostate.model.apiresult.*
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
@@ -47,6 +44,38 @@ class HomeFragmentViewModel @Inject constructor(
         val response = agentRepository.getDashBoardMetrics(token)
         return  when (response.success) {
             true -> {
+                val dashBoardMetrics = response.result?.metrics
+
+                //get all current agent's assigned routes in database
+                val databaseRoutes = getAllAgentRoutesInDatabase()
+                Timber.d("agents database routes to be deleted $databaseRoutes")
+                //delete all current agent's assigned routes in database
+                deleteAllAgentRoutesInDatabase(databaseRoutes)
+
+                //insert new retrieved agent's routes to database
+                Timber.d("agents remote routes to be inserted ${dashBoardMetrics?.routes}")
+                dashBoardMetrics?.routes?.let { routes ->
+                    Mapper.mapListOfAgentRouteToListOfAgentRouteEntity(routes)
+                }?.let { insertAllAgentRoutesToDatabase(it) }
+
+                //retrieve settings values for whether agent can collect money from vehicles
+                //outside their route
+                val setting = dashBoardMetrics?.settings?.find { it.setting_key == "allow_agents_collect_outside_route" }
+                //save setting value to appConfig
+                updateAgentCollectionSettingValue(setting?.value ?: "No")
+
+                //get all current agent's assigned routes in database
+                val taxFreeDays = getAllTaxFreeDays()
+                Timber.d("tax free days in database to be deleted $taxFreeDays")
+                //delete all current agent's assigned routes in database
+                deleteAllTaxFreeDaysInDatabase(taxFreeDays)
+
+                //retrieve and save new tax free days to database
+                Timber.d("remote tax free days to be inserted ${response.result?.metrics?.taxFreeDays}")
+                response.result?.metrics?.taxFreeDays?.let { holidays ->
+                    Mapper.mapListOfTaxFreeDayToListOfTaxFreeDayEntity(holidays)
+                }?.let { insertAllTaxFreeDaysToDatabase(it) }
+
                 ViewModelResult.Success(response.result)
             }
             else -> {
@@ -55,7 +84,19 @@ class HomeFragmentViewModel @Inject constructor(
         }
     }
 
-    suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {
+    private suspend fun deleteAllTaxFreeDaysInDatabase(taxFreeDays: List<HolidayEntity>) {
+        transactionRepository.deleteAllTaxFreeDaysInDatabase(taxFreeDays)
+    }
+
+    private suspend fun getAllTaxFreeDays(): List<HolidayEntity> {
+        return transactionRepository.getAllTaxFreeDays()
+    }
+
+    private suspend fun insertAllTaxFreeDaysToDatabase(holidays: List<HolidayEntity>) {
+        transactionRepository.insertAllTaxFreeDays(holidays)
+    }
+
+    private suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {
         agentRepository.insertAllAgentRoutesToDatabase(routes)
     }
 
@@ -174,15 +215,15 @@ class HomeFragmentViewModel @Inject constructor(
         vehicleRepository.insertVehiclesFromCurrentEnumerationToDatabase(vehicles)
     }
 
-    suspend fun getAllAgentRoutes(): List<AgentRouteEntity> {
+    private suspend fun getAllAgentRoutesInDatabase(): List<AgentRouteEntity> {
         return agentRepository.getAllAgentRoutesInDatabase()
     }
 
-    suspend fun deleteAllAgentRoutes(routes: List<AgentRouteEntity>) {
+    private suspend fun deleteAllAgentRoutesInDatabase(routes: List<AgentRouteEntity>) {
         agentRepository.deleteAllAgentRoutesInDatabase(routes)
     }
 
-    suspend fun updateAgentCollectionSettingValue(value: String) {
+    private suspend fun updateAgentCollectionSettingValue(value: String) {
         userPreferencesRepository.updateAgentCollectionSettingValue(value)
     }
 

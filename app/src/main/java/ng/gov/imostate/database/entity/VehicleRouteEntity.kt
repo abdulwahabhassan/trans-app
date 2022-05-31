@@ -9,7 +9,9 @@ import ng.gov.imostate.model.domain.Route
 
 @Entity(tableName = "vehicle_route")
 data class VehicleRouteEntity(
-    @PrimaryKey val id: Long? = null,
+    @PrimaryKey
+    @ColumnInfo
+    val id: Long? = null,
     @ColumnInfo(name = "route_id")
     val routeID: Long? = null,
     @ColumnInfo(name = "vehicle_id")

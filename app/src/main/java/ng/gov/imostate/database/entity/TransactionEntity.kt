@@ -10,7 +10,8 @@ data class TransactionEntity (
     @PrimaryKey
     @ColumnInfo(name = "vehicle_id")
     val vehicleId: String,
-    @ColumnInfo(name = "to")
+    @ColumnInfo
     val to: String?,
+    @ColumnInfo
     val amount: Double?
     )

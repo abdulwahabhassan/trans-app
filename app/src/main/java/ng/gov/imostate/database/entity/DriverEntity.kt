@@ -8,7 +8,9 @@ import com.squareup.moshi.Json
 
 @Entity(tableName = "driver")
 data class DriverEntity(
-    @PrimaryKey val id: Long?,
+    @PrimaryKey
+    @ColumnInfo
+    val id: Long?,
     @ColumnInfo(name = "first_name")
     val firstName: String?,
     @ColumnInfo(name = "middle_name")

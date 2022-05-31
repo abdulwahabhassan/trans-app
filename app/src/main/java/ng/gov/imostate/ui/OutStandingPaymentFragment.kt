@@ -111,23 +111,35 @@ class OutStandingPaymentFragment : Fragment() {
             Timber.d("selected end pay date: $dateToPayTo")
             Timber.d("number of days selected: $numOfSelectedDays")
 
-            //array to hold valid days
-            val validDaysArray = arrayListOf<String>()
-
-            numOfSelectedDays.downTo(0).forEach {
-                val date = LocalDate.parse(dateTo).minusDays(it)
-                    .format(DateTimeFormatter.ofPattern("E, dd MMM yyyy", Locale.UK))
-                Timber.d("numOfDays: $it date: ${date}")
-                //exempt saturdays and sundays
-                if (!date.contains("Sat", true) && !date.contains("Sun", true)) {
-                    validDaysArray.add(date)
-                }
-            }
-            Timber.d("valid days array: $validDaysArray")
-
-            val numOfEligibleDaysOwed = validDaysArray.size
-
             viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+
+                //array to hold valid days
+                val validDaysArray = arrayListOf<String>()
+
+                val holidays = Mapper.mapListOfTaxFreeDayEntityToListOfTaxFreeDay(
+                    viewModel.getAllHolidaysInDatabase()
+                )
+                val holiDates = holidays.map { holiday -> holiday.date?.let { date -> AppUtils.formatDateToFullDate(date) } }
+                Timber.d("Holidates $holiDates")
+
+                numOfSelectedDays.downTo(0).forEach {
+                    val date = LocalDate.parse(dateTo).minusDays(it)
+                        .format(DateTimeFormatter.ofPattern("E, dd MMM yyyy", Locale.UK))
+                    Timber.d("numOfDays: $it date: ${date}")
+                    //exempt saturdays and sundays
+                    if (!date.contains("Sat", true) && !date.contains("Sun", true)) {
+                        //exempt holidays
+                        if (!holiDates.contains(date)) {
+                            validDaysArray.add(date)
+                        } else {
+                            Timber.d("found an holiday $date")
+                        }
+                    }
+                }
+                Timber.d("valid days array: $validDaysArray")
+
+                val numOfEligibleDaysOwed = validDaysArray.size
+
                 val rate = vehicleCategory?.let { viewModel.getRateInDatabase(it) }
                 if (rate?.amount != null) {
                     amountToPay = rate.amount.toDouble().times(numOfEligibleDaysOwed.toDouble())

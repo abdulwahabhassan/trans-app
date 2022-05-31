@@ -21,7 +21,8 @@ import timber.log.Timber
         TransactionEntity::class,
         RateEntity::class,
         AgentRouteEntity::class,
-        UpdateEntity::class
+        UpdateEntity::class,
+        HolidayEntity::class
                ],
     version = 1,
     exportSchema = false

@@ -1,11 +1,9 @@
 package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ng.gov.imostate.database.entity.AgentRouteEntity
-import ng.gov.imostate.database.entity.RateEntity
-import ng.gov.imostate.database.entity.VehicleCurrentEntity
-import ng.gov.imostate.database.entity.VehicleRouteEntity
+import ng.gov.imostate.database.entity.*
 import ng.gov.imostate.repository.AgentRepository
+import ng.gov.imostate.repository.TransactionRepository
 import ng.gov.imostate.repository.UserPreferencesRepository
 import ng.gov.imostate.repository.VehicleRepository
 import javax.inject.Inject
@@ -14,7 +12,8 @@ import javax.inject.Inject
 class NfcReaderResultFragmentViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     private val agentRepository: AgentRepository,
-    private val vehicleRepository: VehicleRepository
+    private val vehicleRepository: VehicleRepository,
+    private val transactionRepository: TransactionRepository
 ) : BaseViewModel(
     userPreferencesRepository
 ){
@@ -28,5 +27,9 @@ class NfcReaderResultFragmentViewModel @Inject constructor(
 
     suspend fun getVehicleFromCurrentEnumerationInDatabase(identifier: String): VehicleCurrentEntity? {
         return vehicleRepository.getVehicleFromCurrentEnumerationInDatabase(identifier)
+    }
+
+    suspend fun getAllHolidaysInDatabase(): List<HolidayEntity> {
+        return transactionRepository.getAllTaxFreeDays()
     }
 }

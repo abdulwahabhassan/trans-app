@@ -253,43 +253,80 @@ class TransactionsFragment : Fragment() {
     fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
         val format = SimpleDateFormat("'Date' yyyy-MM-dd 'Time' HH:mm:ss")
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
-        return printer.addTextToPrint(
-            """
+
+        var textToPrint = ""
+
+        when (args.transactionType) {
+            TransactionType.AGENT_TRANSACTION.name -> {
+                val transaction = transactionsAdapter.currentList[0]
+                textToPrint = """
             [C]<img>${
-                PrinterTextParserImg.bitmapToHexadecimalString(
-                    printer,
-                    requireContext().getResources()
-                        .getDrawableForDensity(
-                            R.drawable.imo_logo,
-                            DisplayMetrics.DENSITY_MEDIUM
-                        )
-                )
-            }</img>
+                    PrinterTextParserImg.bitmapToHexadecimalString(
+                        printer,
+                        requireContext().getResources()
+                            .getDrawableForDensity(
+                                R.drawable.imo_logo,
+                                DisplayMetrics.DENSITY_LOW
+                            )
+                    )
+                }</img>
             [L]
-            [C]<u><font size='big'>Tax Receipt</font></u>
+            [C]<u><font size='big'>Receipt</font></u>
             [L]
             [C]${format.format(Date())}
             [C]
             [C]================================
             [L]
-            [L]<b>AMOUNT</b>[R]500.99 NGN
-            [L]
-            [L]<b>VAT</b>[R]10.00 NGN
-            [L]
-            [C]--------------------------------
-            [R]TOTAL CHARGE :[R]510.99 NGN
-            [R]TAX :[R]1.50 NGN
+            [L]INTERNAL REF [R]${transaction.internalReference}
+            [L]AMOUNT [R]${transaction.amount} NGN
+            [L]DATE [R]${AppUtils.formatDateToFullDate(transaction.createdAt.substring(0, 10))}
+            [L]SENDER [R]${transaction.accountFrom}
+            [L]RECIPIENT [R]${transaction.accountTo}
+            [L]VEHICLE [R]${transaction.vehicleFrom.vehiclePlates}
+            [L]DRIVER [R]${transaction.vehicleFrom.driverName}
             [L]
             [C]================================
             [L]
-            [L]<font color='bg-black'>Vehicle Details:</font>
-            [L]Vehicle ID: 3892
-            [L]Driver: Johnson Dubem
-            [L]Address: No. 5 Amakohia Flyover, Owerri, Imo
-            [L]Phone: 08012014561
-            
             """.trimIndent()
-        )
+
+            }
+
+            TransactionType.VEHICLE_TRANSACTION.name -> {
+                val collection = collectionsAdapter.currentList[0]
+                textToPrint = """
+            [C]<img>${
+                    PrinterTextParserImg.bitmapToHexadecimalString(
+                        printer,
+                        requireContext().getResources()
+                            .getDrawableForDensity(
+                                R.drawable.imo_logo,
+                                DisplayMetrics.DENSITY_LOW
+                            )
+                    )
+                }</img>
+            [L]
+            [C]<u><font size='big'>Receipt</font></u>
+            [L]
+            [C]${format.format(Date())}
+            [C]
+            [C]================================
+            [L]
+            [L]TRANSACTION ID [R]${collection.transactionID}
+            [L]INTERNAL REF [R]${collection.internalReference}
+            [L]AMOUNT [R]${collection.amount} NGN
+            [L]STATUS [R]${collection.status}
+            [L]DATE [R]${collection.date?.let { AppUtils.formatDateToFullDate(it) }}
+            [L]VEHICLE ID [R]${collection.vehicleID}
+            [L]DAYS [R]${collection.daysCount}
+            [L]
+            [C]================================
+            [L]
+            """.trimIndent()
+            }
+
+        }
+
+        return printer.addTextToPrint(textToPrint)
     }
 
     private fun initRV() {

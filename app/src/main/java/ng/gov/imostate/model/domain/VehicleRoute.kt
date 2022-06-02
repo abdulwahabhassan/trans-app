@@ -15,6 +15,5 @@ data class VehicleRoute(
     val createdAt: String? = null,
     @Json(name = "updated_at")
     val updatedAt: String? = null,
-    val route: Route? = null,
     var selected: Boolean? = false,
 )

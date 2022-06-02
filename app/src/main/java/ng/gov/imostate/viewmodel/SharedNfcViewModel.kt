@@ -59,5 +59,6 @@ enum class NfcMode {
 
 enum class NfcSyncMode {
     SYNCED,
-    UNSYNCED
+    UNSYNCED,
+    ERROR
 }

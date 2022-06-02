@@ -8,20 +8,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.ItemRouteBinding
+import ng.gov.imostate.model.domain.Route
 import ng.gov.imostate.model.domain.VehicleRoute
 import timber.log.Timber
 import java.util.*
 
 class RoutesAdapter(
-    private val onItemClicked: (position: Int, itemAtPosition: VehicleRoute) -> Unit
-) : ListAdapter<VehicleRoute, RoutesAdapter.RouteVH>(object :
-    DiffUtil.ItemCallback<VehicleRoute>() {
+    private val onItemClicked: (position: Int, itemAtPosition: Route) -> Unit
+) : ListAdapter<Route, RoutesAdapter.RouteVH>(object :
+    DiffUtil.ItemCallback<Route>() {
 
-    override fun areItemsTheSame(oldItem: VehicleRoute, newItem: VehicleRoute): Boolean {
+    override fun areItemsTheSame(oldItem: Route, newItem: Route): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: VehicleRoute, newItem: VehicleRoute): Boolean {
+    override fun areContentsTheSame(oldItem: Route, newItem: Route): Boolean {
         return oldItem == newItem
     }
 
@@ -55,14 +56,14 @@ class RoutesAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(vehicleRoute: VehicleRoute) {
+        fun bind(vehicleRoute: Route) {
             Timber.d("$vehicleRoute")
             with(binding) {
-                routeNameTV.text = vehicleRoute.route?.from?.replaceFirstChar {
+                routeNameTV.text = vehicleRoute.from?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
-                } + " to " + vehicleRoute.route?.to?.replaceFirstChar {
+                } + " to " + vehicleRoute.to?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()

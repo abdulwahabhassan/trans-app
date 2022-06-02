@@ -21,6 +21,7 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.async
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentOutStandingPaymentBinding
@@ -57,6 +58,7 @@ class OutStandingPaymentFragment : Fragment() {
     var dateTo: String? = ""
     var outstandingBalance: Double? = 0.00
     var amountToPay: Double = 0.00
+    var agentName: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +114,8 @@ class OutStandingPaymentFragment : Fragment() {
             Timber.d("number of days selected: $numOfSelectedDays")
 
             viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                //get agent name
+                agentName = viewModel.getInitialUserPreferences().agentName
 
                 //array to hold valid days
                 val validDaysArray = arrayListOf<String>()
@@ -337,6 +341,7 @@ class OutStandingPaymentFragment : Fragment() {
     fun getAsyncEscPosPrinter(printerConnection: DeviceConnection?): AsyncEscPosPrinter? {
         val format = SimpleDateFormat("'Date' yyyy-MM-dd 'Time' HH:mm:ss")
         val printer = AsyncEscPosPrinter(printerConnection, 203, 48f, 32)
+
         return printer.addTextToPrint(
             """
             [C]<img>${
@@ -345,33 +350,30 @@ class OutStandingPaymentFragment : Fragment() {
                     requireContext().getResources()
                         .getDrawableForDensity(
                             R.drawable.imo_logo,
-                            DisplayMetrics.DENSITY_MEDIUM
+                            DisplayMetrics.DENSITY_LOW
                         )
                 )
             }</img>
             [L]
-            [C]<u><font size='big'>Tax Receipt</font></u>
+            [C]<u><font size='big'>Receipt</font></u>
             [L]
             [C]${format.format(Date())}
             [C]
             [C]================================
             [L]
-            [L]<b>AMOUNT</b>[R]500.99 NGN
-            [L]
-            [L]<b>VAT</b>[R]10.00 NGN
+            [L]<b>AMOUNT PAID</b> [R]$amountToPay NGN</b>
+            [L]<b>VAT [R]0.00 NGN</b>
             [L]
             [C]--------------------------------
-            [R]TOTAL CHARGE :[R]510.99 NGN
-            [R]TAX :[R]1.50 NGN
-            [R]OUTSTANDING BAL : $vehicleCategory NGN
+            [L]TOTAL CHARGE : [R]$amountToPay NGN
+            [L]OUTSTANDING BAL : [R]${outstandingBalance?.minus(amountToPay)} NGN
             [L]
             [C]================================
             [L]
-            [C]<font color='bg-black'><b>Details</b></font>
+            [L]VEHICLE : $vehiclePlatesNumber
+            [L]DRIVER : $driverName
+            [L]AGENT : $agentName
             [L]
-            [L]Vehicle ID: $vehicleId
-            [L]Driver: $driverName
-            
             """.trimIndent()
         )
     }

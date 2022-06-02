@@ -23,9 +23,5 @@ data class VehicleRouteEntity(
     @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
     @ColumnInfo(name = "updated_at")
-    val updatedAt: String? = null,
-    @ColumnInfo(name = "from")
-    val from: String? = null,
-    @ColumnInfo(name = "to")
-    val to: String? = null
+    val updatedAt: String? = null
 )

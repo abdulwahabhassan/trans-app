@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentSuccessBinding
 import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
@@ -112,9 +113,21 @@ class SuccessFragment : Fragment() {
                         binding.nfcWriteModeLAV.pauseAnimation()
                         binding.nfcWriteModeLAV.visibility = INVISIBLE
                         binding.syncTagBTN.text =
-                            if (binding.successTV.text.toString() == "Successfully Synced Tag")
-                                "RE-SYNC TAG" else "SYNC TAG"
-                        binding.successLAV.visibility = VISIBLE
+                            when {
+                                binding.successTV.text.toString() == "Successfully Synced Tag" -> {
+                                    binding.successLAV.visibility = VISIBLE
+                                    "RE-SYNC TAG"
+                                }
+                                binding.successTV.text.toString() == "Failed to Synced Tag" -> {
+                                    binding.successLAV.visibility = INVISIBLE
+                                    "SYNC TAG"
+                                }
+                                else -> {
+                                    binding.successLAV.visibility = VISIBLE
+                                    "SYNC TAG"
+                                }
+                            }
+
                     }
                 }
             }
@@ -127,11 +140,18 @@ class SuccessFragment : Fragment() {
                 sharedNfcViewModel.nfcSyncMode.collect { nfcSyncMode ->
                     if (nfcSyncMode == NfcSyncMode.SYNCED.name) {
                         binding.successTV.text = "Successfully Synced Tag"
+                        binding.successTV.setTextColor(getResources().getColor(R.color.green))
                         binding.syncTagBTN.text = "RE-SYNC TAG"
+                        binding.successLAV.visibility = VISIBLE
                         binding.successLAV.playAnimation()
-                        //reset sync mode to un-synced
-                        sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.UNSYNCED)
+                    } else if (nfcSyncMode == NfcSyncMode.ERROR.name) {
+                        binding.successTV.text = "Failed to Synced Tag"
+                        binding.successTV.setTextColor(getResources().getColor(R.color.red))
+                        binding.syncTagBTN.text = "RE-SYNC TAG"
+                        binding.successLAV.visibility = INVISIBLE
                     }
+                    //reset sync mode to un-synced
+                    sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.UNSYNCED)
                 }
             }
         }

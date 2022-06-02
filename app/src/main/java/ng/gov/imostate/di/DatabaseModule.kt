@@ -50,7 +50,7 @@ object DatabaseModule {
     @Singleton
     fun provideRouteLocalDAO(
         @ApplicationContext appContext: Context
-    ): VehicleRouteLocalDao {
+    ): RouteLocalDao {
         return AppRoomDatabase.getInstance(appContext).routeLocalDao()
     }
 

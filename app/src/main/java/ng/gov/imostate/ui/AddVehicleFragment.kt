@@ -23,6 +23,7 @@ import ng.gov.imostate.adapter.RoutesAdapter
 import ng.gov.imostate.databinding.FragmentAddVehicleBinding
 import ng.gov.imostate.databinding.FragmentFindVehicleDialogBinding
 import ng.gov.imostate.databinding.LayoutSelectRoutesBinding
+import ng.gov.imostate.model.domain.Route
 import ng.gov.imostate.model.domain.VehicleRoute
 import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.model.request.OnboardVehicleRequest
@@ -43,7 +44,7 @@ class AddVehicleFragment : Fragment() {
     private val mainBinding get() = _binding!!
     private var lgaIndex: Int  = 0
     private var validationErrorMessage: String = ""
-    private var selectedRoutes = mutableListOf<VehicleRoute>()
+    private var selectedRoutes = mutableListOf<Route>()
     private var vehicleCategories = listOf<String>()
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
@@ -162,7 +163,7 @@ class AddVehicleFragment : Fragment() {
                         imssin = imssin.ifEmpty { "-" },
                         email = email,
                         phone = phoneNumber,
-                        routes = selectedRoutes.map { VehicleRoute(routeID = it.routeID, selected = null) },
+                        routes = selectedRoutes.map { VehicleRoute(routeID = it.id, selected = null) },
                         stateOfRegistration = selectedStateOfReg.toString(),
                         gender = selectedDriverGender.toString(),
                         maritalStatus = selectedMaritalStatus.toString(),
@@ -211,8 +212,7 @@ class AddVehicleFragment : Fragment() {
                                         onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates,
                                         onBoardedVehicle?.driverName,
-//                                    AppUtils.getCurrentDate(),
-                                        "2022-04-01",
+                                        AppUtils.getCurrentDate(),
                                         onBoardedVehicle?.type
                                     )
                                 findNavController().navigate(action)
@@ -263,10 +263,10 @@ class AddVehicleFragment : Fragment() {
         binding.doneBTN.setOnClickListener {
             selectRoutesSheet.dismiss()
             mainBinding.selectedVehicleRoutesTV.text = selectedRoutes.map { selectedRoute ->
-                "${selectedRoute.route?.from?.replaceFirstChar {
+                "${selectedRoute.from?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) 
                 else it.toString() 
-            }} to ${selectedRoute.route?.to?.replaceFirstChar {
+            }} to ${selectedRoute.to?.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) 
                 else it.toString() }}"}.toString()
                 .removePrefix("[").removeSuffix("]")
@@ -289,10 +289,10 @@ class AddVehicleFragment : Fragment() {
                 routesAdapter.notifyItemChanged(position)
             }
             binding.routesRV.adapter = routesAdapter
-            val routes = Mapper.mapListOfVehicleRouteEntityToListOfVehicleRoute(viewModel.getAllRoutesInDatabase())
+            val routes = Mapper.mapListOfRouteEntityToListOfRoute(viewModel.getAllRoutesInDatabase())
             Timber.d("routes in database $routes")
             val list = routes.map { vehicleRoute ->
-                selectedRoutes.find { it.routeID == vehicleRoute.routeID } ?: vehicleRoute
+                selectedRoutes.find { it.id == vehicleRoute.id } ?: vehicleRoute
             }
             Timber.d("list $list")
             routesAdapter.submitList(list)
@@ -311,7 +311,11 @@ class AddVehicleFragment : Fragment() {
         val findVehicleBottomSheetDialog = BottomSheetDialog(requireContext())
         findVehicleBottomSheetDialog.setContentView(binding.root)
 
-        findVehicleBottomSheetDialog.show()
+        findVehicleBottomSheetDialog.setCancelable(false)
+
+        if (!findVehicleBottomSheetDialog.isShowing) {
+            findVehicleBottomSheetDialog.show()
+        }
 
         binding.backArrowIV.setOnClickListener {
             findVehicleBottomSheetDialog.dismiss()
@@ -408,24 +412,24 @@ class AddVehicleFragment : Fragment() {
                             )
 
                             selectedRoutes = vehicle.vehicleRoutes?.let { vehicleRouteEntities ->
-                                Mapper.mapListOfVehicleRouteEntityToListOfVehicleRoute(
+                                Mapper.mapListOfVehicleRouteEntityToListOfRoute(
                                     vehicleRouteEntities
                                 ).map {
-                                    val retrievedRoute = it.routeID?.let { id ->
+                                    val retrievedRoute = it.id?.let { id ->
                                         viewModel.getRoute(id)
                                     }
-                                    it.copy(route = it.route?.copy(
+                                    it.copy(
                                         from = retrievedRoute?.from,
                                         to = retrievedRoute?.to
-                                    ))
+                                    )
                                 }.map { it.copy(selected = true) }.toMutableList()
-                            } ?: emptyList<VehicleRoute>().toMutableList()
+                            } ?: emptyList<Route>().toMutableList()
 
                             Timber.d("slr $selectedRoutes")
 
                             if (selectedRoutes.isNotEmpty()) {
                                 selectedVehicleRoutesTV.text = selectedRoutes.map { routeEntity ->
-                                    val route = routeEntity.routeID?.let { routeId ->
+                                    val route = routeEntity.id?.let { routeId ->
                                         viewModel.getRoute(routeId)
                                     }
                                     if (route?.from != null && route.to != null) {

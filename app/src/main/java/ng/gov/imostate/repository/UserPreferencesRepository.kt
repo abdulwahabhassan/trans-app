@@ -51,7 +51,8 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
             currentTotalVended = preferences[PreferencesKeys.CURRENT_TOTAL_VENDED],
             currentTotalCredited = preferences[PreferencesKeys.CURRENT_TOTAL_CREDITED],
             currentPayable = preferences[PreferencesKeys.CURRENT_PAYABLE],
-            currentPaidOut = preferences[PreferencesKeys.CURRENT_PAID_OUT]
+            currentPaidOut = preferences[PreferencesKeys.CURRENT_PAID_OUT],
+            collectionSetting = preferences[PreferencesKeys.COLLECTION_SETTING]
         )
     }
 

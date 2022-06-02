@@ -2,6 +2,8 @@ package ng.gov.imostate.ui
 
 //import timber.log.Timber
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.content.Intent
 import android.content.IntentFilter
 import android.nfc.NdefMessage
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         //init pending intent
         pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, javaClass).apply {
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }, 0)
+        }, FLAG_MUTABLE)
         //init nfc tech discovered filter
         val techDiscoveredIntentFilter = IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED)
         //init nfc ndef discovered filter
@@ -275,7 +277,7 @@ class MainActivity : AppCompatActivity() {
         //then write to it
         Timber.d("tagData: ${tagData} dataToWrite: $data")
         if (tagData != null) {
-            if (tagData.vpn == data?.vpn) {
+            if (true) { //DEBUG AND DEMO MODE
                 Timber.d("Writing To Tag")
                 val records = arrayListOf<NdefRecord>()
                 val jsonRecord = createNdefJsonRecord(data)
@@ -291,6 +293,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 AppUtils.showToast(this, "Tag and vehicle are incompatible", MotionToastStyle.ERROR)
+                sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.ERROR)
             }
         } else {
             Timber.d("Writing To Tag")
@@ -511,11 +514,13 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "NAME: ${data.name}\nPLATES NO.: ${data.vpn} ID: ${data.vid}",
+                                    "NAME: ${data.name}\nPLATES NO.: ${data.vpn}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload
-                                goToScannedTagResultScreen(data)
+                                if (navController.currentDestination?.id != R.id.successFragment) {
+                                    goToScannedTagResultScreen(data)
+                                }
                             }
                         } else {
                             AppUtils.showToast(

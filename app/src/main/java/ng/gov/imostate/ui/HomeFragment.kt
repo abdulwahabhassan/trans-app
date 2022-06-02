@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Lifecycle
@@ -148,7 +150,7 @@ class HomeFragment : Fragment() {
                     }
                     is ViewModelResult.Error -> {
                         Timber.d("synced transactions error: ${viewModelResult.errorMessage}")
-                        AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                        //AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
 
                     }
                 }
@@ -253,8 +255,19 @@ class HomeFragment : Fragment() {
                 viewModel.userPreferences.collect { userPreferences ->
                     when (userPreferences) {
                         is ViewModelResult.Success -> {
-                            binding.lastSyncTV.text = "Last synced: ${userPreferences.data.lastSyncTime ?:
-                            viewModel.getInitialUserPreferences().lastSyncTime ?: ""}"
+                            when {
+                                !userPreferences.data.lastSyncTime.isNullOrEmpty() -> {
+                                    binding.lastSyncTV.text = "Last synced: ${userPreferences.data.lastSyncTime}"
+                                    binding.lastSyncTV.visibility = VISIBLE
+                                }
+                                !viewModel.getInitialUserPreferences().lastSyncTime.isNullOrEmpty() -> {
+                                    binding.lastSyncTV.text = "Last synced: ${viewModel.getInitialUserPreferences().lastSyncTime}"
+                                    binding.lastSyncTV.visibility = VISIBLE
+                                }
+                                else -> {
+                                    binding.lastSyncTV.visibility = GONE
+                                }
+                            }
                         }
                         is ViewModelResult.Error -> {
                             Timber.d("${userPreferences.errorMessage}")

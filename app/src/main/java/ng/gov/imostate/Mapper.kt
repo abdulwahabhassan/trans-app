@@ -184,8 +184,6 @@ object Mapper {
             vehicleRoute.status,
             vehicleRoute.createdAt,
             vehicleRoute.updatedAt,
-            vehicleRoute.route?.from,
-            vehicleRoute.route?.to
         )
     }
 
@@ -197,15 +195,7 @@ object Mapper {
             vehicleRoute.driverID,
             vehicleRoute.status,
             vehicleRoute.createdAt,
-            vehicleRoute.updatedAt,
-            Route(
-                vehicleRoute.routeID,
-                vehicleRoute.from,
-                vehicleRoute.to,
-                vehicleRoute.status,
-                vehicleRoute.createdAt,
-                vehicleRoute.updatedAt
-            )
+            vehicleRoute.updatedAt
         )
     }
 
@@ -213,6 +203,21 @@ object Mapper {
         return vehicleRoutes.map { route ->
             mapVehicleRouteEntityToVehicleRoute(route)
         }
+    }
+
+    fun mapListOfVehicleRouteEntityToListOfRoute(vehicleRoutes: List<VehicleRouteEntity>): List<Route> {
+        return vehicleRoutes.map { route ->
+            mapVehicleRouteEntityToRoute(route)
+        }
+    }
+
+    private fun mapVehicleRouteEntityToRoute(route: VehicleRouteEntity): Route {
+        return Route(
+            id = route.routeID,
+            status = route.status,
+            createdAt = route.createdAt,
+            updatedAt = route.updatedAt,
+        )
     }
 
     fun mapListOfVehicleRouteToListOfVehicleRouteEntity(vehicleRoutes: List<VehicleRoute>): List<VehicleRouteEntity> {
@@ -340,5 +345,37 @@ object Mapper {
             holiday.updatedAt,
             holiday.status
         )
+    }
+
+    fun mapListOfRouteToListOfRouteEntity(routes: List<Route>): List<RouteEntity> {
+        return routes.map {
+            mapRouteToRouteEntity(it)
+        }
+    }
+
+    private fun mapRouteToRouteEntity(route: Route): RouteEntity {
+        return RouteEntity(
+            id = route.id,
+            from = route.from,
+            to = route.to,
+            status = route.status,
+            createdAt = route.createdAt,
+            updatedAt = route.updatedAt,
+        )
+    }
+
+    private fun mapRouteEntityToRoute(route: RouteEntity): Route {
+        return Route(
+            id = route.id,
+            from = route.from,
+            to = route.to,
+            status = route.status,
+            createdAt = route.createdAt,
+            updatedAt = route.updatedAt,
+        )
+    }
+
+    fun mapListOfRouteEntityToListOfRoute(routes: List<RouteEntity>): List<Route> {
+        return routes.map { mapRouteEntityToRoute(it) }
     }
 }

@@ -61,12 +61,12 @@ class TransactionsAdapter(
                 transactionTitleTV.text = transaction.accountFrom
                 transactionAmountTV.text = StringBuilder("₦").append(
                     AppUtils.formatCurrency(
-                        transaction.amount
+                        transaction.amount ?: "0.00"
                     )
                 )
-                transactionDateTV.text = AppUtils.formatDateToFullDate(
-                    transaction.createdAt.substring(0, 10)
-                )
+                transactionDateTV.text = transaction.createdAt?.substring(0, 10)?.let {
+                    AppUtils.formatDateToFullDate(it)
+                }
                 transactionIV.setImageResource(R.drawable.ic_transaction_credit)
             }
         }

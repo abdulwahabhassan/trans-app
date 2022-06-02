@@ -96,10 +96,12 @@ class TransactionsFragment : Fragment() {
                         when (val result = viewModel.transactions.value) {
                             is ViewModelResult.Success -> {
                                 val filteredTransactions = result.data.filter { transaction ->
-                                    transaction.accountFrom.contains(newText.toString(), true) ||
-                                    transaction.accountTo.contains(newText.toString(), true) ||
-                                    transaction.internalReference.contains(newText.toString(), true) ||
-                                    transaction.amount.contains(newText.toString(), true)
+                                    transaction.accountFrom?.contains(newText.toString(), true) == true ||
+                                            transaction.accountTo?.contains(newText.toString(), true) == true ||
+                                            transaction.internalReference?.contains(newText.toString(), true) == true ||
+                                            transaction.vehicleFrom?.vehiclePlates?.contains(newText.toString(), true) == true ||
+                                            transaction.createdAt?.substring(0, 10)?.contains(newText.toString(), true) == true ||
+                                            transaction.amount?.contains(newText.toString(), true) == true
                                 }
                                 transactionsAdapter.submitList(filteredTransactions)
                             }
@@ -111,13 +113,10 @@ class TransactionsFragment : Fragment() {
                             is ViewModelResult.Success -> {
                                 val filteredCollection = result.data.filter { collection ->
                                     collection.amount?.contains(newText.toString(), true) == true ||
+                                    collection.status?.contains(newText.toString(), true) == true ||
                                     collection.vehicleID.toString().contains(newText.toString(), true) ||
-                                    collection.flaggedMessage?.contains(newText.toString(), true) == true ||
-                                    collection.date?.contains(newText.toString(), true) == true ||
-                                    collection.vehicleID.toString().contains(newText.toString(), true) ||
-                                    collection.internalReference.toString().contains(newText.toString(), true) ||
-                                    collection.pointsAggregated.toString().contains(newText.toString(), true)
-
+                                    collection.date.toString().contains(newText.toString(), true) ||
+                                    collection.internalReference.toString().contains(newText.toString(), true)
                                 }
                                 collectionsAdapter.submitList(filteredCollection)
                             }
@@ -279,11 +278,12 @@ class TransactionsFragment : Fragment() {
             [L]
             [L]INTERNAL REF [R]${transaction.internalReference}
             [L]AMOUNT [R]${transaction.amount} NGN
-            [L]DATE [R]${AppUtils.formatDateToFullDate(transaction.createdAt.substring(0, 10))}
+            [L]DATE [R]${transaction.createdAt?.substring(0, 10)
+                    ?.let { AppUtils.formatDateToFullDate(it) }}
             [L]SENDER [R]${transaction.accountFrom}
             [L]RECIPIENT [R]${transaction.accountTo}
-            [L]VEHICLE [R]${transaction.vehicleFrom.vehiclePlates}
-            [L]DRIVER [R]${transaction.vehicleFrom.driverName}
+            [L]VEHICLE [R]${transaction.vehicleFrom?.vehiclePlates}
+            [L]DRIVER [R]${transaction.vehicleFrom?.driverName}
             [L]
             [C]================================
             [L]
@@ -399,11 +399,12 @@ class TransactionsFragment : Fragment() {
             binding.doneBTN.setOnClickListener {
                 transactionDetailsSheet.dismiss()
             }
-            senderTV.text = transaction.vehicleFrom.driverName
+            senderTV.text = transaction.vehicleFrom?.driverName
             receiverTV.text = transaction.accountTo
             amountTV.text = transaction.amount
-            dateTV.text = AppUtils.formatDateToFullDate(transaction.createdAt.substring(0, 10))
-            vehiclePlatesTV.text = transaction.vehicleFrom.vehiclePlates
+            dateTV.text = transaction.createdAt?.substring(0, 10)
+                ?.let { AppUtils.formatDateToFullDate(it) }
+            vehiclePlatesTV.text = transaction.vehicleFrom?.vehiclePlates
         }
     }
 

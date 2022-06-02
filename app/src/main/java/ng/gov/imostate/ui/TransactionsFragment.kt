@@ -280,10 +280,10 @@ class TransactionsFragment : Fragment() {
             [L]AMOUNT [R]${transaction.amount} NGN
             [L]DATE [R]${transaction.createdAt?.substring(0, 10)
                     ?.let { AppUtils.formatDateToFullDate(it) }}
-            [L]SENDER [R]${transaction.accountFrom}
-            [L]RECIPIENT [R]${transaction.accountTo}
-            [L]VEHICLE [R]${transaction.vehicleFrom?.vehiclePlates}
-            [L]DRIVER [R]${transaction.vehicleFrom?.driverName}
+            [L]SENDER [R]${transaction.accountFrom ?: "-"}
+            [L]RECIPIENT [R]${transaction.accountTo ?: "-"}
+            [L]VEHICLE [R]${transaction.vehicleFrom?.vehiclePlates ?: "-"}
+            [L]DRIVER [R]${transaction.vehicleFrom?.driverName ?: "-"}
             [L]
             [C]================================
             [L]
@@ -311,13 +311,13 @@ class TransactionsFragment : Fragment() {
             [C]
             [C]================================
             [L]
-            [L]TRANSACTION ID [R]${collection.transactionID}
+            [L]TRANSACTION ID [R]${collection.transactionID ?: "-"}
             [L]INTERNAL REF [R]${collection.internalReference}
             [L]AMOUNT [R]${collection.amount} NGN
-            [L]STATUS [R]${collection.status}
+            [L]STATUS [R]${collection.status ?: "-"}
             [L]DATE [R]${collection.date?.let { AppUtils.formatDateToFullDate(it) }}
-            [L]VEHICLE ID [R]${collection.vehicleID}
-            [L]DAYS [R]${collection.daysCount}
+            [L]VEHICLE ID [R]${collection.vehicleID ?: "-"}
+            [L]DAYS [R]${collection.daysCount ?: "-"}
             [L]
             [C]================================
             [L]

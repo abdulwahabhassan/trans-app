@@ -271,6 +271,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun writeDataToTag(tagFromIntent: Tag, data: Data?) {
+        Timber.d("Writing To Tag")
         val tagData = readAndReturnTagData(tagFromIntent)
         //only write to tag if their vpn are the same otherwise if the tag is null which could
         //mean that it is a new tag that hasn't been onboarded yet with any record,
@@ -278,7 +279,6 @@ class MainActivity : AppCompatActivity() {
         Timber.d("tagData: ${tagData} dataToWrite: $data")
         if (tagData != null) {
             if (true) { //DEBUG AND DEMO MODE
-                Timber.d("Writing To Tag")
                 val records = arrayListOf<NdefRecord>()
                 val jsonRecord = createNdefJsonRecord(data)
                 if (jsonRecord != null) {
@@ -296,7 +296,6 @@ class MainActivity : AppCompatActivity() {
                 sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.ERROR)
             }
         } else {
-            Timber.d("Writing To Tag")
             val records = arrayListOf<NdefRecord>()
             val jsonRecord = createNdefJsonRecord(data)
             if (jsonRecord != null) {
@@ -337,6 +336,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun writeNdefRecordsToTag(records: Array<NdefRecord>, tag: Tag) {
+        Timber.d("Write NDEF records to tag")
         val ndef = Ndef.get(tag)
         Timber.d("${ndef.maxSize}")
         val message = NdefMessage(records)
@@ -504,7 +504,7 @@ class MainActivity : AppCompatActivity() {
                         val data = AppUtils.convertToData(json, moshi)
 
                         if (data != null) {
-                            if (data.name == "" && data.vid == "" && data.lpd == "" && data.vc == "") {
+                            if (data.vid == "" && data.lpd == "" && data.vc == "") {
                                 Timber.d("Record is empty")
                                 AppUtils.showToast(
                                     this,
@@ -514,7 +514,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "NAME: ${data.name}\nPLATES NO.: ${data.vpn}",
+                                    "PLATES NO.: ${data.vpn}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload
@@ -548,7 +548,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToScannedTagResultScreen(data: Data) {
         val bundle = Bundle().also {
-            it.putString(DRIVER_NAME_KEY, data.name)
             it.putString(VEHICLE_ID_NUMBER_KEY, data.vid)
             it.putString(LAST_PAYMENT_DATE_KEY, data.lpd)
             it.putString(VEHICLE_CATEGORY_KEY, data.vc)

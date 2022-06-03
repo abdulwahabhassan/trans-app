@@ -52,12 +52,6 @@ interface ApiService {
         @Header("Authorization") token: String
     ): ApiResponse<TransactionsResult>
 
-    @GET("agent/vehicle/transaction/{id}")
-    suspend fun getRecentTransaction(
-        @Header("Authorization") token: String,
-        @Path("id") vehicleId: String,
-    ): ApiResponse<TransactionResult>
-
     @GET("agent/vehicle/rates")
     suspend fun getRates(
         @Header("Authorization") token: String

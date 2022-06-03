@@ -83,7 +83,6 @@ class SuccessFragment : Fragment() {
                 } else {
                     sharedNfcViewModel.setData(
                         Data(
-                            args.driverName.toString(),
                             args.vehicleId,
                             args.lastPayDate.toString(),
                             args.vehicleCategory.toString(),
@@ -144,11 +143,15 @@ class SuccessFragment : Fragment() {
                         binding.syncTagBTN.text = "RE-SYNC TAG"
                         binding.successLAV.visibility = VISIBLE
                         binding.successLAV.playAnimation()
+                        Timber.d("Synced")
                     } else if (nfcSyncMode == NfcSyncMode.ERROR.name) {
                         binding.successTV.text = "Failed to Synced Tag"
                         binding.successTV.setTextColor(getResources().getColor(R.color.red))
                         binding.syncTagBTN.text = "RE-SYNC TAG"
                         binding.successLAV.visibility = INVISIBLE
+                        Timber.d("syn Error")
+                    } else if (nfcSyncMode == NfcSyncMode.UNSYNCED.name) {
+                        Timber.d("Unsynced")
                     }
                     //reset sync mode to un-synced
                     sharedNfcViewModel.setNfcSyncMode(NfcSyncMode.UNSYNCED)

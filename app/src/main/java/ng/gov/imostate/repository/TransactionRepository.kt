@@ -53,21 +53,6 @@ class TransactionRepository @Inject constructor(
         }
     }
 
-    suspend fun getRecentTransaction(token: String, vehicleId: String) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
-            dataSource.getRecentTransaction(token, vehicleId)
-        }) {
-            is ApiResult.Success -> {
-                Timber.d("$apiResult")
-                apiResult.response
-            }
-            is ApiResult.Error -> {
-                Timber.d("$apiResult")
-                ApiResponse(message = apiResult.message)
-            }
-        }
-    }
-
     suspend fun getAllTransactionsInDatabase(): List<TransactionEntity> {
         return transactionLocalDao.getAllTransactions()
     }

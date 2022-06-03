@@ -51,7 +51,6 @@ class NfcReaderResultFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         data = Data(
-            arguments?.getString(MainActivity.DRIVER_NAME_KEY) ?: "",
             arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY) ?: "",
             arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)?: "",
             arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY) ?: "",
@@ -141,7 +140,6 @@ class NfcReaderResultFragment : Fragment() {
 
             Timber.d("$data")
 
-            driverTV.text = data.name
             vehiclePlatesTV.text = data.vpn
             lastPaymentDateTV.text = AppUtils.formatDateToFullDate(data.lpd)
 
@@ -285,7 +283,6 @@ class NfcReaderResultFragment : Fragment() {
                     Timber.d("dateFrom: $dateFrom dateTO: $dateTo")
 
                     val bundle = Bundle().also { bundle ->
-                        bundle.putString(MainActivity.DRIVER_NAME_KEY, data.name)
                         bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, data.vid)
                         bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
                         bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, data.vc)

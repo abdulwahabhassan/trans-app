@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -399,12 +401,24 @@ class TransactionsFragment : Fragment() {
             binding.doneBTN.setOnClickListener {
                 transactionDetailsSheet.dismiss()
             }
-            senderTV.text = transaction.vehicleFrom?.driverName
-            receiverTV.text = transaction.accountTo
-            amountTV.text = transaction.amount
-            dateTV.text = transaction.createdAt?.substring(0, 10)
-                ?.let { AppUtils.formatDateToFullDate(it) }
-            vehiclePlatesTV.text = transaction.vehicleFrom?.vehiclePlates
+            if (transaction.vehicleFrom != null) {
+                //vehicle transaction
+                senderTV.text = transaction.vehicleFrom?.driverName
+                receiverTV.text = transaction.accountTo
+                amountTV.text = transaction.amount
+                dateTV.text = transaction.createdAt?.substring(0, 10)
+                    ?.let { AppUtils.formatDateToFullDate(it) }
+                vehiclePlatesTV.text = transaction.vehicleFrom?.vehiclePlates
+            } else {
+                //vendor transaction
+                senderTV.text = transaction.accountFrom
+                receiverTV.text = transaction.accountTo
+                amountTV.text = transaction.amount?.let { AppUtils.formatCurrency(it) }
+                dateTV.text = transaction.createdAt?.substring(0, 10)
+                    ?.let { AppUtils.formatDateToFullDate(it) }
+                vehiclePlatesLabelTV.visibility = GONE
+                vehiclePlatesTV.visibility = GONE
+            }
         }
     }
 

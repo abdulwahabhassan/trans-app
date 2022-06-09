@@ -49,7 +49,6 @@ class OutStandingPaymentFragment : Fragment() {
     lateinit var appViewModelFactory: AppViewModelsFactory
     lateinit var viewModel: OutstandingPaymentFragmentViewModel
     var selectedDevice: BluetoothConnection? = null
-    var driverName: String? = ""
     private var vehicleCategory: String? = ""
     private var lastPaymentDate: String? = ""
     var vehiclePlatesNumber: String? = ""
@@ -79,7 +78,6 @@ class OutStandingPaymentFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, appViewModelFactory).get(OutstandingPaymentFragmentViewModel::class.java)
 
-        driverName = arguments?.getString(MainActivity.DRIVER_NAME_KEY)
         vehiclePlatesNumber = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
         vehicleCategory = arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY)
         lastPaymentDate = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
@@ -209,7 +207,6 @@ class OutStandingPaymentFragment : Fragment() {
                                         .actionOutStandingPaymentFragmentToSuccessFragment(
                                             vehicleId!!,
                                             vehiclePlatesNumber,
-                                            driverName,
                                             dateTo,
                                             vehicleCategory.toString()
                                         )
@@ -371,7 +368,6 @@ class OutStandingPaymentFragment : Fragment() {
             [C]================================
             [L]
             [L]VEHICLE : $vehiclePlatesNumber
-            [L]DRIVER : $driverName
             [L]AGENT : $agentName
             [L]
             """.trimIndent()

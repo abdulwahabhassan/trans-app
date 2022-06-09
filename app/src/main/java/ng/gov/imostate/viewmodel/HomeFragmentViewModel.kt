@@ -60,9 +60,14 @@ class HomeFragmentViewModel @Inject constructor(
 
                 //retrieve settings values for whether agent can collect money from vehicles
                 //outside their route
-                val setting = dashBoardMetrics?.settings?.find { it.setting_key == "allow_agents_collect_outside_route" }
+                val outsideRouteSetting = dashBoardMetrics?.settings?.find { it.setting_key == "allow_agents_collect_outside_route" }
                 //save setting value to appConfig
-                updateAgentCollectionSettingValue(setting?.value ?: "No")
+                updateAgentCollectionSettingValue(outsideRouteSetting?.value ?: "No")
+
+                //retrieve settings values for whether instalments from vehicles are allowed
+                val instalmentsSetting = dashBoardMetrics?.settings?.find { it.setting_key == "allow_installmental_payment" }
+                //save setting value to appConfig
+                updateInstalmentsSettingValue(instalmentsSetting?.value ?: "0")
 
                 //get all current agent's assigned routes in database
                 val taxFreeDays = getAllTaxFreeDays()
@@ -82,6 +87,11 @@ class HomeFragmentViewModel @Inject constructor(
                 ViewModelResult.Error(response.message ?: "Unknown Error")
             }
         }
+    }
+
+    private suspend fun updateInstalmentsSettingValue(value: String) {
+        Timber.d("instalments: $value")
+        userPreferencesRepository.updateInstalmentsSettingValue(value)
     }
 
     private suspend fun deleteAllTaxFreeDaysInDatabase(taxFreeDays: List<HolidayEntity>) {
@@ -200,12 +210,6 @@ class HomeFragmentViewModel @Inject constructor(
         transactionRepository.deleteAllTransactionsInDatabase(transactions)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        NetworkConnectivityUtil.instance?.networkConnectivityStatus
-            ?.removeObserver(activeNetworkStateObserver)
-    }
-
     suspend fun getLastVehicleIdFromPreviousEnumerationInDatabase(): Long? {
         return vehicleRepository.getLastVehicleIdFromPreviousEnumerationInDatabase()
     }
@@ -225,5 +229,13 @@ class HomeFragmentViewModel @Inject constructor(
     private suspend fun updateAgentCollectionSettingValue(value: String) {
         userPreferencesRepository.updateAgentCollectionSettingValue(value)
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        NetworkConnectivityUtil.instance?.networkConnectivityStatus
+            ?.removeObserver(activeNetworkStateObserver)
+    }
+
+
 
 }

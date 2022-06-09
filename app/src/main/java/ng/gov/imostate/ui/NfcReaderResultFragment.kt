@@ -241,10 +241,6 @@ class NfcReaderResultFragment : Fragment() {
 
         picker.addOnPositiveButtonClickListener {
 
-            //declare variables to hold selected dates
-            val dateFrom: String
-            val dateTo: String
-
             //set selected dates
             val first: Long? = it.first
             val firstDate = Date(first!!)
@@ -267,43 +263,102 @@ class NfcReaderResultFragment : Fragment() {
             val compulsoryEndDate = sdf.format(endDate)
             Timber.d("required end date: $compulsoryEndDate selected end date: $selectedEndDate")
 
-            when {
-                selectedStartDate != compulsoryStartDate -> {
-                    showInvalidStartDateDialog(compulsoryStartDate)
-                }
-                selectedEndDate > compulsoryEndDate -> {
-                    showInvalidEndDateDialog(compulsoryEndDate)
-                }
-                else -> {
-                    //format selected dates
-                    val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                    dateFrom = format.format(firstDate)
-                    dateTo = format.format(secondDate)
+            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                //declare variables to hold selected dates
+                val dateFrom: String
+                val dateTo: String
 
-                    Timber.d("dateFrom: $dateFrom dateTO: $dateTo")
+                val allowInstalments = viewModel.getInitialUserPreferences().instalmentsSetting
+                Timber.d("Instalment: $allowInstalments")
+                if (allowInstalments == true) {
+                    when {
+                        selectedStartDate != compulsoryStartDate -> {
+                            showInvalidStartDateDialog(compulsoryStartDate)
+                        }
+                        selectedEndDate > compulsoryEndDate -> {
+                            showInvalidEndDateDialog(compulsoryEndDate)
+                        }
+                        else -> {
+                            //format selected dates
+                            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                            dateFrom = format.format(firstDate)
+                            dateTo = format.format(secondDate)
 
-                    val bundle = Bundle().also { bundle ->
-                        bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, data.vid)
-                        bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
-                        bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, data.vc)
-                        bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, data.vpn)
-                        bundle.putDouble(OUTSTANDING_BALANCE, outstandingBalance)
-                        bundle.putString(DATE_FROM_KEY, dateFrom)
-                        bundle.putString(DATE_TO_KEY, dateTo)
+                            Timber.d("dateFrom: $dateFrom dateTO: $dateTo")
+
+                            val bundle = Bundle().also { bundle ->
+                                bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, data.vid)
+                                bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
+                                bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, data.vc)
+                                bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, data.vpn)
+                                bundle.putDouble(OUTSTANDING_BALANCE, outstandingBalance)
+                                bundle.putString(DATE_FROM_KEY, dateFrom)
+                                bundle.putString(DATE_TO_KEY, dateTo)
+                            }
+
+                            //do api call
+                            findNavController().navigate(R.id.outStandingPaymentFragment, bundle,
+                                NavOptions.Builder().setLaunchSingleTop(true).build())
+                        }
                     }
+                } else {
+                    if (selectedEndDate != AppUtils.getCurrentDate()) {
+                        showInstalmentsNotAllowed(compulsoryStartDate, compulsoryEndDate)
+                    } else {
+                        when {
+                            selectedStartDate != compulsoryStartDate -> {
+                                showInvalidStartDateDialog(compulsoryStartDate)
+                            }
+                            selectedEndDate > compulsoryEndDate -> {
+                                showInvalidEndDateDialog(compulsoryEndDate)
+                            }
+                            else -> {
+                                //format selected dates
+                                val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                dateFrom = format.format(firstDate)
+                                dateTo = format.format(secondDate)
 
-                    //do api call
-                    findNavController().navigate(R.id.outStandingPaymentFragment, bundle,
-                        NavOptions.Builder().setLaunchSingleTop(true).build())
+                                Timber.d("dateFrom: $dateFrom dateTO: $dateTo")
+
+                                val bundle = Bundle().also { bundle ->
+                                    bundle.putString(MainActivity.VEHICLE_ID_NUMBER_KEY, data.vid)
+                                    bundle.putString(MainActivity.LAST_PAYMENT_DATE_KEY, data.lpd)
+                                    bundle.putString(MainActivity.VEHICLE_CATEGORY_KEY, data.vc)
+                                    bundle.putString(MainActivity.VEHICLE_PLATES_NUMBER_KEY, data.vpn)
+                                    bundle.putDouble(OUTSTANDING_BALANCE, outstandingBalance)
+                                    bundle.putString(DATE_FROM_KEY, dateFrom)
+                                    bundle.putString(DATE_TO_KEY, dateTo)
+                                }
+
+                                //do api call
+                                findNavController().navigate(R.id.outStandingPaymentFragment, bundle,
+                                    NavOptions.Builder().setLaunchSingleTop(true).build())
+                            }
+                        }
+                    }
                 }
             }
+
+
         }
+    }
+
+    private fun showInstalmentsNotAllowed(compulsoryStartDate: String, compulsoryEndDate: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Instalments are not allowed")
+            .setMessage("Please pay all outstanding balance between ${AppUtils
+                .formatDateToFullDate(compulsoryStartDate)} and ${AppUtils
+                .formatDateToFullDate(compulsoryEndDate)}")
+            .setNegativeButton("Ok") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 
     private fun showInvalidEndDateDialog(compulsoryEndDate: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Invalid date selection")
-            .setMessage("Valid date selection must not exceed today (${AppUtils.formatDateToFullDate(compulsoryEndDate)})")
+            .setMessage("Valid date selection must not exceed today (${AppUtils
+                .formatDateToFullDate(compulsoryEndDate)})")
             .setNegativeButton("Ok") { dialog, _ ->
                 dialog.dismiss()
             }.show()
@@ -312,7 +367,8 @@ class NfcReaderResultFragment : Fragment() {
     private fun showInvalidStartDateDialog(compulsoryStartDate: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Invalid date selection")
-            .setMessage("Valid date selection must begin from the next day (${AppUtils.formatDateToFullDate(compulsoryStartDate)}) after last payment")
+            .setMessage("Valid date selection must begin from the next day (${AppUtils
+                .formatDateToFullDate(compulsoryStartDate)}) after last payment")
             .setNegativeButton("Ok") { dialog, _ ->
                 dialog.dismiss()
             }.show()

@@ -52,7 +52,8 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
             currentTotalCredited = preferences[PreferencesKeys.CURRENT_TOTAL_CREDITED],
             currentPayable = preferences[PreferencesKeys.CURRENT_PAYABLE],
             currentPaidOut = preferences[PreferencesKeys.CURRENT_PAID_OUT],
-            collectionSetting = preferences[PreferencesKeys.COLLECTION_SETTING]
+            collectionSetting = preferences[PreferencesKeys.COLLECTION_SETTING],
+            instalmentsSetting = preferences[PreferencesKeys.INSTALMENT_SETTING]
         )
     }
 
@@ -83,6 +84,13 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
     suspend fun updateAgentCollectionSettingValue(value: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.COLLECTION_SETTING] = value
+        }
+    }
+
+    suspend fun updateInstalmentsSettingValue(value: String) {
+        Timber.d("instalments: $value")
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.INSTALMENT_SETTING] = value != "0"
         }
     }
 
@@ -131,7 +139,8 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val currentTotalCredited: Double? = 0.00,
         val currentPayable: Double? = 0.00,
         val currentPaidOut: Double? = 0.00,
-        val collectionSetting: String? = ""
+        val collectionSetting: String? = "",
+        val instalmentsSetting: Boolean? = false
     )
 
     //define preferences keys
@@ -159,6 +168,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
         val CURRENT_PAYABLE = doublePreferencesKey("current_payable")
         val CURRENT_PAID_OUT = doublePreferencesKey("current_paid_out")
         val COLLECTION_SETTING = stringPreferencesKey("collectionSetting")
+        val INSTALMENT_SETTING = booleanPreferencesKey("instalments")
     }
 
 }

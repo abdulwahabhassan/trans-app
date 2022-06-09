@@ -199,19 +199,18 @@ class AddVehicleFragment : Fragment() {
 
                                 AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
                                 //insert/update newly created transaction to app's database to be synced later to cloud database/server
-                                viewModel.insertTransactionToDatabase(
-                                    TransactionData(result.data?.onBoardVehicle?.id.toString(),
-                                        AppUtils.getCurrentDate(),
-                                        0.00
-                                    )
-                                )
+//                                viewModel.insertTransactionToDatabase(
+//                                    TransactionData(result.data?.onBoardVehicle?.id.toString(),
+//                                        AppUtils.getCurrentDate(),
+//                                        0.00
+//                                    )
+//                                )
 
                                 val onBoardedVehicle = result.data?.onBoardVehicle
                                 val action = AddVehicleFragmentDirections
                                     .actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates,
-                                        onBoardedVehicle?.driverName,
                                         AppUtils.getCurrentDate(),
                                         onBoardedVehicle?.type
                                     )

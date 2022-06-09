@@ -44,9 +44,9 @@ class HomeFragment : Fragment() {
     private fun updateUI(isConnected: Boolean) {
         updateNetworkStatusUI(isConnected)
         if (isConnected) {
+            syncDatabase()
             getCurrentUser()
             getDashboardMetrics()
-            syncDatabase()
         }
     }
 
@@ -288,6 +288,7 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             when(val viewModelResult = viewModel.getInitialUserPreferences().token?.let { viewModel.getDashBoardMetrics(it) }!!) {
                 is ViewModelResult.Success -> {
+                    Timber.d("${viewModelResult.data}")
                     val dashBoardMetrics = viewModelResult.data?.metrics
                     //display current wallet info to dashboard
                     with(binding) {

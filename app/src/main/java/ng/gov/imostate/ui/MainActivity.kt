@@ -514,7 +514,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "PLATES NO.: ${data.vpn}",
+                                    "PLATES NO: ${data.vpn}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload
@@ -568,12 +568,10 @@ class MainActivity : AppCompatActivity() {
         const val DATA_PAYLOAD_TIME_KEY = "time"
         const val VEHICLE_LICENSE_EXPIRY_DATE_KEY = "VLEDK"
         const val VEHICLE_PLATES_NUMBER_KEY = "VPN"
-        const val DRIVER_NAME_KEY = "DN"
         const val VEHICLE_ID_NUMBER_KEY = "VID"
         const val LAST_PAYMENT_DATE_KEY = "LPD"
         const val VEHICLE_CATEGORY_KEY = "VC"
         const val DATE_ONBOARDED_KEY = "DOK"
-        private const val TAG = "MainActivity"
         const val DATA_PAYLOAD_BODY_KEY = "body"
         const val DATA_PAYLOAD_TITLE_KEY = "title"
     }

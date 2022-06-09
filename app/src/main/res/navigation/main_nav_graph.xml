@@ -98,10 +98,6 @@
             app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="driverName"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
             android:name="lastPayDate"
             app:argType="string"
             app:nullable="true" />

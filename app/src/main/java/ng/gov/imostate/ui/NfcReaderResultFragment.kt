@@ -80,6 +80,7 @@ class NfcReaderResultFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                     //check first if agent is allowed to collect from outside routes
                     Timber.d("collection settings: ${viewModel.getInitialUserPreferences().collectionSetting}")
+                    Timber.d("${viewModel.getInitialUserPreferences().collectionSetting}")
                     when (viewModel.getInitialUserPreferences().collectionSetting) {
                         "Yes" -> {
                             showDatePicker()

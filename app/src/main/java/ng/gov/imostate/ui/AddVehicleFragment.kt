@@ -198,20 +198,14 @@ class AddVehicleFragment : Fragment() {
                                 Timber.d("onboarded vehicle: ${result.data}")
 
                                 AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
-                                //insert/update newly created transaction to app's database to be synced later to cloud database/server
-//                                viewModel.insertTransactionToDatabase(
-//                                    TransactionData(result.data?.onBoardVehicle?.id.toString(),
-//                                        AppUtils.getCurrentDate(),
-//                                        0.00
-//                                    )
-//                                )
 
                                 val onBoardedVehicle = result.data?.onBoardVehicle
                                 val action = AddVehicleFragmentDirections
                                     .actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates,
-                                        AppUtils.getCurrentDate(),
+//                                        AppUtils.getCurrentDate(),
+                                        "2022-03-01",
                                         onBoardedVehicle?.type
                                     )
                                 findNavController().navigate(action)

@@ -84,7 +84,7 @@ class SuccessFragment : Fragment() {
                     sharedNfcViewModel.setData(
                         Data(
                             args.vehicleId,
-                            args.lastPayDate.toString(),
+                            AppUtils.encryptLastPaidDate(args.lastPayDate.toString()),
                             args.vehicleCategory.toString(),
                             args.vehiclePlatesNumber.toString()
                         )

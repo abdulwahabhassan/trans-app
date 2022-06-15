@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -24,7 +23,6 @@ import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.NfcReaderResultFragmentViewModel
-import ng.gov.imostate.viewmodel.SharedNfcViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
 import java.text.SimpleDateFormat
@@ -41,18 +39,19 @@ class NfcReaderResultFragment : Fragment() {
     private var _binding: FragmentNfcReaderResultBinding? = null
     private val binding get() = _binding!!
     private lateinit var data: Data
-    private val sharedNfcViewModel: SharedNfcViewModel by activityViewModels()
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
     private lateinit var viewModel: NfcReaderResultFragmentViewModel
     var outstandingBalance: Double = 0.00
+    private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         data = Data(
             arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY) ?: "",
-            arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)?: "",
+            arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)?.let { lpd ->
+                AppUtils.decryptLastPaidDate(lpd) } ?: "",
             arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY) ?: "",
             arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY) ?: ""
         )
@@ -108,7 +107,21 @@ class NfcReaderResultFragment : Fragment() {
                                     if (common.isNotEmpty()) {
                                         showDatePicker()
                                     } else {
-                                        showInCompatibleRoutes()
+                                        if (viewModel.getInitialUserPreferences().collectionSetting.equals("Warn", true)) {
+                                            AlertDialog.Builder(requireContext())
+                                                .setTitle("Warning")
+                                                .setMessage("This vehicle has no route that you are allowed to collect payment from")
+                                                .setNegativeButton("Abort") { dialog, _ ->
+                                                    dialog.dismiss()
+                                                }
+                                                .setPositiveButton("Continue") { dialog, _ ->
+                                                    dialog.dismiss()
+                                                    showDatePicker()
+                                                }.show()
+                                        } else if (viewModel.getInitialUserPreferences().collectionSetting.equals("No", true)) {
+                                            showInCompatibleRoutes()
+                                        }
+
                                     }
                                 } else {
                                     AlertDialog.Builder(requireContext())
@@ -137,7 +150,7 @@ class NfcReaderResultFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
-            outstandingBalancePeriodTV.text = "${AppUtils.formatDateToFullDate(data.lpd)} - ${AppUtils.getCurrentFullDate()}"
+            outstandingBalancePeriodTV.text = "${AppUtils.formatDateToFullDate(sdf.format(sdf.parse(data.lpd)?.time?.plus(TimeUnit.DAYS.toMillis(1))))} - ${AppUtils.getCurrentFullDate()}"
 
             Timber.d("$data")
 
@@ -145,7 +158,6 @@ class NfcReaderResultFragment : Fragment() {
             lastPaymentDateTV.text = AppUtils.formatDateToFullDate(data.lpd)
 
             val dateStr = data.lpd
-            val sdf = SimpleDateFormat("yyyy-MM-dd")
             val lastPayDate = sdf.parse(dateStr)
 
             val currentDate = sdf.parse(AppUtils.getCurrentDate())
@@ -218,25 +230,23 @@ class NfcReaderResultFragment : Fragment() {
     private fun showDatePicker() {
         val builder : MaterialDatePicker.Builder<Pair<Long, Long>> =
             MaterialDatePicker.Builder.dateRangePicker()
-
         builder.setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
         builder.setTitleText("HOLIDAYS WILL BE EXCLUDED")
-        val calendar = Calendar.getInstance()
+        val timeNow = Date().time
 
         //format last payment date
         val dateStr = data.lpd
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
         val lastPayDate = sdf.parse(dateStr)
 
         //set selected dates to reflect outstanding days since the last payment, exempt the last
-        //paid date from the selection by adding (86400000 * 2) milliseconds (2 days) to
+        //paid date from the selection by adding (86400000) milliseconds (1 day) to
         //the last paid date so that the first selection is the next day after the last paid date
-        val startDate = lastPayDate?.time?.plus(86400000 * 2)
+        val startDate = lastPayDate?.time?.plus(TimeUnit.DAYS.toMillis(1))
         val endDate = Date().time
 
-        Timber.d("start date: $startDate end date: $endDate calendarMilli: ${calendar.timeInMillis}")
+        Timber.d("start date: $startDate end date: $endDate calendarMilli: ${timeNow}")
 
-        builder.setSelection(Pair(startDate, calendar.timeInMillis))
+        builder.setSelection(Pair(startDate, timeNow))
         val picker = builder.build()
         picker.show(childFragmentManager, picker.toString())
 
@@ -248,13 +258,11 @@ class NfcReaderResultFragment : Fragment() {
             val second: Long? = it.second
             val secondDate = Date(second!!)
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
             //if selected first date does not match actual/valid start date to begin payment from,
             //show invalid date selection dialog
             Timber.d("first: ${firstDate.time}")
             val selectedStartDate = sdf.format(firstDate.time)
-            val compulsoryStartDate = sdf.format(startDate?.minus(86400000)) //minus one day to match actual start date
+            val compulsoryStartDate = sdf.format(startDate)
             Timber.d("required start date: $compulsoryStartDate selected start date: $selectedStartDate")
 
             //if selected second date does not match actual/valid end date to make payment

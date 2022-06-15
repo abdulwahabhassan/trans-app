@@ -15,6 +15,7 @@ import com.squareup.moshi.Moshi
 import ng.gov.imostate.BuildConfig
 import ng.gov.imostate.R
 import ng.gov.imostate.model.domain.Data
+import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 import java.io.ByteArrayOutputStream
@@ -266,5 +267,63 @@ object AppUtils {
             ) else it.toString()
         }
     }
+
+    private val encryptionMap = mapOf(
+        0 to "d",
+        1 to "v",
+        2 to "k",
+        3 to "l",
+        4 to "o",
+        5 to "q",
+        6 to "i",
+        7 to "a",
+        8 to "z",
+        9 to "f",
+    )
+
+
+    private val decryptionMap = mapOf(
+        "d" to 0,
+        "v" to 1,
+        "k" to 2,
+        "l" to 3,
+        "o" to 4,
+        "q" to 5,
+        "i" to 6,
+        "a" to 7,
+        "z" to 8,
+        "f" to 9,
+    )
+
+
+    fun encryptLastPaidDate(lpd: String): String {
+        Timber.d("lpd data to encrypt: $lpd")
+        val encryptedData = lpd.map { char ->
+            if (char.toString() != "-") {
+                encryptionMap[char.toString().toInt()]
+            } else {
+                //make "x" represent "-"
+                "x"
+            }
+        }
+        Timber.d("encrypted lpd data: ${encryptedData.joinToString("")}")
+        return encryptedData.joinToString("")
+    }
+
+    fun decryptLastPaidDate(lpd: String): String {
+        Timber.d("lpd data to decrypt: $lpd")
+        val decryptedData = lpd.map { char ->
+            if (char.toString() != "x") {
+                decryptionMap[char.toString()].toString()
+            } else {
+                //make "-" represent "x"
+                "-"
+            }
+
+        }
+        Timber.d("decrypted lpd data: ${decryptedData.joinToString("")}")
+        return decryptedData.joinToString("")
+    }
+
 
 }

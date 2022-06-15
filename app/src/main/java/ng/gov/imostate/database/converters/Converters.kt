@@ -27,18 +27,6 @@ class Converters @Inject constructor (
         return json?.let { adapter.fromJson(it) }
     }
 
-//    @TypeConverter
-//    fun fromRoute(value: Route?): String? {
-//        val adapter = moshi.adapter(Route::class.java)
-//        return adapter.toJson(value)
-//    }
-//
-//    @TypeConverter
-//    fun toRoute(json: String?): Route? {
-//        val adapter = moshi.adapter(Route::class.java)
-//        return json?.let { adapter.fromJson(it) }
-//    }
-
     @TypeConverter
     fun fromListOfRoute(value: List<VehicleRouteEntity>?): String? {
         val routeListType = object : TypeToken<List<VehicleRouteEntity?>?>() {}.type

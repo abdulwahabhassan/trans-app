@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nfcWriteModeLAV" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/enterImssinTV"
+        android:id="@+id/enterPlatesNumberTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -84,7 +84,7 @@
         android:layout_marginHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterImssinTV">
+        app:layout_constraintTop_toBottomOf="@+id/enterPlatesNumberTV">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/platesNumberET"

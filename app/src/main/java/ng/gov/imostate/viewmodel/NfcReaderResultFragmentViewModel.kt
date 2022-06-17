@@ -30,6 +30,6 @@ class NfcReaderResultFragmentViewModel @Inject constructor(
     }
 
     suspend fun getAllHolidaysInDatabase(): List<HolidayEntity> {
-        return transactionRepository.getAllTaxFreeDays()
+        return transactionRepository.getAllTaxFreeDaysInDatabase()
     }
 }

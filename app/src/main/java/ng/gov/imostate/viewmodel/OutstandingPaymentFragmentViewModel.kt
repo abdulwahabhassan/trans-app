@@ -6,10 +6,7 @@ import ng.gov.imostate.database.entity.HolidayEntity
 import ng.gov.imostate.database.entity.RateEntity
 import ng.gov.imostate.database.entity.TransactionEntity
 import ng.gov.imostate.model.apiresult.MetricsResult
-import ng.gov.imostate.model.apiresult.SyncTransactionsResult
-import ng.gov.imostate.model.apiresult.TransactionsResult
 import ng.gov.imostate.model.domain.TransactionData
-import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
@@ -56,6 +53,6 @@ class OutstandingPaymentFragmentViewModel @Inject constructor(
     }
 
     suspend fun getAllHolidaysInDatabase(): List<HolidayEntity> {
-        return transactionRepository.getAllTaxFreeDays()
+        return transactionRepository.getAllTaxFreeDaysInDatabase()
     }
 }

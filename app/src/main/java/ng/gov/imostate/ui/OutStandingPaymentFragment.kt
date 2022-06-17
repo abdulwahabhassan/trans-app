@@ -363,6 +363,7 @@ class OutStandingPaymentFragment : Fragment() {
             [L]
             [C]--------------------------------
             [L]TOTAL CHARGE : [R]$amountToPay NGN
+            [L]PERIOD : [R]$amountToPay NGN
             [L]OUTSTANDING BAL : [R]${outstandingBalance?.minus(amountToPay)} NGN
             [L]
             [C]================================

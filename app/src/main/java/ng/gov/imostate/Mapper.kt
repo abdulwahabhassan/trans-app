@@ -175,7 +175,7 @@ object Mapper {
         )
     }
 
-    private fun mapVehicleRouteToRouteEntity(vehicleRoute: VehicleRoute): VehicleRouteEntity {
+    private fun mapVehicleRouteToVehicleRouteEntity(vehicleRoute: VehicleRoute): VehicleRouteEntity {
         return VehicleRouteEntity(
             vehicleRoute.id,
             vehicleRoute.routeID,
@@ -222,7 +222,7 @@ object Mapper {
 
     fun mapListOfVehicleRouteToListOfVehicleRouteEntity(vehicleRoutes: List<VehicleRoute>): List<VehicleRouteEntity> {
         return vehicleRoutes.map { route ->
-            mapVehicleRouteToRouteEntity(route)
+            mapVehicleRouteToVehicleRouteEntity(route)
         }
     }
 

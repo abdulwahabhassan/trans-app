@@ -18,6 +18,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
+import ng.gov.imostate.database.entity.VehicleCurrentEntity
 import ng.gov.imostate.databinding.FragmentNfcReaderResultBinding
 import ng.gov.imostate.model.domain.Data
 import ng.gov.imostate.util.AppUtils
@@ -45,8 +46,9 @@ class NfcReaderResultFragment : Fragment() {
     private lateinit var viewModel: NfcReaderResultFragmentViewModel
     var outstandingBalance: Double = 0.00
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private var vehicleInDatabase: VehicleCurrentEntity?  = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         data = Data(
             arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY) ?: "",
@@ -87,10 +89,12 @@ class NfcReaderResultFragment : Fragment() {
                         else -> {
                             //check if vehicle belongs to agent's route
                         //show picker if yes else don't show
-                            val vehicleInDatabase = viewModel.getVehicleFromCurrentEnumerationInDatabase(data.vpn)
+                            vehicleInDatabase = viewModel.getVehicleFromCurrentEnumerationInDatabase(data.vpn)
                             Timber.d("vehicle in database $vehicleInDatabase")
                             if (vehicleInDatabase != null) {
-                                val vehicle = Mapper.mapVehicleCurrentEntityToVehicle(vehicleInDatabase)
+                                val vehicle = Mapper.mapVehicleCurrentEntityToVehicle(
+                                    vehicleInDatabase!!
+                                )
                                 val vehicleRoutes = vehicle.vehicleRoutes
                                 Timber.d("vehicle routes $vehicleRoutes")
                                 //intersect both lists of route ids and if the result contains at least one
@@ -173,11 +177,39 @@ class NfcReaderResultFragment : Fragment() {
 
                 val daysOwedArray = arrayListOf<String>()
 
-                val holidays = Mapper.mapListOfTaxFreeDayEntityToListOfTaxFreeDay(
+                //get all holidays(tax free days) in database
+                var holidays = Mapper.mapListOfTaxFreeDayEntityToListOfTaxFreeDay(
                     viewModel.getAllHolidaysInDatabase()
                 )
-                val holiDates = holidays.map { holiday -> holiday.date?.let { date -> AppUtils.formatDateToFullDate(date) } }
-                Timber.d("Holidates $holiDates")
+
+                Timber.d("All Holidays in database $holidays")
+
+                Timber.d("All Holidays dates in database ${holidays.map { it.date }}")
+
+                //get and initialize vehicleInDatabase globally if not already initialized
+                if (vehicleInDatabase == null) {
+                    vehicleInDatabase = viewModel.getVehicleFromCurrentEnumerationInDatabase(data.vpn)
+                }
+
+                Timber.d("vehicle in database $vehicleInDatabase")
+
+                //get vehicle routes
+                val vehicleRoutes = vehicleInDatabase?.vehicleRoutes?.let { routes ->
+                    routes.map { route -> route.routeID }
+                } ?: emptyList()
+
+                Timber.d("Vehicle's routes id $vehicleRoutes")
+
+                //filter holidays by those which fall on a route that belongs to the vehicle's routes
+                //i.e if an holiday falls on any of a vehicle's route, count that as a tax-free day
+                //for the vehicle
+                holidays = holidays.filter { holiday -> vehicleRoutes.contains(holiday.routeId) }
+
+                Timber.d("Filtered Holidays based on vehicle's route $holidays")
+
+                val holidayDates = holidays.map { holiday -> holiday.date?.let { date -> AppUtils.formatDateToFullDate(date) } }
+                Timber.d("Filtered Holiday dates based on vehicle's route $holidayDates")
+
 
                 numOfDaysSinceLastPaid.downTo(0).forEach {
                     val date = LocalDate.now(ZoneId.of("Africa/Lagos")).minusDays(it)
@@ -186,17 +218,17 @@ class NfcReaderResultFragment : Fragment() {
                     //exempt saturdays and sundays
                     if (!date.contains("Sat", true) && !date.contains("Sun", true)) {
                         //exempt holidays
-                        if (!holiDates.contains(date)) {
+                        if (!holidayDates.contains(date)) {
                             daysOwedArray.add(date)
                         } else {
                             Timber.d("found an holiday $date")
                         }
                     }
                 }
-                Timber.d("$daysOwedArray")
+                Timber.d("days owed (excluding holidays) $daysOwedArray")
 
                 val numOfEligibleDaysOwed = daysOwedArray.size
-                Timber.d("${daysOwedArray.size}")
+                Timber.d("number of days owed ${daysOwedArray.size}")
 
                 val rate = viewModel.getRateInDatabase(data.vc)
                 if (rate?.amount != null) {
@@ -236,13 +268,16 @@ class NfcReaderResultFragment : Fragment() {
 
         //format last payment date
         val dateStr = data.lpd
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val lastPayDate = sdf.parse(dateStr)
+        Timber.d("lpd $lastPayDate")
 
         //set selected dates to reflect outstanding days since the last payment, exempt the last
         //paid date from the selection by adding (86400000) milliseconds (1 day) to
         //the last paid date so that the first selection is the next day after the last paid date
         val startDate = lastPayDate?.time?.plus(TimeUnit.DAYS.toMillis(1))
         val endDate = Date().time
+
 
         Timber.d("start date: $startDate end date: $endDate calendarMilli: $timeNow")
 

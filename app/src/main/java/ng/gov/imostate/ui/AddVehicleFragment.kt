@@ -204,7 +204,8 @@ class AddVehicleFragment : Fragment() {
                                     .actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates,
-                                        AppUtils.getCurrentDate(),
+//                                        AppUtils.getCurrentDate(),
+                                        "2022-01-01",
                                         onBoardedVehicle?.type
                                     )
                                 findNavController().navigate(action)
@@ -308,6 +309,11 @@ class AddVehicleFragment : Fragment() {
         if (!findVehicleBottomSheetDialog.isShowing) {
             findVehicleBottomSheetDialog.show()
         }
+
+        binding.orTextTV.visibility = GONE
+        binding.nfcWriteModeLAV.visibility = GONE
+        binding.aidTextTV.visibility = GONE
+        binding.enterPlatesNumberTV.text = "Enter vehicle plate number"
 
         binding.backArrowIV.setOnClickListener {
             findVehicleBottomSheetDialog.dismiss()

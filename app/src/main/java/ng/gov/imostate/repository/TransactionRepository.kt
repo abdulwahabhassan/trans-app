@@ -69,11 +69,11 @@ class TransactionRepository @Inject constructor(
         return transactionLocalDao.getTransaction(vehicleId)
     }
 
-    suspend fun insertAllTaxFreeDays(holidays: List<HolidayEntity>) {
+    suspend fun insertAllTaxFreeDaysToDatabase(holidays: List<HolidayEntity>) {
         transactionLocalDao.insertAllTaxFreeDays(holidays)
     }
 
-    suspend fun getAllTaxFreeDays(): List<HolidayEntity> {
+    suspend fun getAllTaxFreeDaysInDatabase(): List<HolidayEntity> {
         return transactionLocalDao.getAllTaxFreeDays()
     }
 

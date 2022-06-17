@@ -73,14 +73,14 @@ class HomeFragmentViewModel @Inject constructor(
                 updateInstalmentsSettingValue(instalmentsSetting?.value ?: "0")
 
                 //get all current agent's assigned routes in database
-                val taxFreeDays = getAllTaxFreeDays()
+                val taxFreeDays = getAllTaxFreeDaysInDatabase()
                 Timber.d("tax free days in database to be deleted $taxFreeDays")
                 //delete all current agent's assigned routes in database
                 deleteAllTaxFreeDaysInDatabase(taxFreeDays)
 
                 //retrieve and save new tax free days to database
-                Timber.d("remote tax free days to be inserted ${response.result?.metrics?.taxFreeDays}")
-                response.result?.metrics?.taxFreeDays?.let { holidays ->
+                Timber.d("remote tax free days to be inserted ${response.meta?.taxFreeDays}")
+                response.meta?.taxFreeDays?.let { holidays ->
                     Mapper.mapListOfTaxFreeDayToListOfTaxFreeDayEntity(holidays)
                 }?.let { insertAllTaxFreeDaysToDatabase(it) }
 
@@ -101,12 +101,12 @@ class HomeFragmentViewModel @Inject constructor(
         transactionRepository.deleteAllTaxFreeDaysInDatabase(taxFreeDays)
     }
 
-    private suspend fun getAllTaxFreeDays(): List<HolidayEntity> {
-        return transactionRepository.getAllTaxFreeDays()
+    private suspend fun getAllTaxFreeDaysInDatabase(): List<HolidayEntity> {
+        return transactionRepository.getAllTaxFreeDaysInDatabase()
     }
 
     private suspend fun insertAllTaxFreeDaysToDatabase(holidays: List<HolidayEntity>) {
-        transactionRepository.insertAllTaxFreeDays(holidays)
+        transactionRepository.insertAllTaxFreeDaysToDatabase(holidays)
     }
 
     private suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {

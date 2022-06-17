@@ -9,6 +9,8 @@ data class Meta(
     @Json(name = "monnify_accounts")
     val monnifyAccounts: List<AccountDetails>?,
     @Json(name = "server_time")
-    val serverTime: String?
+    val serverTime: String?,
+    @Json(name = "tax_frees")
+    val taxFreeDays: List<Holiday>?
 )
 

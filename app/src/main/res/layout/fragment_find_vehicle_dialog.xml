@@ -21,6 +21,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/aidTextTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:text="Move closer to NFC tag to scan"
+        android:textAlignment="center"
+        android:textColor="?colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/nfcWriteModeLAV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aidTextTV"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="nfc_write.json"
+        app:lottie_loop="true" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/orTextTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:text="OR"
+        android:textAlignment="center"
+        android:textColor="?colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nfcWriteModeLAV" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/enterImssinTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,13 +67,13 @@
         android:layout_marginEnd="32dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="Enter Vehicle Plate Number"
+        android:text="Enter vehicle plate number to see record"
         android:textAlignment="center"
         android:textColor="?colorOnSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
+        app:layout_constraintTop_toBottomOf="@+id/orTextTV" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/vehicleDetailsTIP"

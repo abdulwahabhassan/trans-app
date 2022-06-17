@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.util.Base64
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import com.google.gson.Gson
 import com.squareup.moshi.Moshi
@@ -23,6 +25,7 @@ import java.io.IOException
 import java.net.NetworkInterface
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 object AppUtils {

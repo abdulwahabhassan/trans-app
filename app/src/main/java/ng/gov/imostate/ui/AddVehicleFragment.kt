@@ -204,8 +204,7 @@ class AddVehicleFragment : Fragment() {
                                     .actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates,
-//                                        AppUtils.getCurrentDate(),
-                                        "2022-03-01",
+                                        AppUtils.getCurrentDate(),
                                         onBoardedVehicle?.type
                                     )
                                 findNavController().navigate(action)

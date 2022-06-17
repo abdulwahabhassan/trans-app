@@ -1,6 +1,7 @@
 package ng.gov.imostate.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +30,8 @@ import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.HomeFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
+import java.time.LocalDate
+import java.util.*
 import javax.inject.Inject
 
 
@@ -200,6 +205,26 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.connectionState.collect { viewModelResult ->
                 updateUI(viewModelResult.data)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.serverTime.collect { serverTime ->
+                Timber.d(serverTime)
+                if (serverTime.isNotEmpty() && AppUtils.getCurrentDate() != serverTime.substring(0, 10)) {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Incorrect date")
+                        .setMessage(
+                            "Adjust device current date " +
+                                "(${AppUtils.formatDateToFullDate(AppUtils.getCurrentDate())}) " +
+                                "in settings to correct date"
+                        )
+                        .setNegativeButton("Ok") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .setCancelable(false)
+                        .show()
+                }
             }
         }
 

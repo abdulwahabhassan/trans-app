@@ -33,7 +33,7 @@ open class BaseRepository {
                             ": Api Message - ${apiError?.message} " +
                             ": Api Errors - ${apiError?.errors} " +
                             ": Api Error Code - ${apiError?.errorCode}")
-                    ApiResult.Error(apiError?.errors?.toString())
+                    ApiResult.Error(apiError?.message)
                 } catch (e: Exception) {
                     Timber.d("Exception Error ${e.message}")
                     ApiResult.Error(e.localizedMessage)

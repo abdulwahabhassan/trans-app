@@ -26,6 +26,9 @@ class HomeFragmentViewModel @Inject constructor(
     private val moshi: Moshi
 ) : BaseViewModel(userPreferencesRepository) {
 
+    private val _serverTime = MutableStateFlow(value = "")
+    val serverTime = _serverTime
+
     private val _connectionState = MutableStateFlow(value = ViewModelResult.Success(false))
     val connectionState = _connectionState
 
@@ -166,6 +169,10 @@ class HomeFragmentViewModel @Inject constructor(
         return  when (response.success) {
             true -> {
                 Timber.d("current user result ${response.result}")
+
+                Timber.d("server-time: ${response.meta?.serverTime}")
+                _serverTime.value = response.meta?.serverTime ?: ""
+
                 //put agent current wallet information to data store
                 response.result?.user?.profile?.let {
                     userPreferencesRepository.updateCurrentWalletInfo(

@@ -74,26 +74,30 @@ class SuccessFragment : Fragment() {
 
         with(binding) {
             syncTagBTN.setOnClickListener {
-                AppUtils.showProgressIndicator(true, binding.progressIndicator)
-                AppUtils.showView(false, binding.syncTagBTN)
-
-                val nfcMode = sharedNfcViewModel.getNfcMode()
-                if (nfcMode == NfcMode.WRITE.name) {
-                    sharedNfcViewModel.setNfcMode(NfcMode.READ)
+                if (syncTagBTN.text.toString() == "DONE") {
+                    findNavController().popBackStack()
                 } else {
-                    sharedNfcViewModel.setData(
-                        Data(
-                            args.vehicleId,
-                            AppUtils.encryptLastPaidDate(args.lastPayDate.toString()),
-                            args.vehicleCategory.toString(),
-                            args.vehiclePlatesNumber.toString()
+                    AppUtils.showProgressIndicator(true, binding.progressIndicator)
+                    AppUtils.showView(false, binding.syncTagBTN)
+
+                    val nfcMode = sharedNfcViewModel.getNfcMode()
+                    if (nfcMode == NfcMode.WRITE.name) {
+                        sharedNfcViewModel.setNfcMode(NfcMode.READ)
+                    } else {
+                        sharedNfcViewModel.setData(
+                            Data(
+                                args.vehicleId,
+                                AppUtils.encryptLastPaidDate(args.lastPayDate.toString()),
+                                args.vehicleCategory.toString(),
+                                args.vehiclePlatesNumber.toString()
+                            )
                         )
-                    )
-                    Timber.d("lastpaydatesuccessfragment: ${args.lastPayDate}")
-                    sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
+                        Timber.d("lastpaydatesuccessfragment: ${args.lastPayDate}")
+                        sharedNfcViewModel.setNfcMode(NfcMode.WRITE)
+                    }
+                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                    AppUtils.showView(true, binding.syncTagBTN)
                 }
-                AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                AppUtils.showView(true, binding.syncTagBTN)
             }
         }
 
@@ -115,11 +119,11 @@ class SuccessFragment : Fragment() {
                             when {
                                 binding.successTV.text.toString() == "Successfully Synced Tag" -> {
                                     binding.successLAV.visibility = VISIBLE
-                                    "RE-SYNC TAG"
+                                    "DONE"
                                 }
                                 binding.successTV.text.toString() == "Failed to Synced Tag" -> {
                                     binding.successLAV.visibility = INVISIBLE
-                                    "SYNC TAG"
+                                    "RE-SYNC TAG"
                                 }
                                 else -> {
                                     binding.successLAV.visibility = VISIBLE
@@ -140,7 +144,7 @@ class SuccessFragment : Fragment() {
                     if (nfcSyncMode == NfcSyncMode.SYNCED.name) {
                         binding.successTV.text = "Successfully Synced Tag"
                         binding.successTV.setTextColor(getResources().getColor(R.color.green))
-                        binding.syncTagBTN.text = "RE-SYNC TAG"
+                        binding.syncTagBTN.text = "DONE"
                         binding.successLAV.visibility = VISIBLE
                         binding.successLAV.playAnimation()
                         Timber.d("Synced")

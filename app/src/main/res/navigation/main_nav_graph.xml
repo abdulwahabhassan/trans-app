@@ -59,7 +59,7 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
-    <dialog
+    <fragment
         android:id="@+id/findVehicleDialogFragment"
         android:name="ng.gov.imostate.ui.FindVehicleDialogFragment"
         android:label="fragment_find_vehicle_dialog"

@@ -111,7 +111,7 @@
                 android:layout_height="46dp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:hint="Enter your password"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:padding="0dp"
                 android:singleLine="true"
                 android:textSize="14sp" />

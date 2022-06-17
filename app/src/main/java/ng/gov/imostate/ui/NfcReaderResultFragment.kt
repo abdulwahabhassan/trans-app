@@ -121,7 +121,6 @@ class NfcReaderResultFragment : Fragment() {
                                         } else if (viewModel.getInitialUserPreferences().collectionSetting.equals("No", true)) {
                                             showInCompatibleRoutes()
                                         }
-
                                     }
                                 } else {
                                     AlertDialog.Builder(requireContext())
@@ -155,6 +154,7 @@ class NfcReaderResultFragment : Fragment() {
             Timber.d("$data")
 
             vehiclePlatesTV.text = data.vpn
+            vehicleCategoryTV.text = data.vc
             lastPaymentDateTV.text = AppUtils.formatDateToFullDate(data.lpd)
 
             val dateStr = data.lpd
@@ -244,7 +244,7 @@ class NfcReaderResultFragment : Fragment() {
         val startDate = lastPayDate?.time?.plus(TimeUnit.DAYS.toMillis(1))
         val endDate = Date().time
 
-        Timber.d("start date: $startDate end date: $endDate calendarMilli: ${timeNow}")
+        Timber.d("start date: $startDate end date: $endDate calendarMilli: $timeNow")
 
         builder.setSelection(Pair(startDate, timeNow))
         val picker = builder.build()

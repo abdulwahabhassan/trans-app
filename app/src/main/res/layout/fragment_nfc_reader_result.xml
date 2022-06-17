@@ -234,7 +234,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/driverTV"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleTypeLabelTV" />
+                    app:layout_constraintTop_toBottomOf="@+id/vehicleCategoryLabelTV" />
 
                 <TextView
                     android:id="@+id/driverTV"
@@ -255,38 +255,36 @@
                     tools:text="Dipo Mike" />
 
                 <TextView
-                    android:id="@+id/vehicleTypeLabelTV"
+                    android:id="@+id/vehicleCategoryLabelTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:text="Vehicle Type :"
+                    android:text="Vehicle Category :"
                     android:textColor="@color/black"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toStartOf="@+id/vehicleTypeTV"
+                    app:layout_constraintEnd_toStartOf="@+id/vehicleCategoryTV"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vehicleColorLabelTV" />
 
                 <TextView
-                    android:id="@+id/vehicleTypeTV"
+                    android:id="@+id/vehicleCategoryTV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:maxLines="1"
-                    android:text="Mercedes Benz"
+                    tools:text="Mercedes Benz"
                     android:textAlignment="viewEnd"
                     android:textColor="@color/black"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/vehicleTypeLabelTV"
+                    app:layout_constraintBottom_toBottomOf="@+id/vehicleCategoryLabelTV"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/vehicleTypeLabelTV"
-                    app:layout_constraintTop_toTopOf="@+id/vehicleTypeLabelTV" />
+                    app:layout_constraintStart_toEndOf="@+id/vehicleCategoryLabelTV"
+                    app:layout_constraintTop_toTopOf="@+id/vehicleCategoryLabelTV" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

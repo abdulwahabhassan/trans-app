@@ -199,25 +199,34 @@ class MainActivity : AppCompatActivity() {
             if (activityViewModel.getInitialUserPreferences().loggedIn == true) {
                 when (intent.action) {
                     NfcAdapter.ACTION_TECH_DISCOVERED -> {
-                        Timber.d("NFC TECH DISCOVERED")
-                        val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-                        if (tagFromIntent != null) {
-                            Timber.d("Tag tech list: ${tagFromIntent.techList}")
-                            if (sharedNfcViewModel.getNfcMode() == NfcMode.READ.name) {
-                                readTag(tagFromIntent)
-                            } else {
-                                //writeTestDataToTag(tagFromIntent)
-                                writeDataToTag(tagFromIntent, sharedNfcViewModel.getData())
-                                //reset to read mode. This is the default mode and must be rest back
-                                //after every write operation
-                                sharedNfcViewModel.setNfcMode(NfcMode.READ)
-                                //reset data to null after write operation
-                                sharedNfcViewModel.setData(null)
-                            }
+                        //only when in these two screens should nfc data exchange between tag and sticker happen
+                        if (navController.currentDestination?.id == R.id.findVehicleDialogFragment ||
+                            navController.currentDestination?.id == R.id.successFragment) {
 
-                        } else {
-                            Timber.d("Tag is null")
-                            AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
+                                if (navController.currentDestination?.id == R.id.findVehicleDialogFragment) {
+                                    navController.popBackStack()
+                                }
+
+                            Timber.d("NFC TECH DISCOVERED")
+                            val tagFromIntent: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+                            if (tagFromIntent != null) {
+                                Timber.d("Tag tech list: ${tagFromIntent.techList}")
+                                if (sharedNfcViewModel.getNfcMode() == NfcMode.READ.name) {
+                                    readTag(tagFromIntent)
+                                } else {
+                                    //writeTestDataToTag(tagFromIntent)
+                                    writeDataToTag(tagFromIntent, sharedNfcViewModel.getData())
+                                    //reset to read mode. This is the default mode and must be rest back
+                                    //after every write operation
+                                    sharedNfcViewModel.setNfcMode(NfcMode.READ)
+                                    //reset data to null after write operation
+                                    sharedNfcViewModel.setData(null)
+                                }
+
+                            } else {
+                                Timber.d("Tag is null")
+                                AppUtils.showToast(this@MainActivity, "Tag not found!", MotionToastStyle.ERROR)
+                            }
                         }
                     }
                     TransAppFirebaseMessagingService.FIREBASE_MESSAGING_EVENT -> {
@@ -278,7 +287,7 @@ class MainActivity : AppCompatActivity() {
         //then write to it
         Timber.d("tagData: ${tagData} dataToWrite: $data")
         if (tagData != null) {
-            if (true) { //DEBUG AND DEMO MODE
+            if (tagData.vpn == data?.vpn) {
                 val records = arrayListOf<NdefRecord>()
                 val jsonRecord = createNdefJsonRecord(data)
                 if (jsonRecord != null) {

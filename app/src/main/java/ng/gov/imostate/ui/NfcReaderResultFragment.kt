@@ -45,7 +45,12 @@ class NfcReaderResultFragment : Fragment() {
     //view model
     private lateinit var viewModel: NfcReaderResultFragmentViewModel
     var outstandingBalance: Double = 0.00
-    private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val sdf: SimpleDateFormat
+    get() {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        return dateFormat
+    }
     private var vehicleInDatabase: VehicleCurrentEntity?  = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -264,24 +269,20 @@ class NfcReaderResultFragment : Fragment() {
             MaterialDatePicker.Builder.dateRangePicker()
         builder.setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
         builder.setTitleText("HOLIDAYS WILL BE EXCLUDED")
-        val timeNow = Date().time
 
         //format last payment date
-        val dateStr = data.lpd
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val lastPayDate = sdf.parse(dateStr)
-        Timber.d("lpd $lastPayDate")
+        val lastPayDate = sdf.parse(data.lpd)
+        Timber.d("lpd date ${lastPayDate?.time}")
 
         //set selected dates to reflect outstanding days since the last payment, exempt the last
         //paid date from the selection by adding (86400000) milliseconds (1 day) to
         //the last paid date so that the first selection is the next day after the last paid date
         val startDate = lastPayDate?.time?.plus(TimeUnit.DAYS.toMillis(1))
-        val endDate = Date().time
+        val endDate = MaterialDatePicker.todayInUtcMilliseconds()
 
+        Timber.d("start date: $startDate timeNow: $endDate")
 
-        Timber.d("start date: $startDate end date: $endDate calendarMilli: $timeNow")
-
-        builder.setSelection(Pair(startDate, timeNow))
+        builder.setSelection(Pair(startDate, endDate))
         val picker = builder.build()
         picker.show(childFragmentManager, picker.toString())
 

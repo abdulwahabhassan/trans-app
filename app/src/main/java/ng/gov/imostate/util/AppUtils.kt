@@ -90,38 +90,44 @@ object AppUtils {
     }
 
     fun getCurrentDateTime(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK)
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentFullDate(): String {
-        val sdf = SimpleDateFormat("E, dd MMM yyyy", Locale.UK)
+        val sdf = SimpleDateFormat("E, dd MMM yyyy", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentFullDateTime(): String {
-        val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.UK)
+        val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
         val now = Date()
         return sdf.format(now)
     }
 
     fun formatDateTimeToFullDateTime(date: String): String{
-        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK)
-        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.UK)
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.getDefault())
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
         return formatter.format(parser.parse(date) ?: "")
     }
 
     fun formatDateToFullDate(date: String): String{
-        val parser = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
-        val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.UK)
+        val parser = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.getDefault())
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
         return formatter.format(parser.parse(date) ?: "")
     }
 

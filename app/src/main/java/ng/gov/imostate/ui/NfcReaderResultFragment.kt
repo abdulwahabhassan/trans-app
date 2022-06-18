@@ -48,6 +48,7 @@ class NfcReaderResultFragment : Fragment() {
     private val sdf: SimpleDateFormat
     get() {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        //dates used with MaterialDatePicker must be formatted to UTC time zone
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
         return dateFormat
     }

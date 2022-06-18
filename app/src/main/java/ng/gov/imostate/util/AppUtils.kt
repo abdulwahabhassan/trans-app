@@ -91,28 +91,28 @@ object AppUtils {
 
     fun getCurrentDateTime(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        sdf.timeZone = TimeZone.getTimeZone("Africa/Lagos")
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentFullDate(): String {
         val sdf = SimpleDateFormat("E, dd MMM yyyy", Locale.getDefault())
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        sdf.timeZone = TimeZone.getTimeZone("Africa/Lagos")
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentFullDateTime(): String {
         val sdf = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.getDefault())
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        sdf.timeZone = TimeZone.getTimeZone("Africa/Lagos")
         val now = Date()
         return sdf.format(now)
     }
 
     fun getCurrentDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        sdf.timeZone = TimeZone.getTimeZone("Africa/Lagos")
         val now = Date()
         return sdf.format(now)
     }
@@ -120,14 +120,14 @@ object AppUtils {
     fun formatDateTimeToFullDateTime(date: String): String{
         val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val formatter = SimpleDateFormat("E, dd MMM yyyy hh:mm", Locale.getDefault())
-        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        formatter.timeZone = TimeZone.getTimeZone("Africa/Lagos")
         return formatter.format(parser.parse(date) ?: "")
     }
 
     fun formatDateToFullDate(date: String): String{
         val parser = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val formatter = SimpleDateFormat("E, dd MMM yyyy", Locale.getDefault())
-        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        formatter.timeZone = TimeZone.getTimeZone("Africa/Lagos")
         return formatter.format(parser.parse(date) ?: "")
     }
 

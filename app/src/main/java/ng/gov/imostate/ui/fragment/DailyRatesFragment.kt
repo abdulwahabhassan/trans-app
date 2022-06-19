@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -26,7 +26,6 @@ class NetworkClient @Inject constructor (
                     .request()
                     .newBuilder()
                     .addHeader("Connection", "close")
-                    //.addHeader("Authorization", "Bearer 32|AV7OhjPo8xtnw30ByNvbsrZA88qtU67AtesjQGQ3")
                     .build()
                     chain.proceed(request)
                 })

@@ -30,7 +30,7 @@ class AgentRepository @Inject constructor(
     ): BaseRepository() {
 
     suspend fun loginAgent(loginRequest: LoginRequest) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.loginAgent(loginRequest)
         }) {
             is ApiResult.Success -> {
@@ -45,7 +45,7 @@ class AgentRepository @Inject constructor(
     }
 
     suspend fun getCurrentUser(token: String) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getCurrentUser(token)
         }) {
             is ApiResult.Success -> {
@@ -60,7 +60,7 @@ class AgentRepository @Inject constructor(
     }
 
     suspend fun getDashBoardMetrics(token: String,) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getDashBoardMetrics(token)
         }) {
             is ApiResult.Success -> {
@@ -75,7 +75,7 @@ class AgentRepository @Inject constructor(
     }
 
     suspend fun getRates(token: String) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getRates(token)
         }) {
             is ApiResult.Success -> {
@@ -92,7 +92,7 @@ class AgentRepository @Inject constructor(
     suspend fun getFundWalletAccountDetails(
         token: String,
         fundWalletAccountDetailsRequest: FundWalletAccountDetailsRequest) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getFundWalletAccountDetails(token, fundWalletAccountDetailsRequest)
         }) {
             is ApiResult.Success -> {
@@ -112,10 +112,6 @@ class AgentRepository @Inject constructor(
 
     suspend fun insertUpdateToDatabase(update: UpdateEntity) {
         updateLocalDao.insertUpdate(update)
-    }
-
-    suspend fun getUpdateInDatabase(updateId: Long): UpdateEntity? {
-        return updateLocalDao.getUpdate(updateId)
     }
 
     suspend fun getAllRatesInDatabase(): List<RateEntity> {
@@ -147,10 +143,6 @@ class AgentRepository @Inject constructor(
 
     suspend fun insertAllAgentRoutesToDatabase(routes: List<AgentRouteEntity>) {
         agentRouteLocalDao.insertAllAgentRoutes(routes)
-    }
-
-    suspend fun getAllAgentRoutes() {
-        agentRouteLocalDao.getAllAgentRoutes()
     }
 
     suspend fun deleteAllAgentRoutesInDatabase(routes: List<AgentRouteEntity>) {

@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -39,7 +39,10 @@ class PaymentFragment : Fragment() {
                 amountTIP.error = ""
                 val amount = amountET.text.toString()
                 if (amount.isNotEmpty() && amount.toDouble() != 0.00) {
-                    val action = PaymentFragmentDirections.actionPaymentFragmentToFundWalletFragment(amount)
+                    val action =
+                        PaymentFragmentDirections.actionPaymentFragmentToFundWalletFragment(
+                            amount
+                        )
                     findNavController().navigate(action)
                 } else {
                     amountTIP.error = "Please enter valid amount"

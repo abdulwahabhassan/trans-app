@@ -15,9 +15,7 @@ object NetworkConnectivityModule {
 
     @Provides
     @Singleton
-    fun providesNetworkConnectivityUtil(
-        @ApplicationContext appContext: Context
-    ): NetworkConnectivityUtil {
+    fun providesNetworkConnectivityUtil(): NetworkConnectivityUtil {
         return NetworkConnectivityUtil.instance!!
 
     }

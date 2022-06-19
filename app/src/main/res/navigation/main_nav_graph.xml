@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ng.gov.imostate.ui.HomeFragment"
+        android:name="ng.gov.imostate.ui.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVehicleFragment"
-        android:name="ng.gov.imostate.ui.AddVehicleFragment"
+        android:name="ng.gov.imostate.ui.fragment.AddVehicleFragment"
         android:label="fragment_add_vehicle"
         tools:layout="@layout/fragment_add_vehicle" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="ng.gov.imostate.ui.TransactionsFragment"
+        android:name="ng.gov.imostate.ui.fragment.TransactionsFragment"
         android:label="fragment_transactions"
         tools:layout="@layout/fragment_transactions" >
         <argument
@@ -61,22 +61,22 @@
     </fragment>
     <fragment
         android:id="@+id/findVehicleDialogFragment"
-        android:name="ng.gov.imostate.ui.FindVehicleDialogFragment"
+        android:name="ng.gov.imostate.ui.fragment.FindVehicleDialogFragment"
         android:label="fragment_find_vehicle_dialog"
         tools:layout="@layout/fragment_find_vehicle_dialog" />
     <fragment
         android:id="@+id/nfcReaderResultFragment"
-        android:name="ng.gov.imostate.ui.NfcReaderResultFragment"
+        android:name="ng.gov.imostate.ui.fragment.NfcReaderResultFragment"
         android:label="fragment_reader_result"
         tools:layout="@layout/fragment_nfc_reader_result" />
     <fragment
         android:id="@+id/dailyRatesFragment"
-        android:name="ng.gov.imostate.ui.DailyRatesFragment"
+        android:name="ng.gov.imostate.ui.fragment.DailyRatesFragment"
         android:label="fragment_daily_rates"
         tools:layout="@layout/fragment_daily_rates" />
     <fragment
         android:id="@+id/outStandingPaymentFragment"
-        android:name="ng.gov.imostate.ui.OutStandingPaymentFragment"
+        android:name="ng.gov.imostate.ui.fragment.OutStandingPaymentFragment"
         android:label="fragment_out_standing_payment"
         tools:layout="@layout/fragment_out_standing_payment" >
         <action
@@ -87,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/successFragment"
-        android:name="ng.gov.imostate.ui.SuccessFragment"
+        android:name="ng.gov.imostate.ui.fragment.SuccessFragment"
         android:label="fragment_success"
         tools:layout="@layout/fragment_success" >
         <argument
@@ -108,12 +108,12 @@
     </fragment>
     <fragment
         android:id="@+id/updatesFragment"
-        android:name="ng.gov.imostate.ui.UpdatesFragment"
+        android:name="ng.gov.imostate.ui.fragment.UpdatesFragment"
         android:label="fragment_updates"
         tools:layout="@layout/fragment_updates" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="ng.gov.imostate.ui.LoginFragment"
+        android:name="ng.gov.imostate.ui.fragment.LoginFragment"
         android:label="fragment_login_screen"
         tools:layout="@layout/fragment_login" >
         <action
@@ -123,7 +123,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehicleDetailsDialogFragment"
-        android:name="ng.gov.imostate.ui.VehicleDetailsDialogFragment"
+        android:name="ng.gov.imostate.ui.fragment.VehicleDetailsDialogFragment"
         android:label="fragment_vehicle_details_dialog"
         tools:layout="@layout/fragment_vehicle_details_dialog" >
         <action
@@ -136,7 +136,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="ng.gov.imostate.ui.PaymentFragment"
+        android:name="ng.gov.imostate.ui.fragment.PaymentFragment"
         android:label="fragment_payment"
         tools:layout="@layout/fragment_payment" >
         <action
@@ -146,7 +146,7 @@
     </fragment>
     <fragment
         android:id="@+id/fundWalletFragment"
-        android:name="ng.gov.imostate.ui.FundWalletFragment"
+        android:name="ng.gov.imostate.ui.fragment.FundWalletFragment"
         android:label="fragment_fund_wallet"
         tools:layout="@layout/fragment_fund_wallet" >
         <argument

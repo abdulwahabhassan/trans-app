@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="bottom"
-    tools:context=".ui.LoginFragment">
+    tools:context=".ui.fragment.LoginFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

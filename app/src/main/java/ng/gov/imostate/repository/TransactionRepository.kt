@@ -24,7 +24,7 @@ class TransactionRepository @Inject constructor(
 ): BaseRepository() {
 
     suspend fun createSyncTransactions(token: String, data: CreateSyncTransactionsRequest) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.createSyncTransactions(token, data)
         }) {
             is ApiResult.Success -> {
@@ -39,7 +39,7 @@ class TransactionRepository @Inject constructor(
     }
 
     suspend fun getTransactions(token: String,) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getTransactions(token)
         }) {
             is ApiResult.Success -> {

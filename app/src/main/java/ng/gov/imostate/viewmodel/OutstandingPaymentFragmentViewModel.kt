@@ -21,19 +21,6 @@ class OutstandingPaymentFragmentViewModel @Inject constructor(
 ) : BaseViewModel(
     userPreferencesRepository
 ){
-
-    suspend fun getDashBoardMetrics(token: String,): ViewModelResult<MetricsResult?> {
-        val response = agentRepository.getDashBoardMetrics(token)
-        return  when (response.success) {
-            true -> {
-                ViewModelResult.Success(response.result)
-            }
-            else -> {
-                ViewModelResult.Error(response.message ?: "Unknown Error")
-            }
-        }
-    }
-
     suspend fun insertTransactionToDatabase(transaction: TransactionData) {
         transactionRepository.insertTransactionToDatabase(
             Mapper.mapTransactionToTransactionEntity(transaction)

@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,7 +54,8 @@ class LoginFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             if (viewModel.getInitialUserPreferences().loggedIn == true) {
-                val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                val action =
+                    LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                 findNavController().navigate(action)
             } else {
                 AppUtils.showView(true, binding.loginBTN)
@@ -113,7 +114,8 @@ class LoginFragment : Fragment() {
                             //keep user logged in until they log out
                             viewModel.updateAgentLogInStatus(true)
 
-                            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                            val action =
+                                LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                             findNavController().navigate(action)
                         }
                         is ViewModelResult.Error -> {

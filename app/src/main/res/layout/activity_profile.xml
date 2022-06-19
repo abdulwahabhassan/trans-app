@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.ProfileActivity">
+    tools:context=".ui.activity.ProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -340,21 +340,34 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:id="@+id/viewRoutesTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/view_routes_text"
         android:layout_marginTop="8dp"
-        app:cornerRadius="8dp"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="12dp"
-        android:fontFamily="@font/nunito_sans_semibold"
-        android:textColor="@color/blue"
-        android:visibility="gone"
         android:background="@drawable/log_out_bg"
         android:backgroundTint="@color/white"
+        android:fontFamily="@font/nunito_sans_semibold"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="@string/view_routes_text"
+        android:textColor="@color/blue"
+        app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView"
         app:layout_constraintStart_toStartOf="@+id/materialCardView"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/viewRoutesTV"
+        app:layout_constraintEnd_toEndOf="@+id/viewRoutesTV"
+        app:layout_constraintStart_toStartOf="@+id/viewRoutesTV"
+        app:layout_constraintTop_toTopOf="@+id/viewRoutesTV"
+        app:trackColor="@color/sky_blue" />
 
     <TextView
         android:id="@+id/logoutTV"

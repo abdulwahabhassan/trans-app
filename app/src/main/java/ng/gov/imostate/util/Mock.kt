@@ -5,7 +5,6 @@ import ng.gov.imostate.model.domain.Transaction
 import ng.gov.imostate.model.domain.Update
 
 object Mock {
-
     fun getFundWalletAccountDetails(): List<AccountDetails> {
         return listOf(
             AccountDetails("John Maxwell", "0123902102", "First Bank of Nigeria Limited"),

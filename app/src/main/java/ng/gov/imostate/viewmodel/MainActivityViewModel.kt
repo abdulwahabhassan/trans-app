@@ -10,6 +10,4 @@ class MainActivityViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository
 ) : BaseViewModel(
     userPreferencesRepository
-) {
-
-}
+)

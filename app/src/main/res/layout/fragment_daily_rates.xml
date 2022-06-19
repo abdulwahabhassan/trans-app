@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/dailyRatesDialogFragment"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    tools:context=".ui.DailyRatesFragment">
+    tools:context=".ui.fragment.DailyRatesFragment">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/backArrowIV"

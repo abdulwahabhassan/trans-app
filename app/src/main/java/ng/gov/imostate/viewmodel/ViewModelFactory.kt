@@ -24,8 +24,7 @@ class AppViewModelsFactory @Inject constructor(
                     userPreferencesRepository,
                     agentRepository,
                     vehicleRepository,
-                    transactionRepository,
-                    moshi
+                    transactionRepository
                 ) as T
             }
             modelClass.isAssignableFrom(TransactionsFragmentViewModel::class.java) -> {
@@ -74,13 +73,6 @@ class AppViewModelsFactory @Inject constructor(
                     transactionRepository
                 ) as T
             }
-            modelClass.isAssignableFrom(SuccessFragmentViewModel::class.java) -> {
-                return SuccessFragmentViewModel(
-                    userPreferencesRepository,
-                    vehicleRepository,
-                    transactionRepository
-                ) as T
-            }
             modelClass.isAssignableFrom(OutstandingPaymentFragmentViewModel::class.java) -> {
                 return OutstandingPaymentFragmentViewModel(
                     userPreferencesRepository,
@@ -92,11 +84,6 @@ class AppViewModelsFactory @Inject constructor(
                 return VehicleDetailsDialogFragmentViewModel(
                     userPreferencesRepository,
                     vehicleRepository
-                ) as T
-            }
-            modelClass.isAssignableFrom(TagVehicleFragmentViewModel::class.java) -> {
-                return TagVehicleFragmentViewModel(
-                    userPreferencesRepository
                 ) as T
             }
             modelClass.isAssignableFrom(DailyRatesDialogFragmentViewModel::class.java) -> {

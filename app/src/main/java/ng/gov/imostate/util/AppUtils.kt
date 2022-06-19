@@ -145,47 +145,6 @@ object AppUtils {
         return formatter.format(parser.parse(date) ?: "")
     }
 
-    fun getMacAddress(): String {
-        try {
-            val all: List<NetworkInterface> =
-                Collections.list(NetworkInterface.getNetworkInterfaces())
-            for (nif in all) {
-                if (!nif.name.equals("wlan0", ignoreCase = true)) continue
-                val macBytes = nif.hardwareAddress ?: return ""
-                val res1 = java.lang.StringBuilder()
-                for (b in macBytes) {
-                    //res1.append(Integer.toHexString(b & 0xFF) + ":");
-                    res1.append(String.format("%02X:", b))
-                }
-                if (res1.isNotEmpty()) {
-                    res1.deleteCharAt(res1.length - 1)
-                }
-                return res1.toString()
-            }
-        } catch (ex: java.lang.Exception) {
-        }
-        return "02:00:00:00:00:00"
-    }
-
-    private fun isVMMac(mac: ByteArray?): Boolean {
-        if (null == mac) return false
-        val invalidMacs = arrayOf(
-            byteArrayOf(0x00, 0x05, 0x69),
-            byteArrayOf(0x00, 0x1C, 0x14),
-            byteArrayOf(0x00, 0x0C, 0x29),
-            byteArrayOf(0x00, 0x50, 0x56),
-            byteArrayOf(0x08, 0x00, 0x27),
-            byteArrayOf(0x0A, 0x00, 0x27),
-            byteArrayOf(0x00, 0x03, 0xFF.toByte()),
-            byteArrayOf(0x00, 0x15, 0x5D)
-        )
-        for (invalid in invalidMacs) {
-            if (invalid[0] == mac[0] && invalid[1] == mac[1] && invalid[2] == mac[2]
-            ) return true
-        }
-        return false
-    }
-
     fun getAppVersion(context: Context): String? {
         var packageInfo: PackageInfo? = null
         try {

@@ -16,7 +16,6 @@ import timber.log.Timber
 open class BaseRepository {
 
     suspend fun <T> coroutineHandler(
-        context: Context,
         dispatcher: CoroutineDispatcher,
         networkConnectivityUtil: NetworkConnectivityUtil,
         apiRequest: suspend () -> T

@@ -22,8 +22,7 @@ class HomeFragmentViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     private val agentRepository: AgentRepository,
     private val vehicleRepository: VehicleRepository,
-    private val transactionRepository: TransactionRepository,
-    private val moshi: Moshi
+    private val transactionRepository: TransactionRepository
 ) : BaseViewModel(userPreferencesRepository) {
 
     private val _serverTime = MutableStateFlow(value = "")
@@ -143,18 +142,6 @@ class HomeFragmentViewModel @Inject constructor(
     ): ViewModelResult<SyncTransactionsResult?> {
         val response = transactionRepository.createSyncTransactions(token, createSyncTransactionsRequest)
         return when (response.success) {
-            true -> {
-                ViewModelResult.Success(response.result)
-            }
-            else -> {
-                ViewModelResult.Error(response.message ?: "Unknown Error")
-            }
-        }
-    }
-
-    suspend fun getRates(token: String): ViewModelResult<RatesResult?> {
-        val response = agentRepository.getRates(token)
-        return  when (response.success) {
             true -> {
                 ViewModelResult.Success(response.result)
             }

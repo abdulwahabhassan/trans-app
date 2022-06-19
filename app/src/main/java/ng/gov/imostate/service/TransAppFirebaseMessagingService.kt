@@ -1,15 +1,9 @@
 package ng.gov.imostate.service
 
-import android.content.Intent
-import android.widget.Toast
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import ng.gov.imostate.ui.MainActivity
-import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.util.NotificationBuilder
 import timber.log.Timber
-import www.sanju.motiontoast.MotionToastStyle
 
 class TransAppFirebaseMessagingService: FirebaseMessagingService() {
 

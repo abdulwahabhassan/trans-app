@@ -1,7 +1,6 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -26,14 +24,13 @@ import ng.gov.imostate.databinding.FragmentHomeBinding
 import ng.gov.imostate.model.domain.TransactionType
 import ng.gov.imostate.model.request.CreateSyncTransactionsRequest
 import ng.gov.imostate.model.result.ViewModelResult
+import ng.gov.imostate.ui.activity.ProfileActivity
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.HomeFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle
-import java.time.LocalDate
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -243,30 +240,36 @@ class HomeFragment : Fragment() {
 
         with(binding) {
             scanVehicleBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToFindVehicleDialogFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToFindVehicleDialogFragment()
                 findNavController().navigate(action)
             }
             addVehicleBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToAddVehicleFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToAddVehicleFragment()
                 findNavController().navigate(action)
             }
             transactionsBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToTransactionsFragment(
-                    TransactionType.AGENT_TRANSACTION.name,
-                    null
-                )
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToTransactionsFragment(
+                        TransactionType.AGENT_TRANSACTION.name,
+                        null
+                    )
                 findNavController().navigate(action)
             }
             updatesBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToUpdatesFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToUpdatesFragment()
                 findNavController().navigate(action)
             }
             dailyRatesBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToDailyRatesFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToDailyRatesFragment()
                 findNavController().navigate(action)
             }
             paymentBTN.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToPaymentFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToPaymentFragment()
                 findNavController().navigate(action)
             }
             userPhotoIV.setOnClickListener{

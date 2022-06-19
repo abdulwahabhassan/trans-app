@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +15,9 @@ import ng.gov.imostate.adapter.UpdatesAdapter
 import ng.gov.imostate.database.entity.UpdateEntity
 import ng.gov.imostate.databinding.FragmentUpdatesBinding
 import ng.gov.imostate.model.domain.Update
+import ng.gov.imostate.ui.activity.MainActivity
 import ng.gov.imostate.util.AppUtils
-import ng.gov.imostate.util.Mock
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
-import ng.gov.imostate.viewmodel.HomeFragmentViewModel
-import ng.gov.imostate.viewmodel.NfcMode
 import ng.gov.imostate.viewmodel.UpdatesFragmentViewModel
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToastStyle

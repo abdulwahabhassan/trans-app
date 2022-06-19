@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,7 +22,6 @@ import ng.gov.imostate.util.Mock
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.FundWalletFragmentViewModel
 import timber.log.Timber
-import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
 

@@ -2,6 +2,7 @@ package ng.gov.imostate.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.ItemRouteBinding
 import ng.gov.imostate.model.domain.Route
-import ng.gov.imostate.model.domain.VehicleRoute
 import timber.log.Timber
 import java.util.*
 
@@ -56,28 +56,34 @@ class RoutesAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(vehicleRoute: Route) {
-            Timber.d("$vehicleRoute")
+        fun bind(route: Route) {
+            Timber.d("$route")
             with(binding) {
-                routeNameTV.text = vehicleRoute.from?.replaceFirstChar {
+                routeNameTV.text = route.from?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
-                } + " to " + vehicleRoute.to?.replaceFirstChar {
+                } + " to " + route.to?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
                 }
-                if (vehicleRoute.status.equals("active", true)) {
+                if (route.status.equals("active", true)) {
                     routeStatusTV.setTextColor(root.context.resources.getColor(R.color.green))
                 } else {
                     routeStatusTV.setTextColor(root.context.resources.getColor(R.color.red))
                 }
-                routeStatusTV.text = vehicleRoute.status
-                if (vehicleRoute.selected == true) {
-                    selectedIV.setImageResource(R.drawable.ic_check)
-                } else {
-                    selectedIV.setImageResource(R.drawable.ic_unchecked)
+                routeStatusTV.text = route.status
+                when (route.selected) {
+                    true -> {
+                        selectedIV.setImageResource(R.drawable.ic_check)
+                    }
+                    false -> {
+                        selectedIV.setImageResource(R.drawable.ic_unchecked)
+                    }
+                    else -> {
+                        selectedIV.setImageResource(R.drawable.ic_location)
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -21,7 +21,6 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.async
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentOutStandingPaymentBinding
@@ -29,6 +28,7 @@ import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.printer.AsyncBluetoothEscPosPrint
 import ng.gov.imostate.printer.AsyncEscPosPrint
 import ng.gov.imostate.printer.AsyncEscPosPrinter
+import ng.gov.imostate.ui.activity.MainActivity
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.OutstandingPaymentFragmentViewModel
@@ -204,8 +204,8 @@ class OutStandingPaymentFragment : Fragment() {
                                     }
 
                                     printBluetooth()
-                                    val action = OutStandingPaymentFragmentDirections
-                                        .actionOutStandingPaymentFragmentToSuccessFragment(
+                                    val action =
+                                        OutStandingPaymentFragmentDirections.actionOutStandingPaymentFragmentToSuccessFragment(
                                             vehicleId!!,
                                             vehiclePlatesNumber,
                                             dateTo,

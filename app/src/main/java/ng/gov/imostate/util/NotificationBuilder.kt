@@ -10,10 +10,9 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ng.gov.imostate.R
 import ng.gov.imostate.service.TransAppFirebaseMessagingService
-import ng.gov.imostate.ui.MainActivity
+import ng.gov.imostate.ui.activity.MainActivity
 
 class NotificationBuilder(
     private val context: Context,

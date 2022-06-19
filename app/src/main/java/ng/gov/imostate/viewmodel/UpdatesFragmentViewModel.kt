@@ -23,8 +23,4 @@ class UpdatesFragmentViewModel @Inject constructor(
         agentRepository.insertUpdateToDatabase(update)
     }
 
-    suspend fun getUpdateInDatabase(updateId: Long): UpdateEntity? {
-        return agentRepository.getUpdateInDatabase(updateId)
-    }
-
 }

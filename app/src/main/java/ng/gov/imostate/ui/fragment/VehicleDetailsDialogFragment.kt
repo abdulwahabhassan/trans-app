@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,19 +6,15 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentVehicleDetailsDialogBinding
 import ng.gov.imostate.model.domain.TransactionType
+import ng.gov.imostate.ui.activity.MainActivity
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.FindVehicleDialogFragmentViewModel
-import ng.gov.imostate.viewmodel.VehicleDetailsDialogFragmentViewModel
-import www.sanju.motiontoast.MotionToastStyle
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,12 +67,13 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
             }
 
             syncVehicleTagTV.setOnClickListener {
-                val action = VehicleDetailsDialogFragmentDirections.actionVehicleDetailsDialogFragmentToSuccessFragment(
-                    vehicleIdNumber.toString(),
-                    vehiclePlates,
-                    vehicleLastPaidDate?.let { date -> AppUtils.formatFullDateToDate(date) },
-                    vehicleCategory
-                )
+                val action =
+                    VehicleDetailsDialogFragmentDirections.actionVehicleDetailsDialogFragmentToSuccessFragment(
+                        vehicleIdNumber.toString(),
+                        vehiclePlates,
+                        vehicleLastPaidDate?.let { date -> AppUtils.formatFullDateToDate(date) },
+                        vehicleCategory
+                    )
                 findNavController().navigate(action)
             }
 
@@ -87,8 +84,8 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
             lastPaidDateTV.text = vehicleLastPaidDate ?: "-"
 
             seeTransactionsBTN.setOnClickListener {
-                val action = VehicleDetailsDialogFragmentDirections
-                    .actionVehicleDetailsDialogFragmentToTransactionsFragment(
+                val action =
+                    VehicleDetailsDialogFragmentDirections.actionVehicleDetailsDialogFragmentToTransactionsFragment(
                         TransactionType.VEHICLE_TRANSACTION.name,
                         vehiclePlates
                     )

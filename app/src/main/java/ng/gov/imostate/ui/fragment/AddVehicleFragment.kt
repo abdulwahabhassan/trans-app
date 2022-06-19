@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -199,8 +199,8 @@ class AddVehicleFragment : Fragment() {
                                 AppUtils.showToast(requireActivity(), "Successful", MotionToastStyle.SUCCESS)
 
                                 val onBoardedVehicle = result.data?.onBoardVehicle
-                                val action = AddVehicleFragmentDirections
-                                    .actionAddVehicleFragmentToSuccessFragment(
+                                val action =
+                                    AddVehicleFragmentDirections.actionAddVehicleFragmentToSuccessFragment(
                                         onBoardedVehicle?.id.toString(),
                                         onBoardedVehicle?.vehiclePlates,
 //                                        AppUtils.getCurrentDate(),

@@ -1,12 +1,10 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -15,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.R
 import ng.gov.imostate.databinding.FragmentFindVehicleDialogBinding
 import ng.gov.imostate.model.result.ViewModelResult
+import ng.gov.imostate.ui.activity.MainActivity
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.FindVehicleDialogFragmentViewModel

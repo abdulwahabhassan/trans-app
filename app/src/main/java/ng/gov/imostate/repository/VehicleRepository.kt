@@ -30,7 +30,7 @@ class VehicleRepository @Inject constructor(
 ): BaseRepository() {
 
     suspend fun getAllVehiclesFromCurrentEnumeration(token: String,) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getAllVehiclesFromCurrentEnumeration(token)
         }) {
             is ApiResult.Success -> {
@@ -45,7 +45,7 @@ class VehicleRepository @Inject constructor(
     }
 
     suspend fun getAllVehiclesFromPreviousEnumeration(token: String, lastVehicleId: Long) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getAllVehiclesFromPreviousEnumeration(token, lastVehicleId)
         }) {
             is ApiResult.Success -> {
@@ -60,7 +60,7 @@ class VehicleRepository @Inject constructor(
     }
 
     suspend fun getVehicle(token: String, vehicleId: String) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.getVehicle(token, vehicleId)
         }) {
             is ApiResult.Success -> {
@@ -75,7 +75,7 @@ class VehicleRepository @Inject constructor(
     }
 
     suspend fun onboardVehicle(token: String, onboardVehicleRequest: OnboardVehicleRequest) = withContext(dispatcher) {
-        when (val apiResult = coroutineHandler(context, dispatcher, networkConnectivityUtil) {
+        when (val apiResult = coroutineHandler(dispatcher, networkConnectivityUtil) {
             dataSource.onboardVehicle(token, onboardVehicleRequest)
         }) {
             is ApiResult.Success -> {

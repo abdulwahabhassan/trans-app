@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    tools:context=".ui.AddVehicleFragment">
+    tools:context=".ui.fragment.AddVehicleFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
@@ -38,13 +38,14 @@
             app:strokeColor="@color/dark_blue" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/phoneNumberPromptTV"
+            android:id="@+id/titleTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:fontFamily="@font/nunito_sans_extrabold"
             android:text="Select Routes"
             android:textAlignment="center"
+            android:gravity="center"
             android:textColor="@color/dark_blue"
             android:textSize="16sp"
             android:layout_marginTop="8dp"
@@ -71,7 +72,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumberPromptTV"
+            app:layout_constraintTop_toBottomOf="@+id/titleTV"
             app:queryBackground="@drawable/search_view_bg"
             app:queryHint="search"
             app:searchIcon="@drawable/ic_search">

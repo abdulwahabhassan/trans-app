@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -36,9 +36,6 @@ class SuccessFragment : Fragment() {
     private val sharedNfcViewModel: SharedNfcViewModel by activityViewModels()
     @Inject
     lateinit var appViewModelFactory: AppViewModelsFactory
-    //view model
-    private lateinit var viewModel: SuccessFragmentViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +63,6 @@ class SuccessFragment : Fragment() {
         observeNfcMode()
 
         observeNfcSyncMode()
-
-        viewModel = ViewModelProvider(
-            this,
-            appViewModelFactory
-        ).get(SuccessFragmentViewModel::class.java)
 
         with(binding) {
             syncTagBTN.setOnClickListener {

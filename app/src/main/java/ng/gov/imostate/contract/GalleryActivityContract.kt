@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import ng.gov.imostate.ui.GalleryActivity
+import ng.gov.imostate.ui.activity.GalleryActivity
 
 class GalleryActivityContract : ActivityResultContract<Unit, String>() {
 

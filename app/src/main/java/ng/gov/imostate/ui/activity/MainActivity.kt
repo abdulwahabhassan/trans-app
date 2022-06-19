@@ -1,8 +1,7 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.activity
 
 //import timber.log.Timber
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_MUTABLE
 import android.content.Intent
 import android.content.IntentFilter

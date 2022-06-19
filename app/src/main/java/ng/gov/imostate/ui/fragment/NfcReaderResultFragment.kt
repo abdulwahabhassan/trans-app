@@ -1,4 +1,4 @@
-package ng.gov.imostate.ui
+package ng.gov.imostate.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -21,6 +21,7 @@ import ng.gov.imostate.R
 import ng.gov.imostate.database.entity.VehicleCurrentEntity
 import ng.gov.imostate.databinding.FragmentNfcReaderResultBinding
 import ng.gov.imostate.model.domain.Data
+import ng.gov.imostate.ui.activity.MainActivity
 import ng.gov.imostate.util.AppUtils
 import ng.gov.imostate.viewmodel.AppViewModelsFactory
 import ng.gov.imostate.viewmodel.NfcReaderResultFragmentViewModel

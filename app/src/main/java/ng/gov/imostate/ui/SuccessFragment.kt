@@ -111,8 +111,8 @@ class SuccessFragment : Fragment() {
                         binding.nfcWriteModeLAV.playAnimation()
                         binding.nfcWriteModeLAV.visibility = VISIBLE
                         binding.hintTV.visibility = VISIBLE
-                        binding.syncTagBTN.text = "STOP SYNC"
-                        binding.successTV.text = "Click button to STOP syncing"
+                        binding.syncTagBTN.text = "CANCEL SYNC"
+                        binding.successTV.text = "Click button to CANCEL sync"
                         binding.successTV.setTextColor(getResources().getColor(R.color.dark_grey))
                         binding.successLAV.visibility = INVISIBLE
                     } else {
@@ -130,7 +130,7 @@ class SuccessFragment : Fragment() {
                                     "RE-SYNC TAG"
                                 }
                                 else -> {
-                                    binding.successTV.text = "Click button to START syncing"
+                                    binding.successTV.text = "Click button to SYNC tag"
                                     binding.successTV.setTextColor(getResources().getColor(R.color.dark_grey))
                                     "SYNC TAG"
                                 }
@@ -173,10 +173,10 @@ class SuccessFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("Info")
             .setMessage("Please confirm that you have successfully synced tag?")
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton("No, I haven't") { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setPositiveButton("Yes, I have") { dialog, _ ->
                 //reset nfc mode to default - READ
                 sharedNfcViewModel.setNfcMode(NfcMode.READ)
                 dialog.dismiss()

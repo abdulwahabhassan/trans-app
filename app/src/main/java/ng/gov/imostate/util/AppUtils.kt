@@ -131,6 +131,13 @@ object AppUtils {
         return formatter.format(parser.parse(date) ?: "")
     }
 
+    fun formatDateToShortDate(date: String): String{
+        val parser = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        formatter.timeZone = TimeZone.getTimeZone("Africa/Lagos")
+        return formatter.format(parser.parse(date) ?: "")
+    }
+
     fun formatFullDateToDate(date: String): String? {
         val parser = SimpleDateFormat("E, dd MMM yyyy", Locale.getDefault())
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

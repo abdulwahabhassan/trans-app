@@ -11,10 +11,11 @@
     <TextView
         android:id="@+id/hintTV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="Move closer to sticker/tag to sync"
-        android:visibility="invisible"
+        android:text="Move closer to sticker/tag to sync\n\n OR"
+        android:gravity="center"
+        android:visibility="visible"
         android:layout_marginTop="32dp"
         android:textColor="?colorOnSurface"
         android:textSize="18sp"
@@ -25,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_sans_extrabold"
-        android:text="Please sync tag"
-        android:layout_marginTop="32dp"
-        android:textColor="@color/green"
+        android:text="Click button to sync"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/dark_grey"
         android:textSize="18sp"
         android:textStyle="bold" />
 

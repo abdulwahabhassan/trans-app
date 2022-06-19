@@ -92,7 +92,8 @@ object Mapper {
         return TransactionEntity(
             transactionData.vehicleId.toString(),
             transactionData.to,
-            transactionData.amount
+            transactionData.amount,
+            transactionData.dateTime
         )
     }
 
@@ -100,7 +101,8 @@ object Mapper {
         return TransactionData(
             transactionEntity.vehicleId,
             transactionEntity.to,
-            transactionEntity.amount
+            transactionEntity.amount,
+            transactionEntity.dateTime
         )
     }
 

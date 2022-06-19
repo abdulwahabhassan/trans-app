@@ -272,7 +272,7 @@ class TransactionsFragment : Fragment() {
                     )
                 }</img>
             [L]
-            [C]<u><font size='big'>Receipt</font></u>
+            [C]<b><font size='normal'>RECEIPT (Reprint)</font></b>
             [L]
             [C]${format.format(Date())}
             [C]
@@ -284,8 +284,8 @@ class TransactionsFragment : Fragment() {
                     ?.let { AppUtils.formatDateToFullDate(it) }}
             [L]SENDER [R]${transaction.accountFrom ?: "-"}
             [L]RECIPIENT [R]${transaction.accountTo ?: "-"}
-            [L]VEHICLE [R]${transaction.vehicleFrom?.vehiclePlates ?: "-"}
-            [L]DRIVER [R]${transaction.vehicleFrom?.driverName ?: "-"}
+            ${if (transaction.vehicleFrom != null) {"""[L]VEHICLE [R]${transaction.vehicleFrom.vehiclePlates ?: "-"}
+            [L]DRIVER [R]${transaction.vehicleFrom.driverName ?: "-"}"""} else { "" }}
             [L]
             [C]================================
             [L]
@@ -307,7 +307,7 @@ class TransactionsFragment : Fragment() {
                     )
                 }</img>
             [L]
-            [C]<u><font size='big'>Receipt</font></u>
+            [C]<b><font size='normal'>RECEIPT (Reprint)</font></b>
             [L]
             [C]${format.format(Date())}
             [C]

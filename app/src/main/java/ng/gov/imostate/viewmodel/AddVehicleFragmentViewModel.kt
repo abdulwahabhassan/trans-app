@@ -1,18 +1,15 @@
 package ng.gov.imostate.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ng.gov.imostate.Mapper
 import ng.gov.imostate.database.entity.RouteEntity
-import ng.gov.imostate.database.entity.VehicleRouteEntity
 import ng.gov.imostate.database.entity.VehiclePreviousEntity
-import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.apiresult.OnboardVehicleResult
-import ng.gov.imostate.model.domain.TransactionData
+import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.repository.AgentRepository
 import ng.gov.imostate.repository.TransactionRepository
-import ng.gov.imostate.repository.VehicleRepository
 import ng.gov.imostate.repository.UserPreferencesRepository
+import ng.gov.imostate.repository.VehicleRepository
 import javax.inject.Inject
 
 
@@ -44,12 +41,6 @@ class AddVehicleFragmentViewModel @Inject constructor(
 
     suspend fun findVehicleDriverRecordFromPreviousEnumerationInDatabase(identifier: String): VehiclePreviousEntity? {
         return vehicleRepository.findVehicleDriverRecordFromPreviousEnumerationInDatabase(identifier)
-    }
-
-    suspend fun insertTransactionToDatabase(transaction: TransactionData) {
-        transactionRepository.insertTransactionToDatabase(
-            Mapper.mapTransactionToTransactionEntity(transaction)
-        )
     }
 
     suspend fun getCategories(): List<String> {

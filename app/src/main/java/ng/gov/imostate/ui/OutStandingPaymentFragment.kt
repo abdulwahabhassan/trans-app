@@ -193,12 +193,13 @@ class OutStandingPaymentFragment : Fragment() {
                                         //update the current 'amount' and 'date to' in database
                                         val transactionData = transaction.copy(
                                             to = dateTo,
-                                            amount = (transaction.amount ?: 0.00) + amountToPay
+                                            amount = (transaction.amount ?: 0.00) + amountToPay,
+                                            dateTime = AppUtils.getCurrentDateTime()
                                         )
                                         viewModel.insertTransactionToDatabase(transactionData)
                                     } else {
                                         viewModel.insertTransactionToDatabase(
-                                            TransactionData(vehicleId, dateTo, amountToPay)
+                                            TransactionData(vehicleId, dateTo, amountToPay, AppUtils.getCurrentDateTime())
                                         )
                                     }
 
@@ -352,18 +353,20 @@ class OutStandingPaymentFragment : Fragment() {
                 )
             }</img>
             [L]
-            [C]<u><font size='big'>Receipt</font></u>
+            [C]<b><font size='normal'>RECEIPT</font></b>
             [L]
             [C]${format.format(Date())}
             [C]
             [C]================================
             [L]
-            [L]<b>AMOUNT PAID</b> [R]$amountToPay NGN</b>
-            [L]<b>VAT [R]0.00 NGN</b>
+            [L]AMOUNT PAID</b> [R]$amountToPay NGN
+            [L]VAT [R]0.00 NGN
+            [C]PERIOD 
+            [C]${AppUtils.formatDateToShortDate(dateFrom ?: "")} - ${AppUtils.formatDateToShortDate(dateTo ?: "")}
             [L]
             [C]--------------------------------
+            [L]
             [L]TOTAL CHARGE : [R]$amountToPay NGN
-            [L]PERIOD : [R]$amountToPay NGN
             [L]OUTSTANDING BAL : [R]${outstandingBalance?.minus(amountToPay)} NGN
             [L]
             [C]================================

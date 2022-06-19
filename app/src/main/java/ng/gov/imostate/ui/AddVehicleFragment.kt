@@ -25,7 +25,6 @@ import ng.gov.imostate.databinding.FragmentFindVehicleDialogBinding
 import ng.gov.imostate.databinding.LayoutSelectRoutesBinding
 import ng.gov.imostate.model.domain.Route
 import ng.gov.imostate.model.domain.VehicleRoute
-import ng.gov.imostate.model.domain.TransactionData
 import ng.gov.imostate.model.request.OnboardVehicleRequest
 import ng.gov.imostate.model.result.ViewModelResult
 import ng.gov.imostate.util.AppUtils

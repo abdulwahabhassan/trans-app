@@ -7,5 +7,6 @@ data class TransactionData(
     val vehicleId: String?,
     @Json(name = "to")
     val to: String?,
-    val amount: Double?
+    val amount: Double?,
+    val dateTime: String?
 )

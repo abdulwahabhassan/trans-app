@@ -13,5 +13,7 @@ data class TransactionEntity (
     @ColumnInfo
     val to: String?,
     @ColumnInfo
-    val amount: Double?
+    val amount: Double?,
+    @ColumnInfo(name = "date_time")
+    val dateTime: String?
     )

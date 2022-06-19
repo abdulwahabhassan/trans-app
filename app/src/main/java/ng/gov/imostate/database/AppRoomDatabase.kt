@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import ng.gov.imostate.database.converters.Converters
@@ -25,7 +26,7 @@ import timber.log.Timber
         HolidayEntity::class,
         RouteEntity::class
                ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppRoomDatabase : RoomDatabase() {
@@ -58,8 +59,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
                 Moshi.Builder()
                     .add(KotlinJsonAdapterFactory())
                     .build())
-            )
-                .build()
+            ).build()
         }
 
     }

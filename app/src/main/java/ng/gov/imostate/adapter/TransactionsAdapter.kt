@@ -58,7 +58,7 @@ class TransactionsAdapter(
         fun bind(transaction: Transaction) {
             Timber.d("$transaction")
             with(binding) {
-                transactionTitleTV.text = transaction.accountFrom
+                transactionTitleTV.text = if (transaction.vehicleFrom != null) transaction.accountFrom + " (${transaction.vehicleFrom.vehiclePlates})" else transaction.accountFrom
                 transactionAmountTV.text = StringBuilder("₦").append(
                     AppUtils.formatCurrency(
                         transaction.amount ?: "0.00"

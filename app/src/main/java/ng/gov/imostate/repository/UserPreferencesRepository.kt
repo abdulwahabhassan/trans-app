@@ -71,18 +71,21 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
 
     suspend fun updateLoginStatus(loggedIn: Boolean) {
         dataStore.edit { preferences ->
+            //save user's login state, TRUE OR FALSE
             preferences[PreferencesKeys.LOGGED_IN] = loggedIn
         }
     }
 
     suspend fun updateLastSyncTime(time: String) {
         dataStore.edit { preferences ->
+            //save app's last transaction sync time
             preferences[PreferencesKeys.LAST_SYNC_TIME] = time
         }
     }
 
     suspend fun updateAgentCollectionSettingValue(value: String) {
         dataStore.edit { preferences ->
+            //allow agent to collect from any route, values are YES, NO, WARN
             preferences[PreferencesKeys.COLLECTION_SETTING] = value
         }
     }
@@ -90,6 +93,7 @@ class UserPreferencesRepository @Inject constructor (private val dataStore: Data
     suspend fun updateInstalmentsSettingValue(value: String) {
         Timber.d("instalments: $value")
         dataStore.edit { preferences ->
+            //settings to allow instalment, 0 means No, 1 means Yes
             preferences[PreferencesKeys.INSTALMENT_SETTING] = value != "0"
         }
     }

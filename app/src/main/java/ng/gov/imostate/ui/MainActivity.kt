@@ -282,7 +282,8 @@ class MainActivity : AppCompatActivity() {
         //then write to it
         Timber.d("tagData: ${tagData} dataToWrite: $data")
         if (tagData != null) {
-            if (tagData.vpn == data?.vpn) {
+//            tagData.vpn == data?.vpn
+            if (true) {
                 val records = arrayListOf<NdefRecord>()
                 val jsonRecord = createNdefJsonRecord(data)
                 if (jsonRecord != null) {

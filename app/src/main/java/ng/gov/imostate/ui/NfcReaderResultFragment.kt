@@ -45,13 +45,20 @@ class NfcReaderResultFragment : Fragment() {
     //view model
     private lateinit var viewModel: NfcReaderResultFragmentViewModel
     var outstandingBalance: Double = 0.00
-    private val sdf: SimpleDateFormat
+    private val sdfUtc: SimpleDateFormat
     get() {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         //dates used with MaterialDatePicker must be formatted to UTC time zone
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
         return dateFormat
     }
+    private val sdfLocal: SimpleDateFormat
+        get() {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            //dates used with MaterialDatePicker must be formatted to UTC time zone
+            dateFormat.timeZone = TimeZone.getTimeZone("Africa/Lagos")
+            return dateFormat
+        }
     private var vehicleInDatabase: VehicleCurrentEntity?  = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +90,19 @@ class NfcReaderResultFragment : Fragment() {
         ).get(NfcReaderResultFragmentViewModel::class.java)
 
         with(binding) {
-            payOutstandingBTN.setOnClickListener {
+
+            binding.payOutstandingBTN.setOnClickListener {
+                //add 1 day to current time of last paid date to exempt last paid date from current
+                //payment
+                val paymentStartDate = Date(sdfUtc.parse(data.lpd)?.time?.plus(TimeUnit.DAYS.toMillis(1))!!)
+                goToOutstandingPaymentScreen(sdfLocal.format(paymentStartDate), AppUtils.getCurrentDate())
+            }
+
+            openCalendarTV.setOnClickListener {
+                //ux
+                AppUtils.showView(false, openCalendarTV)
+                AppUtils.showProgressIndicator(true, progressIndicator)
+                payOutstandingBTN.isEnabled = false
                 viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                     //check first if agent is allowed to collect from outside routes
                     Timber.d("collection settings: ${viewModel.getInitialUserPreferences().collectionSetting}")
@@ -151,15 +170,13 @@ class NfcReaderResultFragment : Fragment() {
 
                         }
                     }
-
                 }
-
             }
             backArrowIV.setOnClickListener {
                 findNavController().popBackStack()
             }
 
-            outstandingBalancePeriodTV.text = "${AppUtils.formatDateToFullDate(sdf.format(sdf.parse(data.lpd)?.time?.plus(TimeUnit.DAYS.toMillis(1))))} - ${AppUtils.getCurrentFullDate()}"
+            outstandingBalancePeriodTV.text = "${AppUtils.formatDateToFullDate(sdfUtc.format(sdfUtc.parse(data.lpd)?.time?.plus(TimeUnit.DAYS.toMillis(1))))} - ${AppUtils.getCurrentFullDate()}"
 
             Timber.d("$data")
 
@@ -168,9 +185,9 @@ class NfcReaderResultFragment : Fragment() {
             lastPaymentDateTV.text = AppUtils.formatDateToFullDate(data.lpd)
 
             val dateStr = data.lpd
-            val lastPayDate = sdf.parse(dateStr)
+            val lastPayDate = sdfUtc.parse(dateStr)
 
-            val currentDate = sdf.parse(AppUtils.getCurrentDate())
+            val currentDate = sdfUtc.parse(AppUtils.getCurrentDate())
 
             val daysDifference = currentDate?.time!! - lastPayDate?.time!!
             val numOfDaysSinceLastPaid = TimeUnit.DAYS.convert(daysDifference, TimeUnit.MILLISECONDS) - 1 //minus one to exempt last pay date
@@ -245,12 +262,19 @@ class NfcReaderResultFragment : Fragment() {
                         lastPaymentDateTV.setTextColor(getResources().getColor(R.color.green))
                         payOutstandingBTN.visibility = INVISIBLE
                         outstandingBalancePeriodTV.visibility = INVISIBLE
+                        openCalendarTV.visibility = INVISIBLE
                     } else {
                         outstandingBalanceTV.setBackgroundResource(R.drawable.balance_text_red_bg)
                         outstandingBalanceTV.setTextColor(getResources().getColor(R.color.red))
                         lastPaymentDateTV.setTextColor(getResources().getColor(R.color.red))
                         payOutstandingBTN.visibility = VISIBLE
                         outstandingBalancePeriodTV.visibility = VISIBLE
+                        //if instalments are allowed show text, else hide text
+                        if (viewModel.getInitialUserPreferences().instalmentsSetting == true) {
+                            openCalendarTV.visibility = VISIBLE
+                        } else {
+                            openCalendarTV.visibility = INVISIBLE
+                        }
                     }
                     outstandingBalanceTV.text = "Outstanding Balance: ₦${AppUtils.formatCurrency(outstandingBalance)}"
                     outstandingBalanceTV.visibility = VISIBLE
@@ -271,8 +295,8 @@ class NfcReaderResultFragment : Fragment() {
         builder.setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
         builder.setTitleText("HOLIDAYS WILL BE EXCLUDED")
 
-        //format last payment date
-        val lastPayDate = sdf.parse(data.lpd)
+        //format last payment date in UTC timezone
+        val lastPayDate = sdfUtc.parse(data.lpd)
         Timber.d("lpd date ${lastPayDate?.time}")
 
         //set selected dates to reflect outstanding days since the last payment, exempt the last
@@ -287,8 +311,14 @@ class NfcReaderResultFragment : Fragment() {
         val picker = builder.build()
         picker.show(childFragmentManager, picker.toString())
 
-        picker.addOnPositiveButtonClickListener {
+        picker.addOnDismissListener {
+            //ux
+            AppUtils.showView(true, binding.openCalendarTV)
+            AppUtils.showProgressIndicator(false, binding.progressIndicator)
+            binding.payOutstandingBTN.isEnabled = true
+        }
 
+        picker.addOnPositiveButtonClickListener {
             //set selected dates
             val first: Long? = it.first
             val firstDate = Date(first!!)
@@ -298,22 +328,21 @@ class NfcReaderResultFragment : Fragment() {
             //if selected first date does not match actual/valid start date to begin payment from,
             //show invalid date selection dialog
             Timber.d("first: ${firstDate.time}")
-            val selectedStartDate = sdf.format(firstDate.time)
-            val compulsoryStartDate = sdf.format(startDate)
+            val selectedStartDate = sdfUtc.format(firstDate.time)
+            val compulsoryStartDate = sdfUtc.format(startDate)
             Timber.d("required start date: $compulsoryStartDate selected start date: $selectedStartDate")
 
             //if selected second date does not match actual/valid end date to make payment
             //show invalid date selection dialog
             Timber.d("first: ${secondDate.time}")
-            val selectedEndDate = sdf.format(secondDate.time)
-            val compulsoryEndDate = sdf.format(endDate)
+            val selectedEndDate = sdfUtc.format(secondDate.time)
+            val compulsoryEndDate = sdfUtc.format(endDate)
             Timber.d("required end date: $compulsoryEndDate selected end date: $selectedEndDate")
 
             viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                //format selected dates
-                val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val dateFrom = format.format(firstDate)
-                val dateTo = format.format(secondDate)
+                //format selected dates to local time zone and string pattern
+                val dateFrom = sdfLocal.format(firstDate)
+                val dateTo = sdfLocal.format(secondDate)
 
                 val allowInstalments = viewModel.getInitialUserPreferences().instalmentsSetting
                 Timber.d("Instalment: $allowInstalments")

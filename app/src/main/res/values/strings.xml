@@ -8,6 +8,7 @@
     <string name="channel_description">push notification channel</string>
     <string name="msg_token_fmt">Token: %s</string>
     <string name="view_routes_text"><b><u>View routes</u></b></string>
+    <string name="sync_vehicle_tag_text"><u>Sync Vehicle Tag</u></string>
 
     <string-array name="vehicle_routes">
         <item>1</item>

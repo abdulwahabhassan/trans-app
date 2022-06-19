@@ -108,11 +108,10 @@ class FindVehicleDialogFragment : BottomSheetDialogFragment() {
                        is ViewModelResult.Error -> {
                            Timber.d("$viewModelResult")
                            AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
+                           AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                           AppUtils.showView(true, binding.continueBTN)
                        }
                    }
-
-                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
-                    AppUtils.showView(true, binding.continueBTN)
                 }
             }
         }

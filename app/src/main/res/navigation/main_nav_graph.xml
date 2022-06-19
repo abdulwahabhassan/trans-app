@@ -121,7 +121,7 @@
             app:destination="@id/homeFragment"
             app:launchSingleTop="true" />
     </fragment>
-    <dialog
+    <fragment
         android:id="@+id/vehicleDetailsDialogFragment"
         android:name="ng.gov.imostate.ui.VehicleDetailsDialogFragment"
         android:label="fragment_vehicle_details_dialog"
@@ -130,7 +130,10 @@
             android:id="@+id/action_vehicleDetailsDialogFragment_to_transactionsFragment"
             app:destination="@id/transactionsFragment"
             app:launchSingleTop="true" />
-    </dialog>
+        <action
+            android:id="@+id/action_vehicleDetailsDialogFragment_to_successFragment"
+            app:destination="@id/successFragment" />
+    </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="ng.gov.imostate.ui.PaymentFragment"

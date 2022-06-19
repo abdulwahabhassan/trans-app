@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_sans_bold"
-        android:text="Move closer to NFC tag to scan"
+        android:text="Move closer to sticker/tag to scan"
         android:textAlignment="center"
         android:textColor="?colorOnSurface"
         app:layout_constraintEnd_toEndOf="parent"

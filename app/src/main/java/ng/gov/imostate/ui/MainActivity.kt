@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
         //then write to it
         Timber.d("tagData: ${tagData} dataToWrite: $data")
         if (tagData != null) {
-            if (true) {
+            if (tagData.vpn == data?.vpn) {
                 val records = arrayListOf<NdefRecord>()
                 val jsonRecord = createNdefJsonRecord(data)
                 if (jsonRecord != null) {
@@ -518,7 +518,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 AppUtils.showToast(
                                     this,
-                                    "PLATES NO: ${data.vpn}",
+                                    "Vehicle: ${data.vpn}",
                                     MotionToastStyle.INFO
                                 )
                                 //display tag payload

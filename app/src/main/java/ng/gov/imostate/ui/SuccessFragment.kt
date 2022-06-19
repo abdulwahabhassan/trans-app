@@ -110,11 +110,15 @@ class SuccessFragment : Fragment() {
                     if (nfcMode == NfcMode.WRITE.name) {
                         binding.nfcWriteModeLAV.playAnimation()
                         binding.nfcWriteModeLAV.visibility = VISIBLE
+                        binding.hintTV.visibility = VISIBLE
                         binding.syncTagBTN.text = "STOP SYNC"
+                        binding.successTV.text = "Click button to STOP syncing"
+                        binding.successTV.setTextColor(getResources().getColor(R.color.dark_grey))
                         binding.successLAV.visibility = INVISIBLE
                     } else {
                         binding.nfcWriteModeLAV.pauseAnimation()
                         binding.nfcWriteModeLAV.visibility = INVISIBLE
+                        binding.hintTV.visibility = INVISIBLE
                         binding.syncTagBTN.text =
                             when {
                                 binding.successTV.text.toString() == "Successfully Synced Tag" -> {
@@ -126,7 +130,8 @@ class SuccessFragment : Fragment() {
                                     "RE-SYNC TAG"
                                 }
                                 else -> {
-                                    binding.successLAV.visibility = VISIBLE
+                                    binding.successTV.text = "Click button to START syncing"
+                                    binding.successTV.setTextColor(getResources().getColor(R.color.dark_grey))
                                     "SYNC TAG"
                                 }
                             }
@@ -172,6 +177,7 @@ class SuccessFragment : Fragment() {
                 dialog.dismiss()
             }
             .setPositiveButton("Yes") { dialog, _ ->
+                //reset nfc mode to default - READ
                 sharedNfcViewModel.setNfcMode(NfcMode.READ)
                 dialog.dismiss()
                 findNavController().popBackStack()

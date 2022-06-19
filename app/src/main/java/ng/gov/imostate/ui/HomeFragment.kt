@@ -3,6 +3,7 @@ package ng.gov.imostate.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -214,14 +215,14 @@ class HomeFragment : Fragment() {
                 Timber.d(serverTime)
                 if (serverTime.isNotEmpty() && AppUtils.getCurrentDate() != serverTime.substring(0, 10)) {
                     AlertDialog.Builder(requireContext())
-                        .setTitle("Incorrect date")
+                        .setTitle("Incorrect date detected")
                         .setMessage(
-                            "Adjust device current date " +
-                                "(${AppUtils.formatDateToFullDate(AppUtils.getCurrentDate())}) " +
-                                "in settings to correct date"
+                            "Adjust device current date in settings"
                         )
-                        .setNegativeButton("Ok") { dialog, _ ->
+                        .setPositiveButton("Ok") { dialog, _ ->
                             dialog.dismiss()
+                            startActivity(Intent(Settings.ACTION_DATE_SETTINGS))
+                            activity?.finish()
                         }
                         .setCancelable(false)
                         .show()

@@ -8,257 +8,283 @@
     tools:context=".ui.VehicleDetailsDialogFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/vehicle_details_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_extrabold"
-            android:maxLines="1"
-            android:text="Vehicle Details"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/vehicleLicenseExpiryDateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/vehicleLicenseExpiryDateLabelTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vehicleLicenseExpiryDateLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/vehicleLicenseExpiryDateLabelTV"
-            tools:text="Fri, 01 March 2022" />
-
-        <TextView
-            android:id="@+id/vehiclePlatesLabelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Vehicle Plates :"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/vehiclePlatesTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
-
-        <TextView
-            android:id="@+id/vehiclePlatesTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/vehiclePlatesLabelTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vehiclePlatesLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/vehiclePlatesLabelTV"
-            tools:text="IMO-511-OWR" />
-
-        <TextView
-            android:id="@+id/lastPaidDateLabelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Last Paid Date :"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/lastPaidDateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehiclePlatesLabelTV" />
-
-        <TextView
-            android:id="@+id/lastPaidDateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            tools:text="Tue, 25 Jan 2022"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/lastPaidDateLabelTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/lastPaidDateLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/lastPaidDateLabelTV" />
-
-        <TextView
-            android:id="@+id/vehicleLicenseExpiryDateLabelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="License Expiry Date :"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/vehicleLicenseExpiryDateTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastPaidDateLabelTV" />
-
-        <TextView
-            android:id="@+id/lastPaymentDateLabelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Last Pay Date :"
-            android:textColor="@color/black"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/lastPaymentDateTV"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateOnBoardedLabelTV" />
-
-        <TextView
-            android:id="@+id/lastPaymentDateTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/blue"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/lastPaymentDateLabelTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/lastPaymentDateLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/lastPaymentDateLabelTV"
-            tools:text="03/04/22" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <TextView
-            android:id="@+id/dateOnBoardedLabelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Date on-boarded :"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/dateOnBoardedTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleTypeLabelTV" />
-
-        <TextView
-            android:id="@+id/dateOnBoardedTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/dateOnBoardedLabelTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/dateOnBoardedLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/dateOnBoardedLabelTV"
-            tools:text="Mon, 23 April 2022" />
-
-        <TextView
-            android:id="@+id/vehicleTypeLabelTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Vehicle Type :"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/vehicleTypeTV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseExpiryDateLabelTV" />
-
-        <TextView
-            android:id="@+id/vehicleTypeTV"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:maxLines="1"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/vehicleTypeLabelTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/vehicleTypeLabelTV"
-            app:layout_constraintTop_toTopOf="@+id/vehicleTypeLabelTV"
-            tools:text="Mini bus" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/seeTransactionsBTN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/backArrowIV"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/dark_blue"
-        android:fontFamily="@font/nunito_sans_bold"
-        android:padding="15dp"
-        android:text="SEE TRANSACTIONS"
-        android:textColor="@color/white"
-        app:cornerRadius="8dp"
-        android:layout_marginBottom="32dp"
+        android:padding="8dp"
+        android:backgroundTint="@color/white"
+        android:tint="@color/black"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/nunito_sans_extrabold"
+        android:maxLines="1"
+        android:text="Vehicle Details"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backArrowIV" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/vehicleLicenseExpiryDateTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/vehicleLicenseExpiryDateLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/vehicleLicenseExpiryDateLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/vehicleLicenseExpiryDateLabelTV"
+                tools:text="Fri, 01 March 2022" />
+
+            <TextView
+                android:id="@+id/vehiclePlatesLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Vehicle Plates :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/vehiclePlatesTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/vehiclePlatesTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/vehiclePlatesLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/vehiclePlatesLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/vehiclePlatesLabelTV"
+                tools:text="IMO-511-OWR" />
+
+            <TextView
+                android:id="@+id/lastPaidDateLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Last Paid Date :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/lastPaidDateTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehiclePlatesLabelTV" />
+
+            <TextView
+                android:id="@+id/lastPaidDateTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/lastPaidDateLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lastPaidDateLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/lastPaidDateLabelTV"
+                tools:text="Tue, 25 Jan 2022" />
+
+            <TextView
+                android:id="@+id/vehicleLicenseExpiryDateLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="License Expiry Date :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/vehicleLicenseExpiryDateTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastPaidDateLabelTV" />
+
+            <TextView
+                android:id="@+id/lastPaymentDateLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Last Pay Date :"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/lastPaymentDateTV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateOnBoardedLabelTV" />
+
+            <TextView
+                android:id="@+id/lastPaymentDateTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/blue"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/lastPaymentDateLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lastPaymentDateLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/lastPaymentDateLabelTV"
+                tools:text="03/04/22" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/dateOnBoardedLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Date on-boarded :"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dateOnBoardedTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicleTypeLabelTV" />
+
+            <TextView
+                android:id="@+id/dateOnBoardedTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/dateOnBoardedLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/dateOnBoardedLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/dateOnBoardedLabelTV"
+                tools:text="Mon, 23 April 2022" />
+
+            <TextView
+                android:id="@+id/vehicleTypeLabelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Vehicle Type :"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/vehicleTypeTV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicleLicenseExpiryDateLabelTV" />
+
+            <TextView
+                android:id="@+id/vehicleTypeTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/vehicleTypeLabelTV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/vehicleTypeLabelTV"
+                app:layout_constraintTop_toTopOf="@+id/vehicleTypeLabelTV"
+                tools:text="Mini bus" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seeTransactionsBTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/dark_blue"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:padding="15dp"
+            android:text="SEE TRANSACTIONS"
+            android:textColor="@color/white"
+            app:cornerRadius="8dp" />
+
+        <TextView
+            android:id="@+id/syncVehicleTagTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ellipsize="end"
+            android:padding="8dp"
+            android:fontFamily="@font/nunito_sans"
+            android:maxLines="1"
+            android:text="@string/sync_vehicle_tag_text"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package ng.gov.imostate.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,12 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
     lateinit var appViewModelFactory: AppViewModelsFactory
     //view model
     val viewModel: FindVehicleDialogFragmentViewModel by activityViewModels()
+    private var dateOnBoarded: String? = null
+    private var vehiclePlates: String? = null
+    private var vehicleLastPaidDate: String? = null
+    private var vehicleCategory: String? = null
+    private var vehicleLicenseExp: String? = null
+    private var vehicleIdNumber: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,19 +48,49 @@ class VehicleDetailsDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dateOnBoarded = arguments?.getString(MainActivity.DATE_ONBOARDED_KEY)
+        vehiclePlates = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
+        vehicleCategory = arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY)
+        vehicleLicenseExp = arguments?.getString(MainActivity.VEHICLE_LICENSE_EXPIRY_DATE_KEY)
+        vehicleLastPaidDate = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
+        vehicleIdNumber = arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY)
+
         with(binding) {
-            dateOnBoardedTV.text = arguments?.getString(MainActivity.DATE_ONBOARDED_KEY)
-            vehiclePlatesTV.text = arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
-            vehicleTypeTV.text = arguments?.getString(MainActivity.VEHICLE_CATEGORY_KEY)
-            vehicleLicenseExpiryDateTV.text = arguments?.getString(MainActivity.VEHICLE_LICENSE_EXPIRY_DATE_KEY)
-            lastPaidDateTV.text = arguments?.getString(MainActivity.LAST_PAYMENT_DATE_KEY)
-            val vehicleId = arguments?.getString(MainActivity.VEHICLE_ID_NUMBER_KEY)
+
+            if (
+                vehicleIdNumber.isNullOrEmpty() ||
+                vehiclePlates.isNullOrEmpty() ||
+                vehicleCategory.isNullOrEmpty() ||
+                vehicleLastPaidDate.isNullOrEmpty()
+            ) {
+                binding.syncVehicleTagTV.visibility = INVISIBLE
+            }
+
+            backArrowIV.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            syncVehicleTagTV.setOnClickListener {
+                val action = VehicleDetailsDialogFragmentDirections.actionVehicleDetailsDialogFragmentToSuccessFragment(
+                    vehicleIdNumber.toString(),
+                    vehiclePlates,
+                    vehicleLastPaidDate?.let { date -> AppUtils.formatFullDateToDate(date) },
+                    vehicleCategory
+                )
+                findNavController().navigate(action)
+            }
+
+            dateOnBoardedTV.text = dateOnBoarded ?: "-"
+            vehiclePlatesTV.text = vehiclePlates ?: "-"
+            vehicleTypeTV.text = vehicleCategory ?: "-"
+            vehicleLicenseExpiryDateTV.text = vehicleLicenseExp ?: "-"
+            lastPaidDateTV.text = vehicleLastPaidDate ?: "-"
 
             seeTransactionsBTN.setOnClickListener {
                 val action = VehicleDetailsDialogFragmentDirections
                     .actionVehicleDetailsDialogFragmentToTransactionsFragment(
                         TransactionType.VEHICLE_TRANSACTION.name,
-                        arguments?.getString(MainActivity.VEHICLE_PLATES_NUMBER_KEY)
+                        vehicleIdNumber
                     )
                 findNavController().navigate(action)
             }

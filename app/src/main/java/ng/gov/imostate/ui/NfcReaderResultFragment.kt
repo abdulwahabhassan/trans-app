@@ -352,7 +352,7 @@ class NfcReaderResultFragment : Fragment() {
             bundle.putString(DATE_FROM_KEY, dateFrom)
             bundle.putString(DATE_TO_KEY, dateTo)
         }
-        //do api call
+
         findNavController().navigate(R.id.outStandingPaymentFragment, bundle,
             NavOptions.Builder().setLaunchSingleTop(true).build())
     }

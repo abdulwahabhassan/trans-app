@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.*
 import dagger.hilt.android.AndroidEntryPoint
 import ng.gov.imostate.Mapper
 import ng.gov.imostate.R
@@ -271,7 +271,7 @@ class NfcReaderResultFragment : Fragment() {
                         payOutstandingBTN.visibility = VISIBLE
                         outstandingBalancePeriodTV.visibility = VISIBLE
                         //if instalments are allowed show text, else hide text
-                        if (viewModel.getInitialUserPreferences().instalmentsSetting == true) {
+                        if (viewModel.getInitialUserPreferences().instalmentsSetting == false) {
                             openCalendarTV.visibility = VISIBLE
                         } else {
                             openCalendarTV.visibility = INVISIBLE
@@ -307,6 +307,18 @@ class NfcReaderResultFragment : Fragment() {
         val endDate = MaterialDatePicker.todayInUtcMilliseconds()
 
         Timber.d("start date: $startDate timeNow: $endDate")
+
+        val dateValidatorMin: CalendarConstraints.DateValidator? = startDate?.let {
+            DateValidatorPointForward
+                .from(it)
+        }
+        val dateValidatorMax: CalendarConstraints.DateValidator = DateValidatorPointBackward.before(endDate)
+        val dateValidators = CompositeDateValidator.allOf(listOf(dateValidatorMin, dateValidatorMax))
+        builder.setCalendarConstraints(
+            CalendarConstraints.Builder()
+                .setValidator(dateValidators)
+                .build()
+        )
 
         builder.setSelection(Pair(startDate, endDate))
         val picker = builder.build()

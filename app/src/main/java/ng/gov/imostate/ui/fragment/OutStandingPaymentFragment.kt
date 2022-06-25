@@ -58,6 +58,7 @@ class OutStandingPaymentFragment : Fragment() {
     var outstandingBalance: Double? = 0.00
     var amountToPay: Double = 0.00
     var agentName: String? = ""
+    private var numOfEligibleDaysOwed: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,7 +141,7 @@ class OutStandingPaymentFragment : Fragment() {
                 }
                 Timber.d("valid days array: $validDaysArray")
 
-                val numOfEligibleDaysOwed = validDaysArray.size
+                numOfEligibleDaysOwed = validDaysArray.size
 
                 val rate = vehicleCategory?.let { viewModel.getRateInDatabase(it) }
                 if (rate?.amount != null) {
@@ -163,7 +164,7 @@ class OutStandingPaymentFragment : Fragment() {
                         val transactions = Mapper.mapListOfTransactionEntityToListOfTransaction(
                             viewModel.getAllTransactionsInDatabase()
                         )
-                        val totalOfflineTransactionAmount = transactions.sumOf { it.amount ?: 0.00 }
+                        val totalOfflineTransactionAmount = transactions.sumOf { it.totalAmount.toDouble() }
                         val actualBalance = (lastSyncBalance ?: 0.00) - totalOfflineTransactionAmount
                         Timber.d("lastSyncBalance: $lastSyncBalance " +
                                 "totalOfflineTransactionAmount: $totalOfflineTransactionAmount " +
@@ -193,19 +194,27 @@ class OutStandingPaymentFragment : Fragment() {
                                         //update the current 'amount' and 'date to' in database
                                         val transactionData = transaction.copy(
                                             to = dateTo,
-                                            amount = (transaction.amount ?: 0.00) + amountToPay,
-                                            dateTime = AppUtils.getCurrentDateTime()
+                                            totalAmount = (transaction.totalAmount.toDouble() + amountToPay).toString(),
+                                            totalDays = (transaction.totalDays.toInt() + numOfEligibleDaysOwed).toString(),
+                                            collectionTime = AppUtils.getCurrentDateTime()
                                         )
                                         viewModel.insertTransactionToDatabase(transactionData)
                                     } else {
                                         viewModel.insertTransactionToDatabase(
-                                            TransactionData(vehicleId, dateTo, amountToPay, AppUtils.getCurrentDateTime())
+                                            TransactionData(
+                                                vehicleId,
+                                                dateTo,
+                                                amountToPay.toString(),
+                                                numOfEligibleDaysOwed.toString(),
+                                                AppUtils.getCurrentDateTime()
+                                            )
                                         )
                                     }
 
                                     printBluetooth()
                                     val action =
-                                        OutStandingPaymentFragmentDirections.actionOutStandingPaymentFragmentToSuccessFragment(
+                                        OutStandingPaymentFragmentDirections
+                                            .actionOutStandingPaymentFragmentToSuccessFragment(
                                             vehicleId!!,
                                             vehiclePlatesNumber,
                                             dateTo,

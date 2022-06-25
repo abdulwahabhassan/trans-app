@@ -330,6 +330,12 @@ class HomeFragment : Fragment() {
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                        currentPayableTV.text = dashBoardMetrics?.metrics?.currentPayable
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
+
+                        //color to indicate online
+                        walletBalanceTV.setTextColor(getResources().getColor(R.color.black))
+                        totalCreditedTV.setTextColor(getResources().getColor(R.color.black))
+                        totalVendedTV.setTextColor(getResources().getColor(R.color.black))
+                        currentPayableTV.setTextColor(getResources().getColor(R.color.black))
                     }
                 }
                 is ViewModelResult.Error -> {
@@ -346,6 +352,12 @@ class HomeFragment : Fragment() {
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
                         currentPayableTV.text = prefs.currentPayable
                             ?.let { "₦${AppUtils.formatCurrency(it)}" }
+
+                        //color to indicate offline
+                        walletBalanceTV.setTextColor(getResources().getColor(R.color.line_grey))
+                        totalCreditedTV.setTextColor(getResources().getColor(R.color.line_grey))
+                        totalVendedTV.setTextColor(getResources().getColor(R.color.line_grey))
+                        currentPayableTV.setTextColor(getResources().getColor(R.color.line_grey))
                     }
                 }
             }

@@ -332,6 +332,7 @@ class NfcReaderResultFragment : Fragment() {
         }
 
         picker.addOnPositiveButtonClickListener {
+
             //set selected dates
             val first: Long? = it.first
             val firstDate = Date(first!!)

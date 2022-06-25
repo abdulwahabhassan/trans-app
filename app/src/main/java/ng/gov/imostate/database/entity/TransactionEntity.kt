@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 @Entity(tableName = "transaction")
 data class TransactionEntity (
@@ -12,8 +13,10 @@ data class TransactionEntity (
     val vehicleId: String,
     @ColumnInfo
     val to: String?,
-    @ColumnInfo
-    val amount: Double?,
-    @ColumnInfo(name = "date_time")
-    val dateTime: String?
+    @ColumnInfo(name = "total_amount")
+    val totalAmount: String,
+    @ColumnInfo(name = "total_days")
+    val totalDays: String,
+    @ColumnInfo(name = "collection_time")
+    val collectionTime: String
     )

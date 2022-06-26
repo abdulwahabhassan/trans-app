@@ -108,6 +108,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:cornerRadius="8dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,5 +131,24 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/noTransactionTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:drawableTint="@color/dark_blue"
+        android:paddingHorizontal="12dp"
+        android:text="No transaction record"
+        android:paddingVertical="8dp"
+        android:visibility="invisible"
+        android:layout_marginTop="8dp"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="@color/dark_blue"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/progressIndicator"
+        app:layout_constraintStart_toStartOf="@+id/progressIndicator"
+        app:layout_constraintTop_toBottomOf="@+id/progressIndicator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

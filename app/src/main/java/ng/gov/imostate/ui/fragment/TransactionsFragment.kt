@@ -432,16 +432,25 @@ class TransactionsFragment : Fragment() {
                             when (viewModelResult) {
                                 is ViewModelResult.Success -> {
                                     Timber.d("${viewModelResult.data}")
+                                    AppUtils.showProgressIndicator(false, binding.progressIndicator)
                                     if (viewModelResult.data.isNotEmpty()) {
                                         transactionsAdapter.submitList(viewModelResult.data)
-                                        AppUtils.showProgressIndicator(false, binding.progressIndicator)
                                         AppUtils.showView(true, binding.transactionsRV)
+                                        AppUtils.showView(true, binding.generateLastReceiptBTN)
+                                        AppUtils.showView(false, binding.noTransactionTV)
+                                    } else {
+                                        AppUtils.showView(true, binding.noTransactionTV)
                                     }
                                 }
                                 is ViewModelResult.Error -> {
                                     AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                                     AppUtils.showView(false, binding.transactionsRV)
+                                    AppUtils.showView(false, binding.generateLastReceiptBTN)
                                     AppUtils.showProgressIndicator(false, binding.progressIndicator)
+                                    AppUtils.showView(true, binding.noTransactionTV)
+                                }
+                                is ViewModelResult.Loading -> {
+                                    AppUtils.showProgressIndicator(true, binding.progressIndicator)
                                 }
                             }
                         }
@@ -460,14 +469,19 @@ class TransactionsFragment : Fragment() {
                                 Timber.d("${viewModelResult.data?.vehicle?.collection}")
                                 if (viewModelResult.data?.vehicle?.collection?.isEmpty() == true) {
                                     AppUtils.showToast(requireActivity(), "No transaction record", MotionToastStyle.INFO)
+                                    AppUtils.showView(true, binding.noTransactionTV)
                                 } else {
                                     collectionsAdapter.submitList(viewModelResult.data?.vehicle?.collection)
+                                    AppUtils.showView(false, binding.noTransactionTV)
                                     AppUtils.showView(true, binding.transactionsRV)
+                                    AppUtils.showView(true, binding.generateLastReceiptBTN)
                                 }
                             }
                             is ViewModelResult.Error -> {
                                 AppUtils.showToast(requireActivity(), viewModelResult.errorMessage, MotionToastStyle.ERROR)
                                 AppUtils.showView(false, binding.transactionsRV)
+                                AppUtils.showView(false, binding.generateLastReceiptBTN)
+                                AppUtils.showView(true, binding.noTransactionTV)
                             }
                         }
                         AppUtils.showProgressIndicator(false, binding.progressIndicator)

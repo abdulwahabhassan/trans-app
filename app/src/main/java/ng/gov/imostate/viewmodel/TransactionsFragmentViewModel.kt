@@ -26,7 +26,7 @@ class TransactionsFragmentViewModel @Inject constructor(
 ){
 
     private val _transactions:
-            MutableStateFlow<ViewModelResult<List<Transaction>>> = MutableStateFlow(value = ViewModelResult.Success(emptyList())
+            MutableStateFlow<ViewModelResult<List<Transaction>>> = MutableStateFlow(value = ViewModelResult.Loading("Loading")
     )
     val transactions: StateFlow<ViewModelResult<List<Transaction>>> = _transactions
 
@@ -43,15 +43,14 @@ class TransactionsFragmentViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getTransactions(token: String,): ViewModelResult<TransactionsResult?> {
+    private suspend fun getTransactions(token: String,) {
         val response = transactionRepository.getTransactions(token)
         return  when (response.success) {
             true -> {
                 _transactions.value = ViewModelResult.Success(response.result?.transactions ?: emptyList())
-                ViewModelResult.Success(response.result)
             }
             else -> {
-                ViewModelResult.Error(response.message ?: "Unknown Error")
+                _transactions.value = ViewModelResult.Error(response.message ?: "Unknown Error")
             }
         }
     }
@@ -64,6 +63,7 @@ class TransactionsFragmentViewModel @Inject constructor(
                 ViewModelResult.Success(response.result)
             }
             else -> {
+                _collections.value = ViewModelResult.Error(response.message ?: "Unknown Error")
                 ViewModelResult.Error(response.message ?: "Unknown Error")
             }
         }

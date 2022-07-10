@@ -1,0 +1,157 @@
+name: Android CI
+
+on:
+  # Trigger this workflow on push to the included branches
+  push:
+    branches: [master]
+  # Trigger this workflow on pull request against the included branches
+  pull_request:
+    branches: [master]
+  # Allows running this workflow manually from the actions tab
+  workflow_dispatch:
+  
+#Run the following jobs below
+jobs:
+  #Job 1: Unit test
+  unit_test:
+    runs-on: ubuntu-latest
+    
+    #Define the steps for this job
+    steps:
+      #Check out the code to the runner
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        
+      #Cache Gradle
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+      
+      #Setup JDK on the runner
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+         java-version: 11
+         
+      #Run the unit test
+      - name: Run unit test
+        run: ./gradlew testDebugUnitTest --stacktrace
+        
+      #Upload generated test report to artifacts
+      - name: Upload Unit Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Local Unit Test report
+          path: app/build/reports/tests
+          if-no-files-found: ignore
+        
+  #Job 2: Instrumentation test
+  instrumentation_test:
+    continue-on-error: true #other jobs in the matrix will continue running even if a job fails
+    #so that we can know for which api levels the instrumentation test fails
+    strategy:
+      matrix:
+      #Run this job for all api levels listed
+        api-level: [21, 23, 26, 29]
+    runs-on: macos-latest
+    
+    #Define the steps for this job
+    steps:
+      #Check out the code to the runner
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        
+      #Cache Gradle
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+        
+      #Setup JDK on the runner
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      
+      #Cache AVD
+      - name: AVD cache
+        uses: actions/cache@v2
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+          
+      #Create AVD
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+          
+      #Run the instrumentation test
+      - name: Run instrumentation test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedDebugAndroidTest --stacktrace
+          
+      #Upload generated test report to artifacts
+      - name: Upload Instrumentation Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Instrumentation Test report
+          path: app/build/reports/androidTests/connected
+          if-no-files-found: ignore
+  
+  #Job 3: Build apk
+  build:
+    #this job is dependent on the success of other jobs listed below
+    needs: [unit_test, instrumentation_test] #depending jobs
+    runs-on: ubuntu-latest
+    
+    steps:
+      #Check out the code to the runner
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        
+      #Cache Gradle
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      #Setup JDK on the runner
+      - name: Use Java8
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+
+      #Build debug apk
+      - name: Build debug apk
+        run: ./gradlew clean assembleDebug --stacktrace
+
+      #Upload generated apk to artifacts
+      - name: Upload apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: Debug APK
+          path: app/build/outputs/apk/debug/app-universal-debug.apk
